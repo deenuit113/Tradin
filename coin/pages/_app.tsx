@@ -1,22 +1,22 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import '../styles/globals.css';  // Ensure you have global styles if needed
+import Header from "../src/components/commons/header";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <Head>
-        <title>coin project</title>
-      </Head>
-      <header>
-        <h1>coin project</h1>
-      </header>
-      <Component {...pageProps} />
-      <footer>
-        <p>© coin project</p>
-      </footer>
-    </>
-  );
+    return (
+        <>
+            <Head>
+                <title>Crypto Spot Trend</title>
+            </Head>
+            <Header />
+            <Component {...pageProps} />
+            <style jsx global>{`
+                footer {
+                    display: none;
+                }
+            `}</style>
+        </>
+    );
 }
 
 export default MyApp;
