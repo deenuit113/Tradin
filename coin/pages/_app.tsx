@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import Header from "../src/components/commons/header";
+import Header from "../src/components/commons/Header";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (

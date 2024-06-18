@@ -7,9 +7,11 @@ export const Container = styled.div`
 
 export const Sidebar = styled.div`
     width: 15%;
+    box-shadow: 7px 10px 20px gray;
+    border-radius: 0px 10px 10px 0px;
     background-color: #f0f0f0;
     overflow-y: auto;
-    border: 3px solid blue;
+    z-index: 1000;
 `;
 
 export const Menu = styled.ul`
@@ -25,6 +27,10 @@ export const MenuItem = styled.li`
     &:hover {
         background-color: #e0e0e0;
     }
+
+    &:hover ul {
+        display: block;
+    }
 `;
 
 export const SubMenu = styled.ul`
@@ -32,10 +38,6 @@ export const SubMenu = styled.ul`
     padding-left: 1rem;
     margin: 0;
     display: none;
-
-    ${MenuItem}:hover & {
-        display: block;
-    }
 
     li {
         padding: 0.5rem;

@@ -1,5 +1,4 @@
 import NavBar from "./Nav";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import * as S from "./Header.styles"
 

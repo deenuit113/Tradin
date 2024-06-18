@@ -1,4 +1,4 @@
-import * as S from "./nav.styles"
+import * as S from "./Nav.styles"
 
 export default function NavBar(): JSX.Element {
     return (

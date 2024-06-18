@@ -26,8 +26,8 @@ export default function MainPage(): JSX.Element {
                 </S.Menu>
             </S.Sidebar>
             <S.MainContent>
-                <h1>하이</h1>
-                <p>하이dfd</p>
+                <h1>Welcome to the Project</h1>
+                <p>This is the main content area.</p>
                 {/* Add more content as needed */}
             </S.MainContent>
         </S.Container>

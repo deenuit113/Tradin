@@ -10,7 +10,8 @@ export const HeaderContainer = styled.header`
     padding-left: 5%;
     padding-right: 5%;
     box-shadow: 0px 0px 10px gray;
-    border-radius: 10px;
+    border-radius: 10px 10px 10px 0px;
+    z-index: 1001;
 `;
 
 export const Left = styled.div`
