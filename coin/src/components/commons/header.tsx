@@ -17,20 +17,18 @@ export default function Header(): JSX.Element {
     return (
         <S.HeaderContainer>
             <S.Left>
-                <S.Title onClick={handleTitleClick}>site name</S.Title>
+                <S.Title onClick={handleTitleClick}>name</S.Title>
                 <NavBar />
             </S.Left>
             <S.Center>
                 <S.Marquee>
-                    <p>Important coin announcements and disclosures go here.</p>
+                    <p>공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시</p>
                 </S.Marquee>
             </S.Center>
             <S.Right>
                 <S.IconList>
                     <S.IconListItem>Icon 1</S.IconListItem>
                     <S.IconListItem>Icon 2</S.IconListItem>
-                    <S.IconListItem>Icon 3</S.IconListItem>
-                    <S.IconListItem>Icon 4</S.IconListItem>
                 </S.IconList>
             </S.Right>
         </S.HeaderContainer>

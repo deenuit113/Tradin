@@ -1,24 +1,30 @@
 import styled from "@emotion/styled";
 
 export const HeaderContainer = styled.header`
-    width: 100%;
+    width: 90%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    padding: 0 2rem;
     background-color: #f8f9fa;
+    padding-left: 5%;
+    padding-right: 5%;
+    box-shadow: 0px 0px 10px gray;
+    border-radius: 10px;
 `;
 
 export const Left = styled.div`
     width: 15%;
+    height: 100%;
     display: flex;
     align-items: center;
+    align-text: center;
+    justify-content: center;
 `;
 
 export const Title = styled.h1`
     cursor: pointer;
-    margin-right: 2rem;
+    font-size: 20px;
 `;
 
 export const Center = styled.div`
@@ -27,6 +33,8 @@ export const Center = styled.div`
 `;
 
 export const Marquee = styled.div`
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px gray;
     overflow: hidden;
     white-space: nowrap;
 
@@ -53,6 +61,7 @@ export const Right = styled.div`
 `;
 
 export const IconList = styled.ul`
+    width: 100%;
     display: flex;
     list-style: none;
     padding: 0;
@@ -60,5 +69,6 @@ export const IconList = styled.ul`
 `;
 
 export const IconListItem = styled.li`
+    width: 50%;
     margin: 0 0.5rem;
 `;
