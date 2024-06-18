@@ -1,7 +1,7 @@
-import NavBar from "./nav";
+import NavBar from "./Nav";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import * as S from "./header.styles"
+import * as S from "./Header.styles"
 
 export default function Header(): JSX.Element {
     const router = useRouter();

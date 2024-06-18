@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>Crypto Spot Trend</title>
+                <title>project</title>
             </Head>
             <Header />
             <Component {...pageProps} />
