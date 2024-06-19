@@ -10,7 +10,7 @@ export const HeaderContainer = styled.header`
     padding-left: 5%;
     padding-right: 5%;
     box-shadow: 0px 0px 10px gray;
-    border-radius: 10px 10px 10px 0px;
+    border-radius: 10px 10px 10px 10px;
     z-index: 1001;
 `;
 
@@ -25,7 +25,7 @@ export const Left = styled.div`
 
 export const Title = styled.h1`
     cursor: pointer;
-    font-size: 20px;
+    font-size: 25px;
 `;
 
 export const Center = styled.div`
@@ -72,4 +72,13 @@ export const IconList = styled.ul`
 export const IconListItem = styled.li`
     width: 50%;
     margin: 0 0.5rem;
+`;
+
+export const ToggleButton = styled.button`
+    background: none;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+    margin-right: 1rem;
+    padding-top: 10px;
 `;

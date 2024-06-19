@@ -1,9 +1,12 @@
 import NavBar from "./Nav";
 import { useRouter } from "next/router";
-import * as S from "./Header.styles"
+import * as S from "./Header.styles";
+import { FaBars } from "react-icons/fa";
+import { useSidebar } from "./SidebarContext";
 
 export default function Header(): JSX.Element {
     const router = useRouter();
+    const { toggleSidebar } = useSidebar();
 
     const handleTitleClick = () => {
         if (router.pathname === "/") {
@@ -16,6 +19,9 @@ export default function Header(): JSX.Element {
     return (
         <S.HeaderContainer>
             <S.Left>
+                <S.ToggleButton onClick={toggleSidebar}>
+                    <FaBars />
+                </S.ToggleButton>
                 <S.Title onClick={handleTitleClick}>name</S.Title>
                 <NavBar />
             </S.Left>
