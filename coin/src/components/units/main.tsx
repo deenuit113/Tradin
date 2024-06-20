@@ -1,18 +1,26 @@
 import { useState } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import * as S from "./Main.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import SideBar from "./Sidebar";
 import { FaPlus, FaEllipsisV } from "react-icons/fa";
-
-const initialWidgets = ["정보 1", "정보 2"];
+import Widget from "./Widget";
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
-    const [widgets, setWidgets] = useState<string[]>(initialWidgets);
+    const [widgets, setWidgets] = useState<string[]>([]);
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
 
     const addWidget = () => {
         setWidgets([...widgets, `정보 ${widgets.length + 1}`]);
+    };
+
+    const moveWidget = (dragIndex: number, hoverIndex: number) => {
+        const updatedWidgets = [...widgets];
+        const [draggedWidget] = updatedWidgets.splice(dragIndex, 1);
+        updatedWidgets.splice(hoverIndex, 0, draggedWidget);
+        setWidgets(updatedWidgets);
     };
 
     const removeWidget = (index: number) => {
@@ -21,34 +29,29 @@ export default function MainPage(): JSX.Element {
     };
 
     return (
-        <S.Container>
-            <SideBar />
-            <S.MainContent sidebarOpen={sidebarOpen}>
-                {widgets.map((widget, index) => (
-                    <S.Widget key={index}>
-                        <S.WidgetHeader>
-                            {widget}
-                            <S.MenuIcon onClick={() => setMenuOpen(index === menuOpen ? null : index)}>
-                                <FaEllipsisV />
-                            </S.MenuIcon>
-                            {menuOpen === index && (
-                                <S.DropdownMenu>
-                                    <S.DropdownItem onClick={() => removeWidget(index)}>위젯 삭제</S.DropdownItem>
-                                </S.DropdownMenu>
-                            )}
-                        </S.WidgetHeader>
-                        <S.WidgetContent>
-                            {widget} 내용
-                        </S.WidgetContent>
+        <DndProvider backend={HTML5Backend}>
+            <S.Container>
+                <SideBar />
+                <S.MainContent sidebarOpen={sidebarOpen}>
+                    {widgets.map((widget, index) => (
+                        <Widget
+                            key={index}
+                            index={index}
+                            widget={widget}
+                            removeWidget={removeWidget}
+                            menuOpen={menuOpen}
+                            setMenuOpen={setMenuOpen}
+                            moveWidget={moveWidget}
+                        />
+                    ))}
+                    <S.Widget>
+                        <S.AddWidgetButton onClick={addWidget}>
+                            <FaPlus />
+                            위젯 추가
+                        </S.AddWidgetButton>
                     </S.Widget>
-                ))}
-                <S.Widget>
-                    <S.AddWidgetButton onClick={addWidget}>
-                        <FaPlus />
-                        위젯 추가
-                    </S.AddWidgetButton>
-                </S.Widget>
-            </S.MainContent>
-        </S.Container>
+                </S.MainContent>
+            </S.Container>
+        </DndProvider>
     );
 }
