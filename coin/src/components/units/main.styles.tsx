@@ -5,69 +5,74 @@ export const Container = styled.div`
     height: 90vh;
 `;
 
-export const Sidebar = styled.div<{ open: boolean }>`
-    width: 15%;
-    height: 90vh;
-    box-shadow: 7px 10px 20px gray;
-    border-radius: 0px 10px 10px 0px;
-    background-color: #f0f0f0;
-    overflow-y: auto;
-    z-index: 1000;
-    position: fixed;
-    left: ${({ open }) => (open ? "0" : "-20%")};
-    transition: left 0.3s ease;
-    padding-left: 15px;
-    padding-right: 15px;
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        // 모바일 세로
-        width: 30%;
-        left: ${({ open }) => (open ? "0" : "-40%")};
-    }
-`;
-
-export const Menu = styled.ul`
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-`;
-
-export const MenuItem = styled.li`
+export const MainContent = styled.div<{ sidebarOpen: boolean }>`
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "90%" : "100%")};
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: center;
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "18%" : "0")};
+    transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #e0e0e0;
-    }
 `;
 
-export const MenuTitle = styled.div`
+export const Widget = styled.div`
+    background-color: #fff;
+    border: 1px solid lightgray;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    position: relative;
+`;
+
+export const WidgetHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
 `;
 
-export const Icon = styled.span`
+export const MenuIcon = styled.div`
     cursor: pointer;
-    margin-left: 0.5rem;
 `;
 
-export const SubMenu = styled.ul`
-    list-style-type: none;
-    padding-left: 1rem;
-    margin: 0;
+export const DropdownMenu = styled.div`
+    position: absolute;
+    background: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    right: 1rem;
+    top: 2rem;
+`;
 
-    li {
-        padding: 0.5rem;
+export const DropdownItem = styled.div`
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    &:hover {
+        background-color: #f0f0f0;
     }
 `;
 
-export const MainContent = styled.div<{ sidebarOpen: boolean }>`
-    width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+export const WidgetContent = styled.div`
+    margin-top: 1rem;
+`;
+
+export const AddWidgetButton = styled.button`
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
-    transition: width 0.3s ease, margin-left 0.3s ease;
+    cursor: pointer;
+    font-size: 1.5rem;
 `;
