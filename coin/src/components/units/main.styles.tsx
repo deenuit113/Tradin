@@ -44,6 +44,11 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
             width: 12px;
         }
     }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        // 모바일 세로
+        margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "38%" : "0")};
+    }
 `;
 
 export const Widget = styled.div<{ isDragging: boolean }>`

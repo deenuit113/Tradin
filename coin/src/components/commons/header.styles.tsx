@@ -8,16 +8,16 @@ export const HeaderContainer = styled.header`
     align-items: center;
     height: 10vh;
     background-color: #f8f9fa;
-    padding-left: 5%;
-    padding-right: 5%;
     box-shadow: 0px 0px 10px gray;
     border-radius: 10px 10px 10px 10px;
+    margin-right: 1%;
+    margin-left: 0;
     z-index: 1000;
     box-sizing: border-box;
 `;
 
 export const Left = styled.div`
-    width: 15%;
+    width: 13%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -58,7 +58,7 @@ export const Marquee = styled.div`
 `;
 
 export const Right = styled.div`
-    width: 16%;
+    width: 15%;
     display: flex;
     align-items: center;
 `;
@@ -72,7 +72,7 @@ export const IconList = styled.ul`
 `;
 
 export const IconListItem = styled.li`
-    width: 50%;
+    width: 30%;
     margin: 0 0.5rem;
 `;
 
