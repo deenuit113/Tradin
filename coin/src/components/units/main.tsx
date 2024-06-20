@@ -5,7 +5,7 @@ import * as S from "./Main.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import SideBar from "./Sidebar";
 import { FaPlus } from "react-icons/fa";
-import Widget from "./Widget"; // Ensure Widget is correctly imported
+import Widget from "./Widget";
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -44,12 +44,12 @@ export default function MainPage(): JSX.Element {
                             moveWidget={moveWidget}
                         />
                     ))}
-                    <S.Widget>
+                    <S.WidgetAdd>
                         <S.AddWidgetButton onClick={addWidget}>
                             <FaPlus />
                             위젯 추가
                         </S.AddWidgetButton>
-                    </S.Widget>
+                    </S.WidgetAdd>
                 </S.MainContent>
             </S.Container>
         </DndProvider>

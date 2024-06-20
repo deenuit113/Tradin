@@ -65,7 +65,7 @@ const Widget = ({
     drag(drop(ref));
 
     return (
-        <S.Widget ref={ref} style={{ opacity: isDragging ? 0.5 : 1 }}>
+        <S.Widget ref={ref} isDragging={isDragging}>
             <S.WidgetHeader>
                 {widget}
                 <S.MenuIcon onClick={() => setMenuOpen(index === menuOpen ? null : index)}>

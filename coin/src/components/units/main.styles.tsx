@@ -17,7 +17,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     padding: 1rem;
 `;
 
-export const Widget = styled.div`
+export const Widget = styled.div<{ isDragging: boolean }>`
     background-color: #fff;
     border: 1px solid lightgray;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -30,6 +30,32 @@ export const Widget = styled.div`
     margin: 10px;
     position: relative;
     transition: transform 0.3s ease;
+    animation: ${({ isDragging }) => (isDragging ? 'shake 0.5s infinite' : 'none')};
+    transform: ${({ isDragging }) => (isDragging ? 'scale(1.4)' : 'scale(1)')};
+    opacity: ${({ isDragging }) => (isDragging ? 0.8 : 1)};
+    z-index: ${({ isDragging }) => (isDragging ? 1000 : 1)};
+
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-3px); }
+        50% { transform: translateX(0); }
+        75% { transform: translateX(3px); }
+        100% { transform: translateX(0); }
+    }
+`;
+
+export const WidgetAdd = styled.div`
+    background-color: #fff;
+    border: 1px solid lightgray;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    position: relative;
 `;
 
 export const WidgetHeader = styled.div`
