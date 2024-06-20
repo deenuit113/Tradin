@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
     display: flex;
-    height: 90vh;
+    height: 95vh;
+    justify-content: flex-end;
+    align-items: flex-end;
 `;
 
 export const MainContent = styled.div<{ sidebarOpen: boolean }>`
@@ -15,6 +17,33 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "18%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
+    height: 80%;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 8px;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+    }
 `;
 
 export const Widget = styled.div<{ isDragging: boolean }>`

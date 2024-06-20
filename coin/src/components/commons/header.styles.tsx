@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 
 export const HeaderContainer = styled.header`
-    width: 90%;
+    position: fixed;
+    width: 99%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,7 +12,8 @@ export const HeaderContainer = styled.header`
     padding-right: 5%;
     box-shadow: 0px 0px 10px gray;
     border-radius: 10px 10px 10px 10px;
-    z-index: 1001;
+    z-index: 1000;
+    box-sizing: border-box;
 `;
 
 export const Left = styled.div`

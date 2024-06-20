@@ -2,13 +2,14 @@ import styled from "@emotion/styled";
 
 export const Sidebar = styled.div<{ open: boolean }>`
     width: 15%;
-    height: 90vh;
+    height: 87vh;
     box-shadow: 7px 10px 20px gray;
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 10px 10px 10px 10px;
     background-color: #f0f0f0;
     overflow-y: auto;
-    z-index: 1000;
+    z-index: 1001;
     position: fixed;
+    top: 12vh;
     left: ${({ open }) => (open ? "0" : "-20%")};
     transition: left 0.3s ease;
     padding-left: 15px;
