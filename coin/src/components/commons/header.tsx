@@ -3,9 +3,14 @@ import { useRouter } from "next/router";
 import * as S from "./Header.styles";
 import { FaBars } from "react-icons/fa";
 import { useSidebar } from "./SidebarContext";
+import { useState } from "react";
+import Switch from 'react-switch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header(): JSX.Element {
     const router = useRouter();
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
     const { toggleSidebar } = useSidebar();
 
     const handleTitleClick = () => {
@@ -32,7 +37,20 @@ export default function Header(): JSX.Element {
             </S.Center>
             <S.Right>
                 <S.IconList>
-                    <S.IconListItem>Icon 1</S.IconListItem>
+                    <S.IconListItem>
+                        <Switch
+                            onChange={() => setIsDarkMode(prev => !prev)}
+                            checked={isDarkMode}
+                            offColor="#888"
+                            onColor="#0d6efd"
+                            uncheckedIcon={<FontAwesomeIcon icon={faSun} style={{ color: 'yellow', padding: '5px' }} />}
+                            checkedIcon={<FontAwesomeIcon icon={faMoon} style={{ color: 'white', padding: '5px' }} />}
+                            height={30}
+                            width={50}
+                            aria-label="다크모드 스위치"
+                            role="switch"
+                        />
+                    </S.IconListItem>
                     <S.IconListItem>Icon 2</S.IconListItem>
                 </S.IconList>
             </S.Right>
