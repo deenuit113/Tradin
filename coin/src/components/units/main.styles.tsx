@@ -29,6 +29,7 @@ export const Widget = styled.div`
     flex-direction: column;
     margin: 10px;
     position: relative;
+    transition: transform 0.3s ease;
 `;
 
 export const WidgetHeader = styled.div`

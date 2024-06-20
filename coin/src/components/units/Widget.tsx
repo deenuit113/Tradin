@@ -14,14 +14,14 @@ interface WidgetProps {
     moveWidget: (dragIndex: number, hoverIndex: number) => void;
 }
 
-export default function Widget({
+const Widget = ({
     widget,
     index,
     menuOpen,
     setMenuOpen,
     removeWidget,
     moveWidget,
-}: WidgetProps): JSX.Element {
+}: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
 
     const [, drop] = useDrop({
@@ -38,14 +38,14 @@ export default function Widget({
             }
 
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
+            const hoverClientX = clientOffset!.x - hoverBoundingRect.left;
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
                 return;
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
                 return;
             }
 
@@ -83,3 +83,5 @@ export default function Widget({
         </S.Widget>
     );
 }
+
+export default Widget;

@@ -4,8 +4,8 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import * as S from "./Main.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import SideBar from "./Sidebar";
-import { FaPlus, FaEllipsisV } from "react-icons/fa";
-import Widget from "./Widget";
+import { FaPlus } from "react-icons/fa";
+import Widget from "./Widget"; // Ensure Widget is correctly imported
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
