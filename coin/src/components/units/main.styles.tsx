@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
     display: flex;
-    height: 95vh;
+    height: 98vh;
     justify-content: flex-end;
     align-items: flex-end;
 `;
@@ -17,7 +17,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "18%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
-    height: 80%;
+    height: 85%;
     overflow-y: auto;
 
     &::-webkit-scrollbar {
