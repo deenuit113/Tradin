@@ -46,7 +46,6 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     }
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        // 모바일 세로
         margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "38%" : "0")};
     }
 `;
@@ -57,25 +56,14 @@ export const Widget = styled.div<{ isDragging: boolean }>`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 1rem;
-    width: 200px;
+    width: 210px;
     height: 200px;
     display: flex;
     flex-direction: column;
     margin: 10px;
     position: relative;
     transition: transform 0.3s ease;
-    animation: ${({ isDragging }) => (isDragging ? 'shake 0.5s infinite' : 'none')};
-    transform: ${({ isDragging }) => (isDragging ? 'scale(1.4)' : 'scale(1)')};
-    opacity: ${({ isDragging }) => (isDragging ? 0.8 : 1)};
-    z-index: ${({ isDragging }) => (isDragging ? 1000 : 1)};
-
-    @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-3px); }
-        50% { transform: translateX(0); }
-        75% { transform: translateX(3px); }
-        100% { transform: translateX(0); }
-    }
+    transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
 `;
 
 export const WidgetAdd = styled.div`
@@ -131,9 +119,8 @@ export const AddWidgetButton = styled.button`
     width: 100%;
     height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1;
 `;

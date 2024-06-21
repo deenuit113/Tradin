@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import { useSpring, animated } from "react-spring";
 import * as S from "./Main.styles";
 import { FaEllipsisV } from "react-icons/fa";
 
@@ -23,6 +24,14 @@ const Widget = ({
     moveWidget,
 }: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
+
+    const [{ isDragging }, drag] = useDrag({
+        type: ItemType,
+        item: { index },
+        collect: (monitor: any) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
 
     const [, drop] = useDrop({
         accept: ItemType,
@@ -54,34 +63,31 @@ const Widget = ({
         },
     });
 
-    const [{ isDragging }, drag] = useDrag({
-        type: ItemType,
-        item: { index },
-        collect: (monitor: any) => ({
-            isDragging: monitor.isDragging(),
-        }),
-    });
-
     drag(drop(ref));
 
+    const springStyle = useSpring({
+        transform: isDragging ? 'scale(1.05)' : 'scale(1)',
+        config: { tension: 250, friction: 20 }
+    });
+
     return (
-        <S.Widget ref={ref} isDragging={isDragging}>
-            <S.WidgetHeader>
-                {widget}
-                <S.MenuIcon onClick={() => setMenuOpen(index === menuOpen ? null : index)}>
-                    <FaEllipsisV />
-                </S.MenuIcon>
-                {menuOpen === index && (
-                    <S.DropdownMenu>
-                        <S.DropdownItem onClick={() => removeWidget(index)}>위젯 삭제</S.DropdownItem>
-                    </S.DropdownMenu>
-                )}
-            </S.WidgetHeader>
-            <S.WidgetContent>
-                {widget} 내용
-            </S.WidgetContent>
-        </S.Widget>
+        <animated.div style={springStyle} ref={ref}>
+            <S.Widget isDragging={isDragging}>
+                <S.WidgetHeader>
+                    {widget}
+                    <S.MenuIcon onClick={() => setMenuOpen(index === menuOpen ? null : index)}>
+                        <FaEllipsisV />
+                    </S.MenuIcon>
+                    {menuOpen === index && (
+                        <S.DropdownMenu>
+                            <S.DropdownItem onClick={() => removeWidget(index)}>위젯 삭제</S.DropdownItem>
+                        </S.DropdownMenu>
+                    )}
+                </S.WidgetHeader>
+                <S.WidgetContent>{widget} 내용</S.WidgetContent>
+            </S.Widget>
+        </animated.div>
     );
-}
+};
 
 export default Widget;
