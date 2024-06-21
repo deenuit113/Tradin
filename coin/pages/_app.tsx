@@ -3,6 +3,8 @@ import Head from "next/head";
 import Header from "../src/components/commons/Header";
 import { SidebarProvider } from "../src/components/commons/SidebarContext";
 import { RecoilRoot } from "recoil";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -11,12 +13,24 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <title>project</title>
             </Head>
             <RecoilRoot>
-                <SidebarProvider>
-                    <Header />
-                <Component {...pageProps} />
-                </SidebarProvider>
+                <DndProvider backend={HTML5Backend}>
+                    <SidebarProvider>
+                        <Header />
+                    <Component {...pageProps} />
+                    </SidebarProvider>
+                </DndProvider>
             </RecoilRoot>
             <style jsx global>{`
+                html, body, #__next {
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+                * {
+                    box-sizing: border-box;
+                }  
+                
                 footer {
                     display: none;
                 }

@@ -31,16 +31,13 @@ export const Menu = styled.ul`
 export const MenuItem = styled.li`
     padding: 1rem;
     cursor: pointer;
-
-    &:hover {
-        background-color: #e0e0e0;
-    }
 `;
 
 export const MenuTitle = styled.div<{ darkMode: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 10px;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
 
     .FaAngleDown{
@@ -61,5 +58,9 @@ export const SubMenu = styled.ul<{ darkMode: boolean }>`
     li {
         padding: 0.5rem;
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+
+        &:hover{
+            background-color: #e0e0e0;
+        }
     }
 `;

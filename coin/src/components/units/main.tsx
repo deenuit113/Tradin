@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import * as S from "./Main.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import SideBar from "./Sidebar";
@@ -33,29 +31,27 @@ export default function MainPage(): JSX.Element {
     };
 
     return (
-        <DndProvider backend={HTML5Backend}>
-            <S.Container darkMode={isDarkMode}>
-                <SideBar />
-                <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
-                    {widgets.map((widget, index) => (
-                        <Widget
-                            key={index}
-                            index={index}
-                            widget={widget}
-                            removeWidget={removeWidget}
-                            menuOpen={menuOpen}
-                            setMenuOpen={setMenuOpen}
-                            moveWidget={moveWidget}
-                        />
-                    ))}
-                    <S.WidgetAdd>
-                        <S.AddWidgetButton onClick={addWidget} darkMode={isDarkMode}>
-                            <FaPlus />
-                            위젯 추가
-                        </S.AddWidgetButton>
-                    </S.WidgetAdd>
-                </S.MainContent>
-            </S.Container>
-        </DndProvider>
+        <S.Container darkMode={isDarkMode}>
+            <SideBar />
+            <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
+                {widgets.map((widget, index) => (
+                    <Widget
+                        key={index}
+                        index={index}
+                        widget={widget}
+                        removeWidget={removeWidget}
+                        menuOpen={menuOpen}
+                        setMenuOpen={setMenuOpen}
+                        moveWidget={moveWidget}
+                    />
+                ))}
+                <S.WidgetAdd>
+                    <S.AddWidgetButton onClick={addWidget} darkMode={isDarkMode}>
+                        <FaPlus />
+                        위젯 추가
+                    </S.AddWidgetButton>
+                </S.WidgetAdd>
+            </S.MainContent>
+        </S.Container>
     );
 }

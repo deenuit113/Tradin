@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div<{ darkMode: boolean }>`
     display: flex;
+    width: 100%;
     height: 100vh;
     justify-content: flex-end;
     align-items: flex-end;

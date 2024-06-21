@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const HeaderContainer = styled.header<{ darkMode: boolean }>`
     position: fixed;
-    width: 99%;
+    width: 94%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,10 +10,10 @@ export const HeaderContainer = styled.header<{ darkMode: boolean }>`
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     box-shadow: 0px 0px 10px gray;
     border-radius: 10px 10px 10px 10px;
-    margin-right: 1%;
-    margin-left: 0;
     z-index: 1000;
     box-sizing: border-box;
+    margin-left: 3%;
+    margin-right: 3%;
 `;
 
 export const Left = styled.div`
