@@ -3,6 +3,8 @@ import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import * as S from "./Main.styles";
 import { FaEllipsisV } from "react-icons/fa";
+import { useRecoilState } from "recoil";
+import { darkMode } from "../commons/atoms"
 
 const ItemType = "WIDGET";
 
@@ -24,6 +26,7 @@ const Widget = ({
     moveWidget,
 }: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
+    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -72,19 +75,25 @@ const Widget = ({
 
     return (
         <animated.div style={springStyle} ref={ref}>
-            <S.Widget isDragging={isDragging}>
-                <S.WidgetHeader>
+            <S.Widget isDragging={isDragging} darkMode={isDarkMode}>
+                <S.WidgetHeader darkMode={isDarkMode}>
                     {widget}
-                    <S.MenuIcon onClick={() => setMenuOpen(index === menuOpen ? null : index)}>
-                        <FaEllipsisV />
+                    <S.MenuIcon
+                        onClick={() => setMenuOpen(index === menuOpen ? null : index)}
+                        darkMode={isDarkMode}
+                    >
+                        <FaEllipsisV className="MenuIcon"/>
                     </S.MenuIcon>
                     {menuOpen === index && (
-                        <S.DropdownMenu>
-                            <S.DropdownItem onClick={() => removeWidget(index)}>위젯 삭제</S.DropdownItem>
+                        <S.DropdownMenu darkMode={isDarkMode}>
+                            <S.DropdownItem
+                                onClick={() => removeWidget(index)}
+                                darkMode={isDarkMode}
+                            >위젯 삭제</S.DropdownItem>
                         </S.DropdownMenu>
                     )}
                 </S.WidgetHeader>
-                <S.WidgetContent>{widget} 내용</S.WidgetContent>
+                <S.WidgetContent darkMode={isDarkMode}>{widget} 내용</S.WidgetContent>
             </S.Widget>
         </animated.div>
     );

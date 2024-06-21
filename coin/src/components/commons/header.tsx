@@ -3,15 +3,34 @@ import { useRouter } from "next/router";
 import * as S from "./Header.styles";
 import { FaBars } from "react-icons/fa";
 import { useSidebar } from "./SidebarContext";
-import { useState } from "react";
+import { useEffect } from "react";
 import Switch from 'react-switch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { useRecoilState } from "recoil";
+import { darkMode } from "./atoms";
 
 export default function Header(): JSX.Element {
     const router = useRouter();
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     const { toggleSidebar } = useSidebar();
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedDarkMode = localStorage.getItem('DarkMode');
+            console.log('Loaded DarkMode from localStorage:', savedDarkMode);
+            if (savedDarkMode === 'night') {
+                setIsDarkMode(true);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('DarkMode', isDarkMode ? 'night' : 'day');
+            console.log('Saved DarkMode to localStorage:', isDarkMode ? 'night' : 'day');
+        }
+    }, [isDarkMode]);
 
     const handleTitleClick = () => {
         if (router.pathname === "/") {
@@ -22,16 +41,26 @@ export default function Header(): JSX.Element {
     };
 
     return (
-        <S.HeaderContainer>
+        <S.HeaderContainer darkMode={isDarkMode}>
             <S.Left>
-                <S.ToggleButton onClick={toggleSidebar}>
-                    <FaBars />
+                <S.ToggleButton
+                    onClick={toggleSidebar}
+                    darkMode={isDarkMode}
+                >
+                    <FaBars className="Fabars"/>
                 </S.ToggleButton>
-                <S.Title onClick={handleTitleClick}>name</S.Title>
+                <S.Title
+                    onClick={handleTitleClick}
+                    darkMode={isDarkMode}
+                >
+                    name
+                </S.Title>
                 <NavBar />
             </S.Left>
             <S.Center>
-                <S.Marquee>
+                <S.Marquee
+                    darkMode={isDarkMode}
+                >
                     <p>공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시</p>
                 </S.Marquee>
             </S.Center>

@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import Header from "../src/components/commons/Header";
 import { SidebarProvider } from "../src/components/commons/SidebarContext";
+import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -9,10 +10,12 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Head>
                 <title>project</title>
             </Head>
-            <SidebarProvider>
-                <Header />
-            <Component {...pageProps} />
-            </SidebarProvider>
+            <RecoilRoot>
+                <SidebarProvider>
+                    <Header />
+                <Component {...pageProps} />
+                </SidebarProvider>
+            </RecoilRoot>
             <style jsx global>{`
                 footer {
                     display: none;

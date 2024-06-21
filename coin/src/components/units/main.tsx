@@ -6,11 +6,15 @@ import { useSidebar } from "../commons/SidebarContext";
 import SideBar from "./Sidebar";
 import { FaPlus } from "react-icons/fa";
 import Widget from "./Widget";
+import { useRecoilState } from "recoil";
+import { darkMode } from "../commons/atoms"
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [widgets, setWidgets] = useState<string[]>([]);
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
+
+    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
 
     const addWidget = () => {
         setWidgets([...widgets, `정보 ${widgets.length + 1}`]);
@@ -30,9 +34,9 @@ export default function MainPage(): JSX.Element {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <S.Container>
+            <S.Container darkMode={isDarkMode}>
                 <SideBar />
-                <S.MainContent sidebarOpen={sidebarOpen}>
+                <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                     {widgets.map((widget, index) => (
                         <Widget
                             key={index}
@@ -45,7 +49,7 @@ export default function MainPage(): JSX.Element {
                         />
                     ))}
                     <S.WidgetAdd>
-                        <S.AddWidgetButton onClick={addWidget}>
+                        <S.AddWidgetButton onClick={addWidget} darkMode={isDarkMode}>
                             <FaPlus />
                             위젯 추가
                         </S.AddWidgetButton>

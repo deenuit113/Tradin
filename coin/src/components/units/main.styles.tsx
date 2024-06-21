@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
+export const Container = styled.div<{ darkMode: boolean }>`
     display: flex;
-    height: 98vh;
+    height: 100vh;
     justify-content: flex-end;
     align-items: flex-end;
+    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
 `;
 
-export const MainContent = styled.div<{ sidebarOpen: boolean }>`
+export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "90%" : "100%")};
     display: flex;
     flex-wrap: wrap;
@@ -25,7 +26,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #888;
+        background-color:  ${({ darkMode }) => (darkMode ? '#888' : '#f0f0f0')};
         border-radius: 6px;
         transition: background-color 0.3s ease;
     }
@@ -50,10 +51,10 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     }
 `;
 
-export const Widget = styled.div<{ isDragging: boolean }>`
-    background-color: #fff;
+export const Widget = styled.div<{ isDragging: boolean, darkMode: boolean }>`
+    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     border: 1px solid lightgray;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     padding: 1rem;
     width: 210px;
@@ -80,40 +81,50 @@ export const WidgetAdd = styled.div`
     position: relative;
 `;
 
-export const WidgetHeader = styled.div`
+export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: ${({ darkMode }) => (darkMode ? '#333' : '#ffffff')};
 `;
 
-export const MenuIcon = styled.div`
+export const MenuIcon = styled.div<{ darkMode: boolean }>`
     cursor: pointer;
+
+    .MenuIcon {
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    }
 `;
 
-export const DropdownMenu = styled.div`
+export const DropdownMenu = styled.div<{ darkMode: boolean }>`
     position: absolute;
-    background: white;
+    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid lightgray;
     border-radius: 8px;
     right: 1rem;
     top: 2rem;
 `;
 
-export const DropdownItem = styled.div`
+export const DropdownItem = styled.div<{ darkMode: boolean }>`
     padding: 0.5rem 1rem;
     cursor: pointer;
+    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    
     &:hover {
-        background-color: #f0f0f0;
+        background-color: ${({ darkMode }) => (darkMode ? '#d0d0d0' : '#555')};
+        border-radius: 8px;
     }
 `;
 
-export const WidgetContent = styled.div`
+export const WidgetContent = styled.div<{ darkMode: boolean }>`
     margin-top: 1rem;
+    color: ${({ darkMode }) => (darkMode ? '#333' : '#ffffff')};
 `;
 
-export const AddWidgetButton = styled.button`
-    background-color: #0070f3;
-    color: white;
+export const AddWidgetButton = styled.button<{ darkMode: boolean }>`
+    background-color: ${({ darkMode }) => (darkMode ? '#0070f3' : '#333')};
+    color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#f0f0f0')};
     border: none;
     border-radius: 8px;
     width: 100%;

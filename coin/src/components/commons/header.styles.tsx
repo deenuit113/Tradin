@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 
-export const HeaderContainer = styled.header`
+export const HeaderContainer = styled.header<{ darkMode: boolean }>`
     position: fixed;
     width: 99%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    background-color: #f8f9fa;
+    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     box-shadow: 0px 0px 10px gray;
     border-radius: 10px 10px 10px 10px;
     margin-right: 1%;
@@ -25,9 +25,10 @@ export const Left = styled.div`
     justify-content: center;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1<{ darkMode: boolean }>`
     cursor: pointer;
     font-size: 25px;
+    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
 `;
 
 export const Center = styled.div`
@@ -35,16 +36,18 @@ export const Center = styled.div`
     text-align: center;
 `;
 
-export const Marquee = styled.div`
+export const Marquee = styled.div<{ darkMode: boolean }>`
     border-radius: 10px;
     box-shadow: 0px 0px 10px gray;
     overflow: hidden;
     white-space: nowrap;
+    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
 
     p {
         display: inline-block;
         padding-left: 100%;
         animation: marquee 15s linear infinite;
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     }
 
     @keyframes marquee {
@@ -76,11 +79,15 @@ export const IconListItem = styled.li`
     margin: 0 0.5rem;
 `;
 
-export const ToggleButton = styled.button`
+export const ToggleButton = styled.button<{ darkMode: boolean }>`
     background: none;
     border: none;
     font-size: 25px;
     cursor: pointer;
     margin-right: 1rem;
     padding-top: 10px;
+
+    .Fabars{
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    }
 `;

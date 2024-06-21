@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 
-export const Sidebar = styled.div<{ open: boolean }>`
+export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
     width: 15%;
     height: 87vh;
-    box-shadow: 7px 10px 20px gray;
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 10px 10px 10px 10px;
-    background-color: #f0f0f0;
+    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     overflow-y: auto;
     z-index: 1001;
     position: fixed;
@@ -37,10 +37,15 @@ export const MenuItem = styled.li`
     }
 `;
 
-export const MenuTitle = styled.div`
+export const MenuTitle = styled.div<{ darkMode: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+
+    .FaAngleDown{
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    }
 `;
 
 export const Icon = styled.span`
@@ -48,12 +53,13 @@ export const Icon = styled.span`
     margin-left: 0.5rem;
 `;
 
-export const SubMenu = styled.ul`
+export const SubMenu = styled.ul<{ darkMode: boolean }>`
     list-style-type: none;
     padding-left: 1rem;
     margin: 0;
 
     li {
         padding: 0.5rem;
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     }
 `;
