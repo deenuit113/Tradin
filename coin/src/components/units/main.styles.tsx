@@ -68,8 +68,8 @@ export const Widget = styled.div<{ isDragging: boolean, darkMode: boolean }>`
     transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
 `;
 
-export const WidgetAdd = styled.div`
-    background-color: #fff;
+export const WidgetAdd = styled.div<{ darkMode: boolean }>`
+    background-color: ${({ darkMode }) => (darkMode ? '#fff' : '#a0a0a0')};
     border: 1px solid lightgray;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;

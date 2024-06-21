@@ -45,7 +45,7 @@ export default function MainPage(): JSX.Element {
                         moveWidget={moveWidget}
                     />
                 ))}
-                <S.WidgetAdd>
+                <S.WidgetAdd darkMode={isDarkMode}>
                     <S.AddWidgetButton onClick={addWidget} darkMode={isDarkMode}>
                         <FaPlus />
                         위젯 추가
