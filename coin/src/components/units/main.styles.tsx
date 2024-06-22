@@ -80,6 +80,7 @@ export const WidgetAdd = styled.div<{ darkMode: boolean }>`
     flex-direction: column;
     margin: 10px;
     position: relative;
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
 `;
 
 export const WidgetHeader = styled.div<{ darkMode: boolean }>`

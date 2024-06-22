@@ -70,6 +70,7 @@ const Widget = ({
 
     const springStyle = useSpring({
         transform: isDragging ? 'scale(1.05)' : 'scale(1)',
+        opacity: isDragging? 0.5 : 1,
         config: { tension: 250, friction: 20 }
     });
 
