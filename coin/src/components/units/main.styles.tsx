@@ -16,11 +16,12 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     justify-content: flex-start;
     align-items: flex-start;
     text-align: center;
-    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "18%" : "0")};
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
-    height: 85%;
+    height: 90%;
     overflow-y: auto;
+    border: 1px solid red;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -48,7 +49,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     }
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "38%" : "0")};
+        margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "30%" : "0")};
     }
 `;
 
