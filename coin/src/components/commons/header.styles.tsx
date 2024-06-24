@@ -22,18 +22,27 @@ export const Left = styled.div`
     display: flex;
     align-items: center;
     align-text: center;
-    justify-content: center;
+    justify-content: space-between;
 `;
 
 export const Title = styled.h1<{ darkMode: boolean }>`
     cursor: pointer;
     font-size: 25px;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 15px;
+    }
 `;
 
 export const Center = styled.div`
     width: 60%;
     text-align: center;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 58%;
+        margin-left: 20px;
+    }
 `;
 
 export const Marquee = styled.div<{ darkMode: boolean }>`
@@ -64,6 +73,10 @@ export const Right = styled.div`
     width: 15%;
     display: flex;
     align-items: center;
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 10%;
+        margin-right: 20px;
+    }
 `;
 
 export const IconList = styled.ul`
@@ -84,7 +97,7 @@ export const ToggleButton = styled.button<{ darkMode: boolean }>`
     border: none;
     font-size: 25px;
     cursor: pointer;
-    margin-right: 1rem;
+    margin-right: 10px;
     padding-top: 10px;
 
     .Fabars{

@@ -80,7 +80,6 @@ export default function Header(): JSX.Element {
                             role="switch"
                         />
                     </S.IconListItem>
-                    <S.IconListItem>Icon 2</S.IconListItem>
                 </S.IconList>
             </S.Right>
         </S.HeaderContainer>
