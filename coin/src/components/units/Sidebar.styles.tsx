@@ -4,7 +4,7 @@ export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
     width: 15%;
     height: 87vh;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     overflow-y: auto;
     z-index: 1001;
@@ -16,7 +16,6 @@ export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
     padding-right: 15px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        // 모바일 세로
         width: 30%;
         left: ${({ open }) => (open ? "0" : "-40%")};
     }
@@ -31,6 +30,7 @@ export const Menu = styled.ul`
 export const MenuItem = styled.li`
     padding: 1rem;
     cursor: pointer;
+    width: 90%;
 `;
 
 export const MenuTitle = styled.div<{ darkMode: boolean }>`
@@ -39,15 +39,17 @@ export const MenuTitle = styled.div<{ darkMode: boolean }>`
     align-items: center;
     margin: 10px;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
-
-    .FaAngleDown{
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
-    }
+    cursor: pointer;
+    width: 100%;
 `;
 
-export const Icon = styled.span`
+export const Icon = styled.span<{ darkMode: boolean }>`
     cursor: pointer;
     margin-left: 0.5rem;
+
+    .FaAngleDown {
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    }
 `;
 
 export const SubMenu = styled.ul<{ darkMode: boolean }>`
@@ -59,8 +61,14 @@ export const SubMenu = styled.ul<{ darkMode: boolean }>`
         padding: 0.5rem;
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
 
-        &:hover{
+        &:hover {
             background-color: #e0e0e0;
         }
     }
+`;
+
+export const ItemContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `;

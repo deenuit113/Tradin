@@ -3,49 +3,60 @@ import { FaAngleDown } from "react-icons/fa";
 import * as S from "./Sidebar.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../commons/atoms"
-
+import { darkMode } from "../commons/atoms";
+import { useRouter } from 'next/router';
 
 export default function SideBar(): JSX.Element {
     const [spotOpen, setSpotOpen] = useState(false);
     const [futuresOpen, setFuturesOpen] = useState(false);
     const { sidebarOpen } = useSidebar();
+    const router = useRouter();
 
     const toggleSpot = () => setSpotOpen(!spotOpen);
     const toggleFutures = () => setFuturesOpen(!futuresOpen);
 
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
 
+    const onClickMoveToSpot = () => {
+        router.push('./spot');
+    };
+
     return (
         <>
             <S.Sidebar open={sidebarOpen} darkMode={isDarkMode}>
                 <S.Menu>
-                    <S.MenuItem>
-                        <S.MenuTitle onClick={toggleSpot} darkMode={isDarkMode}>
-                            현물 <S.Icon><FaAngleDown className="FaAngleDown"/></S.Icon>
+                    <S.ItemContainer>
+                        <S.MenuTitle darkMode={isDarkMode} onClick={onClickMoveToSpot}>
+                            현물
                         </S.MenuTitle>
-                        {spotOpen && (
-                            <S.SubMenu darkMode={isDarkMode}>
-                                <li>현물 1</li>
-                                <li>현물 2</li>
-                                <li>현물 3</li>
-                                <li>현물 4</li>
-                            </S.SubMenu>
-                        )}
-                    </S.MenuItem>
-                    <S.MenuItem>
+                        <S.Icon onClick={toggleSpot} darkMode={isDarkMode}>
+                            <FaAngleDown className="FaAngleDown"/>
+                        </S.Icon>
+                    </S.ItemContainer>
+                    {spotOpen && (
+                        <S.SubMenu darkMode={isDarkMode}>
+                            <S.MenuItem>현물 1</S.MenuItem>
+                            <S.MenuItem>현물 2</S.MenuItem>
+                            <S.MenuItem>현물 3</S.MenuItem>
+                            <S.MenuItem>현물 4</S.MenuItem>
+                        </S.SubMenu>
+                    )}
+                    <S.ItemContainer>
                         <S.MenuTitle onClick={toggleFutures} darkMode={isDarkMode}>
-                            선물 <S.Icon><FaAngleDown /></S.Icon>
+                            선물
                         </S.MenuTitle>
-                        {futuresOpen && (
-                            <S.SubMenu darkMode={isDarkMode}>
-                                <li>선물 1</li>
-                                <li>선물 2</li>
-                                <li>선물 3</li>
-                                <li>선물 4</li>
-                            </S.SubMenu>
-                        )}
-                    </S.MenuItem>
+                        <S.Icon onClick={toggleFutures} darkMode={isDarkMode}>
+                            <FaAngleDown className="FaAngleDown"/>
+                        </S.Icon>
+                    </S.ItemContainer>
+                    {futuresOpen && (
+                        <S.SubMenu darkMode={isDarkMode}>
+                            <S.MenuItem>선물 1</S.MenuItem>
+                            <S.MenuItem>선물 2</S.MenuItem>
+                            <S.MenuItem>선물 3</S.MenuItem>
+                            <S.MenuItem>선물 4</S.MenuItem>
+                        </S.SubMenu>
+                    )}
                 </S.Menu>
             </S.Sidebar>
         </>

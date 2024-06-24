@@ -20,7 +20,6 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     padding: 1rem;
     height: 90%;
     overflow-y: auto;
-    border: 1px solid red;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -55,7 +54,6 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
 export const SpotHeader = styled.div<{ darkMode: boolean }>`
     width: 100%;
     height: 10%;
-    border: 1px solid blue;
     display: flex;
     align-items: center;
     justify-content: flex-start;

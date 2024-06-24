@@ -5,7 +5,8 @@ import SideBar from "./Sidebar";
 import { FaPlus } from "react-icons/fa";
 import Widget from "./Widget";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../commons/atoms"
+import { darkMode } from "../commons/atoms";
+import { useRouter } from 'next/router';
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
