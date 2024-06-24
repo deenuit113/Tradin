@@ -23,6 +23,7 @@ export const Left = styled.div`
     align-items: center;
     align-text: center;
     justify-content: space-between;
+    margin-left: 10px;
 `;
 
 export const Title = styled.h1<{ darkMode: boolean }>`

@@ -32,15 +32,15 @@ export default function FuturesPage(): JSX.Element {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <S.WidgetCell>코인아이콘</S.WidgetCell>
-                                    <S.WidgetCell>상승</S.WidgetCell>
-                                    <S.WidgetCell>1000 KRW</S.WidgetCell>
-                                    <S.WidgetCell>10.00%</S.WidgetCell>
-                                    <S.WidgetCell>50.00%</S.WidgetCell>
-                                    <S.WidgetCell>1.234</S.WidgetCell>
-                                    <S.WidgetCell>5</S.WidgetCell>
-                                    <S.WidgetCell>10</S.WidgetCell>
-                                    <S.WidgetCell>5.00%</S.WidgetCell>
+                                    <S.WidgetCell className="value">코인아이콘</S.WidgetCell>
+                                    <S.WidgetCell className="value">상승</S.WidgetCell>
+                                    <S.WidgetCell className="value">1000 KRW</S.WidgetCell>
+                                    <S.WidgetCell className="value">10.00%</S.WidgetCell>
+                                    <S.WidgetCell className="value">50.00%</S.WidgetCell>
+                                    <S.WidgetCell className="value">1.234</S.WidgetCell>
+                                    <S.WidgetCell className="value">5</S.WidgetCell>
+                                    <S.WidgetCell className="value">10</S.WidgetCell>
+                                    <S.WidgetCell className="value">5.00%</S.WidgetCell>
                                 </tr>
                             </tbody>
                         </S.WidgetTable>

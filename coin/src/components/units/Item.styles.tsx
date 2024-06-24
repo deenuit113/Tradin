@@ -79,6 +79,10 @@ export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     font-weight: bold;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     margin-bottom: 1rem;
+
+    @media all and (min-width:359px) and (max-width: 699px) {
+        font-size: 14px;
+    }
 `;
 
 export const WidgetTable = styled.table<{ darkMode: boolean }>`
@@ -88,6 +92,16 @@ export const WidgetTable = styled.table<{ darkMode: boolean }>`
 
     .title{
         font-weight: bolder;
+
+        @media all and (min-width:359px) and (max-width: 699px) {
+            font-size: 11px;
+        }
+    }
+
+    .value{
+        @media all and (min-width:359px) and (max-width: 699px) {
+            font-size: 8px;
+        }
     }
 `;
 
