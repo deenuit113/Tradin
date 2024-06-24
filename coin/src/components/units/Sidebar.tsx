@@ -21,6 +21,10 @@ export default function SideBar(): JSX.Element {
         router.push('./spot');
     };
 
+    const onClickMoveToFutures = () => {
+        router.push('./futures');
+    };
+
     return (
         <>
             <S.Sidebar open={sidebarOpen} darkMode={isDarkMode}>
@@ -42,7 +46,7 @@ export default function SideBar(): JSX.Element {
                         </S.SubMenu>
                     )}
                     <S.ItemContainer>
-                        <S.MenuTitle onClick={toggleFutures} darkMode={isDarkMode}>
+                        <S.MenuTitle darkMode={isDarkMode} onClick={onClickMoveToFutures}>
                             선물
                         </S.MenuTitle>
                         <S.Icon onClick={toggleFutures} darkMode={isDarkMode}>
