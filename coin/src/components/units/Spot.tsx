@@ -1,8 +1,6 @@
-import { useState } from "react";
-import * as S from "./Spot.styles";
+import * as S from "./Item.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import SideBar from "./Sidebar";
-import { FaAngleRight } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../commons/atoms";
 
