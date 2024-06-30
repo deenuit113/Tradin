@@ -10,7 +10,7 @@ export const Container = styled.div<{ darkMode: boolean }>`
 `;
 
 export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean }>`
-    width: ${({ sidebarOpen }) => (sidebarOpen ? "90%" : "100%")};
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "80%" : "100%")};
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;

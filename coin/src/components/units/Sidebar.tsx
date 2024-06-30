@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
+import { FaAngleDown, FaPlusCircle } from "react-icons/fa";
 import * as S from "./Sidebar.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../commons/atoms";
 import { useRouter } from 'next/router';
-
 export default function SideBar(): JSX.Element {
     const [spotOpen, setSpotOpen] = useState(false);
     const [futuresOpen, setFuturesOpen] = useState(false);
@@ -18,13 +17,13 @@ export default function SideBar(): JSX.Element {
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
 
     const onClickMoveToSpot = () => {
-        router.push('./spot');
+        router.push('/spot');
     };
 
     const onClickMoveToFutures = () => {
-        router.push('./futures');
+        router.push('/futures');
     };
-
+    
     return (
         <>
             <S.Sidebar open={sidebarOpen} darkMode={isDarkMode}>
@@ -43,6 +42,7 @@ export default function SideBar(): JSX.Element {
                             <S.MenuItem>현물 2</S.MenuItem>
                             <S.MenuItem>현물 3</S.MenuItem>
                             <S.MenuItem>현물 4</S.MenuItem>
+                            <S.MenuItem><FaPlusCircle/></S.MenuItem>
                         </S.SubMenu>
                     )}
                     <S.ItemContainer>
@@ -59,6 +59,7 @@ export default function SideBar(): JSX.Element {
                             <S.MenuItem>선물 2</S.MenuItem>
                             <S.MenuItem>선물 3</S.MenuItem>
                             <S.MenuItem>선물 4</S.MenuItem>
+                            <S.MenuItem><FaPlusCircle/></S.MenuItem>
                         </S.SubMenu>
                     )}
                 </S.Menu>

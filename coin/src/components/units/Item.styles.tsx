@@ -15,7 +15,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "20%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
     height: 90%;
@@ -72,6 +72,7 @@ export const WidgetContainer = styled.div<{ darkMode: boolean }>`
     background-color: ${({ darkMode }) => (darkMode ? '#ddd' : '#444')};
     padding: 1rem;
     border-radius: 8px;
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
 `;
 
 export const WidgetHeader = styled.div<{ darkMode: boolean }>`
@@ -80,7 +81,7 @@ export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     margin-bottom: 1rem;
 
-    @media all and (min-width:359px) and (max-width: 699px) {
+    @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 14px;
     }
 `;
@@ -93,13 +94,13 @@ export const WidgetTable = styled.table<{ darkMode: boolean }>`
     .title{
         font-weight: bolder;
 
-        @media all and (min-width:359px) and (max-width: 699px) {
+        @media all and (min-width:359px) and (max-width: 799px) {
             font-size: 11px;
         }
     }
 
     .value{
-        @media all and (min-width:359px) and (max-width: 699px) {
+        @media all and (min-width:359px) and (max-width: 799px) {
             font-size: 8px;
         }
     }

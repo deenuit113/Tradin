@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
-    width: 15%;
-    height: 87vh;
+    width: 20%;
+    height: 85vh;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
