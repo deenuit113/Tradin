@@ -111,6 +111,7 @@ export const WidgetCell = styled.td`
     border-radius: 5px;
     padding: 0.5rem;
     text-align: center;
+    color: black;
 
     &:first-of-type {
         border-left: none;
@@ -132,15 +133,31 @@ export const TransactionHistory = styled.table<{ darkMode: boolean }>`
     th, td {
         padding: 0.5rem;
         text-align: left;
-        border-bottom: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#555')};
+        border-bottom: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
         vertical-align: middle;
+        border-right: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
+    }
+
+    th {
+        border-top: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
+    }
+
+    th:last-child, td:last-child {
+        border-right: none;
     }
 
     .title {
         font-weight: bold;
+        color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
+        text-align: center;
     }
 
     .value {
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
+        text-align: center;
+    }
+
+    .bordered {
+        border-right: 2px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
     }
 `;
