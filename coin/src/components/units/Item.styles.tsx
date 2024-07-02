@@ -116,3 +116,31 @@ export const WidgetCell = styled.td`
         border-left: none;
     }
 `;
+
+export const HorizontalDivider = styled.div`
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+    margin: 1rem 0;
+`;
+
+export const TransactionHistory = styled.table<{ darkMode: boolean }>`
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+
+    th, td {
+        padding: 0.5rem;
+        text-align: left;
+        border-bottom: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#555')};
+        vertical-align: middle;
+    }
+
+    .title {
+        font-weight: bold;
+    }
+
+    .value {
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    }
+`;

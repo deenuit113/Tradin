@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import * as S from "./Item.styles";
 import { useSidebar } from "../commons/SidebarContext";
 import SideBar from "./Sidebar";
@@ -15,7 +16,9 @@ export default function SpotPage(): JSX.Element {
                 <S.SpotHeader darkMode={isDarkMode}>현물</S.SpotHeader>
                 {[1, 2, 3, 4].map((num) => (
                     <S.WidgetContainer key={num} darkMode={isDarkMode}>
-                        <S.WidgetHeader darkMode={isDarkMode}>현물 {num}</S.WidgetHeader>
+                        <Link href={`/spot/${num}`} passHref>
+                            <S.WidgetHeader darkMode={isDarkMode}>현물 {num}</S.WidgetHeader>
+                        </Link>
                         <S.WidgetTable darkMode={isDarkMode}>
                             <thead>
                                 <tr>
