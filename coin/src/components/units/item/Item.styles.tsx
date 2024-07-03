@@ -80,6 +80,7 @@ export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     font-weight: bold;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     margin-bottom: 1rem;
+    cursor: pointer;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 14px;

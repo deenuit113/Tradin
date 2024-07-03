@@ -4,10 +4,17 @@ import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import SideBar from "../../../commons/sidebar/Sidebar";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../../commons/atoms";
+import { useRouter } from 'next/router';
 
 export default function SpotPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [isDarkMode] = useRecoilState(darkMode);
+    const router = useRouter();
+
+    const onClickMoveToStrategy = (id: number) => {
+        router.push(`./spot/${id}`);
+    };
+
 
     return (
         <S.Container darkMode={isDarkMode}>
@@ -16,9 +23,7 @@ export default function SpotPage(): JSX.Element {
                 <S.SpotHeader darkMode={isDarkMode}>현물</S.SpotHeader>
                 {[1, 2, 3, 4].map((num) => (
                     <S.WidgetContainer key={num} darkMode={isDarkMode}>
-                        <Link href={`/spot/${num}`} passHref>
-                            <S.WidgetHeader darkMode={isDarkMode}>현물 {num}</S.WidgetHeader>
-                        </Link>
+                        <S.WidgetHeader darkMode={isDarkMode} onClick={() => onClickMoveToStrategy(num)}>현물 {num}</S.WidgetHeader>
                         <S.WidgetTable darkMode={isDarkMode}>
                             <thead>
                                 <tr>
