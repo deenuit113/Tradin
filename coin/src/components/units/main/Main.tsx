@@ -1,11 +1,11 @@
 import { useState } from "react";
 import * as S from "./Main.styles";
-import { useSidebar } from "../commons/SidebarContext";
-import SideBar from "./Sidebar";
+import { useSidebar } from "../../commons/sidebar/SidebarContext";
+import SideBar from "../../commons/sidebar/Sidebar";
 import { FaPlus } from "react-icons/fa";
-import Widget from "./Widget";
+import Widget from "../widget/Widget";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../commons/atoms";
+import { darkMode } from "../../commons/atoms";
 import { useRouter } from 'next/router';
 
 export default function MainPage(): JSX.Element {

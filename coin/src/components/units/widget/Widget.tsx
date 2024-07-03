@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
-import * as S from "./Main.styles";
+import * as S from "../main/Main.styles";
 import { FaEllipsisV } from "react-icons/fa";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../commons/atoms"
+import { darkMode } from "../../commons/atoms"
 
 const ItemType = "WIDGET";
 

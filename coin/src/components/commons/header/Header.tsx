@@ -1,14 +1,14 @@
-import NavBar from "./Nav";
+import NavBar from "../nav/Nav";
 import { useRouter } from "next/router";
 import * as S from "./Header.styles";
 import { FaBars } from "react-icons/fa";
-import { useSidebar } from "./SidebarContext";
+import { useSidebar } from "../sidebar/SidebarContext";
 import { useEffect } from "react";
 import Switch from 'react-switch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from "recoil";
-import { darkMode } from "./atoms";
+import { darkMode } from "../atoms";
 
 export default function Header(): JSX.Element {
     const router = useRouter();

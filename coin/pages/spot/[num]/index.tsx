@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import * as S from "../../../src/components/units/Item.styles";
-import { useSidebar } from "../../../src/components/commons/SidebarContext";
-import SideBar from "../../../src/components/units/Sidebar";
+import * as S from "../../../src/components/units/item/Item.styles";
+import { useSidebar } from "../../../src/components/commons/sidebar/SidebarContext";
+import SideBar from "../../../src/components/commons/sidebar/Sidebar";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../../src/components/commons/atoms";
 

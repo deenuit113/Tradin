@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaAngleDown, FaPlusCircle } from "react-icons/fa";
 import * as S from "./Sidebar.styles";
-import { useSidebar } from "../commons/SidebarContext";
+import { useSidebar } from "./SidebarContext";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../commons/atoms";
+import { darkMode } from "../atoms";
 import { useRouter } from 'next/router';
 export default function SideBar(): JSX.Element {
     const [spotOpen, setSpotOpen] = useState(false);
