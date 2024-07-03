@@ -121,7 +121,7 @@ export const WidgetCell = styled.td`
 export const HorizontalDivider = styled.div`
     width: 100%;
     height: 2px;
-    background-color: #ddd;
+    background-color: #ccc;
     margin: 1rem 0;
 `;
 
