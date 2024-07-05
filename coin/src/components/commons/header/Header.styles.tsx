@@ -86,6 +86,12 @@ export const IconList = styled.ul`
     list-style: none;
     padding: 0;
     margin: 0;
+
+    .DarkMode-Switch{
+        &:hover{
+            box-shadow: 0px 0px 20px lightblue;
+        }
+    }
 `;
 
 export const IconListItem = styled.li`

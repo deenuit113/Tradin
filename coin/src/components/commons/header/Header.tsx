@@ -78,6 +78,7 @@ export default function Header(): JSX.Element {
                             width={50}
                             aria-label="다크모드 스위치"
                             role="switch"
+                            className="DarkMode-Switch"
                         />
                     </S.IconListItem>
                 </S.IconList>
