@@ -41,6 +41,11 @@ export const MenuTitle = styled.div<{ darkMode: boolean }>`
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     cursor: pointer;
     width: 100%;
+    padding: 5px 5px 5px 5px;
+
+    &:hover {
+        background-color: ${({ darkMode }) => (darkMode ? '#e0e0e0' : '#222')};
+    }
 `;
 
 export const Icon = styled.span<{ darkMode: boolean }>`
@@ -62,7 +67,7 @@ export const SubMenu = styled.ul<{ darkMode: boolean }>`
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
 
         &:hover {
-            background-color: #e0e0e0;
+            background-color: ${({ darkMode }) => (darkMode ? '#e0e0e0' : '#222')};
         }
     }
 `;
