@@ -65,7 +65,7 @@ export default function Header(): JSX.Element {
                 </S.Marquee>
             </S.Center>
             <S.Right>
-                <S.IconList>
+                <S.IconList darkMode={isDarkMode}>
                     <S.IconListItem>
                         <Switch
                             onChange={() => setIsDarkMode(prev => !prev)}

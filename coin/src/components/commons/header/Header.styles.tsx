@@ -80,7 +80,7 @@ export const Right = styled.div`
     }
 `;
 
-export const IconList = styled.ul`
+export const IconList = styled.ul<{ darkMode: boolean }>`
     width: 100%;
     display: flex;
     list-style: none;
@@ -89,7 +89,7 @@ export const IconList = styled.ul`
 
     .DarkMode-Switch{
         &:hover{
-            box-shadow: 0px 0px 20px lightblue;
+            box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 15px blue' : '0px 0px 15px lightblue')};
         }
     }
 `;
