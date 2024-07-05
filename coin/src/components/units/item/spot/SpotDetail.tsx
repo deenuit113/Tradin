@@ -41,28 +41,28 @@ export default function SpotDetail(): JSX.Element {
                     <S.WidgetTable darkMode={isDarkMode}>
                         <thead>
                             <tr>
-                                <S.WidgetCell className="title">코인</S.WidgetCell>
-                                <S.WidgetCell className="title">현재 포지션</S.WidgetCell>
-                                <S.WidgetCell className="title">진입가격</S.WidgetCell>
-                                <S.WidgetCell className="title">누적손익</S.WidgetCell>
-                                <S.WidgetCell className="title">승률</S.WidgetCell>
-                                <S.WidgetCell className="title">수익 팩터</S.WidgetCell>
-                                <S.WidgetCell className="title">횟수</S.WidgetCell>
-                                <S.WidgetCell className="title">평균봉수</S.WidgetCell>
-                                <S.WidgetCell className="title">평균수익</S.WidgetCell>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>코인</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>현재 포지션</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>진입가격</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>누적손익</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>승률</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>수익 팩터</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>횟수</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>평균봉수</S.StrategyInfo>
+                                <S.StrategyInfo className="title" darkMode={isDarkMode}>평균수익</S.StrategyInfo>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <S.WidgetCell className="value">코인아이콘</S.WidgetCell>
-                                <S.WidgetCell className="value">상승</S.WidgetCell>
-                                <S.WidgetCell className="value">1000 KRW</S.WidgetCell>
-                                <S.WidgetCell className="value">10.00%</S.WidgetCell>
-                                <S.WidgetCell className="value">50.00%</S.WidgetCell>
-                                <S.WidgetCell className="value">1.234</S.WidgetCell>
-                                <S.WidgetCell className="value">5</S.WidgetCell>
-                                <S.WidgetCell className="value">10</S.WidgetCell>
-                                <S.WidgetCell className="value">5.00%</S.WidgetCell>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>코인아이콘</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>상승</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>1000 KRW</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>10.00%</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>50.00%</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>1.234</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>5</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>10</S.StrategyInfo>
+                                <S.StrategyInfo className="value" darkMode={isDarkMode}>5.00%</S.StrategyInfo>
                             </tr>
                         </tbody>
                     </S.WidgetTable>
@@ -70,12 +70,12 @@ export default function SpotDetail(): JSX.Element {
                     <S.TransactionHistory darkMode={isDarkMode}>
                         <thead>
                             <tr>
-                                <S.WidgetCell className="title">ID</S.WidgetCell>
-                                <S.WidgetCell className="title">매매타입</S.WidgetCell>
-                                <S.WidgetCell className="title">날짜</S.WidgetCell>
-                                <S.WidgetCell className="title">가격</S.WidgetCell>
-                                <S.WidgetCell className="title">수익률</S.WidgetCell>
-                                <S.WidgetCell className="title">누적수익률</S.WidgetCell>
+                                <S.StrategyInFoDetail className="title">ID</S.StrategyInFoDetail>
+                                <S.StrategyInFoDetail className="title">매매타입</S.StrategyInFoDetail>
+                                <S.StrategyInFoDetail className="title">날짜</S.StrategyInFoDetail>
+                                <S.StrategyInFoDetail className="title">가격</S.StrategyInFoDetail>
+                                <S.StrategyInFoDetail className="title">수익률</S.StrategyInFoDetail>
+                                <S.StrategyInFoDetail className="title">누적수익률</S.StrategyInFoDetail>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,18 +83,18 @@ export default function SpotDetail(): JSX.Element {
                                 <tr key={idx}>
                                     {idx % 2 === 0 ? (
                                         <>
-                                            <S.WidgetCell className="value bordered" rowSpan={2}>{transaction.id}</S.WidgetCell>
-                                            <S.WidgetCell className="value">{transaction.type}</S.WidgetCell>
-                                            <S.WidgetCell className="value">{transaction.date}</S.WidgetCell>
-                                            <S.WidgetCell className="value">{transaction.price}</S.WidgetCell>
-                                            <S.WidgetCell className="value bordered" rowSpan={2}>{transaction.yield}</S.WidgetCell>
-                                            <S.WidgetCell className="value bordered" rowSpan={2}>{transaction.cumYield}</S.WidgetCell>
+                                            <S.StrategyInFoDetail className="value bordered" rowSpan={2}>{transaction.id}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value">{transaction.type}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value">{transaction.date}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value">{transaction.price}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value bordered" rowSpan={2}>{transaction.yield}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value bordered" rowSpan={2}>{transaction.cumYield}</S.StrategyInFoDetail>
                                         </>
                                     ) : (
                                         <>
-                                            <S.WidgetCell className="value">{transaction.type}</S.WidgetCell>
-                                            <S.WidgetCell className="value">{transaction.date}</S.WidgetCell>
-                                            <S.WidgetCell className="value">{transaction.price}</S.WidgetCell>
+                                            <S.StrategyInFoDetail className="value">{transaction.type}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value">{transaction.date}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value">{transaction.price}</S.StrategyInFoDetail>
                                         </>
                                     )}
                                 </tr>

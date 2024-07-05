@@ -107,12 +107,24 @@ export const WidgetTable = styled.table<{ darkMode: boolean }>`
     }
 `;
 
-export const WidgetCell = styled.td`
-    border-left: 2px solid #ccc;
+export const StrategyInfo = styled.td<{ darkMode: boolean }>`
+    border-left: 1px solid #ccc;
     border-radius: 5px;
     padding: 0.5rem;
     text-align: center;
-    color: black;
+    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+
+    &:first-of-type {
+        border-left: none;
+    }
+`;
+
+export const StrategyInFoDetail = styled.td`
+    border-left: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem;
+    text-align: center;
+    color: #f0f0f0;
 
     &:first-of-type {
         border-left: none;
