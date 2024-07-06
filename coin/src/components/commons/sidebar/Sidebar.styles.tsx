@@ -12,8 +12,6 @@ export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
     top: 12vh;
     left: ${({ open }) => (open ? "0" : "-20%")};
     transition: left 0.3s ease;
-    padding-left: 15px;
-    padding-right: 15px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 30%;
@@ -41,11 +39,8 @@ export const MenuTitle = styled.div<{ darkMode: boolean }>`
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     cursor: pointer;
     width: 100%;
-    padding: 5px 5px 5px 5px;
-
-    &:hover {
-        background-color: ${({ darkMode }) => (darkMode ? '#e0e0e0' : '#222')};
-    }
+    
+    
 `;
 
 export const Icon = styled.span<{ darkMode: boolean }>`
@@ -72,8 +67,14 @@ export const SubMenu = styled.ul<{ darkMode: boolean }>`
     }
 `;
 
-export const ItemContainer = styled.div`
+export const ItemContainer = styled.div<{ darkMode: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 10px;
+    padding: 10px 10px 10px 10px;
+
+    &:hover {
+        background-color: ${({ darkMode }) => (darkMode ? '#e0e0e0' : '#222')};
+    }
 `;

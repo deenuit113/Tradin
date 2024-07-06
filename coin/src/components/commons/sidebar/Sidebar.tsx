@@ -28,7 +28,7 @@ export default function SideBar(): JSX.Element {
         <>
             <S.Sidebar open={sidebarOpen} darkMode={isDarkMode}>
                 <S.Menu>
-                    <S.ItemContainer>
+                    <S.ItemContainer darkMode={isDarkMode}>
                         <S.MenuTitle darkMode={isDarkMode} onClick={onClickMoveToSpot}>
                             현물
                         </S.MenuTitle>
@@ -45,7 +45,7 @@ export default function SideBar(): JSX.Element {
                             <S.MenuItem><FaPlusCircle/></S.MenuItem>
                         </S.SubMenu>
                     )}
-                    <S.ItemContainer>
+                    <S.ItemContainer darkMode={isDarkMode}>
                         <S.MenuTitle darkMode={isDarkMode} onClick={onClickMoveToFutures}>
                             선물
                         </S.MenuTitle>
