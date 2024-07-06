@@ -23,6 +23,14 @@ export default function SideBar(): JSX.Element {
     const onClickMoveToFutures = () => {
         router.push('/futures');
     };
+
+    const onClickMoveToSpotStrategy = (id: number) => {
+        router.push(`/spot/${id}`);
+    };
+
+    const onClickMoveToFutureStrategy = (id: number) => {
+        router.push(`/future/${id}`);
+    };
     
     return (
         <>
@@ -38,11 +46,12 @@ export default function SideBar(): JSX.Element {
                     </S.ItemContainer>
                     {spotOpen && (
                         <S.SubMenu darkMode={isDarkMode}>
-                            <S.MenuItem>현물 1</S.MenuItem>
-                            <S.MenuItem>현물 2</S.MenuItem>
-                            <S.MenuItem>현물 3</S.MenuItem>
-                            <S.MenuItem>현물 4</S.MenuItem>
-                            <S.MenuItem><FaPlusCircle/></S.MenuItem>
+                            {[1, 2, 3, 4].map((num) => (
+                                <S.MenuItem key={num} onClick={() => onClickMoveToSpotStrategy(num)}>
+                                    현물 {num}
+                                </S.MenuItem>
+                            ))}
+                            <S.MenuItem><FaPlusCircle /></S.MenuItem>
                         </S.SubMenu>
                     )}
                     <S.ItemContainer darkMode={isDarkMode}>
@@ -55,11 +64,12 @@ export default function SideBar(): JSX.Element {
                     </S.ItemContainer>
                     {futuresOpen && (
                         <S.SubMenu darkMode={isDarkMode}>
-                            <S.MenuItem>선물 1</S.MenuItem>
-                            <S.MenuItem>선물 2</S.MenuItem>
-                            <S.MenuItem>선물 3</S.MenuItem>
-                            <S.MenuItem>선물 4</S.MenuItem>
-                            <S.MenuItem><FaPlusCircle/></S.MenuItem>
+                            {[1, 2, 3, 4].map((num) => (
+                                <S.MenuItem key={num} onClick={() => onClickMoveToFutureStrategy(num)}>
+                                    현물 {num}
+                                </S.MenuItem>
+                            ))}
+                            <S.MenuItem><FaPlusCircle /></S.MenuItem>
                         </S.SubMenu>
                     )}
                 </S.Menu>
