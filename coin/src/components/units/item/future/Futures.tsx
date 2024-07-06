@@ -3,10 +3,16 @@ import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import SideBar from "../../../commons/sidebar/Sidebar";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../../commons/atoms";
+import { useRouter } from "next/router";
 
 export default function FuturesPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [isDarkMode] = useRecoilState(darkMode);
+    const router = useRouter();
+
+    const onClickMoveToFutureStrategy = (id: number) => {
+        router.push(`./future/${id}`);
+    };
 
     return (
         <S.Container darkMode={isDarkMode}>
@@ -15,7 +21,7 @@ export default function FuturesPage(): JSX.Element {
                 <S.SpotHeader darkMode={isDarkMode}>선물</S.SpotHeader>
                 {[1, 2, 3, 4].map((num) => (
                     <S.WidgetContainer key={num} darkMode={isDarkMode}>
-                        <S.WidgetHeader darkMode={isDarkMode}>선물 {num}</S.WidgetHeader>
+                        <S.WidgetHeader darkMode={isDarkMode} onClick={() => onClickMoveToFutureStrategy(num)}>선물 {num}</S.WidgetHeader>
                         <S.WidgetTable darkMode={isDarkMode}>
                             <thead>
                                 <tr>

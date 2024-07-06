@@ -11,7 +11,7 @@ export default function SpotPage(): JSX.Element {
     const [isDarkMode] = useRecoilState(darkMode);
     const router = useRouter();
 
-    const onClickMoveToStrategy = (id: number) => {
+    const onClickMoveToSpotStrategy = (id: number) => {
         router.push(`./spot/${id}`);
     };
 
@@ -23,7 +23,7 @@ export default function SpotPage(): JSX.Element {
                 <S.SpotHeader darkMode={isDarkMode}>현물</S.SpotHeader>
                 {[1, 2, 3, 4].map((num) => (
                     <S.WidgetContainer key={num} darkMode={isDarkMode}>
-                        <S.WidgetHeader darkMode={isDarkMode} onClick={() => onClickMoveToStrategy(num)}>현물 {num}</S.WidgetHeader>
+                        <S.WidgetHeader darkMode={isDarkMode} onClick={() => onClickMoveToSpotStrategy(num)}>현물 {num}</S.WidgetHeader>
                         <S.WidgetTable darkMode={isDarkMode}>
                             <thead>
                                 <tr>

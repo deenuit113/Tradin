@@ -5,7 +5,7 @@ import SideBar from '../../../commons/sidebar/Sidebar';
 import { useRecoilState } from "recoil";
 import { darkMode } from '../../../commons/atoms';
 
-export default function SpotDetail(): JSX.Element {
+export default function FutureDetail(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [isDarkMode] = useRecoilState(darkMode);
     const router = useRouter();
@@ -35,9 +35,9 @@ export default function SpotDetail(): JSX.Element {
         <S.Container darkMode={isDarkMode}>
             <SideBar />
             <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
-                <S.SpotHeader darkMode={isDarkMode}>현물</S.SpotHeader>
+                <S.SpotHeader darkMode={isDarkMode}>선물</S.SpotHeader>
                 <S.WidgetContainer darkMode={isDarkMode}>
-                    <S.WidgetHeader darkMode={isDarkMode}>현물 {num}</S.WidgetHeader>
+                    <S.WidgetHeader darkMode={isDarkMode}>선물 {num}</S.WidgetHeader>
                     <S.WidgetTable darkMode={isDarkMode}>
                         <thead>
                             <tr>

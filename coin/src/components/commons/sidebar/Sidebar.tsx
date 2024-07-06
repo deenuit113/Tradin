@@ -21,7 +21,7 @@ export default function SideBar(): JSX.Element {
     };
 
     const onClickMoveToFutures = () => {
-        router.push('/futures');
+        router.push('/future');
     };
 
     const onClickMoveToSpotStrategy = (id: number) => {
@@ -66,7 +66,7 @@ export default function SideBar(): JSX.Element {
                         <S.SubMenu darkMode={isDarkMode}>
                             {[1, 2, 3, 4].map((num) => (
                                 <S.MenuItem key={num} onClick={() => onClickMoveToFutureStrategy(num)}>
-                                    현물 {num}
+                                    선물 {num}
                                 </S.MenuItem>
                             ))}
                             <S.MenuItem><FaPlusCircle /></S.MenuItem>
