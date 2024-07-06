@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import * as S from "../Item.styles";
+import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import SideBar from '../../../commons/sidebar/Sidebar';
 import { useRecoilState } from "recoil";
@@ -35,7 +35,7 @@ export default function FutureDetail(): JSX.Element {
         <S.Container darkMode={isDarkMode}>
             <SideBar />
             <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
-                <S.SpotHeader darkMode={isDarkMode}>선물</S.SpotHeader>
+                <S.SpotHeader sidebarOpen={sidebarOpen} darkMode={isDarkMode}>선물</S.SpotHeader>
                 <S.WidgetContainer darkMode={isDarkMode}>
                     <S.WidgetHeader darkMode={isDarkMode}>선물 {num}</S.WidgetHeader>
                     <S.WidgetTable darkMode={isDarkMode}>

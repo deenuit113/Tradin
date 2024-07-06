@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import * as S from "../Item.styles";
+import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import SideBar from '../../../commons/sidebar/Sidebar';
 import { useRecoilState } from "recoil";
@@ -47,8 +47,7 @@ export default function SpotDetail(): JSX.Element {
     return (
         <S.Container darkMode={isDarkMode}>
             <SideBar />
-            <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
-                <S.SpotHeader darkMode={isDarkMode}>
+            <S.SpotHeader sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                     현물
                     <div>
                         {availableOptions.map(n => (
@@ -63,7 +62,8 @@ export default function SpotDetail(): JSX.Element {
                         ))}
                     </div>
                 </S.SpotHeader>
-                <S.WidgetContainer darkMode={isDarkMode}>
+            <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
+                <S.WidgetDetailContainer darkMode={isDarkMode} selectedOption={selectedOption}>
                     <S.WidgetHeader darkMode={isDarkMode}>현물 {num}</S.WidgetHeader>
                     <S.WidgetTable darkMode={isDarkMode}>
                         <thead>
@@ -128,10 +128,10 @@ export default function SpotDetail(): JSX.Element {
                             ))}
                         </tbody>
                     </S.TransactionHistory>
-                </S.WidgetContainer>
+                </S.WidgetDetailContainer>
 
                 {selectedOption && (
-                    <S.WidgetContainer darkMode={isDarkMode}>
+                    <S.WidgetDetailContainer darkMode={isDarkMode} selectedOption={selectedOption}>
                         <S.WidgetHeader darkMode={isDarkMode}>현물 {selectedOption}</S.WidgetHeader>
                         <S.WidgetTable darkMode={isDarkMode}>
                             <thead>
@@ -197,7 +197,7 @@ export default function SpotDetail(): JSX.Element {
                             ))}
                             </tbody>
                         </S.TransactionHistory>
-                    </S.WidgetContainer>
+                    </S.WidgetDetailContainer>
                 )}
             </S.MainContent>
         </S.Container>

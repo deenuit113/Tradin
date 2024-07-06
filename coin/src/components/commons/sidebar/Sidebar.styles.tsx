@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
-    width: 20%;
+    width: 15%;
     height: 85vh;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
