@@ -10,12 +10,12 @@ export const Container = styled.div<{ darkMode: boolean }>`
 `;
 
 export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean }>`
-    width: ${({ sidebarOpen }) => (sidebarOpen ? "90%" : "100%")};
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "20%" : "0")};
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
     height: 90%;
