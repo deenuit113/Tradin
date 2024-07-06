@@ -56,7 +56,7 @@ export const SpotHeader = styled.div<{ darkMode: boolean }>`
     height: 10%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 1rem;
     font-weight: bolder;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
