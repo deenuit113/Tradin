@@ -28,7 +28,9 @@ export const Menu = styled.ul`
 export const MenuItem = styled.li`
     padding: 1rem;
     cursor: pointer;
-    width: 90%;
+    width: 100%;
+    border-radius: 5px;
+    padding-left: 2rem;
 `;
 
 export const MenuTitle = styled.div<{ darkMode: boolean }>`
@@ -39,8 +41,6 @@ export const MenuTitle = styled.div<{ darkMode: boolean }>`
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     cursor: pointer;
     width: 100%;
-    
-    
 `;
 
 export const Icon = styled.span<{ darkMode: boolean }>`
@@ -54,7 +54,7 @@ export const Icon = styled.span<{ darkMode: boolean }>`
 
 export const SubMenu = styled.ul<{ darkMode: boolean }>`
     list-style-type: none;
-    padding-left: 1rem;
+    padding-left: 10%;
     margin: 0;
 
     li {
@@ -71,7 +71,7 @@ export const ItemContainer = styled.div<{ darkMode: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px 10px 10px 10px;
 
     &:hover {
