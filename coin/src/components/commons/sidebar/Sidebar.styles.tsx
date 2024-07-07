@@ -14,8 +14,9 @@ export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
     transition: left 0.3s ease;
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 30%;
+        width: 15%;
         left: ${({ open }) => (open ? "0" : "-40%")};
+        font-size: 12px;
     }
 `;
 

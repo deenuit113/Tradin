@@ -64,7 +64,9 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean, darkMode: boolean }
     padding: 1rem;
     font-weight: bolder;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
-    
+    border: 1px solid red;
+    position: relative;
+
     .FaAngleRight{
         margin-left: 10px;
     }
@@ -186,4 +188,19 @@ export const TransactionHistory = styled.table<{ darkMode: boolean }>`
     .bordered {
         border-right: 2px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
     }
+`;
+
+export const StrategyOption = styled.div`
+    cursor: pointer;
+    display: relative;
+`;
+
+export const StrategyOptionDrop = styled.div`
+    position: absolute;
+    background-color: #f0f0f0;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    right: 10px;
+    top: 50px;
 `;

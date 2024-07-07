@@ -11,6 +11,7 @@ export default function SpotDetail(): JSX.Element {
     const [isDarkMode] = useRecoilState(darkMode);
     const router = useRouter();
     const { num } = router.query;
+    const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
 
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
@@ -44,23 +45,31 @@ export default function SpotDetail(): JSX.Element {
         setSelectedOption(null); // Reset selected option when route changes
     }, [num]);
 
+    const onClickStrategyOption = () => {
+        setMenuOpen(prev=> !prev);
+    }
+
     return (
         <S.Container darkMode={isDarkMode}>
             <SideBar />
             <S.SpotHeader sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                     현물
-                    <div>
-                        {availableOptions.map(n => (
-                            <label key={n}>
-                                <input
-                                    type="checkbox"
-                                    checked={selectedOption === n}
-                                    onChange={() => handleCheckboxChange(n)}
-                                />
-                                현물 {n}
-                            </label>
-                        ))}
-                    </div>
+                    <S.StrategyOption onClick={onClickStrategyOption}>옵션</S.StrategyOption>
+                    { isMenuOpen &&
+                        <S.StrategyOptionDrop>
+                            {availableOptions.map(n => (
+                                <label key={n}>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedOption === n}
+                                        onChange={() => handleCheckboxChange(n)}
+                                    />
+                                    현물 {n}
+                                </label>
+                            ))}
+                        </S.StrategyOptionDrop>
+                    }
+                    
                 </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                 <S.WidgetDetailContainer darkMode={isDarkMode} selectedOption={selectedOption}>
