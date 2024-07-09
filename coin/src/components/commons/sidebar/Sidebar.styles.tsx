@@ -40,7 +40,6 @@ export const MenuTitle = styled.div<{ darkMode: boolean }>`
     align-items: center;
     margin: 10px;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
-    cursor: pointer;
     width: 100%;
 `;
 
@@ -74,6 +73,7 @@ export const ItemContainer = styled.div<{ darkMode: boolean }>`
     align-items: center;
     border-radius: 5px;
     padding: 10px 10px 10px 10px;
+    cursor: pointer;
 
     &:hover {
         background-color: ${({ darkMode }) => (darkMode ? '#e0e0e0' : '#222')};
