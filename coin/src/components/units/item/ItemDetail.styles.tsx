@@ -1,5 +1,18 @@
 import styled from "@emotion/styled";
 
+/*const getTransactionTypeColor = (transactionType: string) => {
+    switch(transactionType) {
+        case "BUY": 
+            return 'blue';
+
+        case "SELL":
+            return 'red';
+
+        default:
+            return 'black';
+    }
+};*/
+
 export const Container = styled.div<{ darkMode: boolean }>`
     display: flex;
     width: 100%;
@@ -64,7 +77,6 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean, darkMode: boolean }
     padding: 1rem;
     font-weight: bolder;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
-    border: 1px solid red;
     position: relative;
 
     .FaAngleRight{
@@ -85,7 +97,6 @@ export const WidgetDetailContainer = styled.div<{ darkMode: boolean, selectedOpt
     width: ${({ selectedOption }) => (selectedOption ? '49.5%' : '100%')};
     margin-bottom: 1rem;
     background-color: ${({ darkMode }) => (darkMode ? '#ddd' : '#444')};
-    padding: 1rem;
     border-radius: 8px;
     box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
 `;
@@ -95,14 +106,15 @@ export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     font-weight: bold;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     margin-bottom: 1rem;
-    cursor: pointer;
+    margin-top: 1rem;
+    padding-left: 1rem;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 14px;
     }
 `;
 
-export const WidgetTable = styled.table<{ darkMode: boolean }>`
+export const WidgetTable = styled.table<{ darkMode: boolean, selectedOption: number | null }>`
     width: 100%;
     border-collapse: collapse;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
@@ -111,13 +123,13 @@ export const WidgetTable = styled.table<{ darkMode: boolean }>`
         font-weight: bolder;
 
         @media all and (min-width:359px) and (max-width: 799px) {
-            font-size: 11px;
+            font-size: ${({ selectedOption }) => (selectedOption ? '11px' : '13px')};
         }
     }
 
     .value{
         @media all and (min-width:359px) and (max-width: 799px) {
-            font-size: 8px;
+            font-size: ${({ selectedOption }) => (selectedOption ? '8px' : '10px')};
         }
     }
 `;
@@ -128,7 +140,7 @@ export const StrategyInfo = styled.td<{ darkMode: boolean }>`
     padding: 0.5rem;
     text-align: center;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
-
+    
     &:first-of-type {
         border-left: none;
     }
@@ -146,6 +158,22 @@ export const StrategyInFoDetail = styled.td`
     }
 `;
 
+/*export const StrategyInFoType = styled.td<{ transactionType: string }>`
+    border-left: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem;
+    text-align: center;
+
+    &:first-of-type {
+        border-left: none;
+    }
+
+    .type {
+        color: ${({ transactionType }) => getTransactionTypeColor(transactionType)};
+    }
+`;
+*/
+
 export const HorizontalDivider = styled.div`
     width: 100%;
     height: 2px;
@@ -153,7 +181,7 @@ export const HorizontalDivider = styled.div`
     margin: 1rem 0;
 `;
 
-export const TransactionHistory = styled.table<{ darkMode: boolean }>`
+export const TransactionHistory = styled.table<{ darkMode: boolean, selectedOption: number | null }>`
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
@@ -176,17 +204,35 @@ export const TransactionHistory = styled.table<{ darkMode: boolean }>`
 
     .title {
         font-weight: bold;
+        font-size: 15px;
         color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
         text-align: center;
+
+        @media all and (min-width:359px) and (max-width: 799px) {
+            font-size: ${({ selectedOption }) => (selectedOption ? '11px' : '13px')};
+        }
     }
 
     .value {
         color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
         text-align: center;
+        @media all and (min-width:359px) and (max-width: 799px) {
+            font-size: ${({ selectedOption }) => (selectedOption ? '8px' : '10px')};
+        }
     }
 
     .bordered {
         border-right: 2px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
+    }
+
+    .buy {
+        color: blue;
+        font-weight: bold;
+    }
+
+    .sell {
+        color: red;
+        font-weight: bold;
     }
 `;
 

@@ -5,6 +5,7 @@ import SideBar from '../../../commons/sidebar/Sidebar';
 import { useRecoilState } from "recoil";
 import { darkMode } from '../../../commons/atoms';
 import { useState, useEffect } from 'react';
+import SpotDetailOption from './SpotDetailOpt';
 
 export default function SpotDetail(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -16,22 +17,22 @@ export default function SpotDetail(): JSX.Element {
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
     const transactions = [
-        { id: 1, type: "매수", date: "2024-06-01", price: "1000 KRW", yield: "10.00%", cumYield: "50.00%" },
-        { id: 1, type: "매도", date: "2024-06-02", price: "1050 KRW", yield: "", cumYield: "" },
-        { id: 2, type: "매수", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
-        { id: 2, type: "매도", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
-        { id: 3, type: "매수", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
-        { id: 3, type: "매도", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
-        { id: 4, type: "매수", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
-        { id: 4, type: "매도", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
-        { id: 5, type: "매수", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
-        { id: 5, type: "매도", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
-        { id: 6, type: "매수", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
-        { id: 6, type: "매도", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
-        { id: 7, type: "매수", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
-        { id: 7, type: "매도", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
-        { id: 8, type: "매수", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
-        { id: 8, type: "매도", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
+        { id: 1, type: "BUY", date: "2024-06-01", price: "1000 KRW", yield: "10.00%", cumYield: "50.00%" },
+        { id: 1, type: "SELL", date: "2024-06-02", price: "1050 KRW", yield: "", cumYield: "" },
+        { id: 2, type: "BUY", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
+        { id: 2, type: "SELL", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
+        { id: 3, type: "BUY", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
+        { id: 3, type: "SELL", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
+        { id: 4, type: "BUY", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
+        { id: 4, type: "SELL", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
+        { id: 5, type: "BUY", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
+        { id: 5, type: "SELL", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
+        { id: 6, type: "BUY", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
+        { id: 6, type: "SELL", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
+        { id: 7, type: "BUY", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
+        { id: 7, type: "SELL", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
+        { id: 8, type: "BUY", date: "2024-06-03", price: "2000 KRW", yield: "20.00%", cumYield: "70.00%" },
+        { id: 8, type: "SELL", date: "2024-06-04", price: "2100 KRW", yield: "", cumYield: "" },
         // Add more transactions as needed
     ];
 
@@ -55,26 +56,17 @@ export default function SpotDetail(): JSX.Element {
             <S.SpotHeader sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                     현물
                     <S.StrategyOption onClick={onClickStrategyOption}>옵션</S.StrategyOption>
-                    { isMenuOpen &&
-                        <S.StrategyOptionDrop>
-                            {availableOptions.map(n => (
-                                <label key={n}>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedOption === n}
-                                        onChange={() => handleCheckboxChange(n)}
-                                    />
-                                    현물 {n}
-                                </label>
-                            ))}
-                        </S.StrategyOptionDrop>
-                    }
-                    
+                    <SpotDetailOption
+                        isMenuOpen={isMenuOpen}
+                        availableOptions={availableOptions}
+                        selectedOption={selectedOption}
+                        handleCheckboxChange={handleCheckboxChange}
+                    />    
                 </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                 <S.WidgetDetailContainer darkMode={isDarkMode} selectedOption={selectedOption}>
                     <S.WidgetHeader darkMode={isDarkMode}>현물 {num}</S.WidgetHeader>
-                    <S.WidgetTable darkMode={isDarkMode}>
+                    <S.WidgetTable darkMode={isDarkMode} selectedOption={selectedOption}>
                         <thead>
                             <tr>
                                 <S.StrategyInfo className="title" darkMode={isDarkMode}>코인</S.StrategyInfo>
@@ -103,7 +95,7 @@ export default function SpotDetail(): JSX.Element {
                         </tbody>
                     </S.WidgetTable>
                     <S.HorizontalDivider />
-                    <S.TransactionHistory darkMode={isDarkMode}>
+                    <S.TransactionHistory darkMode={isDarkMode} selectedOption={selectedOption}>
                         <thead>
                             <tr>
                                 <S.StrategyInFoDetail className="title">ID</S.StrategyInFoDetail>
@@ -120,7 +112,7 @@ export default function SpotDetail(): JSX.Element {
                                     {idx % 2 === 0 ? (
                                         <>
                                             <S.StrategyInFoDetail className="value bordered" rowSpan={2}>{transaction.id}</S.StrategyInFoDetail>
-                                            <S.StrategyInFoDetail className="value">{transaction.type}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value buy">{transaction.type}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.date}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.price}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value bordered" rowSpan={2}>{transaction.yield}</S.StrategyInFoDetail>
@@ -128,7 +120,7 @@ export default function SpotDetail(): JSX.Element {
                                         </>
                                     ) : (
                                         <>
-                                            <S.StrategyInFoDetail className="value">{transaction.type}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value sell">{transaction.type}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.date}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.price}</S.StrategyInFoDetail>
                                         </>
@@ -142,7 +134,7 @@ export default function SpotDetail(): JSX.Element {
                 {selectedOption && (
                     <S.WidgetDetailContainer darkMode={isDarkMode} selectedOption={selectedOption}>
                         <S.WidgetHeader darkMode={isDarkMode}>현물 {selectedOption}</S.WidgetHeader>
-                        <S.WidgetTable darkMode={isDarkMode}>
+                        <S.WidgetTable darkMode={isDarkMode} selectedOption={selectedOption}>
                             <thead>
                                 <tr>
                                     <S.StrategyInfo className="title" darkMode={isDarkMode}>코인</S.StrategyInfo>
@@ -172,7 +164,7 @@ export default function SpotDetail(): JSX.Element {
                             </tbody>
                         </S.WidgetTable>
                         <S.HorizontalDivider />
-                        <S.TransactionHistory darkMode={isDarkMode}>
+                        <S.TransactionHistory darkMode={isDarkMode} selectedOption={selectedOption}>
                             <thead>
                                 <tr>
                                     <S.StrategyInFoDetail className="title">ID</S.StrategyInFoDetail>
@@ -189,7 +181,7 @@ export default function SpotDetail(): JSX.Element {
                                     {idx % 2 === 0 ? (
                                         <>
                                             <S.StrategyInFoDetail className="value bordered" rowSpan={2}>{transaction.id}</S.StrategyInFoDetail>
-                                            <S.StrategyInFoDetail className="value">{transaction.type}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value buy">{transaction.type}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.date}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.price}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value bordered" rowSpan={2}>{transaction.yield}</S.StrategyInFoDetail>
@@ -197,7 +189,7 @@ export default function SpotDetail(): JSX.Element {
                                         </>
                                     ) : (
                                         <>
-                                            <S.StrategyInFoDetail className="value">{transaction.type}</S.StrategyInFoDetail>
+                                            <S.StrategyInFoDetail className="value sell">{transaction.type}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.date}</S.StrategyInFoDetail>
                                             <S.StrategyInFoDetail className="value">{transaction.price}</S.StrategyInFoDetail>
                                         </>
