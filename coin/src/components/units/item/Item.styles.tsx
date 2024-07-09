@@ -20,6 +20,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     padding: 1rem;
     height: 90%;
     overflow-y: auto;
+    border: 3px solid red;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -47,7 +48,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     }
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "30%" : "0")};
+        margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     }
 `;
 
