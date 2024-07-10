@@ -20,7 +20,6 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     padding: 1rem;
     height: 90%;
     overflow-y: auto;
-    border: 3px solid red;
 
     &::-webkit-scrollbar {
         width: 12px;

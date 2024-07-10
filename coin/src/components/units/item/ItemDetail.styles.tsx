@@ -69,6 +69,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
 export const SpotHeader = styled.div<{ sidebarOpen: boolean, darkMode: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
+    margin-top: 10px;
     transition: width 0.3s ease, margin-left 0.3s ease;
     height: 10%;
     display: flex;
@@ -78,6 +79,7 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean, darkMode: boolean }
     font-weight: bolder;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     position: relative;
+    border: 1px solid red;
 
     .FaAngleRight{
         margin-left: 10px;
@@ -176,7 +178,7 @@ export const StrategyInFoDetail = styled.td`
 
 export const HorizontalDivider = styled.div`
     width: 100%;
-    height: 2px;
+    height: 1px;
     background-color: #ccc;
     margin: 1rem 0;
 `;
@@ -242,6 +244,7 @@ export const StrategyOption = styled.div`
 `;
 
 export const StrategyOptionDrop = styled.div`
+    padding: 1rem;
     position: absolute;
     background-color: #f0f0f0;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
@@ -249,4 +252,22 @@ export const StrategyOptionDrop = styled.div`
     border-radius: 8px;
     right: 10px;
     top: 50px;
+`;
+
+export const OptionInnerContainer = styled.div`
+`;
+
+export const OptionTitle = styled.label`
+
+`;
+
+export const ComparisonOption = styled.label`
+
+`;
+
+export const OptionHorizontalDivider = styled.div`
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 10px 0;
 `;

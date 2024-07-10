@@ -13,16 +13,25 @@ export default function SpotDetailOption({ isMenuOpen, availableOptions, selecte
         <>
             { isMenuOpen &&
                 <S.StrategyOptionDrop>
-                    {availableOptions.map(n => (
-                        <label key={n}>
-                            <input
-                                type="checkbox"
-                                checked={selectedOption === n}
-                                onChange={() => handleCheckboxChange(n)}
-                            />
-                            현물 {n}
-                        </label>
-                    ))}
+                    <S.OptionInnerContainer>
+                        <S.OptionTitle> 비교: </S.OptionTitle>
+                        {availableOptions.map(n => (
+                            <S.ComparisonOption key={n}>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedOption === n}
+                                    onChange={() => handleCheckboxChange(n)}
+                                />
+                                현물 {n}
+                            </S.ComparisonOption>
+                        ))}
+                    </S.OptionInnerContainer>
+                    <S.OptionHorizontalDivider/>
+                    <S.OptionInnerContainer>
+                        <S.OptionTitle>필터:</S.OptionTitle>
+                    </S.OptionInnerContainer>
+                    
+                    
                 </S.StrategyOptionDrop>
             }
         </>
