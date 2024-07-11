@@ -5,26 +5,26 @@ import * as S from "../main/Main.styles";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
 
-export default function BitcoinWidget() {
+export default function EthereumWidget() {
     const [price, setPrice] = useState<number | null>(null);
     const [prevPrice, setPrevPrice] = useState<number | null>(null);
     const [isDarkMode] = useRecoilState(darkMode);
 
     useEffect(() => {
-        const fetchBitcoinPrice = async () => {
+        const fetchEthereumPrice = async () => {
             try {
                 const response = await axios.get(
-                    'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=krw'
+                    'https://api.coingecko.com/api/v3/simple/price?ids=Ethereum&vs_currencies=krw'
                 );
                 setPrevPrice(price);
-                setPrice(response.data.bitcoin.krw);
+                setPrice(response.data.ethereum.krw);
             } catch (error) {
                 console.error('Error fetching Bitcoin price:', error);
             }
         };
 
-        fetchBitcoinPrice();
-        const intervalId = setInterval(fetchBitcoinPrice, 60000); // 1분마다 가격 업데이트
+        fetchEthereumPrice();
+        const intervalId = setInterval(fetchEthereumPrice, 60000); // 1분마다 가격 업데이트
 
         return () => clearInterval(intervalId); // 컴포넌트가 언마운트될 때 인터벌 제거
     }, [price]);
@@ -37,7 +37,7 @@ export default function BitcoinWidget() {
     return (
         <S.Widget isDragging={false} darkMode={isDarkMode}>
             <S.WidgetHeader darkMode={isDarkMode}>
-                비트코인 가격
+                이더리움 가격
             </S.WidgetHeader>
             <S.WidgetContent darkMode={isDarkMode}>
                 <p>가격: {price ? `${price} KRW` : '로딩 중...'}</p>
