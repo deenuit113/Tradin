@@ -7,6 +7,7 @@ import Widget from "../widget/Widget";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
 import { useRouter } from 'next/router';
+import BitcoinWidget from "../widget/BitcoinWidget";
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -35,6 +36,7 @@ export default function MainPage(): JSX.Element {
         <S.Container darkMode={isDarkMode}>
             <SideBar />
             <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
+                <BitcoinWidget />
                 {widgets.map((widget, index) => (
                     <Widget
                         key={index}
