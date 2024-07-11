@@ -4,10 +4,9 @@ import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import SideBar from "../../commons/sidebar/Sidebar";
 import { FaPlus } from "react-icons/fa";
 import Widget from "../widget/Widget";
-import { WidgetSelector } from "../widget/WidgetSelector";// 추가된 부분
+import WidgetSelector from "../widget/WidgetSelector";// 추가된 부분
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
-import { useRouter } from 'next/router';
 
 interface WidgetData {
     type: string;
@@ -18,7 +17,7 @@ export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [widgets, setWidgets] = useState<WidgetData[]>([]);
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
-    const [isSelectorOpen, setIsSelectorOpen] = useState<boolean>(false); // 추가된 부분
+    const [isSelectorOpen, setIsSelectorOpen] = useState<boolean>(false);
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
 
     const addWidget = (widgetType: string) => {
@@ -46,7 +45,10 @@ export default function MainPage(): JSX.Element {
                     <Widget
                         key={widgetData.id}
                         index={index}
-                        widget={widgetData.type === 'bitcoin' ? '비트코인 가격' : `정보 ${index + 1}`}
+                        widget={{
+                            type: widgetData.type === 'bitcoin' ? '비트코인 가격' : widgetData.type === 'ethereum' ? '이더리움 가격' : `정보 ${index + 1}`,
+                            coinId: widgetData.type
+                        }}
                         removeWidget={removeWidget}
                         menuOpen={menuOpen}
                         setMenuOpen={setMenuOpen}
@@ -60,9 +62,8 @@ export default function MainPage(): JSX.Element {
                     />
                 )}
                 <S.WidgetAdd darkMode={isDarkMode}>
-                    <S.AddWidgetButton onClick={() => setIsSelectorOpen(true)} darkMode={isDarkMode}>
-                        <FaPlus />
-                        위젯 추가
+                    <S.AddWidgetButton darkMode={isDarkMode} onClick={() => setIsSelectorOpen(true)}>
+                        <FaPlus /> 위젯 추가
                     </S.AddWidgetButton>
                 </S.WidgetAdd>
             </S.MainContent>

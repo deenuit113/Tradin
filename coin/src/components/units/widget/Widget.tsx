@@ -5,12 +5,12 @@ import * as S from "../main/Main.styles";
 import { FaEllipsisV, FaCaretUp, FaCaretDown } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
-import BitcoinWidget from "./BitcoinWidget";
+import CryptoWidget from "./CryptoWidget";
 
 const ItemType = "WIDGET";
 
 interface WidgetProps {
-    widget: string;
+    widget: { type: string; coinId?: string };
     index: number;
     menuOpen: number | null;
     setMenuOpen: (index: number | null) => void;
@@ -27,8 +27,11 @@ const Widget = ({
     moveWidget,
 }: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
-    const [priceData, setPriceData] = useState({ price: null, prevPrice: null });
-    const [isDarkMode] = useRecoilState(darkMode);
+    const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null }>({
+        price: null,
+        prevPrice: null,
+    });
+    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -72,7 +75,7 @@ const Widget = ({
 
     const springStyle = useSpring({
         transform: isDragging ? 'scale(1.05)' : 'scale(1)',
-        opacity: isDragging? 0.5 : 1,
+        opacity: isDragging ? 0.5 : 1,
         config: { tension: 250, friction: 20 }
     });
 
@@ -85,12 +88,12 @@ const Widget = ({
         <animated.div style={springStyle} ref={ref}>
             <S.Widget isDragging={isDragging} darkMode={isDarkMode}>
                 <S.WidgetHeader darkMode={isDarkMode}>
-                    {widget}
+                    {widget.type}
                     <S.MenuIcon
                         onClick={() => setMenuOpen(index === menuOpen ? null : index)}
                         darkMode={isDarkMode}
                     >
-                        <FaEllipsisV className="MenuIcon"/>
+                        <FaEllipsisV className="MenuIcon" />
                     </S.MenuIcon>
                     {menuOpen === index && (
                         <S.DropdownMenu darkMode={isDarkMode}>
@@ -102,17 +105,10 @@ const Widget = ({
                     )}
                 </S.WidgetHeader>
                 <S.WidgetContent darkMode={isDarkMode}>
-                    {widget === '비트코인 가격' && (
-                        <>
-                            <BitcoinWidget setPriceData={setPriceData} />
-                            <p>가격: {priceData.price ? `${priceData.price} KRW` : '로딩 중...'}</p>
-                            {getIcon()}
-                        </>
-                    )}
-                    {widget !== '비트코인 가격' && (
-                        <p>{widget} 내용</p>
-                    )}
+                    <p>가격: {priceData.price ? `${priceData.price} KRW` : '로딩 중...'}</p>
+                    {getIcon()}
                 </S.WidgetContent>
+                {widget.coinId && <CryptoWidget coinId={widget.coinId} setPriceData={setPriceData} />}
             </S.Widget>
         </animated.div>
     );
