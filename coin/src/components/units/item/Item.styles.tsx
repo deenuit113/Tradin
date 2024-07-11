@@ -117,6 +117,10 @@ export const StrategyInfo = styled.td<{ darkMode: boolean }>`
     &:first-of-type {
         border-left: none;
     }
+
+    .position-icon {
+        font-size: 18px;
+    }
 `;
 
 export const StrategyInFoDetail = styled.td`

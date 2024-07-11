@@ -6,6 +6,24 @@ import { useRecoilState } from "recoil";
 import { darkMode } from '../../../commons/atoms';
 import { useState, useEffect } from 'react';
 import SpotDetailOption from './SpotDetailOpt';
+import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
+
+type Position = '상승' | '하강';
+
+interface CoinData {
+    position: Position;
+    entryPrice: string;
+    profitLoss: string;
+    winRate: string;
+    profitFactor: string;
+    trades: number;
+    averageBars: number;
+    averageProfit: string;
+}
+
+const coinData: CoinData[] = [
+    { position: '하강', entryPrice: '1000 KRW', profitLoss: '10.00%', winRate: '50.00%', profitFactor: '1.234', trades: 5, averageBars: 10, averageProfit: '5.00%' },
+];
 
 export default function SpotDetail(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -50,6 +68,8 @@ export default function SpotDetail(): JSX.Element {
         setMenuOpen(prev=> !prev);
     }
 
+    const position = "하강";
+
     return (
         <S.Container darkMode={isDarkMode}>
             <SideBar />
@@ -81,17 +101,21 @@ export default function SpotDetail(): JSX.Element {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>코인아이콘</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>상승</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>1000 KRW</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>10.00%</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>50.00%</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>1.234</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>5</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>10</S.StrategyInfo>
-                                <S.StrategyInfo className="value" darkMode={isDarkMode}>5.00%</S.StrategyInfo>
-                            </tr>
+                            {coinData.map((data, index) => (
+                                <tr key={index}>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>코인아이콘</S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>
+                                        {data.position === '상승' ? <FaCaretUp className="position-icon" color="red" /> : <FaCaretDown className="position-icon" color="blue" />}
+                                    </S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.entryPrice}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.profitLoss}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.winRate}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.profitFactor}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.trades}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.averageBars}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.averageProfit}</S.StrategyInfo>
+                                </tr>
+                            ))}
                         </tbody>
                     </S.WidgetTable>
                     <S.HorizontalDivider />

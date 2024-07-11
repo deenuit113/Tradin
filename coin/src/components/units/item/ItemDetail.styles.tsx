@@ -79,7 +79,6 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean, darkMode: boolean }
     font-weight: bolder;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     position: relative;
-    border: 1px solid red;
 
     .FaAngleRight{
         margin-left: 10px;
@@ -145,6 +144,10 @@ export const StrategyInfo = styled.td<{ darkMode: boolean }>`
     
     &:first-of-type {
         border-left: none;
+    }
+
+    .position-icon {
+        font-size: 20px;
     }
 `;
 
