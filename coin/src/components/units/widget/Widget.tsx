@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import * as S from "../main/Main.styles";
-import { FaEllipsisV } from "react-icons/fa";
+import { FaEllipsisV, FaCaretUp, FaCaretDown } from "react-icons/fa";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../../commons/atoms"
+import { darkMode } from "../../commons/atoms";
+import BitcoinWidget from "./BitcoinWidget";
 
 const ItemType = "WIDGET";
 
@@ -26,7 +27,8 @@ const Widget = ({
     moveWidget,
 }: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
-    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
+    const [priceData, setPriceData] = useState({ price: null, prevPrice: null });
+    const [isDarkMode] = useRecoilState(darkMode);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -74,6 +76,11 @@ const Widget = ({
         config: { tension: 250, friction: 20 }
     });
 
+    const getIcon = () => {
+        if (priceData.prevPrice === null || priceData.price === null) return null;
+        return priceData.price > priceData.prevPrice ? <FaCaretUp color="red" /> : <FaCaretDown color="blue" />;
+    };
+
     return (
         <animated.div style={springStyle} ref={ref}>
             <S.Widget isDragging={isDragging} darkMode={isDarkMode}>
@@ -94,7 +101,18 @@ const Widget = ({
                         </S.DropdownMenu>
                     )}
                 </S.WidgetHeader>
-                <S.WidgetContent darkMode={isDarkMode}>{widget} 내용</S.WidgetContent>
+                <S.WidgetContent darkMode={isDarkMode}>
+                    {widget === '비트코인 가격' && (
+                        <>
+                            <BitcoinWidget setPriceData={setPriceData} />
+                            <p>가격: {priceData.price ? `${priceData.price} KRW` : '로딩 중...'}</p>
+                            {getIcon()}
+                        </>
+                    )}
+                    {widget !== '비트코인 가격' && (
+                        <p>{widget} 내용</p>
+                    )}
+                </S.WidgetContent>
             </S.Widget>
         </animated.div>
     );

@@ -4,21 +4,26 @@ import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import SideBar from "../../commons/sidebar/Sidebar";
 import { FaPlus } from "react-icons/fa";
 import Widget from "../widget/Widget";
+import { WidgetSelector } from "../widget/WidgetSelector";// 추가된 부분
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
 import { useRouter } from 'next/router';
-import BitcoinWidget from "../widget/BitcoinWidget";
-import EthereumWidget from "../widget/EthereumWidget";
+
+interface WidgetData {
+    type: string;
+    id: number;
+}
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
-    const [widgets, setWidgets] = useState<string[]>([]);
+    const [widgets, setWidgets] = useState<WidgetData[]>([]);
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
-
+    const [isSelectorOpen, setIsSelectorOpen] = useState<boolean>(false); // 추가된 부분
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
 
-    const addWidget = () => {
-        setWidgets([...widgets, `정보 ${widgets.length + 1}`]);
+    const addWidget = (widgetType: string) => {
+        setWidgets([...widgets, { type: widgetType, id: widgets.length }]);
+        setIsSelectorOpen(false);
     };
 
     const moveWidget = (dragIndex: number, hoverIndex: number) => {
@@ -37,21 +42,25 @@ export default function MainPage(): JSX.Element {
         <S.Container darkMode={isDarkMode}>
             <SideBar />
             <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
-                <BitcoinWidget />
-                <EthereumWidget/>
-                {widgets.map((widget, index) => (
+                {widgets.map((widgetData, index) => (
                     <Widget
-                        key={index}
+                        key={widgetData.id}
                         index={index}
-                        widget={widget}
+                        widget={widgetData.type === 'bitcoin' ? '비트코인 가격' : `정보 ${index + 1}`}
                         removeWidget={removeWidget}
                         menuOpen={menuOpen}
                         setMenuOpen={setMenuOpen}
                         moveWidget={moveWidget}
                     />
                 ))}
+                {isSelectorOpen && (
+                    <WidgetSelector
+                        addWidget={addWidget}
+                        setIsSelectorOpen={setIsSelectorOpen}
+                    />
+                )}
                 <S.WidgetAdd darkMode={isDarkMode}>
-                    <S.AddWidgetButton onClick={addWidget} darkMode={isDarkMode}>
+                    <S.AddWidgetButton onClick={() => setIsSelectorOpen(true)} darkMode={isDarkMode}>
                         <FaPlus />
                         위젯 추가
                     </S.AddWidgetButton>
