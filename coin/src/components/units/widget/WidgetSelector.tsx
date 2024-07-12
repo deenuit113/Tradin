@@ -7,8 +7,6 @@ interface WidgetSelectorProps {
     setIsSelectorOpen: (isOpen: boolean) => void;
 }
 
-
-
 const WidgetSelector = ({ addWidget, setIsSelectorOpen }: WidgetSelectorProps) => {
     return (
         <S.SelectorContainer>

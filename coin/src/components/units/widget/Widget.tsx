@@ -6,6 +6,7 @@ import { FaEllipsisV, FaCaretUp, FaCaretDown } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
 import CryptoWidget from "./CryptoWidget";
+import { availableWidgets } from "./AvailableWidgets";
 
 const ItemType = "WIDGET";
 
@@ -31,7 +32,7 @@ const Widget = ({
         price: null,
         prevPrice: null,
     });
-    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
+    const [isDarkMode] = useRecoilState(darkMode);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -84,11 +85,13 @@ const Widget = ({
         return priceData.price > priceData.prevPrice ? <FaCaretUp color="red" /> : <FaCaretDown color="blue" />;
     };
 
+    const widgetConfig = availableWidgets.find(w => w.type === widget.type);
+
     return (
         <animated.div style={springStyle} ref={ref}>
             <S.Widget isDragging={isDragging} darkMode={isDarkMode}>
                 <S.WidgetHeader darkMode={isDarkMode}>
-                    {widget.name}
+                    {widgetConfig?.name} {widgetConfig?.icon}
                     <S.MenuIcon
                         onClick={() => setMenuOpen(index === menuOpen ? null : index)}
                         darkMode={isDarkMode}
