@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SelectorContainer = styled.div`
-    position: absolute;
+    position: fixed;
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);

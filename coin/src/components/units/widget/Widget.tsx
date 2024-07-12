@@ -10,7 +10,7 @@ import CryptoWidget from "./CryptoWidget";
 const ItemType = "WIDGET";
 
 interface WidgetProps {
-    widget: { type: string; coinId?: string };
+    widget: { id: string; type: string; name: string };
     index: number;
     menuOpen: number | null;
     setMenuOpen: (index: number | null) => void;
@@ -88,7 +88,7 @@ const Widget = ({
         <animated.div style={springStyle} ref={ref}>
             <S.Widget isDragging={isDragging} darkMode={isDarkMode}>
                 <S.WidgetHeader darkMode={isDarkMode}>
-                    {widget.type}
+                    {widget.name}
                     <S.MenuIcon
                         onClick={() => setMenuOpen(index === menuOpen ? null : index)}
                         darkMode={isDarkMode}
@@ -108,7 +108,7 @@ const Widget = ({
                     <p>가격: {priceData.price ? `${priceData.price} KRW` : '로딩 중...'}</p>
                     {getIcon()}
                 </S.WidgetContent>
-                {widget.coinId && <CryptoWidget coinId={widget.coinId} setPriceData={setPriceData} />}
+                {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
             </S.Widget>
         </animated.div>
     );
