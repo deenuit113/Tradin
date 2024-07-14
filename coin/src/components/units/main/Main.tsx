@@ -9,15 +9,12 @@ import { darkMode } from "../../commons/atoms";
 import WidgetSelector from "../widget/WidgetSelector";
 import { availableWidgets } from "../widget/AvailableWidgets";
 
-
-
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [widgets, setWidgets] = useState<{ id: string; type: string; name: string }[]>([]);
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
     const [widgetSelectorOpen, setWidgetSelectorOpen] = useState(false);
-
-    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
+    const [isDarkMode] = useRecoilState(darkMode);
 
     const addWidget = (widgetType: string) => {
         const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
@@ -36,6 +33,10 @@ export default function MainPage(): JSX.Element {
         setWidgets(widgets.filter((_, i) => i !== index));
         setMenuOpen(null);
     };
+
+    const availableWidgetTypes = availableWidgets.filter(
+        (widget) => !widgets.some((w) => w.type === widget.type)
+    );
 
     return (
         <S.Container darkMode={isDarkMode}>
@@ -58,7 +59,7 @@ export default function MainPage(): JSX.Element {
                         위젯 추가
                     </S.AddWidgetButton>
                     {widgetSelectorOpen && (
-                        <WidgetSelector addWidget={addWidget} setIsSelectorOpen={setWidgetSelectorOpen} />
+                        <WidgetSelector addWidget={addWidget} setIsSelectorOpen={setWidgetSelectorOpen} availableWidgets={availableWidgetTypes} />
                     )}
                 </S.WidgetAdd>
             </S.MainContent>

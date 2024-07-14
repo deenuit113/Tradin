@@ -1,13 +1,14 @@
 import React from "react";
 import * as S from "./WidgetSelector.styles";
-import { availableWidgets } from "./AvailableWidgets";
+import { FaBitcoin, FaEthereum } from "react-icons/fa";
 
 interface WidgetSelectorProps {
     addWidget: (widgetType: string) => void;
     setIsSelectorOpen: (isOpen: boolean) => void;
+    availableWidgets: { type: string; name: string; icon: JSX.Element }[];
 }
 
-const WidgetSelector = ({ addWidget, setIsSelectorOpen }: WidgetSelectorProps) => {
+const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets }: WidgetSelectorProps) => {
     return (
         <S.SelectorContainer>
             <S.SelectorHeader>
