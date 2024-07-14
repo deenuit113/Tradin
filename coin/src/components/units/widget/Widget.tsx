@@ -82,7 +82,9 @@ const Widget = ({
 
     const getIcon = () => {
         if (priceData.prevPrice === null || priceData.price === null) return null;
-        return priceData.price > priceData.prevPrice ? <FaCaretUp color="red" /> : <FaCaretDown color="blue" />;
+        if (priceData.price > priceData.prevPrice) return <FaCaretUp color="red" />;
+        if (priceData.price < priceData.prevPrice) return <FaCaretDown color="blue" />;
+        return <span>-</span>;
     };
 
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);

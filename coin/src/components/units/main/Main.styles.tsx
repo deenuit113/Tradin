@@ -68,8 +68,8 @@ export const Widget = styled.div<{ isDragging: boolean, darkMode: boolean }>`
     transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 160px;
-        height: 150px;
+        width: 170px;
+        height: 160px;
     }
 `;
 
@@ -88,8 +88,8 @@ export const WidgetAdd = styled.div<{ darkMode: boolean }>`
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 160px;
-        height: 150px;
+        width: 170px;
+        height: 160px;
     }
 `;
 

@@ -23,10 +23,10 @@ export default function CryptoWidget({ coinId, setPriceData }: CryptoWidgetProps
         };
 
         fetchCryptoPrice();
-        const intervalId = setInterval(fetchCryptoPrice, 60000); // 1분마다 가격 업데이트
+        const intervalId = setInterval(fetchCryptoPrice, 15000);
 
-        return () => clearInterval(intervalId); // 컴포넌트가 언마운트될 때 인터벌 제거
+        return () => clearInterval(intervalId);
     }, [coinId, setPriceData]);
 
-    return null; // 이 컴포넌트는 데이터를 가져오기만 하고 UI는 반환하지 않음
+    return null;
 }
