@@ -57,7 +57,7 @@ export const Widget = styled.div<{ isDragging: boolean, darkMode: boolean }>`
     border: 1px solid lightgray;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
-    padding: 1rem;
+    padding: 15px 15px 15px 15px;
     width: 210px;
     height: 200px;
     display: flex;
@@ -72,6 +72,12 @@ export const Widget = styled.div<{ isDragging: boolean, darkMode: boolean }>`
         height: 160px;
     }
 `;
+
+export const CoinTimeStamp = styled.p`
+    color: gray;
+    font-size: 11px;
+    margin-top: 20px;
+`
 
 export const WidgetAdd = styled.div<{ darkMode: boolean }>`
     background-color: ${({ darkMode }) => (darkMode ? '#fff' : '#a0a0a0')};
@@ -97,6 +103,7 @@ export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#ffffff')};
 `;
 
@@ -130,7 +137,7 @@ export const DropdownItem = styled.div<{ darkMode: boolean }>`
 `;
 
 export const WidgetContent = styled.div<{ darkMode: boolean }>`
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#ffffff')};
 `;
 

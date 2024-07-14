@@ -28,9 +28,10 @@ const Widget = ({
     moveWidget,
 }: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
-    const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null }>({
+    const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
         price: null,
         prevPrice: null,
+        timestamp: null,
     });
     const [isDarkMode] = useRecoilState(darkMode);
 
@@ -84,7 +85,7 @@ const Widget = ({
         if (priceData.prevPrice === null || priceData.price === null) return null;
         if (priceData.price > priceData.prevPrice) return <FaCaretUp color="red" />;
         if (priceData.price < priceData.prevPrice) return <FaCaretDown color="blue" />;
-        return <span>-</span>;
+        return <span>-</span>; // 전의 가격과 같을 때
     };
 
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);
@@ -112,6 +113,7 @@ const Widget = ({
                 <S.WidgetContent darkMode={isDarkMode}>
                     <p>가격: {priceData.price ? `${priceData.price} KRW` : '로딩 중...'}</p>
                     {getIcon()}
+                    {priceData.timestamp && <S.CoinTimeStamp>{priceData.timestamp} 기준</S.CoinTimeStamp>}
                 </S.WidgetContent>
                 {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
             </S.Widget>
