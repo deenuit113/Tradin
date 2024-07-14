@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./Main.styles";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import SideBar from "../../commons/sidebar/Sidebar";
@@ -18,21 +18,46 @@ export default function MainPage(): JSX.Element {
 
     const addWidget = (widgetType: string) => {
         const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
-        setWidgets([...widgets, { id: `${widgets.length + 1}`, type: widgetType, name: widgetName }]);
-        setWidgetSelectorOpen(false); // 위젯을 추가하면 선택 창을 닫음
+        setWidgets(prevWidgets => {
+            const newWidgets = [...prevWidgets, { id: `${prevWidgets.length + 1}`, type: widgetType, name: widgetName }];
+            localStorage.setItem('widgets', JSON.stringify(newWidgets));
+            return newWidgets;
+        });
+        setWidgetSelectorOpen(false);
     };
 
     const moveWidget = (dragIndex: number, hoverIndex: number) => {
-        const updatedWidgets = [...widgets];
-        const [draggedWidget] = updatedWidgets.splice(dragIndex, 1);
-        updatedWidgets.splice(hoverIndex, 0, draggedWidget);
-        setWidgets(updatedWidgets);
+        setWidgets(prevWidgets => {
+            const updatedWidgets = [...prevWidgets];
+            const [draggedWidget] = updatedWidgets.splice(dragIndex, 1);
+            updatedWidgets.splice(hoverIndex, 0, draggedWidget);
+            localStorage.setItem('widgets', JSON.stringify(updatedWidgets));
+            return updatedWidgets;
+        });
     };
 
     const removeWidget = (index: number) => {
-        setWidgets(widgets.filter((_, i) => i !== index));
+        setWidgets(prevWidgets => {
+            const newWidgets = prevWidgets.filter((_, i) => i !== index);
+            localStorage.setItem('widgets', JSON.stringify(newWidgets));
+            return newWidgets;
+        });
         setMenuOpen(null);
     };
+
+    useEffect(() => {
+        const storedWidgets = localStorage.getItem('widgets');
+        if (storedWidgets) {
+            try {
+                const parsedWidgets = JSON.parse(storedWidgets);
+                if (Array.isArray(parsedWidgets)) {
+                    setWidgets(parsedWidgets);
+                }
+            } catch (e) {
+                console.error("Failed to parse widgets from localStorage", e);
+            }
+        }
+    }, []);
 
     const availableWidgetTypes = availableWidgets.filter(
         (widget) => !widgets.some((w) => w.type === widget.type)

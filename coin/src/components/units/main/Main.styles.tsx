@@ -68,8 +68,8 @@ export const Widget = styled.div<{ isDragging: boolean, darkMode: boolean }>`
     transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 170px;
-        height: 160px;
+        width: 190px;
+        height: 180px;
     }
 `;
 
@@ -77,6 +77,10 @@ export const CoinTimeStamp = styled.p`
     color: gray;
     font-size: 11px;
     margin-top: 20px;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        margin-top: 10px;
+    }
 `
 
 export const WidgetAdd = styled.div<{ darkMode: boolean }>`
@@ -94,8 +98,8 @@ export const WidgetAdd = styled.div<{ darkMode: boolean }>`
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 170px;
-        height: 160px;
+        width: 190px;
+        height: 180px;
     }
 `;
 
@@ -105,6 +109,9 @@ export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     align-items: center;
     padding: 10px;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#ffffff')};
+    @media all and (min-width:359px) and (max-width: 799px) {
+        padding: 3px;
+    }
 `;
 
 export const MenuIcon = styled.div<{ darkMode: boolean }>`
