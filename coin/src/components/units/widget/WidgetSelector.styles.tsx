@@ -34,9 +34,14 @@ export const SelectorHeaderTitle = styled.h3<{ darkMode: boolean }>`
 export const CloseButton = styled.button<{ darkMode: boolean }>`
     background: none;
     border: none;
-    font-size: 16px;
+    font-size: 30px;
     cursor: pointer;
+    transition: transform 0.3s ease;
     color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    
+    &:hover {
+        transform: rotate(180deg);
+    }
 `;
 
 export const WidgetOptionContainer = styled.div<{ darkMode: boolean }>`

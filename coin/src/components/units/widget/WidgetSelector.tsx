@@ -23,7 +23,7 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets }: Widg
         <S.SelectorContainer as={animated.div} style={slideInAnimation} darkMode={isDarkMode}>
             <S.SelectorHeader>
                 <S.SelectorHeaderTitle darkMode={isDarkMode}>위젯 추가</S.SelectorHeaderTitle>
-                <S.CloseButton darkMode={isDarkMode} onClick={() => setIsSelectorOpen(false)}>닫기</S.CloseButton>
+                <S.CloseButton darkMode={isDarkMode} onClick={() => setIsSelectorOpen(false)}>&times;</S.CloseButton>
             </S.SelectorHeader>
             <S.WidgetOptionContainer darkMode={isDarkMode}>
                 {availableWidgets.length > 0 ? (
