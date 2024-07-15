@@ -1,6 +1,8 @@
 import React from "react";
 import * as S from "./WidgetSelector.styles";
-import { FaBitcoin, FaEthereum } from "react-icons/fa";
+import Widget from "./Widget";
+import { darkMode } from "../../commons/atoms";
+import { useRecoilState } from "recoil";
 
 interface WidgetSelectorProps {
     addWidget: (widgetType: string) => void;
@@ -9,17 +11,28 @@ interface WidgetSelectorProps {
 }
 
 const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets }: WidgetSelectorProps) => {
+    const [isDarkMode] = useRecoilState(darkMode);
+
     return (
         <S.SelectorContainer>
             <S.SelectorHeader>
                 <h3>위젯 추가</h3>
                 <S.CloseButton onClick={() => setIsSelectorOpen(false)}>닫기</S.CloseButton>
             </S.SelectorHeader>
-            {availableWidgets.map(widget => (
-                <S.WidgetOption key={widget.type} onClick={() => addWidget(widget.type)}>
-                    {widget.icon} {widget.name}
-                </S.WidgetOption>
-            ))}
+            <S.WidgetOptionContainer darkMode={isDarkMode}>
+                {availableWidgets.map(widget => (
+                    <S.WidgetOption key={widget.type} onClick={() => addWidget(widget.type)}>
+                        <Widget
+                            widget={{ id: widget.type, type: widget.type, name: widget.name }}
+                            index={0}
+                            menuOpen={null}
+                            setMenuOpen={() => {}}
+                            removeWidget={() => {}}
+                            moveWidget={() => {}}
+                        />
+                    </S.WidgetOption>
+                ))}
+            </S.WidgetOptionContainer>
         </S.SelectorContainer>
     );
 };

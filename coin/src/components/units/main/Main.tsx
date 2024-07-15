@@ -84,7 +84,11 @@ export default function MainPage(): JSX.Element {
                         위젯 추가
                     </S.AddWidgetButton>
                     {widgetSelectorOpen && (
-                        <WidgetSelector addWidget={addWidget} setIsSelectorOpen={setWidgetSelectorOpen} availableWidgets={availableWidgetTypes} />
+                        <WidgetSelector 
+                            addWidget={addWidget} 
+                            setIsSelectorOpen={setWidgetSelectorOpen}
+                            availableWidgets={availableWidgetTypes} 
+                        />
                     )}
                 </S.WidgetAdd>
             </S.MainContent>
