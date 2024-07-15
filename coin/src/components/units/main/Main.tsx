@@ -79,15 +79,16 @@ export default function MainPage(): JSX.Element {
                     />
                 ))}
                 <S.WidgetAdd darkMode={isDarkMode}>
-                    <S.AddWidgetButton onClick={() => setWidgetSelectorOpen(!widgetSelectorOpen)} darkMode={isDarkMode}>
+                    <S.AddWidgetButton onClick={() => setWidgetSelectorOpen(true)} darkMode={isDarkMode}>
                         <FaPlus />
                         위젯 추가
                     </S.AddWidgetButton>
                     {widgetSelectorOpen && (
-                        <WidgetSelector 
-                            addWidget={addWidget} 
+                        <WidgetSelector
+                            addWidget={addWidget}
                             setIsSelectorOpen={setWidgetSelectorOpen}
-                            availableWidgets={availableWidgetTypes} 
+                            availableWidgets={availableWidgetTypes}
+                            isOpen={widgetSelectorOpen}
                         />
                     )}
                 </S.WidgetAdd>
