@@ -68,9 +68,9 @@ export default function MainPage(): JSX.Element {
     }
 
     return (
-        <S.Container darkMode={isDarkMode}>
+        <S.Container $darkMode={isDarkMode}>
             <SideBar />
-            <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
+            <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                 {widgets.map((widgetData, index) => (
                     <Widget
                         key={widgetData.id}
@@ -82,8 +82,8 @@ export default function MainPage(): JSX.Element {
                         moveWidget={moveWidget}
                     />
                 ))}
-                <S.WidgetAdd darkMode={isDarkMode}>
-                    <S.AddWidgetButton onClick={onClickWidgetSelector} darkMode={isDarkMode}>
+                <S.WidgetAdd $darkMode={isDarkMode}>
+                    <S.AddWidgetButton onClick={onClickWidgetSelector} $darkMode={isDarkMode}>
                         <FaPlus />
                         위젯 추가
                     </S.AddWidgetButton>

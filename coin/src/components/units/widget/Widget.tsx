@@ -92,25 +92,25 @@ const Widget = ({
 
     return (
         <animated.div style={springStyle} ref={ref}>
-            <S.Widget isDragging={isDragging} darkMode={isDarkMode}>
-                <S.WidgetHeader darkMode={isDarkMode}>
+            <S.Widget isDragging={isDragging} $darkMode={isDarkMode}>
+                <S.WidgetHeader $darkMode={isDarkMode}>
                     {widgetConfig?.name} {widgetConfig?.icon}
                     <S.MenuIcon
                         onClick={() => setMenuOpen(index === menuOpen ? null : index)}
-                        darkMode={isDarkMode}
+                        $darkMode={isDarkMode}
                     >
                         <FaEllipsisV className="MenuIcon" />
                     </S.MenuIcon>
                     {menuOpen === index && (
-                        <S.DropdownMenu darkMode={isDarkMode}>
+                        <S.DropdownMenu $darkMode={isDarkMode}>
                             <S.DropdownItem
                                 onClick={() => removeWidget(index)}
-                                darkMode={isDarkMode}
+                                $darkMode={isDarkMode}
                             >위젯 삭제</S.DropdownItem>
                         </S.DropdownMenu>
                     )}
                 </S.WidgetHeader>
-                <S.WidgetContent darkMode={isDarkMode}>
+                <S.WidgetContent $darkMode={isDarkMode}>
                     <p>가격: {priceData.price ? `${priceData.price} KRW` : '로딩 중...'}</p>
                     {getIcon()}
                     {priceData.timestamp && <S.CoinTimeStamp>{priceData.timestamp} 기준</S.CoinTimeStamp>}
