@@ -20,6 +20,7 @@ export const SelectorContainer = styled(animated.div)<{ $darkMode: boolean }>`
 
 export const SelectorHeader = styled.div`
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 100%;
