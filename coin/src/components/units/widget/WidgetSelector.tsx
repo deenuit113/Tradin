@@ -14,26 +14,21 @@ interface WidgetSelectorProps {
 
 const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen }: WidgetSelectorProps) => {
     const [isDarkMode] = useRecoilState(darkMode);
+    const [closing, setClosing] = useState(false);
 
     const slideInAnimation = useSpring({
-        transform: 'translateY(0%)',
-        from: { transform: 'translateY(100%)' },
+        transform: isOpen ? 'translateY(0%)' : 'translateY(100%)',
+        config: { tension: 100, friction: 20 },
+        onRest: () => {
+            if (closing) {
+                setIsSelectorOpen(false);
+                setClosing(false);
+            }
+        }
     });
 
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                setIsSelectorOpen(false);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
-
     const handleClose = () => {
+        setClosing(true);
         setIsSelectorOpen(false);
     };
 

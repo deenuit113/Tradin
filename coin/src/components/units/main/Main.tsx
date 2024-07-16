@@ -63,6 +63,10 @@ export default function MainPage(): JSX.Element {
         (widget) => !widgets.some((w) => w.type === widget.type)
     );
 
+    const onClickWidgetSelector = (): void => {
+        setWidgetSelectorOpen(prev => !prev);
+    }
+
     return (
         <S.Container darkMode={isDarkMode}>
             <SideBar />
@@ -79,18 +83,16 @@ export default function MainPage(): JSX.Element {
                     />
                 ))}
                 <S.WidgetAdd darkMode={isDarkMode}>
-                    <S.AddWidgetButton onClick={() => setWidgetSelectorOpen(true)} darkMode={isDarkMode}>
+                    <S.AddWidgetButton onClick={onClickWidgetSelector} darkMode={isDarkMode}>
                         <FaPlus />
                         위젯 추가
                     </S.AddWidgetButton>
-                    {widgetSelectorOpen && (
-                        <WidgetSelector
-                            addWidget={addWidget}
-                            setIsSelectorOpen={setWidgetSelectorOpen}
-                            availableWidgets={availableWidgetTypes}
-                            isOpen={widgetSelectorOpen}
-                        />
-                    )}
+                    <WidgetSelector
+                        addWidget={addWidget}
+                        setIsSelectorOpen={setWidgetSelectorOpen}
+                        availableWidgets={availableWidgetTypes}
+                        isOpen={widgetSelectorOpen}
+                    />
                 </S.WidgetAdd>
             </S.MainContent>
         </S.Container>
