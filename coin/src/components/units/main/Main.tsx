@@ -61,6 +61,17 @@ export default function MainPage(): JSX.Element {
         }
     }, []);
 
+    useEffect(() => {
+        const handleEsc = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setSelectedSymbol(null);
+            }
+        };
+
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, []);
+
     const availableWidgetTypes = availableWidgets.filter(
         (widget) => !widgets.some((w) => w.type === widget.type)
     );
