@@ -11,7 +11,7 @@ interface ChartPopupProps {
 const ChartPopup: React.FC<ChartPopupProps> = ({ symbol, onClose, $darkMode }) => {
     return (
         <S.PopupContainer $darkMode={$darkMode}>
-            <S.CloseButton onClick={onClose}>×</S.CloseButton>
+            <S.CloseButton onClick={onClose} $darkMode={$darkMode} >×</S.CloseButton>
             <CoinChart symbol={symbol} />
         </S.PopupContainer>
     );

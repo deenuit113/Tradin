@@ -17,7 +17,7 @@ export const PopupContainer = styled.div<{ $darkMode: boolean }>`
 export const CloseButton = styled.button<{ $darkMode: boolean }>`
     background: none;
     border: none;
-    color: ${({ $darkMode }) => ($darkMode ? '#fff' : '#333')};
+    color: ${({ $darkMode }) => ($darkMode ? '#333' : '#fff')};
     font-size: 30px;
     position: absolute;
     top: 2px;
