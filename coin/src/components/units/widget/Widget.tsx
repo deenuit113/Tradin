@@ -17,6 +17,7 @@ interface WidgetProps {
     setMenuOpen: (index: number | null) => void;
     removeWidget: (index: number) => void;
     moveWidget: (dragIndex: number, hoverIndex: number) => void;
+    onClickWidget: (symbol: string) => void;
 }
 
 const Widget = ({
@@ -26,6 +27,7 @@ const Widget = ({
     setMenuOpen,
     removeWidget,
     moveWidget,
+    onClickWidget,
 }: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
     const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
@@ -91,7 +93,7 @@ const Widget = ({
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);
 
     return (
-        <animated.div style={springStyle} ref={ref}>
+        <animated.div style={springStyle} ref={ref} onClick={() => onClickWidget(widgetConfig?.symbol || '')}>
             <S.Widget isDragging={isDragging} $darkMode={isDarkMode}>
                 <S.WidgetHeader $darkMode={isDarkMode}>
                     {widgetConfig?.name} {widgetConfig?.icon}

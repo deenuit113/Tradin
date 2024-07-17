@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
 import WidgetSelector from "../widget/WidgetSelector";
 import { availableWidgets } from "../widget/AvailableWidgets";
+import ChartPopup from "../chart/Chart";
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -15,6 +16,7 @@ export default function MainPage(): JSX.Element {
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
     const [widgetSelectorOpen, setWidgetSelectorOpen] = useState(false);
     const [isDarkMode] = useRecoilState(darkMode);
+    const [selectedSymbol, setSelectedSymbol] = useState<string | null>(null);
 
     const addWidget = (widgetType: string) => {
         const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
@@ -80,6 +82,7 @@ export default function MainPage(): JSX.Element {
                         menuOpen={menuOpen}
                         setMenuOpen={setMenuOpen}
                         moveWidget={moveWidget}
+                        onClickWidget={(symbol) => setSelectedSymbol(symbol)}
                     />
                 ))}
                 <S.WidgetAdd $darkMode={isDarkMode}>
@@ -94,6 +97,13 @@ export default function MainPage(): JSX.Element {
                         isOpen={widgetSelectorOpen}
                     />
                 </S.WidgetAdd>
+                {selectedSymbol && (
+                    <ChartPopup
+                        symbol={selectedSymbol}
+                        onClose={() => setSelectedSymbol(null)}
+                        $darkMode={isDarkMode}
+                    />
+                )}
             </S.MainContent>
         </S.Container>
     );

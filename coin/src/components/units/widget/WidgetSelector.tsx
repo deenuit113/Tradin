@@ -62,6 +62,7 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
                                 setMenuOpen={() => {}}
                                 removeWidget={() => {}}
                                 moveWidget={() => {}}
+                                onClickWidget= {(symbol: string) => {}}
                             />
                         </S.WidgetOption>
                     ))
