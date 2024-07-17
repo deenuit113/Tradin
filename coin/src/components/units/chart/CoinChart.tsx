@@ -24,7 +24,7 @@ const CoinChart: React.FC<CoinChartProps> = ({ symbol }) => {
                 height: 360,
                 symbol: symbol,
                 interval: 'D',
-                timezone: 'Etc/UTC',
+                timezone: 'Asia/Seoul',
                 theme: isDarkMode? 'light': 'dark', // light
                 style: '1',
                 locale: 'kr',
