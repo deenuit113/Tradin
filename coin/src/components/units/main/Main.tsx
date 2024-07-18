@@ -9,6 +9,7 @@ import { darkMode } from "../../commons/atoms";
 import WidgetSelector from "../widget/WidgetSelector";
 import { availableWidgets } from "../widget/AvailableWidgets";
 import ChartPopup from "../chart/Chart";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function MainPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -21,7 +22,8 @@ export default function MainPage(): JSX.Element {
     const addWidget = (widgetType: string) => {
         const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
         setWidgets(prevWidgets => {
-            const newWidgets = [...prevWidgets, { id: `${prevWidgets.length + 1}`, type: widgetType, name: widgetName }];
+            const newId = uuidv4(); // 고유한 ID 생성
+            const newWidgets = [...prevWidgets, { id: newId, type: widgetType, name: widgetName }];
             localStorage.setItem('widgets', JSON.stringify(newWidgets));
             return newWidgets;
         });
@@ -53,7 +55,11 @@ export default function MainPage(): JSX.Element {
             try {
                 const parsedWidgets = JSON.parse(storedWidgets);
                 if (Array.isArray(parsedWidgets)) {
-                    setWidgets(parsedWidgets);
+                    const uniqueWidgets = parsedWidgets.map(widget => ({
+                        ...widget,
+                        id: widget.id || uuidv4() // 고유한 ID가 없으면 새로 생성
+                    }));
+                    setWidgets(uniqueWidgets);
                 }
             } catch (e) {
                 console.error("Failed to parse widgets from localStorage", e);
@@ -86,7 +92,7 @@ export default function MainPage(): JSX.Element {
             <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                 {widgets.map((widgetData, index) => (
                     <Widget
-                        key={widgetData.id}
+                        key={widgetData.id} // 고유한 key 값으로 id 사용
                         index={index}
                         widget={widgetData}
                         removeWidget={removeWidget}

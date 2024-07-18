@@ -54,15 +54,15 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
             <S.WidgetOptionContainer $darkMode={isDarkMode}>
                 {availableWidgets.length > 0 ? (
                     availableWidgets.map(widget => (
-                        <S.WidgetOption key={widget.type} onClick={() => addWidget(widget.type)}>
+                        <S.WidgetOption key={`${widget.type}-${Math.random()}`} onClick={() => addWidget(widget.type)}>
                             <Widget
-                                widget={{ id: widget.type, type: widget.type, name: widget.name }}
+                                widget={{ id: `${widget.type}-${Math.random()}`, type: widget.type, name: widget.name }} // 고유한 ID 생성
                                 index={0}
                                 menuOpen={null}
                                 setMenuOpen={() => {}}
                                 removeWidget={() => {}}
                                 moveWidget={() => {}}
-                                onClickWidget= {(symbol: string) => {}}
+                                onClickWidget={(symbol: string) => {}}
                             />
                         </S.WidgetOption>
                     ))
