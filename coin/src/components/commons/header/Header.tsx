@@ -52,7 +52,7 @@ export default function Header(): JSX.Element {
     };
 
     const handleNotificationClick = () => {
-        setIsModalOpen(true);
+        setIsModalOpen(prev => !prev);
     };
 
     const closeModal = () => {
@@ -103,7 +103,7 @@ export default function Header(): JSX.Element {
                     <S.IconListItem>
                         <FontAwesomeIcon
                             icon={faBell}
-                            style={{ cursor: 'pointer', color: isDarkMode ? '#333' : '#f0f0f0' }}
+                            style={{ cursor: 'pointer', color: isDarkMode ? '#333' : '#f0f0f0', fontSize: '26px'}}
                             onClick={handleNotificationClick}
                         />
                     </S.IconListItem>
@@ -128,7 +128,7 @@ export default function Header(): JSX.Element {
                         height: '500px',
                     },
                     overlay: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
                     },
                 }}
             >
