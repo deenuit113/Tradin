@@ -10,7 +10,7 @@ export const HeaderContainer = styled.header<{ darkMode: boolean }>`
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 10px 10px 10px 10px;
-    z-index: 1000;
+    z-index: 999;
     box-sizing: border-box;
     margin-left: 3%;
     margin-right: 3%;

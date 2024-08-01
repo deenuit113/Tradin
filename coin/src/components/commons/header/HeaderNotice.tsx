@@ -5,11 +5,34 @@ import { useRecoilState } from "recoil";
 import { darkMode } from "../atoms";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { modalStyles } from "./HeaderNotice.styles";
+import ModalContainer from "./HeaderNoticeModal";
 
 const notifications = [
     "알림 메시지 1",
     "알림 메시지 2",
     "알림 메시지 3",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
+    "알림 메시지 4",
     "알림 메시지 4",
 ];
 
@@ -27,6 +50,13 @@ export default function HeaderNotice() {
         setIsModalOpen(false);
     };
 
+    const modalContent = (
+        <ModalContainer
+            closeModal={closeModal}
+            notifications={notifications}
+        />
+    );
+
     return (
         <>
             <FontAwesomeIcon
@@ -38,31 +68,9 @@ export default function HeaderNotice() {
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 contentLabel="Notification Modal"
-                style={{
-                    content: {
-                        top: '50%',
-                        left: '50%',
-                        right: 'auto',
-                        bottom: 'auto',
-                        marginRight: '-50%',
-                        transform: 'translate(-50%, -50%)',
-                        background: isDarkMode ? '#333' : '#fff',
-                        color: isDarkMode ? '#fff' : '#000',
-                        width: '500px',
-                        height: '500px',
-                    },
-                    overlay: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                    },
-                }}
+                style={modalStyles}
             >
-                <h2>알림</h2>
-                <S.CloseButton onClick={closeModal}>닫기</S.CloseButton>
-                <S.NotificationList>
-                    {notifications.map((notification, index) => (
-                        <S.NotificationItem key={index}>{notification}</S.NotificationItem>
-                    ))}
-                </S.NotificationList>
+                {modalContent}
             </Modal>
         </>
     );
