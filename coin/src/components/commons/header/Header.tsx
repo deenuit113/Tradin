@@ -41,6 +41,10 @@ export default function Header(): JSX.Element {
         }
     };
 
+    const onClickMoveToLogin = () => {
+        router.push("/login");
+    }
+
     return (
         <S.HeaderContainer darkMode={isDarkMode}>
             <S.Left>
@@ -85,6 +89,7 @@ export default function Header(): JSX.Element {
                     <S.IconListItem>
                         <HeaderNotice />
                     </S.IconListItem>
+                    <p onClick={onClickMoveToLogin}>로그인</p>
                 </S.IconList>
             </S.Right>
         </S.HeaderContainer>
