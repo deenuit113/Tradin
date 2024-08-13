@@ -98,6 +98,12 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
             box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 10px blue' : '0px 0px 10px lightblue')};
         }
     }
+
+    .Notification-Switch {
+        &:hover {
+            filter: drop-shadow(${({ darkMode }) => (darkMode ? '0px 0px 5px black' : '0px 0px 5px white')});
+        }
+    }
 `;
 
 export const IconListItem = styled.li`
