@@ -57,7 +57,7 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
     p {
         display: inline-block;
         padding-left: 100%;
-        animation: marquee 15s linear infinite;
+        animation: marquee 10s linear infinite;
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     }
 
@@ -94,7 +94,7 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
 
     .DarkMode-Switch{
         &:hover{
-            box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 15px blue' : '0px 0px 15px lightblue')};
+            box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 10px blue' : '0px 0px 10px lightblue')};
         }
     }
 `;

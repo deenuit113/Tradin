@@ -45,6 +45,14 @@ export default function Header(): JSX.Element {
         router.push("/login");
     }
 
+    const announcements = [
+        { title: "공시 1", content: "공시 1에 대한 내용" },
+        { title: "공시 2", content: "공시 2에 대한 내용" },
+        { title: "공시 3", content: "공시 3에 대한 내용" },
+        { title: "공시 4", content: "공시 4에 대한 내용" },
+        { title: "공시 5", content: "공시 5에 대한 내용" },
+    ];
+
     return (
         <S.HeaderContainer darkMode={isDarkMode}>
             <S.Left>
@@ -63,10 +71,12 @@ export default function Header(): JSX.Element {
                 <NavBar />
             </S.Left>
             <S.Center>
-                <S.Marquee
-                    darkMode={isDarkMode}
-                >
-                    <p>공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시 공시</p>
+                <S.Marquee darkMode={isDarkMode}>
+                    {announcements.map((announcement, index) => (
+                        <p key={index}>
+                            {`${announcement.title}: ${announcement.content}`}
+                        </p>
+                    ))}
                 </S.Marquee>
             </S.Center>
             <S.Right>
