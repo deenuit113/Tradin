@@ -106,10 +106,14 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
     }
 `;
 
-export const IconListItem = styled.li`
+export const IconListItem = styled.li<{ darkMode: boolean }>`
     display: flex;
     align-items: center;
     width: 30%;
+
+    p {
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    }
 `;
 
 export const ToggleButton = styled.button<{ darkMode: boolean }>`
