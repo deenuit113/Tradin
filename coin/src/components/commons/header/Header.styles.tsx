@@ -91,6 +91,7 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
     list-style: none;
     padding: 0;
     margin: 0;
+    justify-content: space-between;
 
     .DarkMode-Switch{
         &:hover{
@@ -103,7 +104,6 @@ export const IconListItem = styled.li`
     display: flex;
     align-items: center;
     width: 30%;
-    margin: 0 0.5rem;
 `;
 
 export const ToggleButton = styled.button<{ darkMode: boolean }>`
@@ -119,6 +119,26 @@ export const ToggleButton = styled.button<{ darkMode: boolean }>`
 `;
 
 export const Login = styled.p`
+    font-size: 11px;
+    &:hover {
+        cursor: pointer;
+    }
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 7px;
+    }
+`
+
+export const LoginSignUpLabel = styled.p`
+    font-size: 11px;
+    &:hover {
+        cursor: pointer;
+    }
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 7px;
+    }
+`
+
+export const SignUp = styled.p`
     font-size: 11px;
     &:hover {
         cursor: pointer;
