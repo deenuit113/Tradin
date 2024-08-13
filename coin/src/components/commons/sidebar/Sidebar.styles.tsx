@@ -7,7 +7,7 @@ export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
     border-radius: 10px;
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     overflow-y: auto;
-    z-index: 1001;
+    z-index: 999;
     position: fixed;
     top: 12vh;
     left: ${({ open }) => (open ? "0" : "-20%")};

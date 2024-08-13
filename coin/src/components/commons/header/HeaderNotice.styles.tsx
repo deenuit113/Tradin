@@ -1,9 +1,20 @@
 import styled from "@emotion/styled";
+import { CSSProperties } from "react";
 
-export const modalStyles = {
+interface ModalStyles {
+    overlay?: CSSProperties;
+    content?: CSSProperties;
+}
+
+export const modalStyles: ModalStyles = {
     overlay: {
+        position: 'fixed', // position의 값을 string이 아닌 'fixed'로 지정
+        top: '0',
+        left: '0',
+        right: '0',
+        bottom: '0',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // 배경 투명도 조절
-        zIndex: 990,
+        zIndex: 1000,
     },
     content: {
         top: '50%',
