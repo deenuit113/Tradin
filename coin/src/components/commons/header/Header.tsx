@@ -99,7 +99,11 @@ export default function Header(): JSX.Element {
                     <S.IconListItem>
                         <HeaderNotice />
                     </S.IconListItem>
-                    <S.Login onClick={onClickMoveToLogin}>로그인 / 회원가입</S.Login>
+                    <S.IconListItem>
+                        <S.Login onClick={onClickMoveToLogin}>로그인</S.Login>
+                        <S.LoginSignUpLabel>&nbsp;/&nbsp;</S.LoginSignUpLabel>
+                        <S.SignUp onClick={onClickMoveToLogin}>회원가입</S.SignUp>
+                    </S.IconListItem>
                 </S.IconList>
             </S.Right>
         </S.HeaderContainer>
