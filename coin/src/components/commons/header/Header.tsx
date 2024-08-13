@@ -81,7 +81,7 @@ export default function Header(): JSX.Element {
             </S.Center>
             <S.Right>
                 <S.IconList darkMode={isDarkMode}>
-                    <S.IconListItem>
+                    <S.IconListItem darkMode={isDarkMode}>
                         <Switch
                             onChange={() => setIsDarkMode(prev => !prev)}
                             checked={isDarkMode}
@@ -96,10 +96,10 @@ export default function Header(): JSX.Element {
                             className="DarkMode-Switch"
                         />
                     </S.IconListItem>
-                    <S.IconListItem>
+                    <S.IconListItem darkMode={isDarkMode}>
                         <HeaderNotice />
                     </S.IconListItem>
-                    <S.IconListItem>
+                    <S.IconListItem darkMode={isDarkMode}>
                         <S.Login onClick={onClickMoveToLogin}>로그인</S.Login>
                         <S.LoginSignUpLabel>&nbsp;/&nbsp;</S.LoginSignUpLabel>
                         <S.SignUp onClick={onClickMoveToLogin}>회원가입</S.SignUp>
