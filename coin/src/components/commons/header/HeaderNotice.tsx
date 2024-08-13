@@ -63,6 +63,7 @@ export default function HeaderNotice() {
                 icon={faBell}
                 style={{ cursor: 'pointer', color: isDarkMode ? '#333' : '#f0f0f0', fontSize: '26px'}}
                 onClick={handleNotificationClick}
+                className="Notification-Switch"
             />
             <Modal
                 isOpen={isModalOpen}
