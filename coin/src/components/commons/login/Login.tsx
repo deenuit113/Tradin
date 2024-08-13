@@ -5,6 +5,7 @@ import { useSidebar } from "../sidebar/SidebarContext";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../atoms";
 import SideBar from "../sidebar/Sidebar";
+import GoogleIcon from '@mui/icons-material/Google';
 
 export default function LoginPage(): JSX.Element {
 
@@ -26,9 +27,9 @@ export default function LoginPage(): JSX.Element {
             <SideBar />
                 <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                     <h1>Login Page</h1>
-                    <button onClick={handleLogin}>
-                        Sign in with Google
-                    </button>
+                    <S.LoginButton onClick={handleLogin}>
+                        <GoogleIcon /> Sign in with Google
+                    </S.LoginButton>
                 </S.MainContent>
         </S.Container>
     );
