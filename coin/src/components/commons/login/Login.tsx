@@ -12,7 +12,7 @@ export default function LoginPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [isDarkMode] = useRecoilState(darkMode);
 
-    const handleLogin = async () => {
+    const onClickGoogleLogin = async () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
@@ -26,9 +26,12 @@ export default function LoginPage(): JSX.Element {
         <S.Container $darkMode={isDarkMode}>
             <SideBar />
                 <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
-                    <h1>Login Page</h1>
-                    <S.LoginButton onClick={handleLogin}>
+                    <S.PageTitle>로그인</S.PageTitle>
+                    <S.LoginButton onClick={onClickGoogleLogin}>
                         <GoogleIcon /> Sign in with Google
+                    </S.LoginButton>
+                    <S.LoginButton>
+                        <GoogleIcon /> Sign in with Naver
                     </S.LoginButton>
                 </S.MainContent>
         </S.Container>

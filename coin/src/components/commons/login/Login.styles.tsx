@@ -13,14 +13,16 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
     height: 90%;
     overflow-y: auto;
+    border: 3px solid red;
+    flex-direction: column;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -52,10 +54,16 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean
     }
 `;
 
+export const PageTitle = styled.h1`
+
+`
+
 export const LoginButton = styled.button`
+    width: 20%;
     font-weight: bolder;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
     svg {
         vertical-align: middle;
     }
