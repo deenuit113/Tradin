@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import { darkMode } from "../atoms";
 import SideBar from "../sidebar/Sidebar";
 import GoogleIcon from '@mui/icons-material/Google';
+import NaverLogin from "./naver/NaverLogin";
 
 export default function LoginPage(): JSX.Element {
 
@@ -28,11 +29,10 @@ export default function LoginPage(): JSX.Element {
                 <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                     <S.PageTitle>로그인</S.PageTitle>
                     <S.LoginButton onClick={onClickGoogleLogin}>
-                        <GoogleIcon /> Sign in with Google
+                        <GoogleIcon />
+                        <p>Sign in with Google</p>
                     </S.LoginButton>
-                    <S.LoginButton>
-                        <GoogleIcon /> Sign in with Naver
-                    </S.LoginButton>
+                    <NaverLogin/>
                 </S.MainContent>
         </S.Container>
     );
