@@ -59,11 +59,17 @@ export const PageTitle = styled.h1`
 `
 
 export const LoginButton = styled.button`
-    width: 20%;
+    width: 230px;
+    display: flex;
     font-weight: bolder;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 20px 10px 10px;
     margin-bottom: 15px;
     border-radius: 5px;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    align-text: center;
+    flex-direction: row;
     svg {
         vertical-align: middle;
     }
