@@ -53,20 +53,28 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
     overflow: hidden;
     white-space: nowrap;
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    position: relative;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px 10px 0px;
 
     p {
-        display: inline-block;
-        padding-left: 100%;
-        animation: marquee 10s linear infinite;
+        margin: 0;
+        position: absolute;
+        animation: slideUp 1s ease-in-out;
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     }
 
-    @keyframes marquee {
+    @keyframes slideUp {
         0% {
-            transform: translate(0, 0);
+            transform: translateY(100%);
+            opacity: 0;
         }
-        100% {
-            transform: translate(-100%, 0);
+        50% {
+            transform: translateY(0%);
+            opacity: 1;
         }
     }
 `;
