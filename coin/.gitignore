@@ -37,3 +37,6 @@ next-env.d.ts
 
 # firebase file
 /src/components/commons/util/firebase.ts
+
+# kakao app key file
+/src/components/commons/login/kakao/KakaoLogin.tsx

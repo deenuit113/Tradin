@@ -5,6 +5,7 @@ import { darkMode } from "../atoms";
 import SideBar from "../sidebar/Sidebar";
 import NaverLogin from "./naver/NaverLogin";
 import GoogleLogin from "./google/GoogleLogin";
+import KakaoLogin from "./kakao/KakaoLogin";
 
 export default function LoginPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -17,6 +18,7 @@ export default function LoginPage(): JSX.Element {
                     <S.PageTitle>로그인</S.PageTitle>
                     <GoogleLogin/>
                     <NaverLogin/>
+                    <KakaoLogin/>
                 </S.MainContent>
         </S.Container>
     );
