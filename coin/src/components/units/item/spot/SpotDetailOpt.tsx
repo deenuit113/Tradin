@@ -1,4 +1,6 @@
 import * as S from "../ItemDetail.styles";
+import { useRecoilState } from "recoil";
+import { darkMode } from "../../../commons/atoms";
 
 interface StrategyOptionProps {
     isMenuOpen: boolean;
@@ -8,15 +10,16 @@ interface StrategyOptionProps {
 }
 
 export default function SpotDetailOption({ isMenuOpen, availableOptions, selectedOption, handleCheckboxChange }: StrategyOptionProps): JSX.Element {
-
+    const [isDarkMode] = useRecoilState(darkMode);
+    
     return(
         <>
             { isMenuOpen &&
                 <S.StrategyOptionDrop>
                     <S.OptionInnerContainer>
-                        <S.OptionTitle> 비교: </S.OptionTitle>
+                        <S.OptionTitle darkMode={isDarkMode}> 비교: </S.OptionTitle>
                         {availableOptions.map(n => (
-                            <S.ComparisonOption key={n}>
+                            <S.ComparisonOption key={n} darkMode={isDarkMode}>
                                 <input
                                     type="checkbox"
                                     checked={selectedOption === n}
@@ -28,7 +31,7 @@ export default function SpotDetailOption({ isMenuOpen, availableOptions, selecte
                     </S.OptionInnerContainer>
                     <S.OptionHorizontalDivider/>
                     <S.OptionInnerContainer>
-                        <S.OptionTitle>필터:</S.OptionTitle>
+                        <S.OptionTitle darkMode={isDarkMode}>필터:</S.OptionTitle>
                     </S.OptionInnerContainer>
                     
                     

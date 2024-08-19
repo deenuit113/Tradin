@@ -260,12 +260,12 @@ export const StrategyOptionDrop = styled.div`
 export const OptionInnerContainer = styled.div`
 `;
 
-export const OptionTitle = styled.label`
-
+export const OptionTitle = styled.label<{darkMode: boolean}>`
+    color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
 `;
 
-export const ComparisonOption = styled.label`
-
+export const ComparisonOption = styled.label<{darkMode: boolean}>`
+    color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
 `;
 
 export const OptionHorizontalDivider = styled.div`
