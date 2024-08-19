@@ -15,11 +15,27 @@ export default function Header(): JSX.Element {
     const router = useRouter();
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     const { toggleSidebar } = useSidebar();
+    const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
+
+    const announcements = [
+        { title: "공시 1", content: "공시 1에 대한 내용" },
+        { title: "공시 2", content: "공시 2에 대한 내용" },
+        { title: "공시 3", content: "공시 3에 대한 내용" },
+        { title: "공시 4", content: "공시 4에 대한 내용" },
+        { title: "공시 5", content: "공시 5에 대한 내용" },
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentAnnouncement((prev) => (prev + 1) % announcements.length);
+        }, 5000); // 5초마다 공시 변경
+
+        return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedDarkMode = localStorage.getItem('DarkMode');
-            console.log('Loaded DarkMode from localStorage:', savedDarkMode);
             if (savedDarkMode === 'night') {
                 setIsDarkMode(true);
             }
@@ -29,7 +45,6 @@ export default function Header(): JSX.Element {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             localStorage.setItem('DarkMode', isDarkMode ? 'night' : 'day');
-            console.log('Saved DarkMode to localStorage:', isDarkMode ? 'night' : 'day');
         }
     }, [isDarkMode]);
 
@@ -44,14 +59,6 @@ export default function Header(): JSX.Element {
     const onClickMoveToLogin = () => {
         router.push("/login");
     }
-
-    const announcements = [
-        { title: "공시 1", content: "공시 1에 대한 내용" },
-        { title: "공시 2", content: "공시 2에 대한 내용" },
-        { title: "공시 3", content: "공시 3에 대한 내용" },
-        { title: "공시 4", content: "공시 4에 대한 내용" },
-        { title: "공시 5", content: "공시 5에 대한 내용" },
-    ];
 
     return (
         <S.HeaderContainer darkMode={isDarkMode}>
@@ -71,12 +78,10 @@ export default function Header(): JSX.Element {
                 <NavBar />
             </S.Left>
             <S.Center>
-                <S.Marquee darkMode={isDarkMode}>
-                    {announcements.map((announcement, index) => (
-                        <p key={index}>
-                            {`${announcement.title}: ${announcement.content}`}
-                        </p>
-                    ))}
+                <S.Marquee darkMode={isDarkMode} key={currentAnnouncement}>
+                    <p>
+                        {`${announcements[currentAnnouncement].title}: ${announcements[currentAnnouncement].content}`}
+                    </p>
                 </S.Marquee>
             </S.Center>
             <S.Right>
