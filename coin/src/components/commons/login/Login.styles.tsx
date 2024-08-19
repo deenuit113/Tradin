@@ -82,3 +82,21 @@ export const LoginButton = styled.button`
         cursor: pointer;
     }
 `
+
+export const KakaoLoginButton = styled.button`
+    width: 230px;
+    display: flex;
+    font-weight: bolder;
+    padding: 10px 20px 10px 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    height: 50px;
+    justify-content: flex-end;
+    align-items: center;
+    align-text: center;
+    flex-direction: row;
+    &:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+`
