@@ -24,6 +24,10 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean
     border: 3px solid red;
     flex-direction: column;
 
+    #naverIdLogin {
+        margin-bottom: 15px;
+    }
+
     &::-webkit-scrollbar {
         width: 12px;
     }
