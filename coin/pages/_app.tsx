@@ -5,6 +5,7 @@ import { SidebarProvider } from "../src/components/commons/sidebar/SidebarContex
 import { RecoilRoot } from "recoil";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import SideBar from "../src/components/commons/sidebar/Sidebar";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -16,7 +17,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <DndProvider backend={HTML5Backend}>
                     <SidebarProvider>
                         <Header />
-                    <Component {...pageProps} />
+                        <SideBar/>
+                        <Component {...pageProps} />
                     </SidebarProvider>
                 </DndProvider>
             </RecoilRoot>

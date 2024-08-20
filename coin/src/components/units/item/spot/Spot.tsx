@@ -1,7 +1,5 @@
-import Link from 'next/link';
 import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
-import SideBar from "../../../commons/sidebar/Sidebar";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../../commons/atoms";
 import { useRouter } from 'next/router';
@@ -35,7 +33,6 @@ export default function SpotPage(): JSX.Element {
 
     return (
         <S.Container darkMode={isDarkMode}>
-            <SideBar />
             <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                 <S.SpotHeader darkMode={isDarkMode}>현물</S.SpotHeader>
                 {[1, 2, 3, 4].map((num) => (
