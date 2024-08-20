@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import * as S from "./Main.styles";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
-import SideBar from "../../commons/sidebar/Sidebar";
 import { FaPlus } from "react-icons/fa";
 import Widget from "../widget/Widget";
 import { useRecoilState } from "recoil";
@@ -88,7 +87,6 @@ export default function MainPage(): JSX.Element {
 
     return (
         <S.Container $darkMode={isDarkMode}>
-            <SideBar />
             <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                 {widgets.map((widgetData, index) => (
                     <Widget

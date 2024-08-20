@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
-import SideBar from '../../../commons/sidebar/Sidebar';
 import { useRecoilState } from "recoil";
 import { darkMode } from '../../../commons/atoms';
 import { useState, useEffect } from 'react';
@@ -72,7 +71,6 @@ export default function SpotDetail(): JSX.Element {
 
     return (
         <S.Container darkMode={isDarkMode}>
-            <SideBar />
             <S.SpotHeader sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
                     현물
                     <S.StrategyOption onClick={onClickStrategyOption}>옵션</S.StrategyOption>
