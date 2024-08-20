@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, googleProvider } from "../../util/firebase";
-import * as S from "../Login.styles"
+import * as S from "../main/Login.styles"
 import GoogleIcon from '@mui/icons-material/Google';
 
 export default function GoogleLogin(): JSX.Element {
