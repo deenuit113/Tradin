@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
-import * as S from "../main/Main.styles";
+import * as S from "../Main.styles";
 import { FaEllipsisV, FaCaretUp, FaCaretDown } from "react-icons/fa";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../../commons/atoms";
+import { darkMode } from "../../../commons/atoms";
 import CryptoWidget from "./CryptoWidget";
 import { availableWidgets } from "./AvailableWidgets";
 

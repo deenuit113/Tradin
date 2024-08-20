@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth, googleProvider } from "../../util/firebase";
+import { auth, googleProvider } from "../../../commons/util/firebase";
 import * as S from "../main/Login.styles"
 import GoogleIcon from '@mui/icons-material/Google';
 

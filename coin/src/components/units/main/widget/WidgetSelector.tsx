@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./WidgetSelector.styles";
 import Widget from "./Widget";
-import { darkMode } from "../../commons/atoms";
+import { darkMode } from "../../../commons/atoms";
 import { useRecoilState } from "recoil";
 import { useSpring, animated } from "react-spring";
 

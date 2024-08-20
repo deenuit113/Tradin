@@ -1,7 +1,7 @@
 import * as S from "./Login.styles"
-import { useSidebar } from "../../sidebar/SidebarContext";
+import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../../atoms";
+import { darkMode } from "../../../commons/atoms";
 import NaverLogin from "../naver/NaverLogin";
 import GoogleLogin from "../google/GoogleLogin";
 import KakaoLogin from "../kakao/KakaoLogin";
