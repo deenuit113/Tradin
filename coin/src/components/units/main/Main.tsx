@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import * as S from "./Main.styles";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import { FaPlus } from "react-icons/fa";
-import Widget from "../widget/Widget";
+import Widget from "./widget/Widget";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../commons/atoms";
-import WidgetSelector from "../widget/WidgetSelector";
-import { availableWidgets } from "../widget/AvailableWidgets";
-import ChartPopup from "../chart/Chart";
+import WidgetSelector from "./widget/WidgetSelector";
+import { availableWidgets } from "./widget/AvailableWidgets";
+import ChartPopup from "./chart/Chart";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function MainPage(): JSX.Element {
