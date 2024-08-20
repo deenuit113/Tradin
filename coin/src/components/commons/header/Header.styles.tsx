@@ -79,12 +79,13 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
 `;
 
 export const Right = styled.div`
-    width: 20%;
+    width: 25%;
     display: flex;
     align-items: center;
     align-text: center;
     justify-content: space-between;
     margin-left: 10px;
+    padding: 0px 10px 0px 10px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 30%;
