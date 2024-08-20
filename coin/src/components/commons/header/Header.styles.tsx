@@ -20,7 +20,7 @@ export const Left = styled.div`
     align-items: center;
     align-text: center;
     justify-content: space-between;
-    border: 1px solid blue;
+
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 15%;
     }
@@ -39,7 +39,6 @@ export const Title = styled.h1<{ darkMode: boolean }>`
 export const Center = styled.div`
     width: 60%;
     text-align: center;
-    border: 1px solid red;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 40%;
@@ -54,7 +53,7 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
     white-space: nowrap;
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     position: relative;
-    height: 30px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,7 +85,7 @@ export const Right = styled.div`
     align-text: center;
     justify-content: space-between;
     margin-left: 10px;
-    border: 1px solid green;
+
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 30%;
         margin-right: 20px;
