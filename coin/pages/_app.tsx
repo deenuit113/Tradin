@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Head>
-                <title>project</title>
+                <title>Tradin</title>
             </Head>
             <RecoilRoot>
                 <DndProvider backend={HTML5Backend}>
