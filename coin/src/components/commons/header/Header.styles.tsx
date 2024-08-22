@@ -20,6 +20,7 @@ export const Left = styled.div`
     align-items: center;
     align-text: center;
     justify-content: space-between;
+    padding-left: 15px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 15%;
