@@ -73,7 +73,7 @@ export default function Header(): JSX.Element {
                     onClick={handleTitleClick}
                     darkMode={isDarkMode}
                 >
-                    name
+                    Tradin
                 </S.Title>
                 <NavBar />
             </S.Left>
