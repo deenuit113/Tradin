@@ -9,8 +9,11 @@ interface CryptoWidgetProps {
 export default function CryptoWidget({ coinId, setPriceData }: CryptoWidgetProps) {
     useEffect(() => {
         const cachedData = localStorage.getItem(`crypto-${coinId}`);
+        let prevPrice: number | null = null;
+
         if (cachedData) {
             const parsedData = JSON.parse(cachedData);
+            prevPrice = parsedData.price;
             setPriceData(parsedData);
         }
 
@@ -19,15 +22,20 @@ export default function CryptoWidget({ coinId, setPriceData }: CryptoWidgetProps
                 const response = await axios.get(
                     `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=krw`
                 );
+                const newPrice = response.data[coinId].krw;
                 const timestamp = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+
                 const newData = {
-                    prevPrice: response.data[coinId].krw,
-                    price: response.data[coinId].krw,
+                    prevPrice: prevPrice,
+                    price: newPrice,
                     timestamp,
                 };
 
                 setPriceData(newData);
                 localStorage.setItem(`crypto-${coinId}`, JSON.stringify(newData));
+
+                // Update prevPrice for the next iteration
+                prevPrice = newPrice;
             } catch (error) {
                 console.error('Error fetching crypto price:', error);
             }
