@@ -7,6 +7,10 @@ import Widget from "./widget/Widget";
 import WidgetSelector from "./widget/WidgetSelector";
 import ChartPopup from "./chart/Chart";
 import { IMainPageUIProps } from "./main.types";
+import Switch from 'react-switch';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWon } from "@fortawesome/free-solid-svg-icons";
+import { faDollar } from "@fortawesome/free-solid-svg-icons";
 
 export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const [isDarkMode] = useRecoilState(darkMode);
@@ -15,6 +19,21 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     return (
         <>
             <S.Container $darkMode={isDarkMode}>
+                <S.CurrencyToggleContainer sidebarOpen={sidebarOpen}>
+                    <Switch
+                            onChange={() => props.setCurrency(prev => !prev)}
+                            checked={props.currency}
+                            offColor="#add836"
+                            onColor="#add836"
+                            uncheckedIcon={<FontAwesomeIcon icon={faWon} style={{ color: 'green', padding: '3.5px', paddingTop:'6px', fontSize: '14px'}} />}
+                            checkedIcon={<FontAwesomeIcon icon={faDollar} style={{ color: 'green', padding: '6px', fontSize: '15px'}} />}
+                            height={30}
+                            width={50}
+                            aria-label="coin-price-currency-unit"
+                            role="switch"
+                            className="Currency-Unit-Switch"
+                        />
+                </S.CurrencyToggleContainer>
                 <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                     {props.widgets.map((widgetData, index) => (
                         <Widget

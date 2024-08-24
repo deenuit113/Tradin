@@ -3,10 +3,40 @@ import styled from "@emotion/styled";
 export const Container = styled.div<{ $darkMode: boolean }>`
     display: flex;
     width: 100%;
-    height: 100vh;
-    justify-content: flex-end;
-    align-items: flex-end;
+    height: 90vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+`;
+
+export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
+    display: flex;
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+    align-items: center;
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
+    transition: width 0.3s ease, margin-left 0.3s ease;
+    justify-content: flex-end;
+    padding: 5px 10px;
+`;
+
+export const CurrencyToggleButton = styled.button<{ active: boolean }>`
+    background-color: ${({ active }) => (active ? '#0070f3' : '#ccc')};
+    color: ${({ active }) => (active ? '#fff' : '#333')};
+    border: none;
+    border-radius: 20px;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: ${({ active }) => (active ? '#005bb5' : '#bbb')};
+    }
+
+    &:first-of-type {
+        margin-right: 5px;
+    }
 `;
 
 export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean }>`
@@ -16,10 +46,10 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean
     justify-content: flex-start;
     align-items: flex-start;
     text-align: center;
-    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
-    height: 90%;
+    height: 100%;
     overflow-y: auto;
 
     &::-webkit-scrollbar {

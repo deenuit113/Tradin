@@ -7,8 +7,9 @@ export default function MainPage(): JSX.Element {
     const [widgets, setWidgets] = useState<{ id: string; type: string; name: string }[]>([]);
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
     const [widgetSelectorOpen, setWidgetSelectorOpen] = useState(false);
-    
     const [selectedSymbol, setSelectedSymbol] = useState<string | null>(null);
+
+    const [currency, setCurrency] = useState<boolean>(true);
 
     const addWidget = (widgetType: string) => {
         const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
@@ -92,6 +93,8 @@ export default function MainPage(): JSX.Element {
                 availableWidgetTypes={availableWidgetTypes}
                 widgetSelectorOpen={widgetSelectorOpen}
                 selectedSymbol={selectedSymbol}
+                currency={currency}
+                setCurrency={setCurrency}
             />
         </>
     );

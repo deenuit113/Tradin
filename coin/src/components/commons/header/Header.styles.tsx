@@ -1,14 +1,13 @@
 import styled from "@emotion/styled";
 
 export const HeaderContainer = styled.header<{ darkMode: boolean }>`
-    position: fixed;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 10vh;
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
-    border: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
     padding: 10px 0px 10px 0px;
     z-index: 999;
     box-sizing: border-box;
