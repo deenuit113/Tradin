@@ -20,6 +20,7 @@ export const Left = styled.div`
     align-items: center;
     align-text: center;
     justify-content: space-between;
+    padding-left: 15px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 15%;
@@ -106,7 +107,7 @@ export const Right = styled.div`
     align-text: center;
     justify-content: space-between;
     margin-left: 10px;
-    padding: 0px 10px 0px 10px;
+    padding: 0px;
 
     align-text: center;
     justify-content: space-between;
@@ -156,6 +157,7 @@ export const IconListItem = styled.li<{ darkMode: boolean }>`
     display: flex;
     align-items: center;
     width: 30%;
+    justify-content: center;
 
     p {
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
