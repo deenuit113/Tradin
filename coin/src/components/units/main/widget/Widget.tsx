@@ -18,6 +18,8 @@ interface WidgetProps {
     removeWidget: (index: number) => void;
     moveWidget: (dragIndex: number, hoverIndex: number) => void;
     onClickWidget: (symbol: string) => void;
+    isCurrencyKRW: boolean;
+    exchangeRate: number | null;
 }
 
 const Widget = ({
@@ -28,6 +30,8 @@ const Widget = ({
     removeWidget,
     moveWidget,
     onClickWidget,
+    isCurrencyKRW,
+    exchangeRate,
 }: WidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
     const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
@@ -90,6 +94,13 @@ const Widget = ({
         return <span>-</span>; // 전의 가격과 같을 때
     };
 
+    const exchangePrice = () => {
+        if (priceData?.price !== null && exchangeRate !== null) {
+            return (priceData.price / exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        return null;
+    };
+
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);
 
     return (
@@ -113,7 +124,11 @@ const Widget = ({
                     )}
                 </S.WidgetHeader>
                 <S.WidgetContent $darkMode={isDarkMode}>
-                    <p>가격: {priceData.price ? `${priceData.price} KRW` : '로딩 중...'}</p>
+                    {isCurrencyKRW ?
+                    <p>가격: {priceData.price ? `${priceData.price.toLocaleString()} KRW` : '로딩 중...'}</p>
+                    : <p>가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
+                    }
+                    
                     {getIcon()}
                     {priceData.timestamp && <S.CoinTimeStamp>{priceData.timestamp} 기준</S.CoinTimeStamp>}
                 </S.WidgetContent>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { availableWidgets } from "./widget/AvailableWidgets";
 import { v4 as uuidv4 } from 'uuid';
 import MainPageUI from "./Main.presenter";
+import { getCurrencyConversionRates } from "./currency/CurrencyConvertAPI";
 
 export default function MainPage(): JSX.Element {
     const [widgets, setWidgets] = useState<{ id: string; type: string; name: string }[]>([]);
@@ -9,7 +10,8 @@ export default function MainPage(): JSX.Element {
     const [widgetSelectorOpen, setWidgetSelectorOpen] = useState(false);
     const [selectedSymbol, setSelectedSymbol] = useState<string | null>(null);
 
-    const [currency, setCurrency] = useState<boolean>(true);
+    const [isCurrencyKRW, setIsCurrencyKRW] = useState<boolean>(true);
+    const [exchangeRate, setExchangeRate] = useState<number | null>(null); // 환율 값을 관리하기 위한 상태 추가
 
     const addWidget = (widgetType: string) => {
         const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
@@ -70,6 +72,18 @@ export default function MainPage(): JSX.Element {
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
+    useEffect(() => {
+        const fetchExchangeRate = async () => {
+            const usdToKrwRate = await getCurrencyConversionRates();
+            setExchangeRate(usdToKrwRate); // 환율 값을 상태로 저장
+        };
+
+        fetchExchangeRate(); // 컴포넌트가 마운트될 때 처음 환율 값을 가져옴
+        const interval = setInterval(fetchExchangeRate, 60000); // 1분마다 환율 값을 갱신
+
+        return () => clearInterval(interval); // 컴포넌트가 언마운트될 때 인터벌을 정리
+    }, []);
+
     const availableWidgetTypes = availableWidgets.filter(
         (widget) => !widgets.some((w) => w.type === widget.type)
     );
@@ -93,8 +107,9 @@ export default function MainPage(): JSX.Element {
                 availableWidgetTypes={availableWidgetTypes}
                 widgetSelectorOpen={widgetSelectorOpen}
                 selectedSymbol={selectedSymbol}
-                currency={currency}
-                setCurrency={setCurrency}
+                isCurrencyKRW={isCurrencyKRW}
+                setIsCurrencyKRW={setIsCurrencyKRW}
+                exchangeRate={exchangeRate}
             />
         </>
     );

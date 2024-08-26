@@ -21,8 +21,8 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
             <S.Container $darkMode={isDarkMode}>
                 <S.CurrencyToggleContainer sidebarOpen={sidebarOpen}>
                     <Switch
-                            onChange={() => props.setCurrency(prev => !prev)}
-                            checked={props.currency}
+                            onChange={() => props.setIsCurrencyKRW(prev => !prev)}
+                            checked={props.isCurrencyKRW}
                             offColor="#add836"
                             onColor="#add836"
                             uncheckedIcon={<FontAwesomeIcon icon={faWon} style={{ color: 'green', padding: '3.5px', paddingTop:'6px', fontSize: '14px'}} />}
@@ -45,6 +45,8 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             setMenuOpen={props.setMenuOpen}
                             moveWidget={props.moveWidget}
                             onClickWidget={(symbol) => props.setSelectedSymbol(symbol)}
+                            isCurrencyKRW={props.isCurrencyKRW}
+                            exchangeRate={props.exchangeRate}
                         />
                     ))}
                     <S.WidgetAdd $darkMode={isDarkMode}>
