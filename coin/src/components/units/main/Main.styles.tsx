@@ -141,6 +141,10 @@ export const Widget = styled.div<{ isDragging: boolean, $darkMode: boolean }>`
     transition: transform 0.3s ease;
     transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
 
+    :hover {
+        transform: scale(1.05);
+    }
+
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 190px;
         height: 180px;
