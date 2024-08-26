@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./WidgetSelector.styles";
 import Widget from "./Widget";
-import { darkMode } from "../../../commons/atoms";
+import { darkMode, currencyKRW } from "../../../commons/atoms";
 import { useRecoilState } from "recoil";
 import { useSpring, animated } from "react-spring";
+import { useExchangeRate } from "../../../../hooks/useExchangeRate";
 
 interface WidgetSelectorProps {
     addWidget: (widgetType: string) => void;
@@ -15,6 +16,9 @@ interface WidgetSelectorProps {
 const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen }: WidgetSelectorProps) => {
     const [isDarkMode] = useRecoilState(darkMode);
     const [closing, setClosing] = useState(false);
+    const [isCurrencyKRW] = useRecoilState(currencyKRW);
+
+    const exchangeRate = useExchangeRate();
 
     const slideInAnimation = useSpring({
         transform: isOpen ? 'translateY(0%)' : 'translateY(100%)',
@@ -63,6 +67,8 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
                                 removeWidget={() => {}}
                                 moveWidget={() => {}}
                                 onClickWidget={(symbol: string) => {}}
+                                isCurrencyKRW={isCurrencyKRW}
+                                exchangeRate={exchangeRate}
                             />
                         </S.WidgetOption>
                     ))
