@@ -31,7 +31,7 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
         }
     });
 
-    const handleClose = () => {
+    const OnClickCloseWidgetSelector = () => {
         setClosing(true);
         setIsSelectorOpen(false);
     };
@@ -39,7 +39,7 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                handleClose();
+                OnClickCloseWidgetSelector();
             }
         };
 
@@ -53,14 +53,14 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
         <S.SelectorContainer as={animated.div} style={slideInAnimation} $darkMode={isDarkMode}>
             <S.SelectorHeader>
                 <S.SelectorHeaderTitle $darkMode={isDarkMode}>위젯 추가</S.SelectorHeaderTitle>
-                <S.CloseButton $darkMode={isDarkMode} onClick={handleClose}>&times;</S.CloseButton>
+                <S.CloseButton $darkMode={isDarkMode} onClick={OnClickCloseWidgetSelector}>&times;</S.CloseButton>
             </S.SelectorHeader>
             <S.WidgetOptionContainer $darkMode={isDarkMode}>
                 {availableWidgets.length > 0 ? (
                     availableWidgets.map(widget => (
-                        <S.WidgetOption key={`${widget.type}-${Math.random()}`} onClick={() => addWidget(widget.type)}>
+                        <S.WidgetOption key={`${widget.type}`} onClick={() => addWidget(widget.type)}>
                             <Widget
-                                widget={{ id: `${widget.type}-${Math.random()}`, type: widget.type, name: widget.name }} // 고유한 ID 생성
+                                widget={{ id: `${widget.type}`, type: widget.type, name: widget.name }} // 고유한 ID 생성
                                 index={0}
                                 menuOpen={null}
                                 setMenuOpen={() => {}}
