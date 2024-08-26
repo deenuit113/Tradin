@@ -153,9 +153,6 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
 export const IconListItem = styled.li<{ darkMode: boolean }>`
     display: flex;
     align-items: center;
-export const IconListItem = styled.li<{ darkMode: boolean }>`
-    display: flex;
-    align-items: center;
     width: 30%;
     justify-content: center;
 
@@ -179,36 +176,6 @@ export const ToggleButton = styled.button<{ darkMode: boolean }>`
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     }
 `;
-
-export const Login = styled.p`
-    font-size: 11px;
-    &:hover {
-        cursor: pointer;
-    }
-    @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 7px;
-    }
-`
-
-export const LoginSignUpLabel = styled.p`
-    font-size: 11px;
-    &:hover {
-        cursor: pointer;
-    }
-    @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 7px;
-    }
-`
-
-export const SignUp = styled.p`
-    font-size: 11px;
-    &:hover {
-        cursor: pointer;
-    }
-    @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 7px;
-    }
-`
 
 export const Login = styled.p`
     font-size: 11px;
