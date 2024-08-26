@@ -44,8 +44,6 @@ export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode:
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
-    justify-content: flex-start;
-    align-items: flex-start;
     text-align: center;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
     transition: width 0.3s ease, margin-left 0.3s ease;
@@ -136,11 +134,10 @@ export const Widget = styled.div<{ isDragging: boolean, $darkMode: boolean }>`
     height: 200px;
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: auto;
     position: relative;
     transition: transform 0.3s ease;
     transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
-
     :hover {
         transform: scale(1.05);
     }
