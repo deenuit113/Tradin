@@ -104,12 +104,21 @@ const Widget = ({
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);
 
     return (
-        <animated.div style={springStyle} ref={ref} onClick={() => onClickWidget(widgetConfig?.symbol || '')}>
-            <S.Widget isDragging={isDragging} $darkMode={isDarkMode}>
+        <animated.div style={springStyle} ref={ref}>
+
+            {/* onClick 이벤트 핸들러를 S.Widget 내부로 이동 */}
+            <S.Widget 
+                isDragging={isDragging} 
+                $darkMode={isDarkMode}
+                onClick={() => onClickWidget(widgetConfig?.symbol || '')}
+            >
                 <S.WidgetHeader $darkMode={isDarkMode}>
                     {widgetConfig?.name} {widgetConfig?.icon}
                     <S.MenuIcon
-                        onClick={() => setMenuOpen(index === menuOpen ? null : index)}
+                        onClick={(e) => {
+                            e.stopPropagation(); // 메뉴 아이콘 클릭 시 이벤트 버블링 방지
+                            setMenuOpen(index === menuOpen ? null : index);
+                        }}
                         $darkMode={isDarkMode}
                     >
                         <FaEllipsisV className="MenuIcon" />
@@ -117,7 +126,10 @@ const Widget = ({
                     {menuOpen === index && (
                         <S.DropdownMenu $darkMode={isDarkMode}>
                             <S.DropdownItem
-                                onClick={() => removeWidget(index)}
+                                onClick={(e) => {
+                                    e.stopPropagation(); // 삭제 클릭 시 이벤트 버블링 방지
+                                    removeWidget(index);
+                                }}
                                 $darkMode={isDarkMode}
                             >위젯 삭제</S.DropdownItem>
                         </S.DropdownMenu>
