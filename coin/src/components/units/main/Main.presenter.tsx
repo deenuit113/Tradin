@@ -34,7 +34,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             className="Currency-Unit-Switch"
                         />
                 </S.CurrencyToggleContainer>
-                <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
+                <S.WidgetGridContainer sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                     {props.widgets.map((widgetData, index) => (
                         <Widget
                             key={widgetData.id} // 고유한 key 값으로 id 사용
@@ -68,7 +68,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             $darkMode={isDarkMode}
                         />
                     )}
-                </S.MainContent>
+                </S.WidgetGridContainer>
             </S.Container>
         </>
     );
