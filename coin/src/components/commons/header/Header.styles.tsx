@@ -15,10 +15,15 @@ export const HeaderContainer = styled.header<{ darkMode: boolean }>`
 
 export const Left = styled.div`
     width: 15%;
+    width: 15%;
     display: flex;
     align-items: center;
     align-text: center;
     justify-content: space-between;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 15%;
+    }
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 15%;
@@ -41,6 +46,7 @@ export const Center = styled.div`
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 40%;
+        width: 40%;
         margin-left: 20px;
     }
 `;
@@ -57,8 +63,17 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
     justify-content: center;
     align-items: center;
     padding: 10px 0px 10px 0px;
+    position: relative;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px 10px 0px;
 
     p {
+        margin: 0;
+        position: absolute;
+        animation: slideUp 1s ease-in-out;
         margin: 0;
         position: absolute;
         animation: slideUp 1s ease-in-out;
@@ -66,10 +81,16 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
     }
 
     @keyframes slideUp {
+    @keyframes slideUp {
         0% {
             transform: translateY(100%);
             opacity: 0;
+            transform: translateY(100%);
+            opacity: 0;
         }
+        50% {
+            transform: translateY(0%);
+            opacity: 1;
         50% {
             transform: translateY(0%);
             opacity: 1;
@@ -79,6 +100,7 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
 
 export const Right = styled.div`
     width: 25%;
+    width: 25%;
     display: flex;
     align-items: center;
     align-text: center;
@@ -86,7 +108,13 @@ export const Right = styled.div`
     margin-left: 10px;
     padding: 0px 10px 0px 10px;
 
+    align-text: center;
+    justify-content: space-between;
+    margin-left: 10px;
+    padding: 0px 10px 0px 10px;
+
     @media all and (min-width:359px) and (max-width: 799px) {
+        width: 30%;
         width: 30%;
         margin-right: 20px;
     }
@@ -99,9 +127,17 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
     padding: 0;
     margin: 0;
     justify-content: space-between;
+    justify-content: space-between;
 
     .DarkMode-Switch{
         &:hover{
+            box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 10px blue' : '0px 0px 10px lightblue')};
+        }
+    }
+
+    .Notification-Switch {
+        &:hover {
+            filter: drop-shadow(${({ darkMode }) => (darkMode ? '0px 0px 5px black' : '0px 0px 5px white')});
             box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 10px blue' : '0px 0px 10px lightblue')};
         }
     }
@@ -116,7 +152,14 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
 export const IconListItem = styled.li<{ darkMode: boolean }>`
     display: flex;
     align-items: center;
+export const IconListItem = styled.li<{ darkMode: boolean }>`
+    display: flex;
+    align-items: center;
     width: 30%;
+
+    p {
+        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    }
 
     p {
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
@@ -134,6 +177,36 @@ export const ToggleButton = styled.button<{ darkMode: boolean }>`
         color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
     }
 `;
+
+export const Login = styled.p`
+    font-size: 11px;
+    &:hover {
+        cursor: pointer;
+    }
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 7px;
+    }
+`
+
+export const LoginSignUpLabel = styled.p`
+    font-size: 11px;
+    &:hover {
+        cursor: pointer;
+    }
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 7px;
+    }
+`
+
+export const SignUp = styled.p`
+    font-size: 11px;
+    &:hover {
+        cursor: pointer;
+    }
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 7px;
+    }
+`
 
 export const Login = styled.p`
     font-size: 11px;
