@@ -18,7 +18,7 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
     const [closing, setClosing] = useState(false);
     const [isCurrencyKRW] = useRecoilState(currencyKRW);
 
-    const exchangeRate = useExchangeRate();
+    const { exchangeRate, timestamp } = useExchangeRate();
 
     const slideInAnimation = useSpring({
         transform: isOpen ? 'translateY(0%)' : 'translateY(100%)',

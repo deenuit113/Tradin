@@ -10,7 +10,7 @@ export const Container = styled.div<{ $darkMode: boolean }>`
     background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
 `;
 
-export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
+export const CurrencyToggleContainer = styled.div<{ $darkMode: boolean, sidebarOpen: boolean }>`
     display: flex;
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     align-items: center;
@@ -18,24 +18,33 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
     transition: width 0.3s ease, margin-left 0.3s ease;
     justify-content: flex-end;
     padding: 5px 10px;
-`;
 
-export const CurrencyToggleButton = styled.button<{ active: boolean }>`
-    background-color: ${({ active }) => (active ? '#0070f3' : '#ccc')};
-    color: ${({ active }) => (active ? '#fff' : '#333')};
-    border: none;
-    border-radius: 20px;
-    padding: 5px 15px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: ${({ active }) => (active ? '#005bb5' : '#bbb')};
+    .Currency-Unit-Switch {
+        margin: 0px 15px 0px 15px;
     }
 
-    &:first-of-type {
-        margin-right: 5px;
+    p {
+        font-size: 16px;
+        margin: 0;
+        position: relative;
+        font-weight: 550;
+        color: ${({ $darkMode: darkMode }) => (darkMode ? '#333' : '#ffffff')};
+    }
+    sub {
+        font-size: 12px;
+        font-weight: 350;
+        color: color: ${({ $darkMode: darkMode }) => (darkMode ? 'lightgray' : 'gray')};
+        position: absolute;
+        left: 0;
+        top: 100%;
+        white-space: nowrap;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.2s linear;
+    }
+    p:hover sub {
+        visibility: visible;
+        opacity: 1;
     }
 `;
 
