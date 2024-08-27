@@ -11,16 +11,24 @@ import Switch from 'react-switch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWon } from "@fortawesome/free-solid-svg-icons";
 import { faDollar } from "@fortawesome/free-solid-svg-icons";
+import { useExchangeRate } from "../../../hooks/useExchangeRate";
 
 export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const [isDarkMode] = useRecoilState(darkMode);
     const [isCurrencyKRW, setIsCurrencyKRW] = useRecoilState(currencyKRW);
     const { sidebarOpen } = useSidebar();
 
+    const { exchangeRate, timestamp } = useExchangeRate();
+    console.log('timestamp:',timestamp);
+
     return (
         <>
             <S.Container $darkMode={isDarkMode}>
-                <S.CurrencyToggleContainer sidebarOpen={sidebarOpen}>
+                <S.CurrencyToggleContainer $darkMode={isDarkMode} sidebarOpen={sidebarOpen}>
+                    <p>
+                        {exchangeRate}&nbsp;KRW/USD
+                        {timestamp && <sub>{new Date(timestamp).toLocaleString()}</sub>}
+                    </p>
                     <Switch
                             onChange={() => setIsCurrencyKRW(prev => !prev)}
                             checked={isCurrencyKRW}

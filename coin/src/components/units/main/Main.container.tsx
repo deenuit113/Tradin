@@ -10,7 +10,7 @@ export default function MainPage(): JSX.Element {
     const [widgetSelectorOpen, setWidgetSelectorOpen] = useState(false);
     const [selectedSymbol, setSelectedSymbol] = useState<string | null>(null);
 
-    const exchangeRate = useExchangeRate(); // 커스텀 훅으로 환율 상태 가져오기
+    const { exchangeRate, timestamp } = useExchangeRate();
 
     const addWidget = (widgetType: string) => {
         const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
