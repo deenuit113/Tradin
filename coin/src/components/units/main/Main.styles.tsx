@@ -51,14 +51,16 @@ export const CurrencyToggleContainer = styled.div<{ $darkMode: boolean, sidebarO
 export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 1rem;
     text-align: center;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
     transition: width 0.3s ease, margin-left 0.3s ease;
-    padding: 1rem;
+    padding: 0rem 1rem 0rem 1rem;
     height: 100%;
     overflow-y: auto;
+    justify-items: center;
+    align-items: center;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -138,8 +140,8 @@ export const Widget = styled.div<{ isDragging: boolean, $darkMode: boolean }>`
     border: 1px solid lightgray;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
-    padding: 15px 15px 15px 15px;
-    width: 210px;
+    padding: 1rem;
+    width: 200px;
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -157,6 +159,24 @@ export const Widget = styled.div<{ isDragging: boolean, $darkMode: boolean }>`
     }
 `;
 
+export const WidgetAdd = styled.div<{ $darkMode: boolean }>`
+    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#fff' : '#a0a0a0')};
+    border: 1px solid lightgray;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 190px;
+        height: 180px;
+    }
+`;
+
 export const CoinTimeStamp = styled.p`
     color: gray;
     font-size: 11px;
@@ -166,26 +186,6 @@ export const CoinTimeStamp = styled.p`
         margin-top: 10px;
     }
 `
-
-export const WidgetAdd = styled.div<{ $darkMode: boolean }>`
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#fff' : '#a0a0a0')};
-    border: 1px solid lightgray;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 1rem;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    position: relative;
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        width: 190px;
-        height: 180px;
-    }
-`;
 
 export const WidgetHeader = styled.div<{ $darkMode: boolean }>`
     display: flex;
