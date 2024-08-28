@@ -11,7 +11,5 @@ export interface IMainPageUIProps {
     availableWidgetTypes: { type: string; name: string, icon: JSX.Element, symbol: string; }[]
     widgetSelectorOpen: boolean;
     selectedSymbol: string | null;
-    isCurrencyKRW: boolean;
-    setIsCurrencyKRW: React.Dispatch<React.SetStateAction<boolean>>;
     exchangeRate: number | null;
 }

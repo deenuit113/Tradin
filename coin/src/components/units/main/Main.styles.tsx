@@ -10,7 +10,7 @@ export const Container = styled.div<{ $darkMode: boolean }>`
     background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
 `;
 
-export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
+export const CurrencyToggleContainer = styled.div<{ $darkMode: boolean, sidebarOpen: boolean }>`
     display: flex;
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     align-items: center;
@@ -18,24 +18,81 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
     transition: width 0.3s ease, margin-left 0.3s ease;
     justify-content: flex-end;
     padding: 5px 10px;
-`;
 
-export const CurrencyToggleButton = styled.button<{ active: boolean }>`
-    background-color: ${({ active }) => (active ? '#0070f3' : '#ccc')};
-    color: ${({ active }) => (active ? '#fff' : '#333')};
-    border: none;
-    border-radius: 20px;
-    padding: 5px 15px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-        background-color: ${({ active }) => (active ? '#005bb5' : '#bbb')};
+    .Currency-Unit-Switch {
+        margin: 0px 15px 0px 15px;
     }
 
-    &:first-of-type {
-        margin-right: 5px;
+    p {
+        font-size: 16px;
+        margin: 0;
+        position: relative;
+        font-weight: 550;
+        color: ${({ $darkMode: darkMode }) => (darkMode ? '#333' : '#ffffff')};
+    }
+    sub {
+        font-size: 12px;
+        font-weight: 350;
+        color: color: ${({ $darkMode: darkMode }) => (darkMode ? 'lightgray' : 'gray')};
+        position: absolute;
+        left: 0;
+        top: 100%;
+        white-space: nowrap;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.2s linear;
+    }
+    p:hover sub {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        padding-bottom: 20px;
+    }
+`;
+
+export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode: boolean }>`
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1rem;
+    text-align: center;
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
+    transition: width 0.3s ease, margin-left 0.3s ease;
+    padding: 0rem 1rem 0rem 1rem;
+    height: 100%;
+    overflow-y: auto;
+    justify-items: center;
+    align-items: center;
+
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color:  ${({ $darkMode: darkMode }) => (darkMode ? '#888' : '#f0f0f0')};
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 8px;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+    }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        
     }
 `;
 
@@ -87,15 +144,36 @@ export const Widget = styled.div<{ isDragging: boolean, $darkMode: boolean }>`
     border: 1px solid lightgray;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
-    padding: 15px 15px 15px 15px;
-    width: 210px;
+    padding: 1rem;
+    width: 200px;
     height: 200px;
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: auto;
     position: relative;
     transition: transform 0.3s ease;
     transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
+    :hover {
+        transform: scale(1.05);
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 190px;
+        height: 180px;
+    }
+`;
+
+export const WidgetAdd = styled.div<{ $darkMode: boolean }>`
+    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#fff' : '#a0a0a0')};
+    border: 1px solid lightgray;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 190px;
@@ -112,26 +190,6 @@ export const CoinTimeStamp = styled.p`
         margin-top: 10px;
     }
 `
-
-export const WidgetAdd = styled.div<{ $darkMode: boolean }>`
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#fff' : '#a0a0a0')};
-    border: 1px solid lightgray;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 1rem;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    position: relative;
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        width: 190px;
-        height: 180px;
-    }
-`;
 
 export const WidgetHeader = styled.div<{ $darkMode: boolean }>`
     display: flex;

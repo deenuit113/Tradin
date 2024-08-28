@@ -1,6 +1,6 @@
 import * as S from "./Main.styles";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../../commons/atoms";
+import { darkMode, currencyKRW } from "../../commons/atoms";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import { FaPlus } from "react-icons/fa";
 import Widget from "./widget/Widget";
@@ -11,18 +11,27 @@ import Switch from 'react-switch';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWon } from "@fortawesome/free-solid-svg-icons";
 import { faDollar } from "@fortawesome/free-solid-svg-icons";
+import { useExchangeRate } from "../../../hooks/useExchangeRate";
 
 export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const [isDarkMode] = useRecoilState(darkMode);
+    const [isCurrencyKRW, setIsCurrencyKRW] = useRecoilState(currencyKRW);
     const { sidebarOpen } = useSidebar();
+
+    const { exchangeRate, timestamp } = useExchangeRate();
+    console.log('timestamp:',timestamp);
 
     return (
         <>
             <S.Container $darkMode={isDarkMode}>
-                <S.CurrencyToggleContainer sidebarOpen={sidebarOpen}>
+                <S.CurrencyToggleContainer $darkMode={isDarkMode} sidebarOpen={sidebarOpen}>
+                    <p>
+                        {exchangeRate}&nbsp;KRW/USD
+                        {timestamp && <sub>{new Date(timestamp).toLocaleString()}</sub>}
+                    </p>
                     <Switch
-                            onChange={() => props.setIsCurrencyKRW(prev => !prev)}
-                            checked={props.isCurrencyKRW}
+                            onChange={() => setIsCurrencyKRW(prev => !prev)}
+                            checked={isCurrencyKRW}
                             offColor="#add836"
                             onColor="#add836"
                             uncheckedIcon={<FontAwesomeIcon icon={faWon} style={{ color: 'green', padding: '3.5px', paddingTop:'6px', fontSize: '14px'}} />}
@@ -34,7 +43,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             className="Currency-Unit-Switch"
                         />
                 </S.CurrencyToggleContainer>
-                <S.MainContent sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
+                <S.WidgetGridContainer sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
                     {props.widgets.map((widgetData, index) => (
                         <Widget
                             key={widgetData.id} // 고유한 key 값으로 id 사용
@@ -45,7 +54,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             setMenuOpen={props.setMenuOpen}
                             moveWidget={props.moveWidget}
                             onClickWidget={(symbol) => props.setSelectedSymbol(symbol)}
-                            isCurrencyKRW={props.isCurrencyKRW}
+                            isCurrencyKRW={isCurrencyKRW}
                             exchangeRate={props.exchangeRate}
                         />
                     ))}
@@ -68,7 +77,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             $darkMode={isDarkMode}
                         />
                     )}
-                </S.MainContent>
+                </S.WidgetGridContainer>
             </S.Container>
         </>
     );

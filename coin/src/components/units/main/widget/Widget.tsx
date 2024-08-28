@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import * as S from "../Main.styles";
@@ -7,20 +7,9 @@ import { useRecoilState } from "recoil";
 import { darkMode } from "../../../commons/atoms";
 import CryptoWidget from "./CryptoWidget";
 import { availableWidgets } from "./AvailableWidgets";
+import { IWidgetProps } from "./Widget.types";
 
 const ItemType = "WIDGET";
-
-interface WidgetProps {
-    widget: { id: string; type: string; name: string };
-    index: number;
-    menuOpen: number | null;
-    setMenuOpen: (index: number | null) => void;
-    removeWidget: (index: number) => void;
-    moveWidget: (dragIndex: number, hoverIndex: number) => void;
-    onClickWidget: (symbol: string) => void;
-    isCurrencyKRW: boolean;
-    exchangeRate: number | null;
-}
 
 const Widget = ({
     widget,
@@ -32,7 +21,7 @@ const Widget = ({
     onClickWidget,
     isCurrencyKRW,
     exchangeRate,
-}: WidgetProps): JSX.Element => {
+}: IWidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
     const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
         price: null,
@@ -40,6 +29,9 @@ const Widget = ({
         timestamp: null,
     });
     const [isDarkMode] = useRecoilState(darkMode);
+    const [priceChangeIcon, setPriceChangeIcon] = useState<JSX.Element | null>(null);
+    const [priceChangePercentage, setPriceChangePercentage] = useState<string | null>(null);
+    const [lastChangeTimestamp, setLastChangeTimestamp] = useState<string | null>(null);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -87,12 +79,24 @@ const Widget = ({
         config: { tension: 250, friction: 20 }
     });
 
-    const getIcon = () => {
-        if (priceData.prevPrice === null || priceData.price === null) return null;
-        if (priceData.price > priceData.prevPrice) return <FaCaretUp color="red" />;
-        if (priceData.price < priceData.prevPrice) return <FaCaretDown color="blue" />;
-        return <span>-</span>; // 전의 가격과 같을 때
-    };
+    useEffect(() => {
+        if (priceData.prevPrice !== null && priceData.price !== null) {
+            if (priceData.price !== priceData.prevPrice) {
+                const priceChange = ((priceData.price - priceData.prevPrice) / priceData.prevPrice) * 100;
+                const formattedChange = priceChange.toFixed(2) + "%";
+
+                if (priceData.price > priceData.prevPrice) {
+                    setPriceChangeIcon(<FaCaretUp color="red" />);
+                    setPriceChangePercentage(`+${formattedChange}`);
+                } else if (priceData.price < priceData.prevPrice) {
+                    setPriceChangeIcon(<FaCaretDown color="blue" />);
+                    setPriceChangePercentage(formattedChange);
+                }
+
+                setLastChangeTimestamp(priceData.timestamp);
+            }
+        }
+    }, [priceData]);
 
     const exchangePrice = () => {
         if (priceData?.price !== null && exchangeRate !== null) {
@@ -104,12 +108,21 @@ const Widget = ({
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);
 
     return (
-        <animated.div style={springStyle} ref={ref} onClick={() => onClickWidget(widgetConfig?.symbol || '')}>
-            <S.Widget isDragging={isDragging} $darkMode={isDarkMode}>
+        <animated.div style={springStyle} ref={ref}>
+
+            {/* onClick 이벤트 핸들러를 S.Widget 내부로 이동 */}
+            <S.Widget 
+                isDragging={isDragging} 
+                $darkMode={isDarkMode}
+                onClick={() => onClickWidget(widgetConfig?.symbol || '')}
+            >
                 <S.WidgetHeader $darkMode={isDarkMode}>
                     {widgetConfig?.name} {widgetConfig?.icon}
                     <S.MenuIcon
-                        onClick={() => setMenuOpen(index === menuOpen ? null : index)}
+                        onClick={(e) => {
+                            e.stopPropagation(); // 메뉴 아이콘 클릭 시 이벤트 버블링 방지
+                            setMenuOpen(index === menuOpen ? null : index);
+                        }}
                         $darkMode={isDarkMode}
                     >
                         <FaEllipsisV className="MenuIcon" />
@@ -117,7 +130,10 @@ const Widget = ({
                     {menuOpen === index && (
                         <S.DropdownMenu $darkMode={isDarkMode}>
                             <S.DropdownItem
-                                onClick={() => removeWidget(index)}
+                                onClick={(e) => {
+                                    e.stopPropagation(); // 삭제 클릭 시 이벤트 버블링 방지
+                                    removeWidget(index);
+                                }}
                                 $darkMode={isDarkMode}
                             >위젯 삭제</S.DropdownItem>
                         </S.DropdownMenu>
@@ -129,8 +145,21 @@ const Widget = ({
                     : <p>가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
                     }
                     
-                    {getIcon()}
-                    {priceData.timestamp && <S.CoinTimeStamp>{priceData.timestamp} 기준</S.CoinTimeStamp>}
+                    {priceChangeIcon && (
+                        <span
+                            style={{
+                                color: priceChangeIcon.props.color,
+                                marginLeft: "8px",
+                            }}
+                        >
+                            {priceChangeIcon} {priceChangePercentage}
+                        </span>
+                    )}
+                    {lastChangeTimestamp && (
+                        <S.CoinTimeStamp>
+                            {lastChangeTimestamp} 기준
+                        </S.CoinTimeStamp>
+                    )}
                 </S.WidgetContent>
                 {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
             </S.Widget>
