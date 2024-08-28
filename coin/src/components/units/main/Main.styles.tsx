@@ -46,12 +46,16 @@ export const CurrencyToggleContainer = styled.div<{ $darkMode: boolean, sidebarO
         visibility: visible;
         opacity: 1;
     }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        padding-bottom: 20px;
+    }
 `;
 
 export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 1rem;
     text-align: center;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
@@ -88,7 +92,7 @@ export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode:
     }
 
     @media all and (min-width: 359px) and (max-width: 799px) {
-        grid-template-columns: repeat(2, 1fr);
+        
     }
 `;
 
