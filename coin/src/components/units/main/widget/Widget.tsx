@@ -30,6 +30,8 @@ const Widget = ({
     });
     const [isDarkMode] = useRecoilState(darkMode);
     const [priceChangeIcon, setPriceChangeIcon] = useState<JSX.Element | null>(null);
+    const [priceChangePercentage, setPriceChangePercentage] = useState<string | null>(null);
+    const [lastChangeTimestamp, setLastChangeTimestamp] = useState<string | null>(null);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -78,14 +80,21 @@ const Widget = ({
     });
 
     useEffect(() => {
-        if (priceData.prevPrice === null || priceData.price === null) {
-            setPriceChangeIcon(null);
-        } else if (priceData.price > priceData.prevPrice) {
-            setPriceChangeIcon(<FaCaretUp color="red" />);
-        } else if (priceData.price < priceData.prevPrice) {
-            setPriceChangeIcon(<FaCaretDown color="blue" />);
-        } else {
-            setPriceChangeIcon(<span>-</span>);
+        if (priceData.prevPrice !== null && priceData.price !== null) {
+            if (priceData.price !== priceData.prevPrice) {
+                const priceChange = ((priceData.price - priceData.prevPrice) / priceData.prevPrice) * 100;
+                const formattedChange = priceChange.toFixed(2) + "%";
+
+                if (priceData.price > priceData.prevPrice) {
+                    setPriceChangeIcon(<FaCaretUp color="red" />);
+                    setPriceChangePercentage(`+${formattedChange}`);
+                } else if (priceData.price < priceData.prevPrice) {
+                    setPriceChangeIcon(<FaCaretDown color="blue" />);
+                    setPriceChangePercentage(formattedChange);
+                }
+
+                setLastChangeTimestamp(priceData.timestamp);
+            }
         }
     }, [priceData]);
 
@@ -136,8 +145,21 @@ const Widget = ({
                     : <p>가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
                     }
                     
-                    {priceChangeIcon}
-                    {priceData.timestamp && <S.CoinTimeStamp>{priceData.timestamp} 기준</S.CoinTimeStamp>}
+                    {priceChangeIcon && (
+                        <span
+                            style={{
+                                color: priceChangeIcon.props.color,
+                                marginLeft: "8px",
+                            }}
+                        >
+                            {priceChangeIcon} {priceChangePercentage}
+                        </span>
+                    )}
+                    {lastChangeTimestamp && (
+                        <S.CoinTimeStamp>
+                            {lastChangeTimestamp} 기준
+                        </S.CoinTimeStamp>
+                    )}
                 </S.WidgetContent>
                 {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
             </S.Widget>
