@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import * as S from "../Main.styles";
@@ -29,6 +29,7 @@ const Widget = ({
         timestamp: null,
     });
     const [isDarkMode] = useRecoilState(darkMode);
+    const [priceChangeIcon, setPriceChangeIcon] = useState<JSX.Element | null>(null);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -76,12 +77,17 @@ const Widget = ({
         config: { tension: 250, friction: 20 }
     });
 
-    const getIcon = () => {
-        if (priceData.prevPrice === null || priceData.price === null) return null;
-        if (priceData.price > priceData.prevPrice) return <FaCaretUp color="red" />;
-        if (priceData.price < priceData.prevPrice) return <FaCaretDown color="blue" />;
-        return <span>-</span>; // 전의 가격과 같을 때
-    };
+    useEffect(() => {
+        if (priceData.prevPrice === null || priceData.price === null) {
+            setPriceChangeIcon(null);
+        } else if (priceData.price > priceData.prevPrice) {
+            setPriceChangeIcon(<FaCaretUp color="red" />);
+        } else if (priceData.price < priceData.prevPrice) {
+            setPriceChangeIcon(<FaCaretDown color="blue" />);
+        } else {
+            setPriceChangeIcon(<span>-</span>);
+        }
+    }, [priceData]);
 
     const exchangePrice = () => {
         if (priceData?.price !== null && exchangeRate !== null) {
@@ -130,7 +136,7 @@ const Widget = ({
                     : <p>가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
                     }
                     
-                    {getIcon()}
+                    {priceChangeIcon}
                     {priceData.timestamp && <S.CoinTimeStamp>{priceData.timestamp} 기준</S.CoinTimeStamp>}
                 </S.WidgetContent>
                 {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
