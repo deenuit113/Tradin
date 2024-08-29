@@ -67,7 +67,7 @@ export default function SidebarButton (props: ToggleButtonProps): JSX.Element {
     return (
         <ToggleButtonContainer
             onClick={handleClick}
-            className={isClose ? 'close' : ''}
+            className={isClose ? '' : 'close'}
             darkMode={props.darkMode}
         >
             <span className="stick"></span>
