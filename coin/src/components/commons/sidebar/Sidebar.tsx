@@ -5,6 +5,7 @@ import { useSidebar } from "./SidebarContext";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../atoms";
 import { useRouter } from 'next/router';
+
 export default function SideBar(): JSX.Element {
     const [spotOpen, setSpotOpen] = useState(false);
     const [futuresOpen, setFuturesOpen] = useState(false);
@@ -31,47 +32,43 @@ export default function SideBar(): JSX.Element {
     const onClickMoveToFutureStrategy = (id: number) => {
         router.push(`/future/${id}`);
     };
-    
+
     return (
         <>
             <S.Sidebar open={sidebarOpen} darkMode={isDarkMode}>
                 <S.Menu>
                     <S.ItemContainer darkMode={isDarkMode} onClick={onClickMoveToSpot}>
                         <S.MenuTitle darkMode={isDarkMode}>
-                            현물
+                            <p>현물</p>
                         </S.MenuTitle>
-                        <S.Icon onClick={toggleSpot} darkMode={isDarkMode}>
-                            <FaAngleDown className="FaAngleDown"/>
+                        <S.Icon onClick={(e) => { e.stopPropagation(); toggleSpot(); }} darkMode={isDarkMode} isOpen={spotOpen}>
+                            <FaAngleDown className="FaAngleDown" />
                         </S.Icon>
                     </S.ItemContainer>
-                    {spotOpen && (
-                        <S.SubMenu darkMode={isDarkMode}>
-                            {[1, 2, 3, 4].map((num) => (
-                                <S.MenuItem key={num} onClick={() => onClickMoveToSpotStrategy(num)}>
-                                    현물 {num}
-                                </S.MenuItem>
-                            ))}
-                            <S.MenuItem><FaPlusCircle /></S.MenuItem>
-                        </S.SubMenu>
-                    )}
+                    <S.SubMenu darkMode={isDarkMode} isOpen={spotOpen}>
+                        {[1, 2, 3, 4].map((num, index) => (
+                            <S.MenuItem key={num} index={4 - index} isOpen={spotOpen} onClick={() => onClickMoveToSpotStrategy(num)}>
+                                현물 {num}
+                            </S.MenuItem>
+                        ))}
+                        <S.MenuItem index={0} isOpen={spotOpen}><FaPlusCircle /></S.MenuItem>
+                    </S.SubMenu>
                     <S.ItemContainer darkMode={isDarkMode} onClick={onClickMoveToFutures}>
                         <S.MenuTitle darkMode={isDarkMode}>
-                            선물
+                            <p>선물</p>
                         </S.MenuTitle>
-                        <S.Icon onClick={toggleFutures} darkMode={isDarkMode}>
-                            <FaAngleDown className="FaAngleDown"/>
+                        <S.Icon onClick={(e) => { e.stopPropagation(); toggleFutures(); }} darkMode={isDarkMode} isOpen={futuresOpen}>
+                            <FaAngleDown className="FaAngleDown" />
                         </S.Icon>
                     </S.ItemContainer>
-                    {futuresOpen && (
-                        <S.SubMenu darkMode={isDarkMode}>
-                            {[1, 2, 3, 4].map((num) => (
-                                <S.MenuItem key={num} onClick={() => onClickMoveToFutureStrategy(num)}>
-                                    선물 {num}
-                                </S.MenuItem>
-                            ))}
-                            <S.MenuItem><FaPlusCircle /></S.MenuItem>
-                        </S.SubMenu>
-                    )}
+                    <S.SubMenu darkMode={isDarkMode} isOpen={futuresOpen}>
+                        {[1, 2, 3, 4].map((num, index) => (
+                            <S.MenuItem key={num} index={4 - index} isOpen={futuresOpen} onClick={() => onClickMoveToFutureStrategy(num)}>
+                                선물 {num}
+                            </S.MenuItem>
+                        ))}
+                        <S.MenuItem index={0} isOpen={futuresOpen}><FaPlusCircle /></S.MenuItem>
+                    </S.SubMenu>
                 </S.Menu>
             </S.Sidebar>
         </>
