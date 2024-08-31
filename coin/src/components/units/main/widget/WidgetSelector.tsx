@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as S from "./WidgetSelector.styles";
 import Widget from "./Widget";
 import { darkMode, currencyKRW } from "../../../commons/atoms";
@@ -14,6 +14,7 @@ interface WidgetSelectorProps {
 }
 
 const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen }: WidgetSelectorProps) => {
+    const WidgetSelectorRef = useRef<HTMLDivElement>(null);
     const [isDarkMode] = useRecoilState(darkMode);
     const [closing, setClosing] = useState(false);
     const [isCurrencyKRW] = useRecoilState(currencyKRW);
@@ -49,8 +50,21 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
         };
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (WidgetSelectorRef.current && !WidgetSelectorRef.current.contains(event.target as Node)) {
+                setIsSelectorOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [setIsSelectorOpen]);
+
     return (
-        <S.SelectorContainer as={animated.div} style={slideInAnimation} $darkMode={isDarkMode}>
+        <S.SelectorContainer as={animated.div} ref={WidgetSelectorRef} style={slideInAnimation} $darkMode={isDarkMode}>
             <S.SelectorHeader>
                 <S.SelectorHeaderTitle $darkMode={isDarkMode}>위젯 추가</S.SelectorHeaderTitle>
                 <S.CloseButton $darkMode={isDarkMode} onClick={OnClickCloseWidgetSelector}>&times;</S.CloseButton>
