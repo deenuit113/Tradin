@@ -10,6 +10,7 @@ import { useRecoilState } from "recoil";
 import { darkMode } from "../atoms";
 import NavBar from "../nav/Nav";
 import HeaderNotice from "./HeaderNotice";
+import SidebarButton from "./SidebarButton";
 
 export default function Header(): JSX.Element {
     const router = useRouter();
@@ -63,12 +64,7 @@ export default function Header(): JSX.Element {
     return (
         <S.HeaderContainer darkMode={isDarkMode}>
             <S.Left>
-                <S.ToggleButton
-                    onClick={toggleSidebar}
-                    darkMode={isDarkMode}
-                >
-                    <FaBars className="Fabars"/>
-                </S.ToggleButton>
+                <SidebarButton darkMode={isDarkMode} onClick={toggleSidebar}/>
                 <S.Title
                     onClick={handleTitleClick}
                     darkMode={isDarkMode}
