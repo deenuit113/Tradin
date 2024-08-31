@@ -23,6 +23,7 @@ const Widget = ({
     exchangeRate,
 }: IWidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
         price: null,
         prevPrice: null,
@@ -98,6 +99,19 @@ const Widget = ({
         }
     }, [priceData]);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setMenuOpen(null);  // dropdownMenu 외부를 클릭하면 닫음
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [setMenuOpen]);
+
     const exchangePrice = () => {
         if (priceData?.price !== null && exchangeRate !== null) {
             return (priceData.price / exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -128,7 +142,7 @@ const Widget = ({
                         <FaEllipsisV className="MenuIcon" />
                     </S.MenuIcon>
                     {menuOpen === index && (
-                        <S.DropdownMenu $darkMode={isDarkMode}>
+                        <S.DropdownMenu ref={dropdownRef} $darkMode={isDarkMode}>
                             <S.DropdownItem
                                 onClick={(e) => {
                                     e.stopPropagation(); // 삭제 클릭 시 이벤트 버블링 방지
