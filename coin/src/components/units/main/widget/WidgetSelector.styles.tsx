@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { animated } from "react-spring";
 
-export const SelectorContainer = styled(animated.div)<{ $darkMode: boolean }>`
+export const SelectorContainer = styled(animated.div)`
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: ${({ $darkMode }) => ($darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.textColor};
     border-top: 1px solid #ccc;
     border-radius: 8px 8px 0 0;
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
@@ -28,24 +28,24 @@ export const SelectorHeader = styled.div`
     border-bottom: 1px solid #ccc;
 `;
 
-export const SelectorHeaderTitle = styled.h3<{ $darkMode: boolean }>`
-    color: ${({ $darkMode }) => ($darkMode ? '#333' : '#f0f0f0')};
+export const SelectorHeaderTitle = styled.h3`
+    color: ${({ theme }) => theme.textColor};
 `
 
-export const CloseButton = styled.button<{ $darkMode: boolean }>`
+export const CloseButton = styled.button`
     background: none;
     border: none;
     font-size: 30px;
     cursor: pointer;
     transition: transform 0.3s ease;
-    color: ${({ $darkMode }) => ($darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
     
     &:hover {
         transform: rotate(180deg);
     }
 `;
 
-export const WidgetOptionContainer = styled.div<{ $darkMode: boolean }>`
+export const WidgetOptionContainer = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -57,7 +57,7 @@ export const WidgetOptionContainer = styled.div<{ $darkMode: boolean }>`
         height: 12px;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: ${({ $darkMode }) => ($darkMode ? '#888' : '#f0f0f0')};
+        background-color: ${({ theme }) => theme.scrollbarThumbColor};
         border-radius: 6px;
         transition: background-color 0.3s ease;
     }

@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div<{ darkMode: boolean }>`
+export const Container = styled.div`
     display: flex;
     width: 100%;
     height: 100vh;
     justify-content: flex-end;
     align-items: flex-end;
-    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.backgroundColor};
 `;
 
-export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean }>`
+export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: flex;
     flex-direction: column;
@@ -26,7 +26,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color:  ${({ darkMode }) => (darkMode ? '#888' : '#f0f0f0')};
+        background-color:  ${({ theme }) => theme.scrollbarThumbColor};
         border-radius: 6px;
         transition: background-color 0.3s ease;
     }
@@ -51,7 +51,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, darkMode: boolean 
     }
 `;
 
-export const SpotHeader = styled.div<{ darkMode: boolean }>`
+export const SpotHeader = styled.div`
     width: 100%;
     height: 10%;
     display: flex;
@@ -59,26 +59,26 @@ export const SpotHeader = styled.div<{ darkMode: boolean }>`
     justify-content: space-between;
     padding: 1rem;
     font-weight: bolder;
-    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
     
     .FaAngleRight{
         margin-left: 10px;
     }
 `;
 
-export const WidgetContainer = styled.div<{ darkMode: boolean }>`
+export const WidgetContainer = styled.div`
     width: 100%;
     margin-bottom: 1rem;
-    background-color: ${({ darkMode }) => (darkMode ? '#ddd' : '#444')};
+    background-color: ${({ theme }) => theme.backgroundColor};
     padding: 1rem;
     border-radius: 8px;
     box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
 `;
 
-export const WidgetHeader = styled.div<{ darkMode: boolean }>`
+export const WidgetHeader = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
-    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
     margin-bottom: 1rem;
     cursor: pointer;
 
@@ -87,10 +87,10 @@ export const WidgetHeader = styled.div<{ darkMode: boolean }>`
     }
 `;
 
-export const WidgetTable = styled.table<{ darkMode: boolean }>`
+export const WidgetTable = styled.table`
     width: 100%;
     border-collapse: collapse;
-    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
 
     .title{
         font-weight: bolder;
@@ -107,12 +107,12 @@ export const WidgetTable = styled.table<{ darkMode: boolean }>`
     }
 `;
 
-export const StrategyInfo = styled.td<{ darkMode: boolean }>`
+export const StrategyInfo = styled.td`
     border-left: 1px solid #ccc;
     border-radius: 5px;
     padding: 0.5rem;
     text-align: center;
-    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
 
     &:first-of-type {
         border-left: none;
@@ -142,7 +142,7 @@ export const HorizontalDivider = styled.div`
     margin: 1rem 0;
 `;
 
-export const TransactionHistory = styled.table<{ darkMode: boolean }>`
+export const TransactionHistory = styled.table`
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
@@ -150,13 +150,13 @@ export const TransactionHistory = styled.table<{ darkMode: boolean }>`
     th, td {
         padding: 0.5rem;
         text-align: left;
-        border-bottom: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
+        border-bottom: 1px solid #ccc;
         vertical-align: middle;
-        border-right: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
+        border-right: 1px solid #ccc;
     }
 
     th {
-        border-top: 1px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
+        border-top: 1px solid #ccc;
     }
 
     th:last-child, td:last-child {
@@ -165,16 +165,16 @@ export const TransactionHistory = styled.table<{ darkMode: boolean }>`
 
     .title {
         font-weight: bold;
-        color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
+        color: ${({ theme }) => theme.textColor};
         text-align: center;
     }
 
     .value {
-        color: ${({ darkMode }) => (darkMode ? 'black' : '#f0f0f0')};
+        color: ${({ theme }) => theme.textColor};
         text-align: center;
     }
 
     .bordered {
-        border-right: 2px solid ${({ darkMode }) => (darkMode ? '#ccc' : '#ccc')};
+        border-right: 2px solid #ccc;
     }
 `;

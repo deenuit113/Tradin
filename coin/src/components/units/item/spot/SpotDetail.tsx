@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
-import { useRecoilState } from "recoil";
-import { darkMode } from '../../../commons/atoms';
 import { useState, useEffect } from 'react';
 import SpotDetailOption from './SpotDetailOpt';
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
@@ -26,7 +24,6 @@ const coinData: CoinData[] = [
 
 export default function SpotDetail(): JSX.Element {
     const { sidebarOpen } = useSidebar();
-    const [isDarkMode] = useRecoilState(darkMode);
     const router = useRouter();
     const { num } = router.query;
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
@@ -70,8 +67,8 @@ export default function SpotDetail(): JSX.Element {
     const position = "하강";
 
     return (
-        <S.Container darkMode={isDarkMode}>
-            <S.SpotHeader sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
+        <S.Container>
+            <S.SpotHeader sidebarOpen={sidebarOpen} >
                     현물
                     <S.StrategyOption onClick={onClickStrategyOption}>옵션</S.StrategyOption>
                     <SpotDetailOption
@@ -81,43 +78,43 @@ export default function SpotDetail(): JSX.Element {
                         handleCheckboxChange={handleCheckboxChange}
                     />    
                 </S.SpotHeader>
-            <S.MainContent sidebarOpen={sidebarOpen} darkMode={isDarkMode}>
-                <S.WidgetDetailContainer darkMode={isDarkMode} selectedOption={selectedOption}>
-                    <S.WidgetHeader darkMode={isDarkMode}>현물 {num}</S.WidgetHeader>
-                    <S.WidgetTable darkMode={isDarkMode} selectedOption={selectedOption}>
+            <S.MainContent sidebarOpen={sidebarOpen} >
+                <S.WidgetDetailContainer selectedOption={selectedOption}>
+                    <S.WidgetHeader>현물 {num}</S.WidgetHeader>
+                    <S.WidgetTable selectedOption={selectedOption}>
                         <thead>
                             <tr>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>코인</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>현재 포지션</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>진입가격</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>누적손익</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>승률</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>수익 팩터</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>횟수</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>평균봉수</S.StrategyInfo>
-                                <S.StrategyInfo className="title" darkMode={isDarkMode}>평균수익</S.StrategyInfo>
+                                <S.StrategyInfo className="title">코인</S.StrategyInfo>
+                                <S.StrategyInfo className="title">현재 포지션</S.StrategyInfo>
+                                <S.StrategyInfo className="title">진입가격</S.StrategyInfo>
+                                <S.StrategyInfo className="title">누적손익</S.StrategyInfo>
+                                <S.StrategyInfo className="title">승률</S.StrategyInfo>
+                                <S.StrategyInfo className="title">수익 팩터</S.StrategyInfo>
+                                <S.StrategyInfo className="title">횟수</S.StrategyInfo>
+                                <S.StrategyInfo className="title">평균봉수</S.StrategyInfo>
+                                <S.StrategyInfo className="title">평균수익</S.StrategyInfo>
                             </tr>
                         </thead>
                         <tbody>
                             {coinData.map((data, index) => (
                                 <tr key={index}>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>코인아이콘</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>
+                                    <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">
                                         {data.position === '상승' ? <FaCaretUp className="position-icon" color="red" /> : <FaCaretDown className="position-icon" color="blue" />}
                                     </S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.entryPrice}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.profitLoss}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.winRate}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.profitFactor}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.trades}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.averageBars}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>{data.averageProfit}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">{data.entryPrice}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">{data.profitLoss}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">{data.winRate}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">{data.profitFactor}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">{data.trades}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">{data.averageBars}</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">{data.averageProfit}</S.StrategyInfo>
                                 </tr>
                             ))}
                         </tbody>
                     </S.WidgetTable>
                     <S.HorizontalDivider />
-                    <S.TransactionHistory darkMode={isDarkMode} selectedOption={selectedOption}>
+                    <S.TransactionHistory selectedOption={selectedOption}>
                         <thead>
                             <tr>
                                 <S.StrategyInFoDetail className="title">ID</S.StrategyInFoDetail>
@@ -154,39 +151,38 @@ export default function SpotDetail(): JSX.Element {
                 </S.WidgetDetailContainer>
 
                 {selectedOption && (
-                    <S.WidgetDetailContainer darkMode={isDarkMode} selectedOption={selectedOption}>
-                        <S.WidgetHeader darkMode={isDarkMode}>현물 {selectedOption}</S.WidgetHeader>
-                        <S.WidgetTable darkMode={isDarkMode} selectedOption={selectedOption}>
+                    <S.WidgetDetailContainer selectedOption={selectedOption}>
+                        <S.WidgetHeader>현물 {selectedOption}</S.WidgetHeader>
+                        <S.WidgetTable  selectedOption={selectedOption}>
                             <thead>
                                 <tr>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>코인</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>현재 포지션</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>진입가격</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>누적손익</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>승률</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>수익 팩터</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>횟수</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>평균봉수</S.StrategyInfo>
-                                    <S.StrategyInfo className="title" darkMode={isDarkMode}>평균수익</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">코인</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">현재 포지션</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">진입가격</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">누적손익</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">승률</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">수익 팩터</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">횟수</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">평균봉수</S.StrategyInfo>
+                                    <S.StrategyInfo className="title">평균수익</S.StrategyInfo>
                                  </tr>
                             </thead>
                             <tbody>
-                                {/* Example static data or fetch similar data for the selected option */}
                                 <tr>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>코인아이콘</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>상승</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>1000 KRW</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>10.00%</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>50.00%</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>1.234</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>5</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>10</S.StrategyInfo>
-                                    <S.StrategyInfo className="value" darkMode={isDarkMode}>5.00%</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">상승</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">1000 KRW</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">10.00%</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">50.00%</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">1.234</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">5</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">10</S.StrategyInfo>
+                                    <S.StrategyInfo className="value">5.00%</S.StrategyInfo>
                                 </tr>
                             </tbody>
                         </S.WidgetTable>
                         <S.HorizontalDivider />
-                        <S.TransactionHistory darkMode={isDarkMode} selectedOption={selectedOption}>
+                        <S.TransactionHistory selectedOption={selectedOption}>
                             <thead>
                                 <tr>
                                     <S.StrategyInFoDetail className="title">ID</S.StrategyInFoDetail>

@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 
-export const Sidebar = styled.div<{ open: boolean, darkMode: boolean }>`
+export const Sidebar = styled.div<{ open: boolean }>`
     width: 15%;
     height: 90vh;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
-    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.backgroundColor};
     overflow-y: auto;
     z-index: 999;
     position: fixed;
@@ -39,11 +39,11 @@ export const MenuItem = styled.li<{ index: number, isOpen: boolean }>`
     transition-delay: ${({ index }) => `${index * 0.1}s`};
 `;
 
-export const MenuTitle = styled.div<{ darkMode: boolean }>`
+export const MenuTitle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
     width: 100%;
     flex: 1;
     padding-left: 1rem;
@@ -53,7 +53,7 @@ export const MenuTitle = styled.div<{ darkMode: boolean }>`
     }
 `;
 
-export const Icon = styled.span<{ darkMode: boolean, isOpen: boolean }>`
+export const Icon = styled.span<{ isOpen: boolean }>`
     display: flex;
     cursor: pointer;
     width: 20%;
@@ -62,7 +62,7 @@ export const Icon = styled.span<{ darkMode: boolean, isOpen: boolean }>`
     align-items: center;
 
     .FaAngleDown {
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        color: ${({ theme }) => theme.iconColor};
         font-size: 1.5rem;
         transition: transform 0.3s ease;
     }
@@ -72,7 +72,7 @@ export const Icon = styled.span<{ darkMode: boolean, isOpen: boolean }>`
     }
 `;
 
-export const SubMenu = styled.ul<{ darkMode: boolean, isOpen: boolean }>`
+export const SubMenu = styled.ul<{ isOpen: boolean }>`
     list-style-type: none;
     padding-left: 10%;
     margin: 0;
@@ -82,15 +82,15 @@ export const SubMenu = styled.ul<{ darkMode: boolean, isOpen: boolean }>`
 
     li {
         padding: 0.5rem;
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        color: ${({ theme }) => theme.textColor};
 
         &:hover {
-            background-color: ${({ darkMode }) => (darkMode ? '#e0e0e0' : '#222')};
+            background-color: ${({ theme }) => theme.sidebarMenuHoverColor};
         }
     }
 `;
 
-export const ItemContainer = styled.div<{ darkMode: boolean }>`
+export const ItemContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,6 +99,6 @@ export const ItemContainer = styled.div<{ darkMode: boolean }>`
     height: 10%;
 
     &:hover {
-        background-color: ${({ darkMode }) => (darkMode ? '#e0e0e0' : '#222')};
+        background-color: ${({ theme }) => theme.sidebarMenuHoverColor};
     }
 `;

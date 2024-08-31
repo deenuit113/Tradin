@@ -1,6 +1,6 @@
 import * as S from "./Main.styles";
 import { useRecoilState } from "recoil";
-import { darkMode, currencyKRW } from "../../commons/atoms";
+import { currencyKRW } from "../../commons/atoms";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import { FaPlus } from "react-icons/fa";
 import Widget from "./widget/Widget";
@@ -14,7 +14,6 @@ import { faDollar } from "@fortawesome/free-solid-svg-icons";
 import { useExchangeRate } from "../../../hooks/useExchangeRate";
 
 export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
-    const [isDarkMode] = useRecoilState(darkMode);
     const [isCurrencyKRW, setIsCurrencyKRW] = useRecoilState(currencyKRW);
     const { sidebarOpen } = useSidebar();
 
@@ -23,8 +22,8 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
 
     return (
         <>
-            <S.Container $darkMode={isDarkMode}>
-                <S.CurrencyToggleContainer $darkMode={isDarkMode} sidebarOpen={sidebarOpen}>
+            <S.Container>
+                <S.CurrencyToggleContainer sidebarOpen={sidebarOpen}>
                     <p>
                         {exchangeRate}&nbsp;KRW/USD
                         {timestamp && <sub>{new Date(timestamp).toLocaleString()}</sub>}
@@ -43,7 +42,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             className="Currency-Unit-Switch"
                         />
                 </S.CurrencyToggleContainer>
-                <S.WidgetGridContainer sidebarOpen={sidebarOpen} $darkMode={isDarkMode}>
+                <S.WidgetGridContainer sidebarOpen={sidebarOpen}>
                     {props.widgets.map((widgetData, index) => (
                         <Widget
                             key={widgetData.id} // 고유한 key 값으로 id 사용
@@ -58,8 +57,8 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             exchangeRate={props.exchangeRate}
                         />
                     ))}
-                    <S.WidgetAdd $darkMode={isDarkMode}>
-                        <S.AddWidgetButton onClick={props.onClickWidgetSelector} $darkMode={isDarkMode}>
+                    <S.WidgetAdd>
+                        <S.AddWidgetButton onClick={props.onClickWidgetSelector}>
                             <FaPlus />
                             위젯 추가
                         </S.AddWidgetButton>
@@ -74,7 +73,6 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                         <ChartPopup
                             symbol={props.selectedSymbol}
                             onClose={() => props.setSelectedSymbol(null)}
-                            $darkMode={isDarkMode}
                         />
                     )}
                 </S.WidgetGridContainer>

@@ -1,7 +1,5 @@
 import * as S from "./HeaderNotice.styles";
 import { useRef } from "react";
-import { useRecoilState } from "recoil";
-import { darkMode } from "../atoms";
 
 interface IModalProps {
     closeModal: () => void;
@@ -10,12 +8,11 @@ interface IModalProps {
 
 const ModalContainer = (props: IModalProps): JSX.Element => {
     const modalRef = useRef<HTMLDivElement>(null);
-    const [isDarkMode] = useRecoilState(darkMode);
 
     return (
-        <S.ModalContainer ref={modalRef} darkMode={isDarkMode}>
+        <S.ModalContainer ref={modalRef}>
             <h2>알림</h2>
-                <S.CloseButton onClick={props.closeModal} darkMode={isDarkMode}>&times;</S.CloseButton>
+                <S.CloseButton onClick={props.closeModal}>&times;</S.CloseButton>
                 <S.NotificationList>
                     {props.notifications.map((notification, index) => (
                         <S.NotificationItem key={index}>{notification}</S.NotificationItem>

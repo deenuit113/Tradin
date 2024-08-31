@@ -2,10 +2,13 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import Header from "../src/components/commons/header/Header";
 import { SidebarProvider } from "../src/components/commons/sidebar/SidebarContext";
-import { RecoilRoot } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import SideBar from "../src/components/commons/sidebar/Sidebar";
+import { ThemeProvider } from "@emotion/react";
+import { lightTheme, darkTheme } from "../src/styles/theme";
+import { darkMode } from "../src/components/commons/atoms";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -14,13 +17,15 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <title>Tradin</title>
             </Head>
             <RecoilRoot>
-                <DndProvider backend={HTML5Backend}>
-                    <SidebarProvider>
-                        <Header />
-                        <SideBar/>
-                        <Component {...pageProps} />
-                    </SidebarProvider>
-                </DndProvider>
+                <ThemeWrapper>
+                    <DndProvider backend={HTML5Backend}>
+                        <SidebarProvider>
+                            <Header />
+                            <SideBar />
+                            <Component {...pageProps} />
+                        </SidebarProvider>
+                    </DndProvider>
+                </ThemeWrapper>
             </RecoilRoot>
             <style jsx global>{`
                 html, body, #__next {
@@ -38,6 +43,16 @@ function MyApp({ Component, pageProps }: AppProps) {
                 }
             `}</style>
         </>
+    );
+}
+
+function ThemeWrapper({ children }: { children: React.ReactNode }) {
+    const [isDarkMode] = useRecoilState(darkMode);
+
+    return (
+        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+            {children}
+        </ThemeProvider>
     );
 }
 

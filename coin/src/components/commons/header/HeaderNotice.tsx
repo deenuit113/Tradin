@@ -61,7 +61,7 @@ export default function HeaderNotice() {
         <>
             <FontAwesomeIcon
                 icon={faBell}
-                style={{ cursor: 'pointer', color: isDarkMode ? '#333' : '#f0f0f0', fontSize: '26px'}}
+                style={{ cursor: 'pointer', color: isDarkMode ? '#f0f0f0' : '#333', fontSize: '26px'}}
                 onClick={handleNotificationClick}
                 className="Notification-Switch"
             />

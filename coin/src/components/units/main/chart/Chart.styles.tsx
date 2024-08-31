@@ -1,23 +1,23 @@
 import styled from 'styled-components';
 
-export const PopupContainer = styled.div<{ $darkMode: boolean }>`
+export const PopupContainer = styled.div`
     position: fixed;
     bottom: 0px;
     right: 0px;
-    background-color: ${({ $darkMode }) => ($darkMode ? '#333' : '#fff')};
-    border: 1px solid ${({ $darkMode }) => ($darkMode ? '#555' : '#ccc')};
+    background-color: ${({ theme }) => theme.backgroundColor};
+    border: 1px solid ${({ theme }) => theme.iconColor};
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    color: ${({ $darkMode }) => ($darkMode ? '#fff' : '#000')};
+    color: ${({ theme }) => theme.textColor};
     z-index: 1000;
     width: 600px;
     height: 360px;
 `;
 
-export const CloseButton = styled.button<{ $darkMode: boolean }>`
+export const CloseButton = styled.button`
     background: none;
     border: none;
-    color: ${({ $darkMode }) => ($darkMode ? '#333' : '#fff')};
+    color: ${({ theme }) => theme.iconColor};
     font-size: 30px;
     position: absolute;
     top: 2px;
