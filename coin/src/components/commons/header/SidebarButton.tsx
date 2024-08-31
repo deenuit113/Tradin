@@ -3,10 +3,9 @@ import styled from '@emotion/styled';
 
 interface ToggleButtonProps {
     onClick: () => void;
-    darkMode: boolean;
 }
 
-const ToggleButtonContainer = styled.button<{ darkMode: boolean }>`
+const ToggleButtonContainer = styled.button`
     background: none;
     border: none;
     cursor: pointer;
@@ -18,7 +17,7 @@ const ToggleButtonContainer = styled.button<{ darkMode: boolean }>`
     height: 40px;
     padding: auto;
     .stick {
-        background-color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        background-color: ${({ theme }) => theme.iconColor};
         width: 24px;
         height: 4px;
         border-radius: 2px;
@@ -68,7 +67,6 @@ export default function SidebarButton (props: ToggleButtonProps): JSX.Element {
         <ToggleButtonContainer
             onClick={handleClick}
             className={isClose ? '' : 'close'}
-            darkMode={props.darkMode}
         >
             <span className="stick"></span>
             <span className="stick"></span>

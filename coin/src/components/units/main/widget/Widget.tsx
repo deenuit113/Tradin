@@ -3,8 +3,6 @@ import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import * as S from "../Main.styles";
 import { FaEllipsisV, FaCaretUp, FaCaretDown } from "react-icons/fa";
-import { useRecoilState } from "recoil";
-import { darkMode } from "../../../commons/atoms";
 import CryptoWidget from "./CryptoWidget";
 import { availableWidgets } from "./AvailableWidgets";
 import { IWidgetProps } from "./Widget.types";
@@ -29,7 +27,6 @@ const Widget = ({
         prevPrice: null,
         timestamp: null,
     });
-    const [isDarkMode] = useRecoilState(darkMode);
     const [priceChangeIcon, setPriceChangeIcon] = useState<JSX.Element | null>(null);
     const [priceChangePercentage, setPriceChangePercentage] = useState<string | null>(null);
     const [lastChangeTimestamp, setLastChangeTimestamp] = useState<string | null>(null);
@@ -126,34 +123,31 @@ const Widget = ({
 
             {/* onClick 이벤트 핸들러를 S.Widget 내부로 이동 */}
             <S.Widget 
-                isDragging={isDragging} 
-                $darkMode={isDarkMode}
+                isDragging={isDragging}
                 onClick={() => onClickWidget(widgetConfig?.symbol || '')}
             >
-                <S.WidgetHeader $darkMode={isDarkMode}>
+                <S.WidgetHeader>
                     {widgetConfig?.name} {widgetConfig?.icon}
                     <S.MenuIcon
                         onClick={(e) => {
                             e.stopPropagation(); // 메뉴 아이콘 클릭 시 이벤트 버블링 방지
                             setMenuOpen(index === menuOpen ? null : index);
                         }}
-                        $darkMode={isDarkMode}
                     >
                         <FaEllipsisV className="MenuIcon" />
                     </S.MenuIcon>
                     {menuOpen === index && (
-                        <S.DropdownMenu ref={dropdownRef} $darkMode={isDarkMode}>
+                        <S.DropdownMenu ref={dropdownRef}>
                             <S.DropdownItem
                                 onClick={(e) => {
                                     e.stopPropagation(); // 삭제 클릭 시 이벤트 버블링 방지
                                     removeWidget(index);
                                 }}
-                                $darkMode={isDarkMode}
                             >위젯 삭제</S.DropdownItem>
                         </S.DropdownMenu>
                     )}
                 </S.WidgetHeader>
-                <S.WidgetContent $darkMode={isDarkMode}>
+                <S.WidgetContent>
                     {isCurrencyKRW ?
                     <p>가격: {priceData.price ? `${priceData.price.toLocaleString()} KRW` : '로딩 중...'}</p>
                     : <p>가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>

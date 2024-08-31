@@ -37,6 +37,7 @@ export default function Header(): JSX.Element {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedDarkMode = localStorage.getItem('DarkMode');
+            console.log(savedDarkMode);
             if (savedDarkMode === 'night') {
                 setIsDarkMode(true);
             }
@@ -62,29 +63,27 @@ export default function Header(): JSX.Element {
     }
 
     return (
-        <S.HeaderContainer darkMode={isDarkMode}>
+        <S.HeaderContainer>
             <S.Left>
                 <S.SidebarButtonContainer>
-                    <SidebarButton darkMode={isDarkMode} onClick={toggleSidebar}/>
+                    <SidebarButton onClick={toggleSidebar}/>
                 </S.SidebarButtonContainer>
                 <S.Title
-                    onClick={handleTitleClick}
-                    darkMode={isDarkMode}
-                >
+                    onClick={handleTitleClick}>
                     Tradin
                 </S.Title>
                 <NavBar />
             </S.Left>
             <S.Center>
-                <S.Marquee darkMode={isDarkMode} key={currentAnnouncement}>
+                <S.Marquee key={currentAnnouncement}>
                     <p>
                         {`${announcements[currentAnnouncement].title}: ${announcements[currentAnnouncement].content}`}
                     </p>
                 </S.Marquee>
             </S.Center>
             <S.Right>
-                <S.IconList darkMode={isDarkMode}>
-                    <S.IconListItem darkMode={isDarkMode}>
+                <S.IconList>
+                    <S.IconListItem>
                         <Switch
                             onChange={() => setIsDarkMode(prev => !prev)}
                             checked={isDarkMode}
@@ -99,10 +98,10 @@ export default function Header(): JSX.Element {
                             className="DarkMode-Switch"
                         />
                     </S.IconListItem>
-                    <S.IconListItem darkMode={isDarkMode}>
+                    <S.IconListItem>
                         <HeaderNotice />
                     </S.IconListItem>
-                    <S.IconListItem darkMode={isDarkMode}>
+                    <S.IconListItem>
                         <S.Login onClick={onClickMoveToLogin}>로그인</S.Login>
                         <S.LoginSignUpLabel>&nbsp;/&nbsp;</S.LoginSignUpLabel>
                         <S.SignUp onClick={onClickMoveToLogin}>회원가입</S.SignUp>

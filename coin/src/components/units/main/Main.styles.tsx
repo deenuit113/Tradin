@@ -1,16 +1,21 @@
 import styled from "@emotion/styled";
+import { Theme as CustomTheme } from '../../../styles/theme'
 
-export const Container = styled.div<{ $darkMode: boolean }>`
+declare module "@emotion/react" {
+    export interface Theme extends CustomTheme {}
+}
+
+export const Container = styled.div`
     display: flex;
     width: 100%;
     height: 90vh;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.backgroundColor};
 `;
 
-export const CurrencyToggleContainer = styled.div<{ $darkMode: boolean, sidebarOpen: boolean }>`
+export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
     display: flex;
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     align-items: center;
@@ -28,12 +33,12 @@ export const CurrencyToggleContainer = styled.div<{ $darkMode: boolean, sidebarO
         margin: 0;
         position: relative;
         font-weight: 550;
-        color: ${({ $darkMode: darkMode }) => (darkMode ? '#333' : '#ffffff')};
+        color: ${({ theme }) => theme.textColor};
     }
     sub {
         font-size: 12px;
         font-weight: 350;
-        color: color: ${({ $darkMode: darkMode }) => (darkMode ? 'lightgray' : 'gray')};
+        color: ${({ theme }) => theme.timeTextColor};
         position: absolute;
         left: 0;
         top: 100%;
@@ -52,7 +57,7 @@ export const CurrencyToggleContainer = styled.div<{ $darkMode: boolean, sidebarO
     }
 `;
 
-export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode: boolean }>`
+export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -71,7 +76,7 @@ export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode:
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color:  ${({ $darkMode: darkMode }) => (darkMode ? '#888' : '#f0f0f0')};
+        background-color:  ${({ theme }) => theme.scrollbarThumbColor};
         border-radius: 6px;
         transition: background-color 0.3s ease;
     }
@@ -96,7 +101,7 @@ export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean, $darkMode:
     }
 `;
 
-export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean }>`
+export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: flex;
     flex-wrap: wrap;
@@ -114,7 +119,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color:  ${({ $darkMode: darkMode }) => (darkMode ? '#888' : '#f0f0f0')};
+        background-color:  ${({ theme }) => theme.scrollbarThumbColor};
         border-radius: 6px;
         transition: background-color 0.3s ease;
     }
@@ -139,8 +144,8 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean
     }
 `;
 
-export const Widget = styled.div<{ isDragging: boolean, $darkMode: boolean }>`
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+export const Widget = styled.div<{ isDragging: boolean }>`
+    background-color: ${({ theme }) => theme.backgroundColor};
     border: 1px solid lightgray;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
@@ -163,8 +168,8 @@ export const Widget = styled.div<{ isDragging: boolean, $darkMode: boolean }>`
     }
 `;
 
-export const WidgetAdd = styled.div<{ $darkMode: boolean }>`
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#fff' : '#a0a0a0')};
+export const WidgetAdd = styled.div`
+    background-color: ${({ theme }) => theme.widgetAddBackgroundColor};
     border: 1px solid lightgray;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -191,28 +196,28 @@ export const CoinTimeStamp = styled.p`
     }
 `
 
-export const WidgetHeader = styled.div<{ $darkMode: boolean }>`
+export const WidgetHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    color: ${({ $darkMode: darkMode }) => (darkMode ? '#333' : '#ffffff')};
+    color: ${({ theme }) => theme.textColor};
     @media all and (min-width:359px) and (max-width: 799px) {
         padding: 3px;
     }
 `;
 
-export const MenuIcon = styled.div<{ $darkMode: boolean }>`
+export const MenuIcon = styled.div`
     cursor: pointer;
 
     .MenuIcon {
-        color: ${({ $darkMode: darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        color: ${({ theme }) => theme.textColor};
     }
 `;
 
-export const DropdownMenu = styled.div<{ $darkMode: boolean }>`
+export const DropdownMenu = styled.div`
     position: absolute;
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.widgetBackgroundColor};
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
     border: 1px solid lightgray;
     border-radius: 8px;
@@ -220,25 +225,25 @@ export const DropdownMenu = styled.div<{ $darkMode: boolean }>`
     top: 2rem;
 `;
 
-export const DropdownItem = styled.div<{ $darkMode: boolean }>`
+export const DropdownItem = styled.div`
     padding: 0.5rem 1rem;
     cursor: pointer;
-    color: ${({ $darkMode: darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
     
     &:hover {
-        background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#d0d0d0' : '#555')};
+        background-color: ${({ theme }) => theme.widgetDropDownHoverColor};
         border-radius: 8px;
     }
 `;
 
-export const WidgetContent = styled.div<{ $darkMode: boolean }>`
+export const WidgetContent = styled.div`
     margin-top: 0.5rem;
-    color: ${({ $darkMode: darkMode }) => (darkMode ? '#333' : '#ffffff')};
+    color: ${({ theme }) => theme.textColor};
 `;
 
-export const AddWidgetButton = styled.button<{ $darkMode: boolean }>`
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#0070f3' : '#333')};
-    color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#f0f0f0')};
+export const AddWidgetButton = styled.button`
+    background-color: ${({ theme }) => theme.widgetAddColor};
+    color: #f0f0f0;
     border: none;
     border-radius: 8px;
     width: 100%;

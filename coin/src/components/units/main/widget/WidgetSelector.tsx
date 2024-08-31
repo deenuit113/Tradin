@@ -64,12 +64,12 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
     }, [setIsSelectorOpen]);
 
     return (
-        <S.SelectorContainer as={animated.div} ref={WidgetSelectorRef} style={slideInAnimation} $darkMode={isDarkMode}>
+        <S.SelectorContainer as={animated.div} ref={WidgetSelectorRef} style={slideInAnimation}>
             <S.SelectorHeader>
-                <S.SelectorHeaderTitle $darkMode={isDarkMode}>위젯 추가</S.SelectorHeaderTitle>
-                <S.CloseButton $darkMode={isDarkMode} onClick={OnClickCloseWidgetSelector}>&times;</S.CloseButton>
+                <S.SelectorHeaderTitle>위젯 추가</S.SelectorHeaderTitle>
+                <S.CloseButton onClick={OnClickCloseWidgetSelector}>&times;</S.CloseButton>
             </S.SelectorHeader>
-            <S.WidgetOptionContainer $darkMode={isDarkMode}>
+            <S.WidgetOptionContainer>
                 {availableWidgets.length > 0 ? (
                     availableWidgets.map(widget => (
                         <S.WidgetOption key={`${widget.type}`} onClick={() => addWidget(widget.type)}>

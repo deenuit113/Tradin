@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { darkMode } from '../../../commons/atoms';
 
 declare global {
     interface Window {
@@ -8,10 +10,11 @@ declare global {
 
 interface CoinChartProps {
     symbol: string;
-    $darkMode: boolean;
 }
 
-const CoinChart: React.FC<CoinChartProps> = ({ symbol, $darkMode }) => {
+const CoinChart: React.FC<CoinChartProps> = ({ symbol }) => {
+    const [isDarkMode] = useRecoilState(darkMode);
+
     useEffect(() => {
         const script = document.createElement('script');
         script.src = 'https://s3.tradingview.com/tv.js';
@@ -23,7 +26,7 @@ const CoinChart: React.FC<CoinChartProps> = ({ symbol, $darkMode }) => {
                 symbol: symbol,
                 interval: 'D',
                 timezone: 'Asia/Seoul',
-                theme: $darkMode? 'light': 'dark', // light
+                theme: isDarkMode? 'dark': 'light', // light
                 style: '1',
                 locale: 'kr',
                 toolbar_bg: '#f1f3f6',
@@ -38,7 +41,7 @@ const CoinChart: React.FC<CoinChartProps> = ({ symbol, $darkMode }) => {
         return () => {
             document.head.removeChild(script);
         };
-  }, [symbol, $darkMode]);
+  }, [symbol, isDarkMode]);
 
     return (
         <div id="tradingview_1" />

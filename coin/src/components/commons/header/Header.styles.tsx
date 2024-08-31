@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 
-export const HeaderContainer = styled.header<{ darkMode: boolean }>`
+export const HeaderContainer = styled.header`
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 10vh;
-    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.backgroundColor};
     border-bottom: 1px solid lightgrey;
     padding: 0px 0px 0px 0px;
     z-index: 999;
@@ -38,10 +38,10 @@ export const SidebarButtonContainer = styled.div`
     height: 100%;
 `
 
-export const Title = styled.h1<{ darkMode: boolean }>`
+export const Title = styled.h1`
     cursor: pointer;
     font-size: 25px;
-    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.textColor};
 
     @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 15px;
@@ -59,12 +59,12 @@ export const Center = styled.div`
     }
 `;
 
-export const Marquee = styled.div<{ darkMode: boolean }>`
+export const Marquee = styled.div`
     border-radius: 10px;
     box-shadow: 0px 0px 10px gray;
     overflow: hidden;
     white-space: nowrap;
-    background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.backgroundColor};
     position: relative;
     height: 50px;
     display: flex;
@@ -85,7 +85,7 @@ export const Marquee = styled.div<{ darkMode: boolean }>`
         margin: 0;
         position: absolute;
         animation: slideUp 1s ease-in-out;
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        color: ${({ theme }) => theme.textColor};
     }
 
     @keyframes slideUp {
@@ -128,7 +128,7 @@ export const Right = styled.div`
     }
 `;
 
-export const IconList = styled.ul<{ darkMode: boolean }>`
+export const IconList = styled.ul`
     width: 100%;
     display: flex;
     list-style: none;
@@ -139,40 +139,23 @@ export const IconList = styled.ul<{ darkMode: boolean }>`
 
     .DarkMode-Switch{
         &:hover{
-            box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 10px blue' : '0px 0px 10px lightblue')};
-        }
-    }
-
-    .Notification-Switch {
-        &:hover {
-            filter: drop-shadow(${({ darkMode }) => (darkMode ? '0px 0px 5px black' : '0px 0px 5px white')});
-            box-shadow: ${({ darkMode }) => (darkMode ? '0px 0px 10px blue' : '0px 0px 10px lightblue')};
-        }
-    }
-
-    .Notification-Switch {
-        &:hover {
-            filter: drop-shadow(${({ darkMode }) => (darkMode ? '0px 0px 5px black' : '0px 0px 5px white')});
+            box-shadow: ${({ theme }) => theme.darkModeSwitchBoxShadow};
         }
     }
 `;
 
-export const IconListItem = styled.li<{ darkMode: boolean }>`
+export const IconListItem = styled.li`
     display: flex;
     align-items: center;
     width: 30%;
     justify-content: center;
 
     p {
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
-    }
-
-    p {
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        color: ${({ theme }) => theme.textColor};
     }
 `;
 
-export const ToggleButton = styled.button<{ darkMode: boolean }>`
+export const ToggleButton = styled.button`
     background: none;
     border: none;
     font-size: 25px;
@@ -180,7 +163,7 @@ export const ToggleButton = styled.button<{ darkMode: boolean }>`
     padding-top: 10px;
 
     .Fabars{
-        color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+        color: ${({ theme }) => theme.iconColor};
     }
 `;
 

@@ -1,15 +1,15 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div<{ $darkMode: boolean }>`
+export const Container = styled.div`
     display: flex;
     width: 100%;
     height: 100vh;
     justify-content: flex-end;
     align-items: flex-end;
-    background-color: ${({ $darkMode: darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
+    background-color: ${({ theme }) => theme.backgroundColor};
 `;
 
-export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean }>`
+export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: flex;
     flex-wrap: wrap;
@@ -33,7 +33,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, $darkMode: boolean
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color:  ${({ $darkMode: darkMode }) => (darkMode ? '#888' : '#f0f0f0')};
+        background-color:  ${({ theme }) => theme.scrollbarThumbColor};
         border-radius: 6px;
         transition: background-color 0.3s ease;
     }

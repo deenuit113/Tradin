@@ -24,7 +24,7 @@ export const modalStyles: ModalStyles = {
     }
 };
 
-export const CloseButton = styled.button<{darkMode: boolean}>`
+export const CloseButton = styled.button`
     position: fixed;
     top: 10px;
     right: 10px;
@@ -33,7 +33,7 @@ export const CloseButton = styled.button<{darkMode: boolean}>`
     font-size: 30px;
     cursor: pointer;
     transition: transform 0.3s ease;
-    color: ${({ darkMode }) => (darkMode ? '#333' : '#f0f0f0')};
+    color: ${({ theme }) => theme.iconColor};
     
     &:hover {
         transform: rotate(180deg);
@@ -49,7 +49,7 @@ export const NotificationItem = styled.li`
     margin: 10px 0;
 `;
 
-export const ModalContainer = styled.div<{darkMode: boolean}>`
+export const ModalContainer = styled.div`
     position: fixed;
     width: 30%;
     height: 80%;
@@ -70,7 +70,7 @@ export const ModalContainer = styled.div<{darkMode: boolean}>`
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color:  ${({ darkMode }) => (darkMode ? '#888' : '#f0f0f0')};
+        background-color:  ${({ theme }) => theme.scrollbarThumbColor};
         border-radius: 6px;
         transition: background-color 0.3s ease;
     }
