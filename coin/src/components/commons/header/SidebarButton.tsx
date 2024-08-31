@@ -29,28 +29,28 @@ const ToggleButtonContainer = styled.button<{ darkMode: boolean }>`
         margin-top: 4.8px;
     }
 
-    .stick:nth-child(1) {
+    .stick:nth-of-type(1) {
         transform-origin: 2px 4px; /* 왼쪽 중간을 중심으로 회전 */
     }
 
-    .stick:nth-child(2) {
+    .stick:nth-of-type(2) {
         transform-origin: center; /* 중앙을 중심으로 축소 */
     }
 
-    .stick:nth-child(3) {
+    .stick:nth-of-type(3) {
         transform-origin: 2px 0px; /* 왼쪽 중간을 중심으로 회전 */
     }
 
-    &.close .stick:nth-child(1) {
+    &.close .stick:nth-of-type(1) {
         transform: rotate(45deg) translate(0px, 0px); /* X 표시를 위한 회전과 이동 */
         width: 27.2px; /* 너비를 조정 */
     }
 
-    &.close .stick:nth-child(2) {
+    &.close .stick:nth-of-type(2) {
         transform: scaleX(0); /* X축 방향으로 축소 */
     }
 
-    &.close .stick:nth-child(3) {
+    &.close .stick:nth-of-type(3) {
         transform: rotate(-45deg) translate(0px, 0px); /* X 표시를 위한 회전과 이동 */
         width: 27.2px; /* 너비를 조정 */
     }

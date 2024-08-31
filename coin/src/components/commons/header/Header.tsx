@@ -64,7 +64,9 @@ export default function Header(): JSX.Element {
     return (
         <S.HeaderContainer darkMode={isDarkMode}>
             <S.Left>
-                <SidebarButton darkMode={isDarkMode} onClick={toggleSidebar}/>
+                <S.SidebarButtonContainer>
+                    <SidebarButton darkMode={isDarkMode} onClick={toggleSidebar}/>
+                </S.SidebarButtonContainer>
                 <S.Title
                     onClick={handleTitleClick}
                     darkMode={isDarkMode}

@@ -8,19 +8,18 @@ export const HeaderContainer = styled.header<{ darkMode: boolean }>`
     height: 10vh;
     background-color: ${({ darkMode }) => (darkMode ? '#f0f0f0' : '#333')};
     border-bottom: 1px solid lightgrey;
-    padding: 10px 0px 10px 0px;
+    padding: 0px 0px 0px 0px;
     z-index: 999;
     box-sizing: border-box;
 `;
 
 export const Left = styled.div`
     width: 15%;
-    width: 15%;
+    height: 100%;
     display: flex;
     align-items: center;
     align-text: center;
     justify-content: space-between;
-    padding-left: 15px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 15%;
@@ -30,6 +29,14 @@ export const Left = styled.div`
         width: 15%;
     }
 `;
+
+export const SidebarButtonContainer = styled.div`
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+`
 
 export const Title = styled.h1<{ darkMode: boolean }>`
     cursor: pointer;
@@ -42,7 +49,7 @@ export const Title = styled.h1<{ darkMode: boolean }>`
 `;
 
 export const Center = styled.div`
-    width: 60%;
+    flex: 1;
     text-align: center;
 
     @media all and (min-width:359px) and (max-width: 799px) {
