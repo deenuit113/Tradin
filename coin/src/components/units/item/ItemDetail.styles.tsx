@@ -21,7 +21,7 @@ export const Container = styled.div`
     height: 100vh;
     justify-content: flex-start;
     align-items: flex-end;
-    background-color: $${({ theme }) => theme.backgroundColor};
+    background-color: ${({ theme }) => theme.backgroundColor};
 `;
 
 export const MainContent = styled.div<{ sidebarOpen: boolean }>`
