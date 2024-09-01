@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import * as S from "./WidgetSelector.styles";
 import Widget from "./Widget";
-import { darkMode, currencyKRW } from "../../../commons/atoms";
+import { currencyKRW } from "../../../commons/atoms";
 import { useRecoilState } from "recoil";
 import { useSpring, animated } from "react-spring";
 import { useExchangeRate } from "../../../../hooks/useExchangeRate";
@@ -15,7 +15,6 @@ interface WidgetSelectorProps {
 
 const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen }: WidgetSelectorProps) => {
     const WidgetSelectorRef = useRef<HTMLDivElement>(null);
-    const [isDarkMode] = useRecoilState(darkMode);
     const [closing, setClosing] = useState(false);
     const [isCurrencyKRW] = useRecoilState(currencyKRW);
 

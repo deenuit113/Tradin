@@ -5,10 +5,9 @@ import CoinChart from "./CoinChart";
 interface ChartPopupProps {
     symbol: string;
     onClose: () => void;
-    $darkMode: boolean;
 }
 
-const ChartPopup: React.FC<ChartPopupProps> = ({ symbol, onClose, $darkMode }) => {
+const ChartPopup: React.FC<ChartPopupProps> = ({ symbol, onClose }) => {
     const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -28,7 +27,7 @@ const ChartPopup: React.FC<ChartPopupProps> = ({ symbol, onClose, $darkMode }) =
     return (
         <S.PopupContainer ref={popupRef}>
             <S.CloseButton onClick={onClose}>×</S.CloseButton>
-            <CoinChart symbol={symbol} $darkMode={$darkMode} />
+            <CoinChart symbol={symbol}/>
         </S.PopupContainer>
     );
 };
