@@ -63,7 +63,7 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
     }, [setIsSelectorOpen]);
 
     return (
-        <S.SelectorContainer as={animated.div} ref={WidgetSelectorRef} style={slideInAnimation}>
+        <S.SelectorContainer ref={WidgetSelectorRef} style={slideInAnimation}>
             <S.SelectorHeader>
                 <S.SelectorHeaderTitle>위젯 추가</S.SelectorHeaderTitle>
                 <S.CloseButton onClick={OnClickCloseWidgetSelector}>&times;</S.CloseButton>
