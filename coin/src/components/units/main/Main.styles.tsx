@@ -60,7 +60,7 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
 export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
     text-align: center;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
@@ -150,7 +150,7 @@ export const Widget = styled.div<{ isDragging: boolean }>`
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     padding: 1rem;
-    width: 200px;
+    width: 240px;
     height: 200px;
     display: flex;
     flex-direction: column;
@@ -163,8 +163,8 @@ export const Widget = styled.div<{ isDragging: boolean }>`
     }
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 190px;
-        height: 180px;
+        width: 230px;
+        height: 190px;
     }
 `;
 
@@ -174,15 +174,15 @@ export const WidgetAdd = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 1rem;
-    width: 200px;
+    width: 240px;
     height: 200px;
     margin: auto;
     position: relative;
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 190px;
-        height: 180px;
+        width: 230px;
+        height: 190px;
     }
 `;
 
@@ -206,6 +206,11 @@ export const WidgetHeader = styled.div`
         padding: 3px;
     }
 `;
+
+export const WidgetTitle = styled.div`
+    font-size: 15px;
+    font-weight: 600;
+`
 
 export const MenuIcon = styled.div`
     cursor: pointer;
@@ -239,6 +244,11 @@ export const DropdownItem = styled.div`
 export const WidgetContent = styled.div`
     margin-top: 0.5rem;
     color: ${({ theme }) => theme.textColor};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 `;
 
 export const AddWidgetButton = styled.button`

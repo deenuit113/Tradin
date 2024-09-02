@@ -103,7 +103,7 @@ const Widget = ({
                 onClick={() => onClickWidget(widgetConfig?.symbol || '')}
             >
                 <S.WidgetHeader>
-                    {widgetConfig?.name} {widgetConfig?.icon}
+                    <S.WidgetTitle>{widgetConfig?.name} {widgetConfig?.icon}</S.WidgetTitle>
                     <S.MenuIcon
                         onClick={(e) => {
                             e.stopPropagation(); // 메뉴 아이콘 클릭 시 이벤트 버블링 방지

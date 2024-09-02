@@ -20,14 +20,14 @@ export const useBinanceLongShortRatio = (symbol: string, period = "5m") => {
                     `https://fapi.binance.com/futures/data/globalLongShortAccountRatio?symbol=${symbol}&period=${period}&limit=1`
                 );
                 const result = await response.json();
-
+                const timestampKR = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
                 if (result && result.length > 0) {
                     const ratioData = result[0];
                     setData({
                         longShortRatio: ratioData.longShortRatio,
                         longAccount: ratioData.longAccount,
                         shortAccount: ratioData.shortAccount,
-                        timestamp: ratioData.timestamp,
+                        timestamp: timestampKR,
                     });
                 } else {
                     setError("No data received");
