@@ -26,13 +26,13 @@ const BackgroundCircle = styled.circle`
     z-index: 998;
 `;
 
-const ForegroundCircle = styled.circle<{ circumference: number; offset: number }>`
+const ForegroundCircle = styled.circle<{ circumference: number; offset: number, hovered: boolean }>`
     stroke: #4169E1;
-    stroke-width: 10;
+    stroke-width: ${({ hovered }) => hovered ? 15 : 10};
     fill: none;
     stroke-dasharray: ${({ circumference }) => circumference};
     stroke-dashoffset: ${({ offset }) => offset};
-    transition: stroke-dashoffset 0.4s ease-out;
+    transition: stroke-dashoffset 0.4s ease-out; stroke-width 0.4s ease-out;
     z-index: 999;
 `;
 
@@ -92,6 +92,7 @@ const FearGreedWidgetContent: React.FC = () => {
                         r="40"
                         circumference={circumference}
                         offset={offset}
+                        hovered={hovered}
                     />
                     
                 </SvgContainer>
