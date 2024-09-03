@@ -91,7 +91,7 @@ const Widget = ({
         if (widgetConfig?.category === 'crypto') {
             return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} />;
         } else if (widgetConfig?.category === 'data') {
-            return <FearGreedWidgetContent />;
+            return <DataWidgetContent type={widget.type} />;
         } else {
             return <p>Unknown widget category</p>;
         }
