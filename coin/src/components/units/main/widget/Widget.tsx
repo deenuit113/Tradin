@@ -5,9 +5,8 @@ import * as S from "../Main.styles";
 import { FaEllipsisV } from "react-icons/fa";
 import { availableWidgets } from "./AvailableWidgets";
 import { IWidgetProps } from "./Widget.types";
-import CryptoWidgetContent from "./CryptoWidgetContent";
-import DataWidgetContent from "./DataWidgetContent";
-import FearGreedWidgetContent from "./FearGreedWidgetContent";
+import CryptoWidgetContent from "./CryptoWidget/CryptoWidgetContent";
+import DataWidgetContent from "./DataWidget/DataWidgetContent";
 
 const ItemType = "WIDGET";
 

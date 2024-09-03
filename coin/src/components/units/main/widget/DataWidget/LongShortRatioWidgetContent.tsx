@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import * as S from "../Main.styles";
-import { useBinanceLongShortRatio } from "../../../../hooks/useBianceData";
+import * as S from "../../Main.styles";
+import { useBinanceLongShortRatio } from "../../../../../hooks/useBianceData";
 
 export const RatioBarContainer = styled.div`
     width: 110%;

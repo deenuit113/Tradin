@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaCaretUp, FaCaretDown } from "react-icons/fa";
-import * as S from "../Main.styles";
-import { ICryptoWidgetProps } from "./Widget.types";
-import { useExchangeRate } from "../../../../hooks/useExchangeRate";
+import * as S from "../../Main.styles";
+import { ICryptoWidgetProps } from "../Widget.types";
+import { useExchangeRate } from "../../../../../hooks/useExchangeRate";
 import CryptoWidget from "./CryptoWidget";
 
 const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX.Element => {

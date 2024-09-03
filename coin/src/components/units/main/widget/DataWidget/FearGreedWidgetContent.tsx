@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useFearGreedIndex } from "../../../../hooks/useFearGreedIndex";
+import { useFearGreedIndex } from "../../../../../hooks/useFearGreedIndex";
 import styled from "@emotion/styled";
-import * as S from "../Main.styles";
+import * as S from "../../Main.styles";
 
 const ProgressBarContainer = styled.div`
     display: flex;
