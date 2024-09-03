@@ -2,10 +2,11 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import * as S from "../Main.styles";
-import { FaEllipsisV, FaCaretUp, FaCaretDown } from "react-icons/fa";
-import CryptoWidget from "./CryptoWidget";
+import { FaEllipsisV } from "react-icons/fa";
 import { availableWidgets } from "./AvailableWidgets";
 import { IWidgetProps } from "./Widget.types";
+import CryptoWidgetContent from "./CryptoWidget/CryptoWidgetContent";
+import DataWidgetContent from "./DataWidget/DataWidgetContent";
 
 const ItemType = "WIDGET";
 
@@ -22,14 +23,6 @@ const Widget = ({
 }: IWidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
-        price: null,
-        prevPrice: null,
-        timestamp: null,
-    });
-    const [priceChangeIcon, setPriceChangeIcon] = useState<JSX.Element | null>(null);
-    const [priceChangePercentage, setPriceChangePercentage] = useState<string | null>(null);
-    const [lastChangeTimestamp, setLastChangeTimestamp] = useState<string | null>(null);
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
@@ -78,25 +71,6 @@ const Widget = ({
     });
 
     useEffect(() => {
-        if (priceData.prevPrice !== null && priceData.price !== null) {
-            if (priceData.price !== priceData.prevPrice) {
-                const priceChange = ((priceData.price - priceData.prevPrice) / priceData.prevPrice) * 100;
-                const formattedChange = priceChange.toFixed(2) + "%";
-
-                if (priceData.price > priceData.prevPrice) {
-                    setPriceChangeIcon(<FaCaretUp color="red" />);
-                    setPriceChangePercentage(`+${formattedChange}`);
-                } else if (priceData.price < priceData.prevPrice) {
-                    setPriceChangeIcon(<FaCaretDown color="blue" />);
-                    setPriceChangePercentage(formattedChange);
-                }
-
-                setLastChangeTimestamp(priceData.timestamp);
-            }
-        }
-    }, [priceData]);
-
-    useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setMenuOpen(null);  // dropdownMenu 외부를 클릭하면 닫음
@@ -109,25 +83,31 @@ const Widget = ({
         };
     }, [setMenuOpen]);
 
-    const exchangePrice = () => {
-        if (priceData?.price !== null && exchangeRate !== null) {
-            return (priceData.price / exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-        return null;
-    };
 
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);
 
+    const renderWidgetContent = () => {
+        if (widgetConfig?.category === 'crypto') {
+            return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} />;
+        } else if (widgetConfig?.category === 'data') {
+            return <DataWidgetContent type={widget.type} />;
+        } else {
+            return <p>Unknown widget category</p>;
+        }
+    };
+
     return (
         <animated.div style={springStyle} ref={ref}>
-
-            {/* onClick 이벤트 핸들러를 S.Widget 내부로 이동 */}
             <S.Widget 
                 isDragging={isDragging}
-                onClick={() => onClickWidget(widgetConfig?.symbol || '')}
+                onClick={() => {
+                    if (widgetConfig?.symbol) {
+                        onClickWidget(widgetConfig.symbol);
+                    }
+                }}
             >
                 <S.WidgetHeader>
-                    {widgetConfig?.name} {widgetConfig?.icon}
+                    <S.WidgetTitle>{widgetConfig?.name} {widgetConfig?.icon}</S.WidgetTitle>
                     <S.MenuIcon
                         onClick={(e) => {
                             e.stopPropagation(); // 메뉴 아이콘 클릭 시 이벤트 버블링 방지
@@ -147,29 +127,7 @@ const Widget = ({
                         </S.DropdownMenu>
                     )}
                 </S.WidgetHeader>
-                <S.WidgetContent>
-                    {isCurrencyKRW ?
-                    <p>가격: {priceData.price ? `${priceData.price.toLocaleString()} KRW` : '로딩 중...'}</p>
-                    : <p>가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
-                    }
-                    
-                    {priceChangeIcon && (
-                        <span
-                            style={{
-                                color: priceChangeIcon.props.color,
-                                marginLeft: "8px",
-                            }}
-                        >
-                            {priceChangeIcon} {priceChangePercentage}
-                        </span>
-                    )}
-                    {lastChangeTimestamp && (
-                        <S.CoinTimeStamp>
-                            {lastChangeTimestamp} 기준
-                        </S.CoinTimeStamp>
-                    )}
-                </S.WidgetContent>
-                {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
+                {renderWidgetContent()}
             </S.Widget>
         </animated.div>
     );

@@ -9,3 +9,8 @@ export interface IWidgetProps {
     isCurrencyKRW: boolean;
     exchangeRate: number | null;
 }
+
+export interface ICryptoWidgetProps {
+    widget: any;
+    isCurrencyKRW: boolean;
+}

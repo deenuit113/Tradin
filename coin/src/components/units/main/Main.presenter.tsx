@@ -20,6 +20,12 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const { exchangeRate, timestamp } = useExchangeRate();
     console.log('timestamp:',timestamp);
 
+    const handleWidgetClick = (symbol: string | undefined) => {
+        if (symbol) {
+            props.setSelectedSymbol(symbol);  // symbol이 undefined가 아닌 경우에만 setSelectedSymbol 호출
+        }
+    };
+
     return (
         <>
             <S.Container>
@@ -43,20 +49,24 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                         />
                 </S.CurrencyToggleContainer>
                 <S.WidgetGridContainer sidebarOpen={sidebarOpen}>
-                    {props.widgets.map((widgetData, index) => (
-                        <Widget
-                            key={widgetData.id} // 고유한 key 값으로 id 사용
-                            index={index}
-                            widget={widgetData}
-                            removeWidget={props.removeWidget}
-                            menuOpen={props.menuOpen}
-                            setMenuOpen={props.setMenuOpen}
-                            moveWidget={props.moveWidget}
-                            onClickWidget={(symbol) => props.setSelectedSymbol(symbol)}
-                            isCurrencyKRW={isCurrencyKRW}
-                            exchangeRate={props.exchangeRate}
-                        />
-                    ))}
+                    {props.widgets.map((widgetData, index) => {
+                        const widgetConfig = props.availableWidgetTypes.find(w => w.type === widgetData.type);
+
+                        return (
+                            <Widget
+                                key={widgetData.id}
+                                index={index}
+                                widget={widgetData}
+                                removeWidget={props.removeWidget}
+                                menuOpen={props.menuOpen}
+                                setMenuOpen={props.setMenuOpen}
+                                moveWidget={props.moveWidget}
+                                onClickWidget={handleWidgetClick}
+                                isCurrencyKRW={isCurrencyKRW}
+                                exchangeRate={props.exchangeRate}
+                            />
+                        );
+                    })}
                     <S.WidgetAdd>
                         <S.AddWidgetButton onClick={props.onClickWidgetSelector}>
                             <FaPlus />

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { animated } from "react-spring";
 
 export const SelectorContainer = styled(animated.div)`
@@ -6,7 +6,7 @@ export const SelectorContainer = styled(animated.div)`
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: ${({ theme }) => theme.textColor};
+    background-color: ${({ theme }) => theme.selectorBackgroundColor};
     border-top: 1px solid #ccc;
     border-radius: 8px 8px 0 0;
     box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
@@ -38,7 +38,7 @@ export const CloseButton = styled.button`
     font-size: 30px;
     cursor: pointer;
     transition: transform 0.3s ease;
-    color: ${({ theme }) => theme.textColor};
+    color: ${({ theme }) => theme.iconColor};
     
     &:hover {
         transform: rotate(180deg);
