@@ -42,7 +42,7 @@ const ProgressText = styled.p<{ hovered: boolean }>`
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.2rem;
-    color: #333;
+    color: ${({ theme }) => theme.textColor};
     z-index: 1000;
     opacity: ${({ hovered }) => hovered ? 1 : 0};
     transition: opacity 0.4s ease-out;
