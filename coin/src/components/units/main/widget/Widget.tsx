@@ -6,7 +6,8 @@ import { FaEllipsisV } from "react-icons/fa";
 import { availableWidgets } from "./AvailableWidgets";
 import { IWidgetProps } from "./Widget.types";
 import CryptoWidgetContent from "./CryptoWidgetContent";
-import BinanceWidgetContent from "./BinanceWidgetContent";
+import DataWidgetContent from "./DataWidgetContent";
+import FearGreedWidgetContent from "./FearGreedWidgetContent";
 
 const ItemType = "WIDGET";
 
@@ -90,7 +91,7 @@ const Widget = ({
         if (widgetConfig?.category === 'crypto') {
             return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} />;
         } else if (widgetConfig?.category === 'data') {
-            return <BinanceWidgetContent />;
+            return <FearGreedWidgetContent />;
         } else {
             return <p>Unknown widget category</p>;
         }

@@ -208,6 +208,10 @@ export const WidgetHeader = styled.div`
 `;
 
 export const WidgetTitle = styled.div`
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
     font-size: 15px;
     font-weight: 600;
 `

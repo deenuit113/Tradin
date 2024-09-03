@@ -88,7 +88,7 @@ export const ShortRatioBar = styled.div<{ width: number }>`
 
 
 
-const BinanceWidgetContent: React.FC = () => {
+const DataWidgetContent: React.FC = () => {
     const { data, loading, error } = useBinanceLongShortRatio("BTCUSDT");
     const [longRatio, setLongRatio] = useState(0);
     const [shortRatio, setShortRatio] = useState(0);
@@ -148,4 +148,4 @@ const BinanceWidgetContent: React.FC = () => {
     );
 };
 
-export default BinanceWidgetContent;
+export default DataWidgetContent;
