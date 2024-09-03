@@ -22,7 +22,7 @@ export const LongRatioBar = styled.div<{ width: number }>`
     justify-content: flex-start;
     align-items: center;
     color: white;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     padding-left: 15px;
     left: 0;
@@ -59,7 +59,7 @@ export const ShortRatioBar = styled.div<{ width: number }>`
     justify-content: flex-end;
     align-items: center;
     color: white;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     padding-right: 15px;
     margin-left: auto;
