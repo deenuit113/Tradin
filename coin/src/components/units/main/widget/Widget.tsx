@@ -100,7 +100,11 @@ const Widget = ({
         <animated.div style={springStyle} ref={ref}>
             <S.Widget 
                 isDragging={isDragging}
-                onClick={() => onClickWidget(widgetConfig?.symbol || '')}
+                onClick={() => {
+                    if (widgetConfig?.symbol) {
+                        onClickWidget(widgetConfig.symbol);
+                    }
+                }}
             >
                 <S.WidgetHeader>
                     <S.WidgetTitle>{widgetConfig?.name} {widgetConfig?.icon}</S.WidgetTitle>

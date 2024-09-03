@@ -8,7 +8,7 @@ export interface IMainPageUIProps {
     onClickWidgetSelector: () => void;
     addWidget: (widgetType: string) => void;
     setWidgetSelectorOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    availableWidgetTypes: { type: string; name: string, icon: JSX.Element, symbol: string; }[]
+    availableWidgetTypes: { type: string; name: string, icon: JSX.Element, symbol: string | undefined; category: string;}[]
     widgetSelectorOpen: boolean;
     selectedSymbol: string | null;
     exchangeRate: number | null;
