@@ -253,6 +253,10 @@ export const WidgetContent = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
+
+    #LoadingIcon{
+            font-size: 30px;
+    }
 `;
 
 export const AddWidgetButton = styled.button`
