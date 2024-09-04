@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import * as S from "../../Main.styles";
 import { useBinanceLongShortRatio } from "../../../../../hooks/useBianceData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export const RatioBarContainer = styled.div`
     width: 110%;
@@ -123,7 +125,7 @@ const LongShortRatioWidgetContent: React.FC = () => {
         }
     }, [data]);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <S.WidgetContent><FontAwesomeIcon id="LoadingIcon" icon={faSpinner} spin /></S.WidgetContent>;
     if (error) return <p>Error: {error}</p>;
 
     return (
