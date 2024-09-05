@@ -120,7 +120,10 @@ export const NotificationItem = styled.li<{ read: boolean }>`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     height: 10%;
+    padding: 0px 20px 0px 20px;
+    cursor: pointer;
 `;
 
 export const ModalContainer = styled.div`
