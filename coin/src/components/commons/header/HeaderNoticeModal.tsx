@@ -21,12 +21,15 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
     const modalRef = useRef<HTMLDivElement>(null);
 
     const markAsRead = (index: number) => {
-        props.setNotifications(prev => {
-            const newNotifications = [...prev];
-            newNotifications[index].read = true;
-            return newNotifications;
-        });
-    };
+    props.setNotifications(prev => {
+        if (index < 0 || index >= prev.length) {
+            return prev;
+        }
+        const newNotifications = [...prev];
+        newNotifications[index].read = true;
+        return newNotifications;
+    });
+};
 
     return (
         <>
@@ -64,8 +67,8 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                 </S.ModalHeader>
                 <S.NotificationList>
                     {props.notifications.map((notification, index) => (
-                        <S.NotificationItem key={index} read={notification.read}>
-                            <span onClick={() => markAsRead(index)}>
+                        <S.NotificationItem key={index} read={notification.read} onClick={() => markAsRead(index)}>
+                            <span>
                                 {notification.read ? `알림: ${notification.message}` : `새 알림: ${notification.message}`}
                             </span>
                             <S.TrashIcon icon={faTrashAlt} onClick={() => props.deleteNotification(index)} />
