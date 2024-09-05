@@ -116,7 +116,7 @@ export default function HeaderNotice() {
     }, [notifications, showUnreadOnly, showReadOnly]);
 
     useEffect(() => {
-        const intervalId = setInterval(addDummyNotification, 60000);
+        const intervalId = setInterval(addDummyNotification, 20000);
         const cleanupIntervalId = setInterval(deleteOldNotifications, 60000);
         return () => {
             clearInterval(intervalId);

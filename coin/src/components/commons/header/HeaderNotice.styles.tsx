@@ -58,7 +58,7 @@ export const BellIcon = styled.div`
     transition: transform 0.3s ease;
     
     &:hover {
-        animation: ${shakeAnimation} 0.5s ease-in-out 0s 2;
+        animation: ${shakeAnimation} 0.5s ease-in-out 0s 1;
         transform-origin: top center;
     }
 `;
@@ -82,9 +82,10 @@ export const CloseButton = styled.button`
 export const NotificationList = styled.ul`
     list-style: none;
     padding: 0;
-    border: 1px solid red;
     height: 90%;
     overflow-y: scroll;
+    background-color: #DFDFDF;
+    border-radius: 10px;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -134,7 +135,7 @@ export const ModalContainer = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #f2f2f2;
-    padding: 20px 10px 20px 10px;
+    padding: 30px 20px 30px 20px;
     border: 1px solid lightgrey;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -143,7 +144,7 @@ export const ModalContainer = styled.div`
     z-index: 1002;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
-        width: 95%;
+        width: 80%;
         height: 80%;
         padding-left: 10px;
     }
@@ -190,4 +191,84 @@ export const SwitchContainer = styled.div`
 
 export const NotificationIcon = styled.div`
     font-size: 20px;
+`;
+
+export const RightContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 15px;
+`;
+
+export const DeleteAllIcon = styled.div`
+    position: relative;
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+
+    &:hover {
+        color: #333;
+    }
+
+    &:hover > div {
+        display: block;
+    }
+`;
+
+export const Tooltip = styled.div`
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+`;
+
+export const ConfirmDialog = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1020;
+`;
+
+export const ConfirmButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px;
+`;
+
+export const ConfirmButton = styled.button`
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #45a049;
+    }
+`;
+
+export const CancelButton = styled.button`
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #da190b;
+    }
 `;
