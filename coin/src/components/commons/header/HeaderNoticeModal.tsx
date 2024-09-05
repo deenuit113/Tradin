@@ -1,14 +1,19 @@
 import * as S from "./HeaderNotice.styles";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRef } from "react";
 import Switch from "react-switch";
 
+interface Notification {
+    message: string;
+    read: boolean;
+    timestamp: Date;
+}
+
 interface IModalProps {
     closeModal: () => void;
-    notifications: { message: string, read: boolean }[];
+    notifications: Notification[];
     deleteNotification: (message: string) => void;
-    setNotifications: React.Dispatch<React.SetStateAction<{ message: string, read: boolean }[]>>;
+    setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>;
     showUnreadOnly: boolean;
     showReadOnly: boolean;
     setShowUnreadOnly: React.Dispatch<React.SetStateAction<boolean>>;

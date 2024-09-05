@@ -13,13 +13,17 @@ import 'react-toastify/dist/ReactToastify.css';
 interface Notification {
     message: string;
     read: boolean;
+    timestamp: Date;
 }
 
 const getNotificationsFromLocalStorage = (): Notification[] => {
     if (typeof window !== 'undefined') {
         const storedNotifications = localStorage.getItem('notifications');
         if (storedNotifications) {
-            return JSON.parse(storedNotifications) as Notification[];
+            return JSON.parse(storedNotifications, (key, value) => {
+                if (key === 'timestamp') return new Date(value);
+                return value;
+            });
         }
     }
     return [];
@@ -36,7 +40,7 @@ Modal.setAppElement('#__next');
 export default function HeaderNotice() {
     const [isDarkMode] = useRecoilState(darkMode);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [notifications, setNotifications] = useState(getNotificationsFromLocalStorage());
+    const [notifications, setNotifications] = useState<Notification[]>(getNotificationsFromLocalStorage());
     const [filteredNotifications, setFilteredNotifications] = useState<Notification[]>([]);
     const [showUnreadOnly, setShowUnreadOnly] = useState(false);
     const [showReadOnly, setShowReadOnly] = useState(false);
@@ -51,7 +55,11 @@ export default function HeaderNotice() {
     };
 
     const addDummyNotification = () => {
-        const newNotification = { message: `${new Date().toLocaleTimeString()}`, read: false };
+        const newNotification: Notification = { 
+            message: `${new Date().toLocaleTimeString()}`, 
+            read: false,
+            timestamp: new Date()
+        };
         setNotifications(prev => {
             const updatedNotifications = [newNotification, ...prev.slice(0, 100)];
             saveNotificationsToLocalStorage(updatedNotifications);
@@ -87,6 +95,17 @@ export default function HeaderNotice() {
         });
     };
 
+    const deleteOldNotifications = () => {
+        const currentTime = new Date();
+        setNotifications(prev => {
+            const updatedNotifications = prev.filter(notif => 
+                !notif.read || (currentTime.getTime() - new Date(notif.timestamp).getTime()) < 24 * 60 * 60 * 1000
+            );
+            saveNotificationsToLocalStorage(updatedNotifications);
+            return updatedNotifications;
+        });
+    };
+
     useEffect(() => {
         const filteredNotifs = notifications.filter(notification => {
             if (showUnreadOnly) return !notification.read;
@@ -97,8 +116,12 @@ export default function HeaderNotice() {
     }, [notifications, showUnreadOnly, showReadOnly]);
 
     useEffect(() => {
-        const intervalId = setInterval(addDummyNotification, 60000); 
-        return () => clearInterval(intervalId); 
+        const intervalId = setInterval(addDummyNotification, 60000);
+        const cleanupIntervalId = setInterval(deleteOldNotifications, 60000);
+        return () => {
+            clearInterval(intervalId);
+            clearInterval(cleanupIntervalId);
+        };
     }, [enableToastAndSound]);
 
     useEffect(() => {
