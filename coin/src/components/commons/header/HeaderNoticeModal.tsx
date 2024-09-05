@@ -26,6 +26,7 @@ interface IModalProps {
 const ModalContainer = (props: IModalProps): JSX.Element => {
     const modalRef = useRef<HTMLDivElement>(null);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [removingNotifications, setRemovingNotifications] = useState<string[]>([]);
 
     const markAsRead = (message: string) => {
         props.setNotifications(prev => 
@@ -33,6 +34,14 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                 notif.message === message ? {...notif, read: true} : notif
             )
         );
+    };
+
+    const handleRemoveNotification = (message: string) => {
+        setRemovingNotifications(prev => [...prev, message]);
+        setTimeout(() => {
+          props.deleteNotification(message);
+          setRemovingNotifications(prev => prev.filter(m => m !== message));
+        }, 300); // 애니메이션 지속 시간과 일치
     };
 
     const handleDeleteAll = (e: React.MouseEvent) => {
@@ -115,20 +124,27 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                     </S.RightContainer>
                 </S.ModalHeader>
                 <S.NotificationList>
-                    {props.notifications.map((notification) => (
-                        <S.NotificationItem 
-                            key={notification.message} 
-                            read={notification.read} 
-                            onClick={() => markAsRead(notification.message)}
-                        >
-                            <span>
-                                {notification.read ? `알림: ${notification.message}` : `새 알림: ${notification.message}`}
-                            </span>
-                            <S.TrashIcon icon={faTrashAlt} onClick={(e) => {
-                                e.stopPropagation();
-                                props.deleteNotification(notification.message);
-                            }} />
-                        </S.NotificationItem>
+                    {props.notifications.map((notification, index) => (
+                    <S.NotificationItem
+                        key={notification.message}
+                        read={notification.read}
+                        isRemoving={removingNotifications.includes(notification.message)}
+                        moveUp={removingNotifications.some(m => 
+                        props.notifications.findIndex(n => n.message === m) < index
+                        )}
+                        onClick={() => markAsRead(notification.message)}
+                    >
+                        <span>
+                        {notification.read ? `알림: ${notification.message}` : `새 알림: ${notification.message}`}
+                        </span>
+                        <S.TrashIcon
+                        icon={faTrashAlt}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveNotification(notification.message);
+                        }}
+                        />
+                    </S.NotificationItem>
                     ))}
                 </S.NotificationList>
             </S.ModalContainer>
