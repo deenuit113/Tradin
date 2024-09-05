@@ -29,11 +29,19 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
     const [removingNotifications, setRemovingNotifications] = useState<string[]>([]);
 
     const markAsRead = (message: string) => {
-        props.setNotifications(prev => 
-            prev.map(notif => 
-                notif.message === message ? {...notif, read: true} : notif
-            )
-        );
+        if (props.showUnreadOnly) {
+            setRemovingNotifications(prev => [...prev, message]);
+        }
+        setTimeout(() => {
+            props.setNotifications(prev => 
+                prev.map(notif => 
+                    notif.message === message ? {...notif, read: true} : notif
+                )
+            );
+            if (props.showUnreadOnly) {
+                setRemovingNotifications(prev => prev.filter(msg => msg !== message));
+            }
+        }, 300);
     };
 
     const handleRemoveNotification = (message: string) => {
