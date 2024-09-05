@@ -143,8 +143,8 @@ export const NotificationList = styled.ul`
     }
 `;
 
-export const NotificationItem = styled.li<{ read: boolean, isRemoving: boolean, moveUp: boolean}>`
-    margin: 10px 0;
+export const NotificationItem = styled.li<{ read: boolean; isRemoving: boolean; moveUp: boolean; dragX: number, isActive: boolean }>`
+    margin: 0;
     border-top: 1px solid lightgrey;
     color: ${({ read }) => (read ? '#888' : '#000')};
     opacity: ${({ read }) => (read ? 0.6 : 1)};
@@ -153,10 +153,47 @@ export const NotificationItem = styled.li<{ read: boolean, isRemoving: boolean, 
     align-items: center;
     text-align: center;
     height: 10%;
-    padding: 0px 20px 0px 20px;
+    padding: 10px 20px 10px 20px;
     cursor: pointer;
     transition: all 0.3s ease-out;
     animation: ${props => props.isRemoving ? slideOutLeft : 'none'} 0.3s forwards, ${props => props.moveUp ? moveUp : 'none'} 0.3s forwards;
+    transform: translateX(${props => props.dragX}px);
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1010;
+    user-select: none;
+`;
+
+export const NotificationText = styled.span`
+    flex-grow: 1;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`;
+
+export const NewBadge = styled.span`
+    color: orange;
+    font-weight: bold;
+    margin-right: 5px;
+`;
+
+export const DeletedZone = styled.div<{ opacity: number }>`
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 80px;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    z-index: 1000;
+    opacity: ${props => props.opacity};
+    transition: opacity 0.3s ease;
 `;
 
 export const ModalContainer = styled.div`
@@ -210,6 +247,7 @@ export const ReadButton = styled.button<{ active: boolean }>`
 export const TrashIcon = styled(FontAwesomeIcon)`
     cursor: pointer;
     color: #888;
+    z-index: 1010;
     &:hover {
         color: #333;
     }
