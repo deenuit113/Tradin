@@ -45,6 +45,7 @@ export default function HeaderNotice() {
     const [showUnreadOnly, setShowUnreadOnly] = useState(false);
     const [showReadOnly, setShowReadOnly] = useState(false);
     const [enableToastAndSound, setEnableToastAndSound] = useState(true);
+    const [unreadCount, setUnreadCount] = useState(0);
 
     const handleNotificationClick = () => {
         setIsModalOpen(prev => !prev);
@@ -128,6 +129,11 @@ export default function HeaderNotice() {
         saveNotificationsToLocalStorage(notifications);
     }, [notifications]);
 
+    useEffect(() => {
+        const unreadNotifications = notifications.filter(notif => !notif.read);
+        setUnreadCount(unreadNotifications.length);
+    }, [notifications]);
+
     const modalContent = (
         <ModalContainer
             closeModal={closeModal}
@@ -145,14 +151,19 @@ export default function HeaderNotice() {
 
     return (
         <>
-            <S.BellIcon>
-                <FontAwesomeIcon
-                    icon={faBell}
-                    style={{ cursor: 'pointer', color: isDarkMode ? '#f0f0f0' : '#333', fontSize: '26px'}}
-                    onClick={handleNotificationClick}
-                    className="Notification-Switch"
-                />
-            </S.BellIcon>
+            <S.BellIconContainer>
+                <S.BellIcon>
+                    <FontAwesomeIcon
+                        icon={faBell}
+                        style={{ cursor: 'pointer', color: isDarkMode ? '#f0f0f0' : '#333', fontSize: '26px'}}
+                        onClick={handleNotificationClick}
+                        className="Notification-Switch"
+                    />
+                </S.BellIcon>
+                {unreadCount > 0 && (
+                    <S.UnreadBadge>{unreadCount}</S.UnreadBadge>
+                )}
+            </S.BellIconContainer>
             <Modal
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
