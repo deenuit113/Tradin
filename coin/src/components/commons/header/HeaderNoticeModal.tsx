@@ -7,7 +7,7 @@ import Switch from "react-switch";
 interface IModalProps {
     closeModal: () => void;
     notifications: { message: string, read: boolean }[];
-    deleteNotification: (index: number) => void;
+    deleteNotification: (message: string) => void;
     setNotifications: React.Dispatch<React.SetStateAction<{ message: string, read: boolean }[]>>;
     showUnreadOnly: boolean;
     showReadOnly: boolean;
@@ -20,23 +20,20 @@ interface IModalProps {
 const ModalContainer = (props: IModalProps): JSX.Element => {
     const modalRef = useRef<HTMLDivElement>(null);
 
-    const markAsRead = (index: number) => {
-    props.setNotifications(prev => {
-        if (index < 0 || index >= prev.length) {
-            return prev;
-        }
-        const newNotifications = [...prev];
-        newNotifications[index].read = true;
-        return newNotifications;
-    });
-};
+    const markAsRead = (message: string) => {
+        props.setNotifications(prev => 
+            prev.map(notif => 
+                notif.message === message ? {...notif, read: true} : notif
+            )
+        );
+    };
 
     return (
         <>
             <S.ModalContainer ref={modalRef}>
                 <S.ModalHeader>
                     <S.ModalButtonContainer>
-                    <S.ReadButton
+                        <S.ReadButton
                             active={!props.showUnreadOnly && !props.showReadOnly}
                             onClick={() => { 
                                 props.setShowUnreadOnly(false); 
@@ -45,7 +42,7 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                         >
                             전체
                         </S.ReadButton>
-                    <S.ReadButton
+                        <S.ReadButton
                             active={props.showUnreadOnly}
                             onClick={() => { props.setShowReadOnly(false); props.setShowUnreadOnly(true); }}
                         >
@@ -66,12 +63,16 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                     />
                 </S.ModalHeader>
                 <S.NotificationList>
-                    {props.notifications.map((notification, index) => (
-                        <S.NotificationItem key={index} read={notification.read} onClick={() => markAsRead(index)}>
+                    {props.notifications.map((notification) => (
+                        <S.NotificationItem 
+                            key={notification.message} 
+                            read={notification.read} 
+                            onClick={() => markAsRead(notification.message)}
+                        >
                             <span>
                                 {notification.read ? `알림: ${notification.message}` : `새 알림: ${notification.message}`}
                             </span>
-                            <S.TrashIcon icon={faTrashAlt} onClick={() => props.deleteNotification(index)} />
+                            <S.TrashIcon icon={faTrashAlt} onClick={() => props.deleteNotification(notification.message)} />
                         </S.NotificationItem>
                     ))}
                 </S.NotificationList>
