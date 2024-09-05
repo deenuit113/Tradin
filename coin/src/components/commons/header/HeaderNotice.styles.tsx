@@ -18,14 +18,23 @@ const shakeAnimation = keyframes`
     }
 `;
 
-const slideDown = keyframes`
-    0% {
-        transform: translateY(-100%);
+const slideOutLeft = keyframes`
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
         opacity: 0;
     }
-    100% {
+`;
+
+const moveUp = keyframes`
+    from {
         transform: translateY(0);
-        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
     }
 `;
 
@@ -134,7 +143,7 @@ export const NotificationList = styled.ul`
     }
 `;
 
-export const NotificationItem = styled.li<{ read: boolean }>`
+export const NotificationItem = styled.li<{ read: boolean, isRemoving: boolean, moveUp: boolean}>`
     margin: 10px 0;
     border-top: 1px solid lightgrey;
     color: ${({ read }) => (read ? '#888' : '#000')};
@@ -146,6 +155,8 @@ export const NotificationItem = styled.li<{ read: boolean }>`
     height: 10%;
     padding: 0px 20px 0px 20px;
     cursor: pointer;
+    transition: all 0.3s ease-out;
+    animation: ${props => props.isRemoving ? slideOutLeft : 'none'} 0.3s forwards, ${props => props.moveUp ? moveUp : 'none'} 0.3s forwards;
 `;
 
 export const ModalContainer = styled.div`
