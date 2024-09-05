@@ -25,7 +25,6 @@ const getNotificationsFromLocalStorage = (): Notification[] => {
     return [];
 };
 
-// 로컬 스토리지에 알림 저장하기
 const saveNotificationsToLocalStorage = (notifications: Notification[]) => {
     if (typeof window !== 'undefined') {
         localStorage.setItem('notifications', JSON.stringify(notifications));
@@ -38,6 +37,7 @@ export default function HeaderNotice() {
     const [isDarkMode] = useRecoilState(darkMode);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [notifications, setNotifications] = useState(getNotificationsFromLocalStorage());
+    const [filteredNotifications, setFilteredNotifications] = useState<Notification[]>([]);
     const [showUnreadOnly, setShowUnreadOnly] = useState(false);
     const [showReadOnly, setShowReadOnly] = useState(false);
     const [enableToastAndSound, setEnableToastAndSound] = useState(true);
@@ -50,7 +50,6 @@ export default function HeaderNotice() {
         setIsModalOpen(false);
     };
 
-    // 더미 알림 추가 함수
     const addDummyNotification = () => {
         const newNotification = { message: `${new Date().toLocaleTimeString()}`, read: false };
         setNotifications(prev => {
@@ -80,21 +79,23 @@ export default function HeaderNotice() {
         audio.play();
     };
 
-    const deleteNotification = (index: number) => {
+    const deleteNotification = (message: string) => {
         setNotifications(prev => {
-            const updatedNotifications = prev.filter((_, i) => i !== index);
+            const updatedNotifications = prev.filter(notif => notif.message !== message);
             saveNotificationsToLocalStorage(updatedNotifications);
             return updatedNotifications;
         });
     };
 
-    const filteredNotifications = notifications.filter(notification => {
-        if (showUnreadOnly) return !notification.read;
-        if (showReadOnly) return notification.read;
-        return true;
-    });
+    useEffect(() => {
+        const filteredNotifs = notifications.filter(notification => {
+            if (showUnreadOnly) return !notification.read;
+            if (showReadOnly) return notification.read;
+            return true;
+        });
+        setFilteredNotifications(filteredNotifs);
+    }, [notifications, showUnreadOnly, showReadOnly]);
 
-    // 1분마다 더미 알림 추가
     useEffect(() => {
         const intervalId = setInterval(addDummyNotification, 60000); 
         return () => clearInterval(intervalId); 

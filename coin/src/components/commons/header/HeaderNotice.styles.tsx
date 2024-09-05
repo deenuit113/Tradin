@@ -174,7 +174,6 @@ export const ReadButton = styled.button<{ active: boolean }>`
     }
 `;
 
-
 export const TrashIcon = styled(FontAwesomeIcon)`
     cursor: pointer;
     color: #888;
