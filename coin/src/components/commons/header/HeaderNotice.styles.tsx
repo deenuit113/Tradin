@@ -181,3 +181,13 @@ export const TrashIcon = styled(FontAwesomeIcon)`
         color: #333;
     }
 `;
+
+export const SwitchContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+`;
+
+export const NotificationIcon = styled.div`
+    font-size: 20px;
+`;

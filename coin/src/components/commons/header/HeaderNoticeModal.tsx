@@ -1,5 +1,6 @@
 import * as S from "./HeaderNotice.styles";
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
 import { useRef } from "react";
 import Switch from "react-switch";
 
@@ -60,12 +61,20 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                             읽음
                         </S.ReadButton>
                     </S.ModalButtonContainer>
-                    <Switch 
-                        checked={props.enableToastAndSound} 
-                        onChange={props.setEnableToastAndSound} 
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                    />
+                    <S.SwitchContainer>
+                        <S.NotificationIcon>
+                            <FontAwesomeIcon 
+                                icon={props.enableToastAndSound ? faBell : faBellSlash} 
+                                color={props.enableToastAndSound ? "#4CAF50" : "#F44336"}
+                            />
+                        </S.NotificationIcon>
+                        <Switch 
+                            checked={props.enableToastAndSound} 
+                            onChange={props.setEnableToastAndSound} 
+                            uncheckedIcon={false}
+                            checkedIcon={false}
+                        />
+                    </S.SwitchContainer>
                 </S.ModalHeader>
                 <S.NotificationList>
                     {props.notifications.map((notification) => (
