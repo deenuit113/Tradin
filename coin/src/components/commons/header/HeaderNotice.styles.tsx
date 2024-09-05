@@ -52,6 +52,27 @@ export const modalStyles: ModalStyles = {
     }
 };
 
+export const BellIconContainer = styled.div`
+    position: relative;
+    display: inline-block;
+`;
+
+export const UnreadBadge = styled.div`
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 800;
+`;
+
 export const BellIcon = styled.div`
     display: inline-block;
     cursor: pointer;
