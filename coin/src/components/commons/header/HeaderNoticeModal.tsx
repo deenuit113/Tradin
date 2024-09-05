@@ -172,6 +172,16 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                                 onChange={props.setEnableToastAndSound} 
                                 uncheckedIcon={false}
                                 checkedIcon={false}
+                                width={30}
+                                height={16}
+                                handleDiameter={12}
+                                offColor="#888888"
+                                onColor="#4CAF50"
+                                boxShadow="0px 1px 3px rgba(0, 0, 0, 0.6)"
+                                activeBoxShadow="0px 0px 1px 6px rgba(0, 0, 0, 0.2)"
+                                aria-label="알림 스위치"
+                                role="switch"
+                                className="Notification-Switch"
                             />
                         </S.SwitchContainer>
                     </S.RightContainer>
