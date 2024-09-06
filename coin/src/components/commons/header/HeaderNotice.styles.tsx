@@ -89,7 +89,7 @@ export const VolumeSliderContainer = styled.div`
 export const VolumeSlider = styled.div<{ volume: number }>`
     width: 100%;
     height: 5px;
-    background-color: #ddd;
+    background-color: ${({ theme }) => theme.notificationVolumeSliderBackgroundColor};
     border-radius: 5px;
 
     &::after {
@@ -152,7 +152,7 @@ export const NotificationList = styled.ul`
     padding: 0;
     height: 90%;
     overflow-y: scroll;
-    background-color: #DFDFDF;
+    background-color: ${({ theme }) => theme.notificationInnerContentBackgroundColor};
     border-radius: 10px;
 
     &::-webkit-scrollbar {
@@ -184,7 +184,7 @@ export const NotificationList = styled.ul`
 export const NotificationItem = styled.li<{ read: boolean; isRemoving: boolean; moveUp: boolean; dragX: number, isActive: boolean }>`
     margin: 0;
     border-top: 1px solid lightgrey;
-    color: ${({ read }) => (read ? '#888' : '#000')};
+    color: ${({ read, theme }) => (read ? theme.notificationReadMessageTextColor : theme.notificationUnreadMessageTextColor)};
     opacity: ${({ read }) => (read ? 0.6 : 1)};
     display: flex;
     justify-content: space-between;
@@ -242,9 +242,9 @@ export const ModalContainer = styled.div`
     top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #f2f2f2;
+    background-color: ${({ theme }) => theme.backgroundColor};
     padding: 30px 20px 30px 20px;
-    border: 1px solid lightgrey;
+    border: 1px solid ${({ theme }) => theme.backgroundColor};
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
@@ -271,15 +271,15 @@ export const ModalButtonContainer = styled.div`
 `;
 
 export const ReadButton = styled.button<{ active: boolean }>`
-    background-color: ${({ active }) => (active ? '#007BFF' : '#f0f0f0')};
-    color: ${({ active }) => (active ? '#fff' : '#000')};
-    border: 1px solid ${({ active }) => (active ? '#007BFF' : '#ddd')};
+    background-color: ${({ active, theme }) => (active ? theme.notificationActiveButtonBgColor : theme.notificationButtonBgColor)};
+    color: ${({ active, theme }) => (active ? theme.notificationActiveButtonTextColor : theme.notificationButtonTextColor)};
+    border: 1px solid ${({ active, theme }) => (active ? theme.notificationActiveButtonBorderColor : theme.notificationButtonBorderColor)};
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;
     outline: none;
     &:hover {
-        background-color: ${({ active }) => (active ? '#0056b3' : '#e0e0e0')};
+        background-color: ${({ active, theme }) => (active ? theme.notificationActiveButtonHoverBgColor : theme.notificationButtonHoverBgColor)};
     }
 `;
 
@@ -357,27 +357,27 @@ export const ConfirmButtonContainer = styled.div`
 `;
 
 export const ConfirmButton = styled.button`
-    background-color: #007BFF;
-    color: #fff;
-    border: 1px solid #007BFF;
+    background-color: ${({ theme }) => theme.notificationActiveButtonBgColor};
+    color: ${({ theme }) => theme.notificationActiveButtonTextColor};
+    border: 1px solid ${({ theme }) => theme.notificationActiveButtonBorderColor};
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;
     outline: none;
     &:hover {
-        background-color: #0056b3;
+        background-color: ${({ theme }) => theme.notificationActiveButtonHoverBgColor};
     }
 `;
 
 export const CancelButton = styled.button`
-    background-color: #f0f0f0;
-    color: #000;
-    border: 1px solid #ddd;
+    background-color: ${({ theme }) => theme.notificationButtonBgColor};
+    color: ${({ theme }) => theme.notificationButtonTextColor};
+    border: 1px solid ${({ theme }) => theme.notificationButtonBorderColor};
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;
     outline: none;
     &:hover {
-        background-color: #e0e0e0;
+        background-color: ${({ theme }) => theme.notificationButtonHoverBgColor};
     }
 `;
