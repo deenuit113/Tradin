@@ -357,27 +357,27 @@ export const ConfirmButtonContainer = styled.div`
 `;
 
 export const ConfirmButton = styled.button`
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    border: 1px solid #007BFF;
+    border-radius: 4px;
     padding: 5px 10px;
-    border-radius: 3px;
     cursor: pointer;
-
+    outline: none;
     &:hover {
-        background-color: #45a049;
+        background-color: #0056b3;
     }
 `;
 
 export const CancelButton = styled.button`
-    background-color: #f44336;
-    color: white;
-    border: none;
+    background-color: #f0f0f0;
+    color: #000;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     padding: 5px 10px;
-    border-radius: 3px;
     cursor: pointer;
-
+    outline: none;
     &:hover {
-        background-color: #da190b;
+        background-color: #e0e0e0;
     }
 `;
