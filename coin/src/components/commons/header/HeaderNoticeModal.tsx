@@ -1,8 +1,10 @@
 import * as S from "./HeaderNotice.styles";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import Switch from "react-switch";
+import { useRecoilState } from "recoil";
+import { notification } from "../atoms";
 
 interface Notification {
     message: string;
@@ -19,17 +21,22 @@ interface IModalProps {
     showReadOnly: boolean;
     setShowUnreadOnly: React.Dispatch<React.SetStateAction<boolean>>;
     setShowReadOnly: React.Dispatch<React.SetStateAction<boolean>>;
-    enableToastAndSound: boolean;
-    setEnableToastAndSound: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalContainer = (props: IModalProps): JSX.Element => {
     const modalRef = useRef<HTMLDivElement>(null);
+    const [isNotification, setIsNotification] = useRecoilState(notification);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [removingNotifications, setRemovingNotifications] = useState<string[]>([]);
     const [draggedItem, setDraggedItem] = useState<string | null>(null);
     const [dragX, setDragX] = useState(0);
     const dragStartX = useRef(0);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('Notification', isNotification ? 'on' : 'off');
+        }
+    }, [isNotification]);
 
     const markAsRead = (message: string) => {
         if (props.showUnreadOnly) {
@@ -163,13 +170,13 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                         <S.SwitchContainer>
                             <S.NotificationIcon>
                                 <FontAwesomeIcon 
-                                    icon={props.enableToastAndSound ? faBell : faBellSlash} 
-                                    color={props.enableToastAndSound ? "#4CAF50" : "#F44336"}
+                                    icon={isNotification ? faBell : faBellSlash} 
+                                    color={isNotification ? "#4CAF50" : "#F44336"}
                                 />
                             </S.NotificationIcon>
                             <Switch 
-                                checked={props.enableToastAndSound} 
-                                onChange={props.setEnableToastAndSound} 
+                                checked={isNotification} 
+                                onChange={() => setIsNotification(prev => !prev)}
                                 uncheckedIcon={false}
                                 checkedIcon={false}
                                 width={30}

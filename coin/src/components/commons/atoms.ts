@@ -8,6 +8,11 @@ export const darkMode = atom({
     default: false,
 });
 
+export const notification = atom({
+    key: `notification`,
+    default: true,
+});
+
 export const currencyKRW = atom({
     key: 'CurrencyKRW',
     default: true,
