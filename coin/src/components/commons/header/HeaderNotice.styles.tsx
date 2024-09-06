@@ -80,7 +80,7 @@ export const BellIconContainer = styled.div<{ isDragging: boolean; dragDistance:
 
 export const VolumeSliderContainer = styled.div`
     position: absolute;
-    bottom: -20px;
+    bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
     width: 120px;
@@ -222,7 +222,8 @@ export const DeletedZone = styled.div<{ opacity: number }>`
     top: 0;
     right: 0;
     bottom: 0;
-    width: 80px;
+    width: 100px;
+    padding-right: 20px;
     background-color: red;
     display: flex;
     align-items: center;

@@ -16,6 +16,24 @@ interface Notification {
     timestamp: Date;
 }
 
+// 로컬스토리지에 볼륨 가져오기
+const getVolumeFromLocalStorage = (): number => {
+    if (typeof window !== 'undefined') {
+        const storedVolume = localStorage.getItem('volume');
+        if (storedVolume) {
+            return parseFloat(storedVolume);
+        }
+    }
+    return 1;
+};
+
+// 로컬스토리지에 볼륨 저장
+const saveVolumeToLocalStorage = (volume: number) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('volume', volume.toString());
+    }
+};
+
 const getNotificationsFromLocalStorage = (): Notification[] => {
     if (typeof window !== 'undefined') {
         const storedNotifications = localStorage.getItem('notifications');
@@ -46,7 +64,7 @@ export default function HeaderNotice() {
     const [showReadOnly, setShowReadOnly] = useState(false);
     const [enableToastAndSound, setEnableToastAndSound] = useState(true);
     const [unreadCount, setUnreadCount] = useState(0);
-    const [volume, setVolume] = useState(1);
+    const [volume, setVolume] = useState(getVolumeFromLocalStorage());
     const [isDragging, setIsDragging] = useState(false);
     const [dragDistance, setDragDistance] = useState(0);
     const bellIconRef = useRef<HTMLDivElement>(null);
@@ -78,14 +96,14 @@ export default function HeaderNotice() {
     };
 
     const showToast = (message: string) => {
-        toast(message, {
-            position: "bottom-right",
-            autoClose: 3001,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-        });
+        // toast(message, {
+        //     position: "bottom-right",
+        //     autoClose: 3001,
+        //     hideProgressBar: true,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        // });
         playNotificationSound();
     };
 
@@ -151,16 +169,21 @@ export default function HeaderNotice() {
         };
     }, [isDragging, handleMouseMove, handleMouseUp]);
 
+    // 컴포넌트가 마운트될 때, 오디오 객체를 초기화
     useEffect(() => {
         if (!audioRef.current) {
             audioRef.current = new Audio("/alarmsound.mp3");
         }
-        // 컴포넌트가 마운트될 때, 오디오 객체를 초기화
-        audioRef.current.volume = volume;
+        console.log("ori",volume);
+        console.log("get",getVolumeFromLocalStorage());
+        console.log("audioref", audioRef.current)
+        audioRef.current.volume = getVolumeFromLocalStorage();
+        console.log("volume 적용")
     }, []);
 
-    // 볼륨 변경 시, 즉시 오디오 객체에 반영
+    // 볼륨 변경 시, 즉시 오디오 객체에 반영 & 로컬스토리지 저장
     useEffect(() => {
+        saveVolumeToLocalStorage(volume);
         if (audioRef.current) {
             audioRef.current.volume = volume;
         }
@@ -182,7 +205,7 @@ export default function HeaderNotice() {
     }, [notifications, showUnreadOnly, showReadOnly]);
 
     useEffect(() => {
-        const intervalId = setInterval(addDummyNotification, 60000);
+        const intervalId = setInterval(addDummyNotification, 3000);
         const cleanupIntervalId = setInterval(deleteOldNotifications, 60000);
         return () => {
             clearInterval(intervalId);
@@ -198,10 +221,6 @@ export default function HeaderNotice() {
         const unreadNotifications = notifications.filter(notif => !notif.read);
         setUnreadCount(unreadNotifications.length);
     }, [notifications]);
-
-    useEffect(() => {
-        console.log(`Current Volume: ${volume}`);
-    }, [volume]);
 
     const modalContent = (
         <ModalContainer
