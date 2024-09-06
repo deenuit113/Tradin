@@ -30,6 +30,7 @@
     "react-modal": "^3.16.1",
     "react-spring": "^9.7.3",
     "react-switch": "^7.0.0",
+    "react-toastify": "^10.0.5",
     "recoil": "^0.7.7",
     "styled-components": "^6.1.12",
     "technicalindicators": "^3.1.0",
