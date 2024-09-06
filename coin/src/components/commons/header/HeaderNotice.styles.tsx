@@ -38,6 +38,11 @@ const moveUp = keyframes`
     }
 `;
 
+const fadeIn = keyframes`
+    from { opacity: 0; }
+    to { opacity: 1; }
+`;
+
 interface ModalStyles {
     overlay?: CSSProperties;
     content?: CSSProperties;
@@ -61,9 +66,41 @@ export const modalStyles: ModalStyles = {
     }
 };
 
-export const BellIconContainer = styled.div`
+export const BellIconContainer = styled.div<{ isDragging: boolean; dragDistance: number }>`
     position: relative;
     display: inline-block;
+
+    .Notification-Icon {
+        transform-origin: top center;
+        transform: ${props => props.isDragging ? `rotate(${props.dragDistance * -0.1}deg)` : 'none'};
+        transition: transform 0.1s ease;
+    }
+`;
+
+
+export const VolumeSliderContainer = styled.div`
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+`;
+
+export const VolumeSlider = styled.div<{ volume: number }>`
+    width: 100%;
+    height: 5px;
+    background-color: #ddd;
+    border-radius: 5px;
+
+    &::after {
+        content: '';
+        display: block;
+        width: ${props => props.volume * 100}%;
+        height: 100%;
+        background-color: #4CAF50;
+        border-radius: 5px;
+        transition: width 0.1s ease;
+    }
 `;
 
 export const UnreadBadge = styled.div`
@@ -80,6 +117,7 @@ export const UnreadBadge = styled.div`
     align-items: center;
     font-size: 10px;
     font-weight: 800;
+    user-select: none;
 `;
 
 export const BellIcon = styled.div`
