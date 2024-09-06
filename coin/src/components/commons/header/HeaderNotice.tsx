@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Modal from "react-modal";
 import * as S from "./HeaderNotice.styles";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../atoms";
+import { darkMode, notification } from "../atoms";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { modalStyles } from "./HeaderNotice.styles";
@@ -57,6 +57,7 @@ Modal.setAppElement('#__next');
 
 export default function HeaderNotice() {
     const [isDarkMode] = useRecoilState(darkMode);
+    const [isNotification, setIsNotification] = useRecoilState(notification);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [notifications, setNotifications] = useState<Notification[]>(getNotificationsFromLocalStorage());
     const [filteredNotifications, setFilteredNotifications] = useState<Notification[]>([]);
@@ -90,7 +91,7 @@ export default function HeaderNotice() {
             saveNotificationsToLocalStorage(updatedNotifications);
             return updatedNotifications;
         });
-        if (enableToastAndSound) {
+        if (isNotification) {
             showToast(newNotification.message);
         }
     };
@@ -153,6 +154,18 @@ export default function HeaderNotice() {
         setIsDragging(false);
         setDragDistance(0);
     }, []);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedNotification = localStorage.getItem('Notification');
+            console.log(savedNotification);
+            if (savedNotification === 'on') {
+                setIsNotification(true);
+            } else if (savedNotification === 'off') {
+                setIsNotification(false);
+            }
+        }
+    }, []);
     
     useEffect(() => {
         if (isDragging) {
@@ -174,11 +187,7 @@ export default function HeaderNotice() {
         if (!audioRef.current) {
             audioRef.current = new Audio("/alarmsound.mp3");
         }
-        console.log("ori",volume);
-        console.log("get",getVolumeFromLocalStorage());
-        console.log("audioref", audioRef.current)
         audioRef.current.volume = getVolumeFromLocalStorage();
-        console.log("volume 적용")
     }, []);
 
     // 볼륨 변경 시, 즉시 오디오 객체에 반영 & 로컬스토리지 저장
@@ -205,13 +214,13 @@ export default function HeaderNotice() {
     }, [notifications, showUnreadOnly, showReadOnly]);
 
     useEffect(() => {
-        const intervalId = setInterval(addDummyNotification, 3000);
+        const intervalId = setInterval(addDummyNotification, 120000);
         const cleanupIntervalId = setInterval(deleteOldNotifications, 60000);
         return () => {
             clearInterval(intervalId);
             clearInterval(cleanupIntervalId);
         };
-    }, [enableToastAndSound]);
+    }, [isNotification]);
 
     useEffect(() => {
         saveNotificationsToLocalStorage(notifications);
@@ -232,8 +241,6 @@ export default function HeaderNotice() {
             showReadOnly={showReadOnly}
             setShowUnreadOnly={setShowUnreadOnly}
             setShowReadOnly={setShowReadOnly}
-            enableToastAndSound={enableToastAndSound}
-            setEnableToastAndSound={setEnableToastAndSound}
         />
     );
 
