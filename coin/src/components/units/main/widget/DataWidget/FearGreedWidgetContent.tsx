@@ -22,7 +22,7 @@ const SvgContainer = styled.svg`
 `;
 
 const BackgroundCircle = styled.circle`
-    stroke: lightgrey;
+    stroke: #a8a8a8;
     stroke-width: 11;
     fill: none;
     z-index: 998;

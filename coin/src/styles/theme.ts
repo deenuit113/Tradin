@@ -1,6 +1,7 @@
 export interface Theme {
     backgroundColor: string;
-    innerbackgroundColor: string
+    innerbackgroundColor: string;
+    moreinnerbackgroundColor: string;
     textColor: string;
     iconColor: string;
     timeTextColor: string;
@@ -31,7 +32,8 @@ export interface Theme {
 
 export const lightTheme = {
     backgroundColor: '#f0f0f0',
-    innerbackgroundColor: '#d0d0d0',
+    innerbackgroundColor: '#e0e0e0',
+    moreinnerbackgroundColor: '#d0d0d0',
     textColor: '#333',
     iconColor: '#333',
     timeTextColor: 'grey',
@@ -63,6 +65,7 @@ export const lightTheme = {
 export const darkTheme = {
     backgroundColor: '#333',
     innerbackgroundColor: '#444',
+    moreinnerbackgroundColor: '#555',
     textColor: '#f0f0f0',
     iconColor: '#f0f0f0',
     timeTextColor: 'lightgrey',
