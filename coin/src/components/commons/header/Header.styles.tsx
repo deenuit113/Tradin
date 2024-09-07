@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const HeaderContainer = styled.header`
     width: 100%;
@@ -40,8 +41,23 @@ export const SidebarButtonContainer = styled.div`
 
 export const Title = styled.h1`
     cursor: pointer;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 25px;
     color: ${({ theme }) => theme.textColor};
+
+    .logo{
+        fill: ${({ theme }) => theme.iconColor};
+    }
+    #t-bar {
+        transition: width 0.2s ease-in-out;
+    }
+    .logo:hover #t-bar {
+        width: 77px;
+    }
 
     @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 15px;
@@ -61,10 +77,9 @@ export const Center = styled.div`
 
 export const Marquee = styled.div`
     border-radius: 10px;
-    box-shadow: 0px 0px 10px gray;
     overflow: hidden;
     white-space: nowrap;
-    background-color: ${({ theme }) => theme.backgroundColor};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     position: relative;
     height: 50px;
     display: flex;
@@ -88,7 +103,6 @@ export const Marquee = styled.div`
         color: ${({ theme }) => theme.textColor};
     }
 
-    @keyframes slideUp {
     @keyframes slideUp {
         0% {
             transform: translateY(100%);
@@ -135,14 +149,25 @@ export const IconList = styled.ul`
     padding: 0;
     margin: 0;
     justify-content: space-between;
-    justify-content: space-between;
 
     .DarkMode-Switch{
-        &:hover{
-            box-shadow: ${({ theme }) => theme.darkModeSwitchBoxShadow};
+        &:hover .SunIcon {
+            transform: rotate(180deg);
+        }
+        &:hover .MoonIcon {
+            transform: rotate(-30deg);
         }
     }
 `;
+
+export const SunIcon = styled(FontAwesomeIcon)`
+    transition: transform 0.5s ease;
+`;
+
+export const MoonIcon = styled(FontAwesomeIcon)`
+    transition: transform 0.3s ease;
+`;
+
 
 export const IconListItem = styled.li`
     display: flex;
