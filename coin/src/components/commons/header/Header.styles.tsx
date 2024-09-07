@@ -8,7 +8,7 @@ export const HeaderContainer = styled.header`
     align-items: center;
     height: 10vh;
     background-color: ${({ theme }) => theme.backgroundColor};
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid ${({ theme }) => theme.innerbackgroundColor};
     padding: 0px 0px 0px 0px;
     z-index: 999;
     box-sizing: border-box;
