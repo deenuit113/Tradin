@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import * as S from "./Header.styles";
-import { FaBars } from "react-icons/fa";
 import { useSidebar } from "../sidebar/SidebarContext";
 import Switch from 'react-switch';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from "recoil";
 import { darkMode } from "../atoms";
@@ -70,7 +68,13 @@ export default function Header(): JSX.Element {
                 </S.SidebarButtonContainer>
                 <S.Title
                     onClick={handleTitleClick}>
-                    Tradin
+                    <svg className="logo" xmlns="http://www.w3.org/2000/svg" width="264" height="132">
+                        <rect x="8" y="53.7" width="18" height="3.4" className="logo" id="t-bar" fill="#2c3e50"/>
+                        <rect x="14.91" y="54.91" width="3.4" height="22.1" className="logo" fill="#2c3e50"/>
+                        <text x="21.82" y="76.74" font-family="Arial, sans-serif" font-size="25.3" font-weight="bold" className="logo" fill="#2c3e50">
+                            radin
+                        </text>
+                    </svg>
                 </S.Title>
                 <NavBar />
             </S.Left>
@@ -89,8 +93,8 @@ export default function Header(): JSX.Element {
                             checked={isDarkMode}
                             offColor="#888"
                             onColor="#0d6efd"
-                            uncheckedIcon={<FontAwesomeIcon icon={faSun} style={{ color: 'yellow', padding: '5px' }} />}
-                            checkedIcon={<FontAwesomeIcon icon={faMoon} style={{ color: 'white', padding: '5px' }} />}
+                            uncheckedIcon={<S.SunIcon icon={faSun} style={{ color: 'yellow', padding: '5px' }} className="SunIcon" />}
+                            checkedIcon={<S.MoonIcon icon={faMoon} style={{ color: 'white', padding: '5px' }} className="MoonIcon"/>}
                             height={30}
                             width={50}
                             aria-label="다크모드 스위치"
