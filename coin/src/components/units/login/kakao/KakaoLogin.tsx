@@ -8,12 +8,14 @@ export default function KakaoLogin(): JSX.Element {
         script.src = "https://developers.kakao.com/sdk/js/kakao.js";
         script.async = true;
         document.body.appendChild(script);
-
+        const kakaoAppKey: string | undefined = process.env.NEXT_PUBLIC_KAKAO_API_KEY;
         script.onload = () => {
-            if (window.Kakao) {
-                window.Kakao.init("672eb3498373a78548fd8fba82ef62b9"); // 여기에 당신의 카카오 앱 키를 넣으세요
+            if (window.Kakao && kakaoAppKey !== undefined) {
+                window.Kakao.init(kakaoAppKey); // 카카오 앱 키를 사용하여 초기화
                 console.log(window.Kakao.isInitialized()); // Kakao SDK 초기화 확인
-            }
+              } else {
+                console.error("Kakao App Key is undefined.");
+              }
         };
     }, []);
 
