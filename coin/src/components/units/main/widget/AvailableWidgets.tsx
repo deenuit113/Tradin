@@ -12,5 +12,5 @@ export const availableWidgets = [
     // 데이터 시각화 위젯
     { type: 'longshortratio', name: '바이낸스 선물 비트코인 롱/숏 포지션 비율', icon: <></>, symbol: undefined, category: 'data' },
     { type: 'feargreedindex', name: '공포 / 탐욕 지수', icon: <></>, symbol: undefined, category: 'data' },
-    { type: 'rsiindex', name: 'BTC RSI', icon: <></>, symbol: undefined, category: 'data' },
+    { type: 'btcrsiindex', name: 'BTC RSI', icon: <></>, symbol: undefined, category: 'data' },
 ];

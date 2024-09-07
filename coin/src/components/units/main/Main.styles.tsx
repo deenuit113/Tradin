@@ -145,9 +145,8 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
 `;
 
 export const Widget = styled.div<{ isDragging: boolean }>`
-    background-color: ${({ theme }) => theme.backgroundColor};
-    border: 1px solid lightgray;
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 1rem;
     width: 240px;
@@ -169,16 +168,21 @@ export const Widget = styled.div<{ isDragging: boolean }>`
 `;
 
 export const WidgetAdd = styled.div`
-    background-color: ${({ theme }) => theme.widgetAddBackgroundColor};
-    border: 1px solid lightgray;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 1rem;
     width: 240px;
     height: 200px;
+    display: flex;
+    flex-direction: column;
     margin: auto;
     position: relative;
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+
+    :hover {
+        transform: scale(1.05);
+    }
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 230px;
@@ -201,6 +205,7 @@ export const WidgetHeader = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    margin-bottom: 5px;
     color: ${({ theme }) => theme.textColor};
     @media all and (min-width:359px) and (max-width: 799px) {
         padding: 3px;
@@ -246,13 +251,18 @@ export const DropdownItem = styled.div`
 `;
 
 export const WidgetContent = styled.div`
-    margin-top: 0.5rem;
     color: ${({ theme }) => theme.textColor};
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
+    border-radius: 8px;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+
+    #LoadingIcon{
+            font-size: 30px;
+    }
 `;
 
 export const AddWidgetButton = styled.button`
@@ -265,6 +275,12 @@ export const AddWidgetButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     cursor: pointer;
     font-size: 1;
+
+    .PlusIcon {
+        font-size: 4rem;
+    }
 `;
+
