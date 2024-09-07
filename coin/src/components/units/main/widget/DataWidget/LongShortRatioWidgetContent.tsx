@@ -6,13 +6,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export const RatioBarContainer = styled.div`
-    width: 110%;
+    width: 100%;
     height: 30px;
-    border: 1px solid lightgrey;
     display: flex;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
+    padding: 0px 10px 0px 10px;
 `;
 
 export const LongRatioBar = styled.div<{ width: number }>`
@@ -28,6 +28,7 @@ export const LongRatioBar = styled.div<{ width: number }>`
     font-weight: 600;
     padding-left: 15px;
     left: 0;
+    border-radius: 10px 0px 0px 10px;
 
 
     @keyframes fillLongBar {
@@ -65,6 +66,7 @@ export const ShortRatioBar = styled.div<{ width: number }>`
     font-weight: 600;
     padding-right: 15px;
     margin-left: auto;
+    border-radius: 0px 10px 10px 0px;
 
     @keyframes fillShortBar {
         from {

@@ -17,8 +17,8 @@ const GaugeContainer = styled.div`
 `;
 
 const GaugeSvg = styled.svg`
-    width: 90%;
-    height: 60%;
+    width: 81%;
+    height: 54%;
     overflow: visible;
 `;
 

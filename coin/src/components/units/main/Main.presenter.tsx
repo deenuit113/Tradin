@@ -68,17 +68,21 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                         );
                     })}
                     <S.WidgetAdd>
-                        <S.AddWidgetButton onClick={props.onClickWidgetSelector}>
-                            <FaPlus />
-                            위젯 추가
-                        </S.AddWidgetButton>
-                        <WidgetSelector
-                            addWidget={props.addWidget}
-                            setIsSelectorOpen={props.setWidgetSelectorOpen}
-                            availableWidgets={props.availableWidgetTypes}
-                            isOpen={props.widgetSelectorOpen}
-                        />
+                        <S.WidgetHeader>
+                            <S.WidgetTitle>
+                                위젯 추가
+                            </S.WidgetTitle> 
+                        </S.WidgetHeader>
+                        <S.AddWidgetButton className="WidgetAddButton" onClick={props.onClickWidgetSelector}>
+                            <FaPlus className="PlusIcon"/>
+                        </S.AddWidgetButton> 
                     </S.WidgetAdd>
+                    <WidgetSelector
+                        addWidget={props.addWidget}
+                        setIsSelectorOpen={props.setWidgetSelectorOpen}
+                        availableWidgets={props.availableWidgetTypes}
+                        isOpen={props.widgetSelectorOpen}
+                    />
                     {props.selectedSymbol && (
                         <ChartPopup
                             symbol={props.selectedSymbol}
