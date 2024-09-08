@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getAnalytics, isSupported } from "firebase/analytics"; // isSupported 추가
-import { useEffect } from "react";
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 // Firebase 설정
 const firebaseConfig = {

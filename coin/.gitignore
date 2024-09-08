@@ -35,11 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# firebase file
-# /src/components/commons/util/firebase.ts
-
-# kakao app key file
-# /src/components/commons/login/kakao/KakaoLogin.tsx
-
-# currency convert api file
-# /src/components/units/main/currency/CurrencyConvertAPI.ts
+.env

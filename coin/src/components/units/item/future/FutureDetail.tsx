@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import { useState, useEffect } from 'react';
@@ -6,8 +6,8 @@ import FutureDetailOption from './FutureDetailOpt';
 
 export default function FutureDetail(): JSX.Element {
     const { sidebarOpen } = useSidebar();
-    const router = useRouter();
-    const { num } = router.query;
+    const searchParams = useSearchParams();
+    const num = searchParams.get('num');
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
 
     const [selectedOption, setSelectedOption] = useState<number | null>(null);

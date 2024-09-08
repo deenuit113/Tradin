@@ -1,6 +1,6 @@
 import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function FuturesPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
