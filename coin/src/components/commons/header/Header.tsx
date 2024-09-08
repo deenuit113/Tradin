@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import * as S from "./Header.styles";
 import { useSidebar } from "../sidebar/SidebarContext";
 import Switch from 'react-switch';
@@ -11,6 +11,7 @@ import HeaderNotice from "./HeaderNotice";
 import SidebarButton from "./SidebarButton";
 
 export default function Header(): JSX.Element {
+    const pathname = usePathname();
     const router = useRouter();
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     const { toggleSidebar } = useSidebar();
@@ -49,8 +50,8 @@ export default function Header(): JSX.Element {
     }, [isDarkMode]);
 
     const handleTitleClick = () => {
-        if (router.pathname === "/") {
-            router.reload();
+        if (pathname === "/") {
+            router.refresh();
         } else {
             router.push("/");
         }

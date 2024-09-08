@@ -1,6 +1,6 @@
 import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
 
 type Position = '상승' | '하강';

@@ -1,8 +1,10 @@
+'use client';
+
 import { useState } from "react";
 import { FaAngleDown, FaPlusCircle } from "react-icons/fa";
 import * as S from "./Sidebar.styles";
 import { useSidebar } from "./SidebarContext";
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function SideBar(): JSX.Element {
     const [spotOpen, setSpotOpen] = useState(false);

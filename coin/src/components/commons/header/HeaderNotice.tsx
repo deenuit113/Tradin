@@ -53,8 +53,6 @@ const saveNotificationsToLocalStorage = (notifications: Notification[]) => {
     }
 };
 
-Modal.setAppElement('#__next');
-
 export default function HeaderNotice() {
     const [isDarkMode] = useRecoilState(darkMode);
     const [isNotification, setIsNotification] = useRecoilState(notification);
@@ -154,6 +152,11 @@ export default function HeaderNotice() {
         setIsDragging(false);
         setDragDistance(0);
     }, []);
+
+    useEffect(() => {
+        Modal.setAppElement(document.getElementById('__next') || document.body);
+      }, []);
+    
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
