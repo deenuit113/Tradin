@@ -16,12 +16,12 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
     display: flex;
     width: 100%;
-    padding-top: 10vh;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     justify-content: flex-start;
     align-items: flex-end;
     background-color: ${({ theme }) => theme.backgroundColor};
+    overflow-y: hidden;
 `;
 
 export const MainContent = styled.div<{ sidebarOpen: boolean }>`
@@ -69,7 +69,6 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
 export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
-    margin-top: 10px;
     transition: width 0.3s ease, margin-left 0.3s ease;
     height: 10%;
     display: flex;
@@ -78,37 +77,37 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
     padding: 1rem;
     font-weight: bolder;
     color: ${({ theme }) => theme.textColor};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    padding: 1rem;
     position: relative;
+    font-size: 1rem;
 
     .FaAngleRight{
         margin-left: 10px;
     }
-`;
 
-export const WidgetContainer = styled.div`
-    width: 100%;
-    margin-bottom: 1rem;
-    background-color: ${({ theme }) => theme.backgroundColor};
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
+    div {
+        font-size: 1rem;
+    }
 `;
 
 export const WidgetDetailContainer = styled.div<{ selectedOption: number | null }>`
     width: ${({ selectedOption }) => (selectedOption ? '49.5%' : '100%')};
     margin-bottom: 1rem;
-    background-color: ${({ theme }) => theme.backgroundColor};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     border-radius: 8px;
-    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
 `;
 
 export const WidgetHeader = styled.div`
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: ${({ theme }) => theme.textColor};
     margin-bottom: 1rem;
     margin-top: 1rem;
-    padding-left: 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
 
     @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 14px;
@@ -119,6 +118,9 @@ export const WidgetTable = styled.table<{ selectedOption: number | null }>`
     width: 100%;
     border-collapse: collapse;
     color: ${({ theme }) => theme.textColor};
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    padding: 30px 20px 30px 20px;
 
     .title{
         font-weight: bolder;
@@ -190,9 +192,13 @@ export const TransactionHistory = styled.table<{ selectedOption: number | null }
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    padding: 30px 20px 30px 20px;
+
 
     th, td {
-        padding: 0.5rem;
+        padding: 0.7rem;
         text-align: left;
         border-bottom: 1px solid #ccc;
         vertical-align: middle;
@@ -260,6 +266,13 @@ export const StrategyOptionDrop = styled.div`
 export const OptionInnerContainer = styled.div`
 `;
 
+export const OptionFilterContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    padding: 10px;
+`;
+
 export const OptionTitle = styled.label`
     color: ${({ theme }) => theme.textColor};
 `;
@@ -278,3 +291,4 @@ export const OptionHorizontalDivider = styled.div`
 export const FilterOption = styled.label`
 
 `;
+

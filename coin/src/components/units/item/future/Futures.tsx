@@ -7,7 +7,7 @@ export default function FuturesPage(): JSX.Element {
     const router = useRouter();
 
     const onClickMoveToFutureStrategy = (id: number) => {
-        router.push(`./future/${id}`);
+        router.push(`/future/${id}`);
     };
 
     return (

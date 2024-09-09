@@ -42,7 +42,7 @@ export default function SpotDetailOption({
                         ))}
                     </S.OptionInnerContainer>
                     <S.OptionHorizontalDivider/>
-                    <S.OptionInnerContainer>
+                    <S.OptionFilterContainer>
                         <S.OptionTitle>필터:</S.OptionTitle>
                         {filtersList.map(filter => (
                             <S.FilterOption key={filter.key}>
@@ -55,7 +55,7 @@ export default function SpotDetailOption({
                                 {filter.label}
                             </S.FilterOption>
                         ))}
-                    </S.OptionInnerContainer>
+                    </S.OptionFilterContainer>
                 </S.StrategyOptionDrop>
             }
         </>

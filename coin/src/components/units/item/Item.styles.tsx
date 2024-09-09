@@ -3,9 +3,10 @@ import styled from "@emotion/styled";
 export const Container = styled.div`
     display: flex;
     width: 100%;
-    height: 100vh;
-    justify-content: flex-end;
-    align-items: flex-end;
+    height: 90vh;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
     background-color: ${({ theme }) => theme.backgroundColor};
 `;
 
@@ -17,9 +18,9 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     align-items: flex-start;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
-    padding: 1rem;
-    height: 90%;
+    height: 100%;
     overflow-y: auto;
+    padding: 1rem;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -51,8 +52,9 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     }
 `;
 
-export const SpotHeader = styled.div`
-    width: 100%;
+export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
+     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     height: 10%;
     display: flex;
     align-items: center;
@@ -60,6 +62,8 @@ export const SpotHeader = styled.div`
     padding: 1rem;
     font-weight: bolder;
     color: ${({ theme }) => theme.textColor};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    margin-bottom: 1rem;
     
     .FaAngleRight{
         margin-left: 10px;
@@ -69,18 +73,20 @@ export const SpotHeader = styled.div`
 export const WidgetContainer = styled.div`
     width: 100%;
     margin-bottom: 1rem;
-    background-color: ${({ theme }) => theme.backgroundColor};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.1);
 `;
 
 export const WidgetHeader = styled.div`
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
     color: ${({ theme }) => theme.textColor};
     margin-bottom: 1rem;
     cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
 
     @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 14px;
@@ -91,7 +97,9 @@ export const WidgetTable = styled.table`
     width: 100%;
     border-collapse: collapse;
     color: ${({ theme }) => theme.textColor};
-
+    border-radius: 10px;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    padding: 30px 20px 30px 20px;
     .title{
         font-weight: bolder;
 
@@ -138,7 +146,7 @@ export const StrategyInFoDetail = styled.td`
 export const HorizontalDivider = styled.div`
     width: 100%;
     height: 2px;
-    background-color: #ccc;
+    background-color: #444;
     margin: 1rem 0;
 `;
 

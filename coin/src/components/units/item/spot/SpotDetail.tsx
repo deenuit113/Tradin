@@ -1,9 +1,9 @@
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import { useState, useEffect } from 'react';
 import SpotDetailOption from './SpotDetailOpt';
-import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
+import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
 
 type Position = '상승' | '하강';
 
@@ -35,9 +35,8 @@ const coinData: CoinData[] = [
 ];
 
 export default function SpotDetail(): JSX.Element {
+    const { num } = useParams();
     const { sidebarOpen } = useSidebar();
-    const searchParams = useSearchParams();
-    const num = searchParams.get('num');
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const [filters, setFilters] = useState<{ [key: string]: boolean }>(initialFilters);
 
@@ -102,7 +101,7 @@ export default function SpotDetail(): JSX.Element {
     return (
         <S.Container>
             <S.SpotHeader sidebarOpen={sidebarOpen} >
-                    현물
+                    <div><FaAngleRight/> 현물 <FaAngleRight/> 현물 {num} </div>
                     <S.StrategyOption onClick={onClickStrategyOption}>옵션</S.StrategyOption>
                     <SpotDetailOption
                         isMenuOpen={isMenuOpen}
@@ -144,7 +143,6 @@ export default function SpotDetail(): JSX.Element {
                             ))}
                         </tbody>
                     </S.WidgetTable>
-                    <S.HorizontalDivider />
                     <S.TransactionHistory selectedOption={selectedOption}>
                         <thead>
                             <tr>
@@ -212,7 +210,6 @@ export default function SpotDetail(): JSX.Element {
                                 ))}
                             </tbody>
                         </S.WidgetTable>
-                        <S.HorizontalDivider />
                         <S.TransactionHistory selectedOption={selectedOption}>
                             <thead>
                                 <tr>
