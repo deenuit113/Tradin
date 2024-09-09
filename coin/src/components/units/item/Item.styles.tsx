@@ -53,7 +53,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
 `;
 
 export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
-     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     height: 10%;
     display: flex;
@@ -64,6 +64,7 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
     color: ${({ theme }) => theme.textColor};
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     margin-bottom: 1rem;
+    transition: width 0.3s ease, margin-left 0.3s ease;
     
     .FaAngleRight{
         margin-left: 10px;

@@ -255,9 +255,9 @@ export const StrategyOption = styled.div`
 export const StrategyOptionDrop = styled.div`
     padding: 1rem;
     position: absolute;
-    background-color: #f0f0f0;
+    background-color: ${({ theme }) => theme.backgroundColor};
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid lightgray;
+    border: 1px solid ${({ theme }) => theme.moreinnerbackgroundColor};;
     border-radius: 8px;
     right: 10px;
     top: 50px;
