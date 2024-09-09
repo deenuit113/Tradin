@@ -274,3 +274,7 @@ export const OptionHorizontalDivider = styled.div`
     background-color: #ccc;
     margin: 10px 0;
 `;
+
+export const FilterOption = styled.label`
+
+`;
