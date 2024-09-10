@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode } from "react";
-import Head from "next/head";
 import Header from "../src/components/commons/header/Header";
 import { SidebarProvider } from "../src/components/commons/sidebar/SidebarContext";
 import { RecoilRoot, useRecoilState } from "recoil";
@@ -15,9 +14,9 @@ import { darkMode } from "../src/components/commons/atoms";
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="ko">
-            <Head>
+            <head>
                 <title>Tradin</title>
-            </Head>
+            </head>
             <body>
                 <RecoilRoot>
                     <ThemeWrapper>
