@@ -1,6 +1,6 @@
 import * as S from "./Main.styles";
 import { useRecoilState } from "recoil";
-import { currencyKRW } from "../../commons/atoms";
+import { currencyKRW } from "../../commons/util/atoms";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import { FaPlus } from "react-icons/fa";
 import Widget from "./widget/Widget";

@@ -4,7 +4,7 @@ import { faTrashAlt, faBell, faBellSlash } from '@fortawesome/free-solid-svg-ico
 import { useRef, useState, useCallback, useEffect } from "react";
 import Switch from "react-switch";
 import { useRecoilState } from "recoil";
-import { notification } from "../atoms";
+import { notification } from "../util/atoms";
 
 interface Notification {
     message: string;

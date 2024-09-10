@@ -5,7 +5,7 @@ import { useSidebar } from "../sidebar/SidebarContext";
 import Switch from 'react-switch';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from "recoil";
-import { darkMode } from "../atoms";
+import { darkMode } from "../util/atoms";
 import NavBar from "../nav/Nav";
 import HeaderNotice from "./HeaderNotice";
 import SidebarButton from "./SidebarButton";
