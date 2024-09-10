@@ -72,7 +72,7 @@ export default function Header(): JSX.Element {
                     <svg className="logo" xmlns="http://www.w3.org/2000/svg" width="264" height="132">
                         <rect x="8" y="53.7" width="18" height="3.4" className="logo" id="t-bar" fill="#2c3e50"/>
                         <rect x="14.91" y="54.91" width="3.4" height="22.1" className="logo" fill="#2c3e50"/>
-                        <text x="21.82" y="76.74" font-family="Arial, sans-serif" font-size="25.3" font-weight="bold" className="logo" fill="#2c3e50">
+                        <text x="21.82" y="76.74" fontFamily="Arial, sans-serif" fontSize="25.3" fontWeight="bold" className="logo" fill="#2c3e50">
                             radin
                         </text>
                     </svg>
