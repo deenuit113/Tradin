@@ -1,9 +1,9 @@
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import { useState, useEffect } from 'react';
 import SpotDetailOption from './SpotDetailOpt';
-import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
+import { FaCaretUp, FaCaretDown, FaAngleRight, FaCog, FaExchangeAlt } from 'react-icons/fa';
 
 type Position = '상승' | '하강';
 
@@ -18,15 +18,27 @@ interface CoinData {
     averageProfit: string;
 }
 
+const initialFilters = {
+    coin: true,
+    position: true,
+    entryPrice: true,
+    profitLoss: false,
+    winRate: false,
+    profitFactor: false,
+    trades: false,
+    averageBars: false,
+    averageProfit: false
+};
+
 const coinData: CoinData[] = [
     { position: '하강', entryPrice: '1000 KRW', profitLoss: '10.00%', winRate: '50.00%', profitFactor: '1.234', trades: 5, averageBars: 10, averageProfit: '5.00%' },
 ];
 
 export default function SpotDetail(): JSX.Element {
+    const { num } = useParams();
     const { sidebarOpen } = useSidebar();
-    const searchParams = useSearchParams();
-    const num = searchParams.get('num');
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
+    const [filters, setFilters] = useState<{ [key: string]: boolean }>(initialFilters);
 
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
@@ -54,66 +66,83 @@ export default function SpotDetail(): JSX.Element {
         setSelectedOption(selectedOption === option ? null : option);
     };
 
+    const handleFilterChange = (key: string) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [key]: !prevFilters[key]
+        }));
+    };
+
+
     const availableOptions = [1, 2, 3, 4].filter(n => n !== Number(num));
     
     useEffect(() => {
-        setSelectedOption(null); // Reset selected option when route changes
+        setSelectedOption(null);
     }, [num]);
 
     const onClickStrategyOption = () => {
         setMenuOpen(prev=> !prev);
     }
 
+    const filteredHeaders = [
+        { key: "coin", label: "코인" },
+        { key: "position", label: "현재 포지션" },
+        { key: "entryPrice", label: "진입가격" },
+        { key: "profitLoss", label: "누적손익" },
+        { key: "winRate", label: "승률" },
+        { key: "profitFactor", label: "수익 팩터" },
+        { key: "trades", label: "횟수" },
+        { key: "averageBars", label: "평균봉수" },
+        { key: "averageProfit", label: "평균수익" }
+    ].filter(header => filters[header.key]);
+
     const position = "하강";
 
     return (
         <S.Container>
             <S.SpotHeader sidebarOpen={sidebarOpen} >
-                    현물
-                    <S.StrategyOption onClick={onClickStrategyOption}>옵션</S.StrategyOption>
+                    <div><FaExchangeAlt/> 현물 <FaAngleRight/> 현물 {num}</div>
+                    <S.StrategyOption onClick={onClickStrategyOption}><FaCog className="OptionIcon"/>옵션</S.StrategyOption>
                     <SpotDetailOption
                         isMenuOpen={isMenuOpen}
                         availableOptions={availableOptions}
                         selectedOption={selectedOption}
                         handleCheckboxChange={handleCheckboxChange}
+                        filters={filters}
+                        handleFilterChange={handleFilterChange}
                     />    
                 </S.SpotHeader>
-            <S.MainContent sidebarOpen={sidebarOpen} >
-                <S.WidgetDetailContainer selectedOption={selectedOption}>
+            <S.MainContent sidebarOpen={sidebarOpen} selectedOption={selectedOption}>
+                <S.WidgetDetailContainer>
                     <S.WidgetHeader>현물 {num}</S.WidgetHeader>
                     <S.WidgetTable selectedOption={selectedOption}>
                         <thead>
                             <tr>
-                                <S.StrategyInfo className="title">코인</S.StrategyInfo>
-                                <S.StrategyInfo className="title">현재 포지션</S.StrategyInfo>
-                                <S.StrategyInfo className="title">진입가격</S.StrategyInfo>
-                                <S.StrategyInfo className="title">누적손익</S.StrategyInfo>
-                                <S.StrategyInfo className="title">승률</S.StrategyInfo>
-                                <S.StrategyInfo className="title">수익 팩터</S.StrategyInfo>
-                                <S.StrategyInfo className="title">횟수</S.StrategyInfo>
-                                <S.StrategyInfo className="title">평균봉수</S.StrategyInfo>
-                                <S.StrategyInfo className="title">평균수익</S.StrategyInfo>
+                                {filteredHeaders.map(header => (
+                                    <S.StrategyInfo key={header.key} className="title">{header.label}</S.StrategyInfo>
+                                ))}
                             </tr>
                         </thead>
                         <tbody>
                             {coinData.map((data, index) => (
                                 <tr key={index}>
-                                    <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">
-                                        {data.position === '상승' ? <FaCaretUp className="position-icon" color="red" /> : <FaCaretDown className="position-icon" color="blue" />}
-                                    </S.StrategyInfo>
-                                    <S.StrategyInfo className="value">{data.entryPrice}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">{data.profitLoss}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">{data.winRate}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">{data.profitFactor}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">{data.trades}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">{data.averageBars}</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">{data.averageProfit}</S.StrategyInfo>
+                                    {filters.coin && <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>}
+                                    {filters.position && (
+                                        <S.StrategyInfo className="value">
+                                            {data.position === '상승' ? <FaCaretUp className="position-icon" color="red" /> : <FaCaretDown className="position-icon" color="blue" />}
+                                        </S.StrategyInfo>
+                                    )}
+                                    {filters.entryPrice && <S.StrategyInfo className="value">{data.entryPrice}</S.StrategyInfo>}
+                                    {filters.profitLoss && <S.StrategyInfo className="value">{data.profitLoss}</S.StrategyInfo>}
+                                    {filters.winRate && <S.StrategyInfo className="value">{data.winRate}</S.StrategyInfo>}
+                                    {filters.profitFactor && <S.StrategyInfo className="value">{data.profitFactor}</S.StrategyInfo>}
+                                    {filters.trades && <S.StrategyInfo className="value">{data.trades}</S.StrategyInfo>}
+                                    {filters.averageBars && <S.StrategyInfo className="value">{data.averageBars}</S.StrategyInfo>}
+                                    {filters.averageProfit && <S.StrategyInfo className="value">{data.averageProfit}</S.StrategyInfo>}
                                 </tr>
                             ))}
                         </tbody>
                     </S.WidgetTable>
-                    <S.HorizontalDivider />
                     <S.TransactionHistory selectedOption={selectedOption}>
                         <thead>
                             <tr>
@@ -151,37 +180,36 @@ export default function SpotDetail(): JSX.Element {
                 </S.WidgetDetailContainer>
 
                 {selectedOption && (
-                    <S.WidgetDetailContainer selectedOption={selectedOption}>
+                    <S.WidgetDetailContainer>
                         <S.WidgetHeader>현물 {selectedOption}</S.WidgetHeader>
                         <S.WidgetTable  selectedOption={selectedOption}>
                             <thead>
                                 <tr>
-                                    <S.StrategyInfo className="title">코인</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">현재 포지션</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">진입가격</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">누적손익</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">승률</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">수익 팩터</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">횟수</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">평균봉수</S.StrategyInfo>
-                                    <S.StrategyInfo className="title">평균수익</S.StrategyInfo>
-                                 </tr>
+                                    {filteredHeaders.map(header => (
+                                        <S.StrategyInfo key={header.key} className="title">{header.label}</S.StrategyInfo>
+                                    ))}
+                                </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">상승</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">1000 KRW</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">10.00%</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">50.00%</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">1.234</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">5</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">10</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">5.00%</S.StrategyInfo>
-                                </tr>
+                                {coinData.map((data, index) => (
+                                    <tr key={index}>
+                                        {filters.coin && <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>}
+                                        {filters.position && (
+                                            <S.StrategyInfo className="value">
+                                                {data.position === '상승' ? <FaCaretUp className="position-icon" color="red" /> : <FaCaretDown className="position-icon" color="blue" />}
+                                            </S.StrategyInfo>
+                                        )}
+                                        {filters.entryPrice && <S.StrategyInfo className="value">{data.entryPrice}</S.StrategyInfo>}
+                                        {filters.profitLoss && <S.StrategyInfo className="value">{data.profitLoss}</S.StrategyInfo>}
+                                        {filters.winRate && <S.StrategyInfo className="value">{data.winRate}</S.StrategyInfo>}
+                                        {filters.profitFactor && <S.StrategyInfo className="value">{data.profitFactor}</S.StrategyInfo>}
+                                        {filters.trades && <S.StrategyInfo className="value">{data.trades}</S.StrategyInfo>}
+                                        {filters.averageBars && <S.StrategyInfo className="value">{data.averageBars}</S.StrategyInfo>}
+                                        {filters.averageProfit && <S.StrategyInfo className="value">{data.averageProfit}</S.StrategyInfo>}
+                                    </tr>
+                                ))}
                             </tbody>
                         </S.WidgetTable>
-                        <S.HorizontalDivider />
                         <S.TransactionHistory selectedOption={selectedOption}>
                             <thead>
                                 <tr>

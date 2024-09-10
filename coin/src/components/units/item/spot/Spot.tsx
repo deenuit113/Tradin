@@ -1,7 +1,7 @@
 import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import { useRouter } from 'next/navigation';
-import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
+import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
 
 type Position = '상승' | '하강';
 
@@ -24,14 +24,18 @@ export default function SpotPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const router = useRouter();
 
-    const onClickMoveToSpotStrategy = (id: number) => {
-        router.push(`./spot/${id}`);
+    const onClickMoveToSpotStrategy = (num: number) => {
+        router.push(`./spot/${num}`);
     };
 
     return (
         <S.Container>
+            <S.SpotHeader sidebarOpen={sidebarOpen}>
+                <div>
+                    <FaAngleRight/> 현물
+                </div>
+            </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} >
-                <S.SpotHeader>현물</S.SpotHeader>
                 {[1, 2, 3, 4].map((num) => (
                     <S.WidgetContainer key={num} >
                         <S.WidgetHeader onClick={() => onClickMoveToSpotStrategy(num)}>현물 {num}</S.WidgetHeader>
