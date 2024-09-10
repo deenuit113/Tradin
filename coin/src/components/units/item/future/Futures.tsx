@@ -1,23 +1,45 @@
 import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
+import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
 
-export default function FuturesPage(): JSX.Element {
+type Position = '상승' | '하강';
+
+interface CoinData {
+    position: Position;
+    entryPrice: string;
+    profitLoss: string;
+    winRate: string;
+    profitFactor: string;
+    trades: number;
+    averageBars: number;
+    averageProfit: string;
+}
+
+const coinData: CoinData[] = [
+    { position: '상승', entryPrice: '1000 KRW', profitLoss: '10.00%', winRate: '50.00%', profitFactor: '1.234', trades: 5, averageBars: 10, averageProfit: '5.00%' },
+];
+
+export default function FuturePage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const router = useRouter();
 
-    const onClickMoveToFutureStrategy = (id: number) => {
-        router.push(`/future/${id}`);
+    const onClickMoveToFutureStrategy = (num: number) => {
+        router.push(`./future/${num}`);
     };
 
     return (
         <S.Container>
+            <S.SpotHeader sidebarOpen={sidebarOpen}>
+                <div>
+                    <FaAngleRight/> 선물
+                </div>
+            </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} >
-                <S.SpotHeader>선물</S.SpotHeader>
                 {[1, 2, 3, 4].map((num) => (
                     <S.WidgetContainer key={num} >
-                        <S.WidgetHeader onClick={() => onClickMoveToFutureStrategy(num)}>선물 {num}</S.WidgetHeader>
-                        <S.WidgetTable >
+                        <S.WidgetHeader onClick={() => onClickMoveToFutureStrategy(num)}>현물 {num}</S.WidgetHeader>
+                        <S.WidgetTable>
                             <thead>
                                 <tr>
                                     <S.StrategyInfo className="title">코인</S.StrategyInfo>
@@ -32,17 +54,21 @@ export default function FuturesPage(): JSX.Element {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">상승</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">1000 KRW</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">10.00%</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">50.00%</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">1.234</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">5</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">10</S.StrategyInfo>
-                                    <S.StrategyInfo className="value">5.00%</S.StrategyInfo>
-                                </tr>
+                                {coinData.map((data, index) => (
+                                    <tr key={index}>
+                                        <S.StrategyInfo className="value">코인아이콘</S.StrategyInfo>
+                                        <S.StrategyInfo className="value">
+                                            {data.position === '상승' ? <FaCaretUp className="position-icon" color="red" /> : <FaCaretDown className="position-icon" color="blue" />}
+                                        </S.StrategyInfo>
+                                        <S.StrategyInfo className="value">{data.entryPrice}</S.StrategyInfo>
+                                        <S.StrategyInfo className="value">{data.profitLoss}</S.StrategyInfo>
+                                        <S.StrategyInfo className="value">{data.winRate}</S.StrategyInfo>
+                                        <S.StrategyInfo className="value">{data.profitFactor}</S.StrategyInfo>
+                                        <S.StrategyInfo className="value">{data.trades}</S.StrategyInfo>
+                                        <S.StrategyInfo className="value">{data.averageBars}</S.StrategyInfo>
+                                        <S.StrategyInfo className="value">{data.averageProfit}</S.StrategyInfo>
+                                    </tr>
+                                ))}
                             </tbody>
                         </S.WidgetTable>
                     </S.WidgetContainer>

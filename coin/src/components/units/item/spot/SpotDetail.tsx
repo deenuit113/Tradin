@@ -112,8 +112,8 @@ export default function SpotDetail(): JSX.Element {
                         handleFilterChange={handleFilterChange}
                     />    
                 </S.SpotHeader>
-            <S.MainContent sidebarOpen={sidebarOpen} >
-                <S.WidgetDetailContainer selectedOption={selectedOption}>
+            <S.MainContent sidebarOpen={sidebarOpen} selectedOption={selectedOption}>
+                <S.WidgetDetailContainer>
                     <S.WidgetHeader>현물 {num}</S.WidgetHeader>
                     <S.WidgetTable selectedOption={selectedOption}>
                         <thead>
@@ -180,7 +180,7 @@ export default function SpotDetail(): JSX.Element {
                 </S.WidgetDetailContainer>
 
                 {selectedOption && (
-                    <S.WidgetDetailContainer selectedOption={selectedOption}>
+                    <S.WidgetDetailContainer>
                         <S.WidgetHeader>현물 {selectedOption}</S.WidgetHeader>
                         <S.WidgetTable  selectedOption={selectedOption}>
                             <thead>

@@ -24,12 +24,11 @@ export const Container = styled.div`
     overflow-y: hidden;
 `;
 
-export const MainContent = styled.div<{ sidebarOpen: boolean }>`
+export const MainContent = styled.div<{ sidebarOpen: boolean, selectedOption: number | null }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: ${({ selectedOption }) => (selectedOption ? "1fr 1fr" : "1fr")};
+    gap: 1rem;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     padding: 1rem;
@@ -91,21 +90,25 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
     }
 `;
 
-export const WidgetDetailContainer = styled.div<{ selectedOption: number | null }>`
-    width: ${({ selectedOption }) => (selectedOption ? '49.5%' : '100%')};
+export const WidgetDetailContainer = styled.div`
+    width: 100%;
+    margin-top: 0.7rem;
     margin-bottom: 1rem;
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     border-radius: 8px;
     padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
 `;
 
 export const WidgetHeader = styled.div`
     font-size: 1.2rem;
     font-weight: bold;
     color: ${({ theme }) => theme.textColor};
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-bottom: 0.8rem;
+    margin-top: 0.8rem;
+    padding: 1rem 1.8rem;
     border-radius: 10px;
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
 
@@ -120,7 +123,6 @@ export const WidgetTable = styled.table<{ selectedOption: number | null }>`
     color: ${({ theme }) => theme.textColor};
     border-radius: 10px;
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
-    padding: 30px 20px 30px 20px;
 
     .title{
         font-weight: bolder;
@@ -138,7 +140,7 @@ export const WidgetTable = styled.table<{ selectedOption: number | null }>`
 `;
 
 export const StrategyInfo = styled.td`
-    border-left: 1px solid #ccc;
+    border-left: 1px solid ${({ theme }) => theme.innerbackgroundColor};
     border-radius: 5px;
     padding: 0.5rem;
     text-align: center;
@@ -154,7 +156,7 @@ export const StrategyInfo = styled.td`
 `;
 
 export const StrategyInFoDetail = styled.td`
-    border-left: 1px solid #ccc;
+    border-left: 1px solid ${({ theme }) => theme.innerbackgroundColor};
     border-radius: 5px;
     padding: 0.5rem;
     text-align: center;
@@ -184,7 +186,7 @@ export const StrategyInFoDetail = styled.td`
 export const HorizontalDivider = styled.div`
     width: 100%;
     height: 1px;
-    background-color: #ccc;
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     margin: 1rem 0;
 `;
 
@@ -200,13 +202,13 @@ export const TransactionHistory = styled.table<{ selectedOption: number | null }
     th, td {
         padding: 0.7rem;
         text-align: left;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid  ${({ theme }) => theme.innerbackgroundColor};
         vertical-align: middle;
-        border-right: 1px solid #ccc;
+        border-right: 1px solid  ${({ theme }) => theme.innerbackgroundColor};
     }
 
     th {
-        border-top: 1px solid #ccc;
+        border-top: 1px solid  ${({ theme }) => theme.innerbackgroundColor};
     }
 
     th:last-child, td:last-child {
@@ -233,7 +235,7 @@ export const TransactionHistory = styled.table<{ selectedOption: number | null }
     }
 
     .bordered {
-        border-right: 2px solid #ccc;
+        border-right: 1px solid  ${({ theme }) => theme.innerbackgroundColor};
     }
 
     .buy {
@@ -284,7 +286,7 @@ export const ComparisonOption = styled.label`
 export const OptionHorizontalDivider = styled.div`
     width: 100%;
     height: 1px;
-    background-color: #ccc;
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     margin: 10px 0;
 `;
 
