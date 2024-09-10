@@ -252,6 +252,14 @@ export const TransactionHistory = styled.table<{ selectedOption: number | null }
 export const StrategyOption = styled.div`
     cursor: pointer;
     display: relative;
+
+    display: flex;
+    align-items: center;
+    // css 세로 중앙 정렬 기능 추가 > align-content: center;
+
+    .OptionIcon {
+        margin-left: 20px;
+    }
 `;
 
 export const StrategyOptionDrop = styled.div`

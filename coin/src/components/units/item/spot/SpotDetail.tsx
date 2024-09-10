@@ -3,7 +3,7 @@ import * as S from "../ItemDetail.styles";
 import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import { useState, useEffect } from 'react';
 import SpotDetailOption from './SpotDetailOpt';
-import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
+import { FaCaretUp, FaCaretDown, FaAngleRight, FaCog, FaExchangeAlt } from 'react-icons/fa';
 
 type Position = '상승' | '하강';
 
@@ -77,7 +77,7 @@ export default function SpotDetail(): JSX.Element {
     const availableOptions = [1, 2, 3, 4].filter(n => n !== Number(num));
     
     useEffect(() => {
-        setSelectedOption(null); // Reset selected option when route changes
+        setSelectedOption(null);
     }, [num]);
 
     const onClickStrategyOption = () => {
@@ -101,8 +101,8 @@ export default function SpotDetail(): JSX.Element {
     return (
         <S.Container>
             <S.SpotHeader sidebarOpen={sidebarOpen} >
-                    <div><FaAngleRight/> 현물 <FaAngleRight/> 현물 {num} </div>
-                    <S.StrategyOption onClick={onClickStrategyOption}>옵션</S.StrategyOption>
+                    <div><FaExchangeAlt/> 현물 <FaAngleRight/> 현물 {num}</div>
+                    <S.StrategyOption onClick={onClickStrategyOption}><FaCog className="OptionIcon"/>옵션</S.StrategyOption>
                     <SpotDetailOption
                         isMenuOpen={isMenuOpen}
                         availableOptions={availableOptions}
