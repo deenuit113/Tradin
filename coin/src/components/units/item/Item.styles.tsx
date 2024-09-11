@@ -59,10 +59,10 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
     font-weight: bolder;
     color: ${({ theme }) => theme.textColor};
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    padding: 0rem 1rem;
+    background-color: ${({ theme }) => theme.breadcrumbBackgroundColor};
     margin-bottom: 1rem;
     transition: width 0.3s ease, margin-left 0.3s ease;
     

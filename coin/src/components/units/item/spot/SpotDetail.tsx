@@ -4,6 +4,7 @@ import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import { useState, useEffect } from 'react';
 import SpotDetailOption from './SpotDetailOpt';
 import { FaCaretUp, FaCaretDown, FaAngleRight, FaCog, FaExchangeAlt } from 'react-icons/fa';
+import Breadcrumb from '../../../commons/breadcrumb/BreadCrumb';
 
 type Position = '상승' | '하강';
 
@@ -101,7 +102,7 @@ export default function SpotDetail(): JSX.Element {
     return (
         <S.Container>
             <S.SpotHeader sidebarOpen={sidebarOpen} >
-                    <div><FaExchangeAlt/> 현물 <FaAngleRight/> 현물 {num}</div>
+                    <div><Breadcrumb/></div>
                     <S.StrategyOption onClick={onClickStrategyOption}><FaCog className="OptionIcon"/>옵션</S.StrategyOption>
                     <SpotDetailOption
                         isMenuOpen={isMenuOpen}

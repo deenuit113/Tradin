@@ -28,6 +28,14 @@ export interface Theme {
     notificationUnreadMessageTextColor: string;
     notificationReadMessageTextColor: string;
     notificationVolumeSliderBackgroundColor: string;
+    //breadcrumb
+    breadcrumbBackgroundColor: string;
+    breadcrumbTextColor: string;
+    breadcrumbLinkColor: string;
+    breadcrumbLinkHoverColor: string;
+    breadcrumbSeparatorColor: string;
+    breadcrumbEditIconColor: string;
+    breadcrumbEditInputBorderColor: string;
 }
 
 export const lightTheme = {
@@ -60,6 +68,14 @@ export const lightTheme = {
     notificationUnreadMessageTextColor: '#000',
     notificationReadMessageTextColor: '#888',
     notificationVolumeSliderBackgroundColor: '#ddd',
+    //breadcrumb
+    breadcrumbBackgroundColor: '#B0C4DE',
+    breadcrumbTextColor: '#333',
+    breadcrumbLinkColor: '#0056b3',
+    breadcrumbLinkHoverColor: '#003d82',
+    breadcrumbSeparatorColor: '#6c757d',
+    breadcrumbEditIconColor: '#6c757d',
+    breadcrumbEditInputBorderColor: '#0056b3',
 };
 
 export const darkTheme = {
@@ -92,4 +108,12 @@ export const darkTheme = {
     notificationUnreadMessageTextColor: '#fff',
     notificationReadMessageTextColor: '#ccc',
     notificationVolumeSliderBackgroundColor: '#666',
+    //breadcrumb
+    breadcrumbBackgroundColor: '#4682B4',
+    breadcrumbTextColor: '#F0F0F0',
+    breadcrumbLinkColor: '#F5FEFF',
+    breadcrumbLinkHoverColor: '#80BFFF',
+    breadcrumbSeparatorColor: '#aaa',
+    breadcrumbEditIconColor: '#aaa',
+    breadcrumbEditInputBorderColor: '#4DA6FF',
 };
