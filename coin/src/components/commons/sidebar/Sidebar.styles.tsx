@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const Sidebar = styled.div<{ open: boolean }>`
     width: 15%;
     height: 90vh;
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     background-color: ${({ theme }) => theme.backgroundColor};
     overflow-y: auto;
@@ -41,7 +41,7 @@ export const MenuItem = styled.li<{ index: number, isOpen: boolean }>`
 
 export const MenuTitle = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     color: ${({ theme }) => theme.textColor};
     width: 100%;
@@ -50,6 +50,10 @@ export const MenuTitle = styled.div`
 
     p {
         font-weight: 700;
+    }
+
+    .MenuIcon {
+        margin-right: 10px;
     }
 `;
 
