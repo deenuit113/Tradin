@@ -19,7 +19,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     transition: width 0.3s ease, margin-left 0.3s ease;
     height: 100%;
     overflow-y: auto;
-    padding: 1rem 4rem;
+    padding: 1rem 3rem;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -102,7 +102,7 @@ export const WidgetTable = styled.table`
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
     padding: 30px 20px 30px 20px;
     .title{
-        font-weight: bolder;
+        font-weight: 900;
 
         @media all and (min-width:359px) and (max-width: 799px) {
             font-size: 11px;
@@ -110,6 +110,8 @@ export const WidgetTable = styled.table`
     }
 
     .value{
+        font-weight: 500;
+
         @media all and (min-width:359px) and (max-width: 799px) {
             font-size: 8px;
         }
