@@ -23,7 +23,8 @@ export const pageStructure: PageNode[] = [
                     { path: '/future/[num]', label: '선물 상세' }
                 ]
             },
-            { path: '/login', label: '로그인' }
+            { path: '/login', label: '로그인' },
+            { path: '/backtest', label: '백테스트'},
         ]
     }
 ];

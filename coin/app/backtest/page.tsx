@@ -1,6 +1,6 @@
 'use client';
 
-import BackTestPage from "../../src/components/units/item/future/Futures";
+import BackTestPage from "../../src/components/units/backtest/BackTest";
 
 export default function BackTest() {
     return (
