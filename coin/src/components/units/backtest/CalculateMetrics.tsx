@@ -1,60 +1,42 @@
-type Trade = {
-    type: 'buy' | 'sell';
-    price: number;
-};
+export function calculateTotalReturn(trades: any[]) {
+    return trades.reduce((acc, trade) => acc + trade.profit, 0);
+}
 
-export function calculateMetrics(trades: Trade[], initialCapital: number, finalCapital: number) {
-    // 총 수익 계산
-    const totalReturn = finalCapital - initialCapital;
+export function calculateAnnualizedReturn(totalReturn: number, initialCapital: number, holdingPeriodYears: number) {
+    const yieldReturn = totalReturn / initialCapital;
+    return (1 + yieldReturn) ** (1 / holdingPeriodYears) - 1;
+}
 
-    // 연간 수익률 계산 (단순히 1년으로 가정)
-    const holdingPeriodYears = 1;
-    const annualizedReturn = (1 + (totalReturn / initialCapital)) ** (1 / holdingPeriodYears) - 1;
+export function calculateMaxDrawdown(capitalSeries: number[]) {
+    let maxDrawdown = 0;
+    let peak = capitalSeries[0];
+    for (const capital of capitalSeries) {
+        if (capital > peak) peak = capital;
+        const drawdown = peak - capital;
+        if (drawdown > maxDrawdown) maxDrawdown = drawdown;
+    }
+    return maxDrawdown;
+}
 
-    // 자본 시리즈 생성 및 최대 손실 (최대 드로우다운) 계산
-    const capitalSeries = trades.reduce<number[]>((acc, trade) => {
-        const lastCapital = acc.length ? acc[acc.length - 1] : initialCapital;
-        const newCapital = trade.type === 'buy' ? lastCapital - trade.price : lastCapital + trade.price;
-        return [...acc, newCapital];
-    }, []);
-    const maxDrawdown = Math.min(...capitalSeries) - initialCapital;
+export function calculateWinRate(trades: any[]) {
+    const winningTrades = trades.filter(trade => trade.profit > 0);
+    return winningTrades.length / trades.length;
+}
 
-    // 승률 계산
-    const winningTrades = trades.filter(trade => trade.type === 'sell' && trade.price > initialCapital);
-    const winRate = trades.length > 0 ? winningTrades.length / trades.length : 0;
+export function calculateAverageGain(trades: any[]) {
+    const winningTrades = trades.filter(trade => trade.profit > 0);
+    return winningTrades.length > 0 ? winningTrades.reduce((sum, trade) => sum + trade.profit, 0) / winningTrades.length : 0;
+}
 
-    // 평균 수익 계산
-    const averageGain = winningTrades.length > 0 
-        ? winningTrades.reduce((sum, trade) => sum + (trade.price - initialCapital), 0) / winningTrades.length 
-        : 0;
+export function calculateAverageLoss(trades: any[]) {
+    const losingTrades = trades.filter(trade => trade.profit <= 0);
+    return losingTrades.length > 0 ? losingTrades.reduce((sum, trade) => sum + trade.profit, 0) / losingTrades.length : 0;
+}
 
-    // 평균 손실 계산
-    const losingTrades = trades.filter(trade => trade.type === 'sell' && trade.price <= initialCapital);
-    const averageLoss = losingTrades.length > 0 
-        ? losingTrades.reduce((sum, trade) => sum + (trade.price - initialCapital), 0) / losingTrades.length 
-        : 0;
+export function calculateSharpeRatio(meanReturn: number, stdDevReturn: number) {
+    return stdDevReturn !== 0 ? meanReturn / stdDevReturn : 0;
+}
 
-    // 샤프 비율 계산
-    const returns = capitalSeries.map((capital, index, array) => index === 0 ? 0 : (capital - array[index - 1]) / array[index - 1]);
-    const meanReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
-    const stdDevReturn = Math.sqrt(returns.reduce((sum, r) => sum + Math.pow(r - meanReturn, 2), 0) / returns.length);
-    const sharpeRatio = stdDevReturn !== 0 ? meanReturn / stdDevReturn : 0;
-
-    // 거래 횟수 계산
-    const numberOfTrades = trades.length;
-
-    // 평균 포지션 보유 기간 계산
-    const averageHoldingPeriod = numberOfTrades > 0 ? holdingPeriodYears / numberOfTrades : 0;
-
-    return {
-        totalReturn,
-        annualizedReturn,
-        maxDrawdown,
-        winRate,
-        averageGain,
-        averageLoss,
-        sharpeRatio,
-        numberOfTrades,
-        averageHoldingPeriod,
-    };
+export function calculateAverageHoldingPeriod(trades: any[]) {
+    return trades.reduce((sum, trade) => sum + trade.holdingPeriod, 0) / trades.length;
 }

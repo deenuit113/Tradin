@@ -1,58 +1,31 @@
-// src/components/BackTest/BackTest.tsx
 import React, { useState } from 'react';
-import * as S from './BackTest.styles';
-import { useSidebar } from '../../commons/sidebar/SidebarContext';
-import Breadcrumb from '../../commons/breadcrumb/BreadCrumb';
-import { useCryptoData } from '../../../hooks/useCryptoData';
-import { calculateMetrics } from './CalculateMetrics';
-
-function performBacktest(data: any[], selectedStrategies: string[], position: string, startDate: string, endDate: string) {
-    // 날짜 범위에 따라 데이터를 필터링합니다.
-    const filteredData = data.filter(entry => {
-        const entryDate = new Date(entry.time);
-        return entryDate >= new Date(startDate) && entryDate <= new Date(endDate);
-    });
-
-    // 초기 자본 및 거래 내역 초기화
-    let initialCapital = 10000;
-    let capital = initialCapital;
-    let trades: any[] = [];
-
-    filteredData.forEach(entry => {
-        if (selectedStrategies.includes('A') && position === 'long') {
-            if (entry.close < entry.open) {
-                // 매수 시뮬레이션
-                trades.push({ type: 'buy', price: entry.close });
-                capital -= entry.close;
-            }
-        } else if (selectedStrategies.includes('B') && position === 'short') {
-            if (entry.close > entry.open) {
-                // 매도 시뮬레이션
-                trades.push({ type: 'sell', price: entry.close });
-                capital += entry.close;
-            }
-        }
-        // 전략 C에 대한 로직 추가 가능
-    });
-
-    return {
-        initialCapital,
-        finalCapital: capital,
-        trades
-    };
-}
+import * as S from "./BackTest.styles";
+import { useSidebar } from "../../commons/sidebar/SidebarContext";
+import Breadcrumb from "../../commons/breadcrumb/BreadCrumb";
+import { strategies, StrategyKey } from './MockStrategy';
+import {
+    calculateTotalReturn,
+    calculateAnnualizedReturn,
+    calculateMaxDrawdown,
+    calculateWinRate,
+    calculateAverageGain,
+    calculateAverageLoss,
+    calculateSharpeRatio,
+    calculateAverageHoldingPeriod
+} from './CalculateMetrics';
 
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
-    const [selectedStrategies, setSelectedStrategies] = useState<string[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [trades, setTrades] = useState<any[]>([]);
+    const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>([]);
     const [position, setPosition] = useState<string>('long');
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
-    const [backtestResult, setBacktestResult] = useState<any | null>(null);
+    const initialCapital = 10000;
 
-    const { data, loading, error } = useCryptoData('BTC', 'USD', startDate, endDate);
-
-    const handleStrategyChange = (strategy: string) => {
+    const handleStrategyChange = (strategy: StrategyKey) => {
         setSelectedStrategies((prev) =>
             prev.includes(strategy)
                 ? prev.filter((s) => s !== strategy)
@@ -60,15 +33,45 @@ export default function BackTestPage(): JSX.Element {
         );
     };
 
-    const performBackTest = () => {
+    const performBackTest = async () => {
         if (!selectedStrategies.length || !startDate || !endDate) {
-            alert("모든 설정을 선택해주세요.");
+            alert("Please select strategies, position, and date range.");
             return;
         }
-        const { initialCapital, finalCapital, trades } = performBacktest(data, selectedStrategies, position, startDate, endDate);
-        const metrics = calculateMetrics(trades, initialCapital, finalCapital);
-        setBacktestResult(metrics);
+        setLoading(true);
+        setError(null);
+        try {
+            const selectedStrategyKey = selectedStrategies[0]; // Use the first selected strategy for simplicity
+
+            // Send the selected strategy key to the server
+            const response = await fetch('/api/backtest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ strategyKey: selectedStrategyKey, startDate, endDate, position }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setTrades(data);
+        } catch (err) {
+            setError('Failed to perform backtest');
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const totalReturn = calculateTotalReturn(trades);
+    const annualizedReturn = calculateAnnualizedReturn(totalReturn, initialCapital, 1); // Assuming 1 year for simplicity
+    const maxDrawdown = calculateMaxDrawdown(trades.map(trade => trade.profit));
+    const winRate = calculateWinRate(trades);
+    const averageGain = calculateAverageGain(trades);
+    const averageLoss = calculateAverageLoss(trades);
+    const sharpeRatio = calculateSharpeRatio(averageGain - averageLoss, 1); // Assuming a standard deviation of 1 for simplicity
+    const averageHoldingPeriod = calculateAverageHoldingPeriod(trades);
 
     return (
         <>
@@ -79,15 +82,16 @@ export default function BackTestPage(): JSX.Element {
                 <S.MainContent sidebarOpen={sidebarOpen}>
                     <S.WidgetContainer>
                         <div>
-                            <h3>백테스트 설정</h3>
+                            <h3>Backtest</h3>
                             <div>
+                                <h4>Select Strategies</h4>
                                 <label>
                                     <input
                                         type="checkbox"
                                         checked={selectedStrategies.includes('A')}
                                         onChange={() => handleStrategyChange('A')}
                                     />
-                                    전략 A
+                                    Strategy A
                                 </label>
                                 <label>
                                     <input
@@ -95,7 +99,7 @@ export default function BackTestPage(): JSX.Element {
                                         checked={selectedStrategies.includes('B')}
                                         onChange={() => handleStrategyChange('B')}
                                     />
-                                    전략 B
+                                    Strategy B
                                 </label>
                                 <label>
                                     <input
@@ -103,10 +107,11 @@ export default function BackTestPage(): JSX.Element {
                                         checked={selectedStrategies.includes('C')}
                                         onChange={() => handleStrategyChange('C')}
                                     />
-                                    전략 C
+                                    Strategy C
                                 </label>
                             </div>
                             <div>
+                                <h4>Select Position</h4>
                                 <label>
                                     <input
                                         type="radio"
@@ -129,8 +134,9 @@ export default function BackTestPage(): JSX.Element {
                                 </label>
                             </div>
                             <div>
+                                <h4>Select Date Range</h4>
                                 <label>
-                                    시작 날짜:
+                                    Start Date:
                                     <input
                                         type="date"
                                         value={startDate}
@@ -138,7 +144,7 @@ export default function BackTestPage(): JSX.Element {
                                     />
                                 </label>
                                 <label>
-                                    종료 날짜:
+                                    End Date:
                                     <input
                                         type="date"
                                         value={endDate}
@@ -146,20 +152,23 @@ export default function BackTestPage(): JSX.Element {
                                     />
                                 </label>
                             </div>
-                            <button onClick={performBackTest}>백테스트 실행</button>
+                            <button onClick={performBackTest} disabled={loading}>
+                                Run Backtest
+                            </button>
                             {loading && <p>Loading data...</p>}
                             {error && <p>{error}</p>}
-                            {backtestResult && (
+                            {trades.length > 0 && (
                                 <div>
-                                    <p>Total Return: ${backtestResult.totalReturn.toFixed(2)}</p>
-                                    <p>Annualized Return: {(backtestResult.annualizedReturn * 100).toFixed(2)}%</p>
-                                    <p>Maximum Drawdown: ${backtestResult.maxDrawdown.toFixed(2)}</p>
-                                    <p>Win Rate: {(backtestResult.winRate * 100).toFixed(2)}%</p>
-                                    <p>Average Gain: ${backtestResult.averageGain.toFixed(2)}</p>
-                                    <p>Average Loss: ${backtestResult.averageLoss.toFixed(2)}</p>
-                                    <p>Sharpe Ratio: {backtestResult.sharpeRatio.toFixed(2)}</p>
-                                    <p>Number of Trades: {backtestResult.numberOfTrades}</p>
-                                    <p>Average Holding Period: {backtestResult.averageHoldingPeriod.toFixed(2)} years</p>
+                                    <h4>Backtest Results:</h4>
+                                    <p>Total Return: ${totalReturn.toFixed(2)}</p>
+                                    <p>Annualized Return: {(annualizedReturn * 100).toFixed(2)}%</p>
+                                    <p>Maximum Drawdown: ${maxDrawdown.toFixed(2)}</p>
+                                    <p>Win Rate: {(winRate * 100).toFixed(2)}%</p>
+                                    <p>Average Gain: ${averageGain.toFixed(2)}</p>
+                                    <p>Average Loss: ${averageLoss.toFixed(2)}</p>
+                                    <p>Sharpe Ratio: {sharpeRatio.toFixed(2)}</p>
+                                    <p>Number of Trades: {trades.length}</p>
+                                    <p>Average Holding Period: {averageHoldingPeriod.toFixed(2)} days</p>
                                 </div>
                             )}
                         </div>
