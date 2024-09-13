@@ -13,6 +13,7 @@ import {
     calculateSharpeRatio,
     calculateAverageHoldingPeriod
 } from './CalculateMetrics';
+import BackTestChart from './BackTestChart';
 
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -41,9 +42,8 @@ export default function BackTestPage(): JSX.Element {
         setLoading(true);
         setError(null);
         try {
-            const selectedStrategyKey = selectedStrategies[0]; // Use the first selected strategy for simplicity
+            const selectedStrategyKey = selectedStrategies[0];
 
-            // Send the selected strategy key to the server
             const response = await fetch('/api/backtest', {
                 method: 'POST',
                 headers: {
@@ -64,14 +64,14 @@ export default function BackTestPage(): JSX.Element {
         }
     };
 
-    const totalReturn = calculateTotalReturn(trades);
-    const annualizedReturn = calculateAnnualizedReturn(totalReturn, initialCapital, 1); // Assuming 1 year for simplicity
-    const maxDrawdown = calculateMaxDrawdown(trades.map(trade => trade.profit));
-    const winRate = calculateWinRate(trades);
-    const averageGain = calculateAverageGain(trades);
-    const averageLoss = calculateAverageLoss(trades);
-    const sharpeRatio = calculateSharpeRatio(averageGain - averageLoss, 1); // Assuming a standard deviation of 1 for simplicity
-    const averageHoldingPeriod = calculateAverageHoldingPeriod(trades);
+    const totalReturn = calculateTotalReturn(trades); // 총 수익
+    const annualizedReturn = calculateAnnualizedReturn(totalReturn, initialCapital, 1); //연간 수익률
+    const maxDrawdown = calculateMaxDrawdown(trades.map(trade => trade.profit)); // 최대 손실
+    const winRate = calculateWinRate(trades); // 승률
+    const averageGain = calculateAverageGain(trades); // 평균 수익 및 손실
+    const averageLoss = calculateAverageLoss(trades); // 샤프 비율
+    const sharpeRatio = calculateSharpeRatio(averageGain - averageLoss, 1); // 거래 횟수
+    const averageHoldingPeriod = calculateAverageHoldingPeriod(trades); // 포지션 평균 보유 기간
 
     return (
         <>
@@ -82,16 +82,16 @@ export default function BackTestPage(): JSX.Element {
                 <S.MainContent sidebarOpen={sidebarOpen}>
                     <S.WidgetContainer>
                         <div>
-                            <h3>Backtest</h3>
+                            <h3>백테스트</h3>
                             <div>
-                                <h4>Select Strategies</h4>
+                                <h4>전략</h4>
                                 <label>
                                     <input
                                         type="checkbox"
                                         checked={selectedStrategies.includes('A')}
                                         onChange={() => handleStrategyChange('A')}
                                     />
-                                    Strategy A
+                                    전략 A
                                 </label>
                                 <label>
                                     <input
@@ -99,7 +99,7 @@ export default function BackTestPage(): JSX.Element {
                                         checked={selectedStrategies.includes('B')}
                                         onChange={() => handleStrategyChange('B')}
                                     />
-                                    Strategy B
+                                    전략 B
                                 </label>
                                 <label>
                                     <input
@@ -107,11 +107,11 @@ export default function BackTestPage(): JSX.Element {
                                         checked={selectedStrategies.includes('C')}
                                         onChange={() => handleStrategyChange('C')}
                                     />
-                                    Strategy C
+                                    전략 C
                                 </label>
                             </div>
                             <div>
-                                <h4>Select Position</h4>
+                                <h4>포지션</h4>
                                 <label>
                                     <input
                                         type="radio"
@@ -134,9 +134,9 @@ export default function BackTestPage(): JSX.Element {
                                 </label>
                             </div>
                             <div>
-                                <h4>Select Date Range</h4>
+                                <h4>기간 선택</h4>
                                 <label>
-                                    Start Date:
+                                    시작 날짜
                                     <input
                                         type="date"
                                         value={startDate}
@@ -144,7 +144,7 @@ export default function BackTestPage(): JSX.Element {
                                     />
                                 </label>
                                 <label>
-                                    End Date:
+                                    종료 날짜
                                     <input
                                         type="date"
                                         value={endDate}
@@ -153,22 +153,23 @@ export default function BackTestPage(): JSX.Element {
                                 </label>
                             </div>
                             <button onClick={performBackTest} disabled={loading}>
-                                Run Backtest
+                                백테스트 실행
                             </button>
                             {loading && <p>Loading data...</p>}
                             {error && <p>{error}</p>}
                             {trades.length > 0 && (
                                 <div>
-                                    <h4>Backtest Results:</h4>
-                                    <p>Total Return: ${totalReturn.toFixed(2)}</p>
-                                    <p>Annualized Return: {(annualizedReturn * 100).toFixed(2)}%</p>
-                                    <p>Maximum Drawdown: ${maxDrawdown.toFixed(2)}</p>
-                                    <p>Win Rate: {(winRate * 100).toFixed(2)}%</p>
-                                    <p>Average Gain: ${averageGain.toFixed(2)}</p>
-                                    <p>Average Loss: ${averageLoss.toFixed(2)}</p>
-                                    <p>Sharpe Ratio: {sharpeRatio.toFixed(2)}</p>
-                                    <p>Number of Trades: {trades.length}</p>
-                                    <p>Average Holding Period: {averageHoldingPeriod.toFixed(2)} days</p>
+                                    <h4>실행 결과:</h4>
+                                    <p>총 수익: ${totalReturn.toFixed(2)}</p>
+                                    <p>연간 수익률: {(annualizedReturn * 100).toFixed(2)}%</p>
+                                    <p>최대 손실: ${maxDrawdown.toFixed(2)}</p>
+                                    <p>승률: {(winRate * 100).toFixed(2)}%</p>
+                                    <p>평균 수익: ${averageGain.toFixed(2)}</p>
+                                    <p>평균 손실: ${averageLoss.toFixed(2)}</p>
+                                    <p>샤프 비율: {sharpeRatio.toFixed(2)}</p>
+                                    <p>거래 횟수: {trades.length}</p>
+                                    <p>평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days</p>
+                                    <BackTestChart trades={trades} />
                                 </div>
                             )}
                         </div>

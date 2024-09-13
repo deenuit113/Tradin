@@ -1,4 +1,3 @@
-// app/api/backtest/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { backtest } from 'grademark';
 import { DataFrame } from 'data-forge';
@@ -27,7 +26,12 @@ export async function POST(req: NextRequest) {
             volume: entry.volumefrom,
         }));
 
-        const inputSeries = new DataFrame(historicalData);
+        const filteredData = historicalData.filter((entry: any) => {
+            const entryDate = new Date(entry.time);
+            return entryDate >= new Date(startDate) && entryDate <= new Date(endDate);
+        });
+
+        const inputSeries = new DataFrame(filteredData);
 
         const trades = backtest(strategy, inputSeries);
         return NextResponse.json(trades);
