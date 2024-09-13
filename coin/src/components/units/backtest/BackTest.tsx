@@ -158,7 +158,7 @@ export default function BackTestPage(): JSX.Element {
                             {loading && <p>Loading data...</p>}
                             {error && <p>{error}</p>}
                             {trades.length > 0 && (
-                                <div>
+                                <S.ResultContainer>
                                     <h4>실행 결과:</h4>
                                     <p>총 수익: ${totalReturn.toFixed(2)}</p>
                                     <p>연간 수익률: {(annualizedReturn * 100).toFixed(2)}%</p>
@@ -170,7 +170,7 @@ export default function BackTestPage(): JSX.Element {
                                     <p>거래 횟수: {trades.length}</p>
                                     <p>평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days</p>
                                     <BackTestChart trades={trades} />
-                                </div>
+                                </S.ResultContainer>
                             )}
                         </div>
                     </S.WidgetContainer>

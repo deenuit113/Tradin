@@ -36,7 +36,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     gap: 1rem;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
-    height: 100%;
+    height: 90%;
     overflow-y: auto;
     padding: 2rem;
 
@@ -77,4 +77,27 @@ export const WidgetContainer = styled.div`
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     padding: 1rem;
     border-radius: 8px;
+`;
+
+export const ResultContainer = styled.div`
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    width: 100%;
+    height: 100%;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+`
+export const ChartContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40vh;
+    overflow: hidden;
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+    @media all and (max-width: 800px) {
+        padding: 0;
+    }
 `;
