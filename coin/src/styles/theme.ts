@@ -36,6 +36,8 @@ export interface Theme {
     breadcrumbSeparatorColor: string;
     breadcrumbEditIconColor: string;
     breadcrumbEditInputBorderColor: string;
+    skeletonBaseColor: string;
+    skeletonHighlightColor: string;
 }
 
 export const lightTheme = {
@@ -76,6 +78,9 @@ export const lightTheme = {
     breadcrumbSeparatorColor: '#6c757d',
     breadcrumbEditIconColor: '#6c757d',
     breadcrumbEditInputBorderColor: '#0056b3',
+    //skeletonUI
+    skeletonBaseColor: '#b0b0b0',
+    skeletonHighlightColor: '#c8c8c8',
 };
 
 export const darkTheme = {
@@ -116,4 +121,7 @@ export const darkTheme = {
     breadcrumbSeparatorColor: '#aaa',
     breadcrumbEditIconColor: '#aaa',
     breadcrumbEditInputBorderColor: '#4DA6FF',
+    //skeletonUI
+    skeletonBaseColor: '#777',
+    skeletonHighlightColor: '#999',
 };
