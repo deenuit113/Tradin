@@ -129,6 +129,8 @@ const DatePickerInput = styled.input`
     width: 100%;
     padding: 2%;
     border: 1px solid ${({ theme }) => theme.borderColor};
+    background-color: ${({ theme }) => theme.backTestInputBackgroundColor};
+    color: ${({ theme }) => theme.textColor};
     border-radius: 4px 4px 0px 0px;
     font-size: 1em;
 `;
@@ -150,6 +152,9 @@ const DatePickerLabel = styled.span`
     width: 100%;
     text-align: center;
     margin-right: 5%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    color: ${({ theme }) => theme.textColor};
 `;
 
 interface OptionsContainerProps {

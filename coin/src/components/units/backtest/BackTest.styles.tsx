@@ -132,6 +132,7 @@ export const Option = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    color: ${({ theme }) => theme.textColor};
 
     > * {
         margin-right: 10px;
