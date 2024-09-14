@@ -11,6 +11,8 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import { Theme as CustomTheme } from '../../../styles/theme'
+import { useTheme } from '@emotion/react';
 
 ChartJS.register(
     CategoryScale,
@@ -24,9 +26,15 @@ ChartJS.register(
 
 interface BackTestChartProps {
     trades: any[];
+};
+
+declare module "@emotion/react" {
+    export interface Theme extends CustomTheme {}
 }
 
 const BackTestChart: React.FC<BackTestChartProps> = ({ trades }) => {
+    const theme = useTheme();
+
     // 자산 곡선 계산
     const equityCurve: number[] = trades.reduce((acc: number[], trade: any) => {
         const lastEquity = acc.length ? acc[acc.length - 1] : 0;
@@ -73,6 +81,27 @@ const BackTestChart: React.FC<BackTestChartProps> = ({ trades }) => {
             legend: {
                 display: true,
                 position: 'top' as const,
+                labels: {
+                    color: theme.textColor,
+                },
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: theme.textColor,
+                },
+                grid: {
+                    color: `${theme.textColor}22`,
+                },
+            },
+            y: {
+                ticks: {
+                    color: theme.textColor,
+                },
+                grid: {
+                    color: `${theme.textColor}22`,
+                },
             },
         },
     };

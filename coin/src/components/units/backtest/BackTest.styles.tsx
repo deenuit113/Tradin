@@ -21,7 +21,6 @@ export const BackTestHeader = styled.div<{ sidebarOpen: boolean }>`
     color: ${({ theme }) => theme.textColor};
     padding: 0rem 1rem;
     background-color: ${({ theme }) => theme.breadcrumbBackgroundColor};
-    margin-bottom: 0.5rem;
     transition: width 0.3s ease, margin-left 0.3s ease;
     
     .FaAngleRight{
@@ -74,7 +73,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
 export const WidgetContainer = styled.div`
     width: 100%;
     background-color: ${({ theme }) => theme.innerbackgroundColor};
-    padding: 1rem 2rem;
+    padding: 2rem;
     border-radius: 8px;
     margin-bottom: 1rem;
     display: flex;
@@ -83,16 +82,19 @@ export const WidgetContainer = styled.div`
     overflow: visible;
 `;
 
-export const OptionToggleButton = styled.button`
+export const OptionToggleButton = styled.button<{ isVisible: boolean }>`
     border: none;
     cursor: pointer;
     padding: 5px 10px;
-    border-radius: 6px 6px 0px 0px;
+    border-radius: ${({ isVisible }) => (isVisible ? '6px 6px 0px 0px' : '6px')};
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    color: ${({ theme }) => theme.textColor};
     position: relative;
     z-index: 2;
+    transition: border-radius 0.3s ease-in-out;
     .FilterIcon {
         margin-right: 5px;
+        color: ${({ theme }) => theme.iconColor};
     }
 `;
 
@@ -117,7 +119,11 @@ export const OptionsContainer = styled.div<{ isVisible: boolean }>`
 `;
 
 export const OptionTitle = styled.h4`
+    color: ${({ theme }) => theme.textColor};
+`
 
+export const OptionContent = styled.label`
+    color: ${({ theme }) => theme.textColor};
 `
 
 export const BackTestButton = styled.button`
@@ -132,19 +138,37 @@ export const BackTestButton = styled.button`
 export const ResultContainer = styled.div`
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
     width: 100%;
-    flex-grow: 1; // Allow it to grow within the WidgetContainer
+    flex-grow: 1;
     padding: 1rem 2rem;
     border-radius: 8px;
-    overflow: auto; // Allow scroll within the result container if needed
-    margin-top: 2rem;
+    overflow: auto;
+    margin-bottom: 1rem;
 `;
+
+export const ResultInnerContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+`
+
+export const ResultTitle = styled.h4`
+    color: ${({ theme }) => theme.textColor};
+    width: 100%;
+`
+
+export const ResultContent = styled.p`
+    color: ${({ theme }) => theme.textColor};
+    width: calc(50% - 0.5rem);
+    margin: 0;
+`
 
 export const ChartContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 50vh; // Set a relative height
+    height: 50vh;
     overflow: hidden;
     canvas {
         width: 100% !important;

@@ -34,34 +34,34 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
             <div>
                 <div>
                     <S.OptionTitle>전략</S.OptionTitle>
-                    <label>
+                    <S.OptionContent>
                         <input
                             type="checkbox"
                             checked={selectedStrategies.includes('A')}
                             onChange={() => handleStrategyChange('A')}
                         />
                         전략 A
-                    </label>
-                    <label>
+                    </S.OptionContent>
+                    <S.OptionContent>
                         <input
                             type="checkbox"
                             checked={selectedStrategies.includes('B')}
                             onChange={() => handleStrategyChange('B')}
                         />
                         전략 B
-                    </label>
-                    <label>
+                    </S.OptionContent>
+                    <S.OptionContent>
                         <input
                             type="checkbox"
                             checked={selectedStrategies.includes('C')}
                             onChange={() => handleStrategyChange('C')}
                         />
                         전략 C
-                    </label>
+                    </S.OptionContent>
                 </div>
                 <div>
                     <S.OptionTitle>포지션</S.OptionTitle>
-                    <label>
+                    <S.OptionContent>
                         <input
                             type="radio"
                             name="position"
@@ -70,8 +70,8 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                             onChange={() => setPosition('long')}
                         />
                         Long
-                    </label>
-                    <label>
+                    </S.OptionContent>
+                    <S.OptionContent>
                         <input
                             type="radio"
                             name="position"
@@ -80,26 +80,26 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                             onChange={() => setPosition('short')}
                         />
                         Short
-                    </label>
+                    </S.OptionContent>
                 </div>
                 <div>
                     <S.OptionTitle>기간 선택</S.OptionTitle>
-                    <label>
+                    <S.OptionContent>
                         시작 날짜
                         <input
                             type="date"
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                         />
-                    </label>
-                    <label>
+                    </S.OptionContent>
+                    <S.OptionContent>
                         종료 날짜
                         <input
                             type="date"
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
                         />
-                    </label>
+                    </S.OptionContent>
                 </div>
                 <S.BackTestButton onClick={performBackTest} disabled={loading}>
                     백테스트 실행

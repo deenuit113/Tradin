@@ -94,8 +94,26 @@ export default function BackTestPage(): JSX.Element {
                 </S.BackTestHeader>
                 <S.MainContent sidebarOpen={sidebarOpen}>
                     <S.WidgetContainer>
-                        <h3>백테스트</h3>
-                        <S.OptionToggleButton onClick={toggleOptions}>
+                        {loading && <p>Loading data...</p>}
+                        {error && <p>{error}</p>}
+                        {trades.length > 0 && (
+                            <S.ResultContainer>
+                                <S.ResultInnerContainer>
+                                    <S.ResultTitle>실행 결과:</S.ResultTitle>
+                                    <S.ResultContent>총 수익: ${totalReturn.toFixed(2)}</S.ResultContent>
+                                    <S.ResultContent>연간 수익률: {(annualizedReturn * 100).toFixed(2)}%</S.ResultContent>
+                                    <S.ResultContent>최대 손실: ${maxDrawdown.toFixed(2)}</S.ResultContent>
+                                    <S.ResultContent>승률: {(winRate * 100).toFixed(2)}%</S.ResultContent>
+                                    <S.ResultContent>평균 수익: ${averageGain.toFixed(2)}</S.ResultContent>
+                                    <S.ResultContent>평균 손실: ${averageLoss.toFixed(2)}</S.ResultContent>
+                                    <S.ResultContent>샤프 비율: {sharpeRatio.toFixed(2)}</S.ResultContent>
+                                    <S.ResultContent>거래 횟수: {trades.length}</S.ResultContent>
+                                    <S.ResultContent>평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days</S.ResultContent>
+                                </S.ResultInnerContainer>
+                                <BackTestChart trades={trades} />
+                        </S.ResultContainer>
+                        )}
+                        <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
                             <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
                             {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
                         </S.OptionToggleButton>
@@ -112,23 +130,6 @@ export default function BackTestPage(): JSX.Element {
                             performBackTest={performBackTest}
                             loading={loading}
                         />
-                        {loading && <p>Loading data...</p>}
-                        {error && <p>{error}</p>}
-                        {trades.length > 0 && (
-                            <S.ResultContainer>
-                                <h4>실행 결과:</h4>
-                                <p>총 수익: ${totalReturn.toFixed(2)}</p>
-                                <p>연간 수익률: {(annualizedReturn * 100).toFixed(2)}%</p>
-                                <p>최대 손실: ${maxDrawdown.toFixed(2)}</p>
-                                <p>승률: {(winRate * 100).toFixed(2)}%</p>
-                                <p>평균 수익: ${averageGain.toFixed(2)}</p>
-                                <p>평균 손실: ${averageLoss.toFixed(2)}</p>
-                                <p>샤프 비율: {sharpeRatio.toFixed(2)}</p>
-                                <p>거래 횟수: {trades.length}</p>
-                                <p>평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days</p>
-                                <BackTestChart trades={trades} />
-                            </S.ResultContainer>
-                        )}
                     </S.WidgetContainer>
                 </S.MainContent>
             </S.Container>
