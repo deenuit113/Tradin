@@ -14,6 +14,9 @@ import {
     calculateAverageHoldingPeriod
 } from './CalculateMetrics';
 import BackTestChart from './BackTestChart';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAlignLeft, faAlignRight, faFilter } from '@fortawesome/free-solid-svg-icons';
+import OptionsContainer from './BackTestOption';
 
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -22,9 +25,19 @@ export default function BackTestPage(): JSX.Element {
     const [trades, setTrades] = useState<any[]>([]);
     const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>([]);
     const [position, setPosition] = useState<string>('long');
-    const [startDate, setStartDate] = useState<string>('');
-    const [endDate, setEndDate] = useState<string>('');
+    const [startDate, setStartDate] = useState<string>('2023-01-01');
+    const [endDate, setEndDate] = useState<string>('2024-01-01');
     const initialCapital = 10000;
+
+    const [optionsVisible, setOptionsVisible] = useState(true);
+
+    const toggleOptions = () => {
+        if (optionsVisible) {
+            setOptionsVisible(false);
+        } else {
+            setOptionsVisible(true);
+        }
+    };
 
     const handleStrategyChange = (strategy: StrategyKey) => {
         setSelectedStrategies((prev) =>
@@ -81,98 +94,41 @@ export default function BackTestPage(): JSX.Element {
                 </S.BackTestHeader>
                 <S.MainContent sidebarOpen={sidebarOpen}>
                     <S.WidgetContainer>
-                        <div>
-                            <h3>백테스트</h3>
-                            <div>
-                                <h4>전략</h4>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedStrategies.includes('A')}
-                                        onChange={() => handleStrategyChange('A')}
-                                    />
-                                    전략 A
-                                </label>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedStrategies.includes('B')}
-                                        onChange={() => handleStrategyChange('B')}
-                                    />
-                                    전략 B
-                                </label>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedStrategies.includes('C')}
-                                        onChange={() => handleStrategyChange('C')}
-                                    />
-                                    전략 C
-                                </label>
-                            </div>
-                            <div>
-                                <h4>포지션</h4>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="position"
-                                        value="long"
-                                        checked={position === 'long'}
-                                        onChange={() => setPosition('long')}
-                                    />
-                                    Long
-                                </label>
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="position"
-                                        value="short"
-                                        checked={position === 'short'}
-                                        onChange={() => setPosition('short')}
-                                    />
-                                    Short
-                                </label>
-                            </div>
-                            <div>
-                                <h4>기간 선택</h4>
-                                <label>
-                                    시작 날짜
-                                    <input
-                                        type="date"
-                                        value={startDate}
-                                        onChange={(e) => setStartDate(e.target.value)}
-                                    />
-                                </label>
-                                <label>
-                                    종료 날짜
-                                    <input
-                                        type="date"
-                                        value={endDate}
-                                        onChange={(e) => setEndDate(e.target.value)}
-                                    />
-                                </label>
-                            </div>
-                            <button onClick={performBackTest} disabled={loading}>
-                                백테스트 실행
-                            </button>
-                            {loading && <p>Loading data...</p>}
-                            {error && <p>{error}</p>}
-                            {trades.length > 0 && (
-                                <S.ResultContainer>
-                                    <h4>실행 결과:</h4>
-                                    <p>총 수익: ${totalReturn.toFixed(2)}</p>
-                                    <p>연간 수익률: {(annualizedReturn * 100).toFixed(2)}%</p>
-                                    <p>최대 손실: ${maxDrawdown.toFixed(2)}</p>
-                                    <p>승률: {(winRate * 100).toFixed(2)}%</p>
-                                    <p>평균 수익: ${averageGain.toFixed(2)}</p>
-                                    <p>평균 손실: ${averageLoss.toFixed(2)}</p>
-                                    <p>샤프 비율: {sharpeRatio.toFixed(2)}</p>
-                                    <p>거래 횟수: {trades.length}</p>
-                                    <p>평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days</p>
-                                    <BackTestChart trades={trades} />
-                                </S.ResultContainer>
-                            )}
-                        </div>
+                        <h3>백테스트</h3>
+                        <S.OptionToggleButton onClick={toggleOptions}>
+                            <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
+                            {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
+                        </S.OptionToggleButton>
+                        <OptionsContainer
+                            isVisible={optionsVisible}
+                            selectedStrategies={selectedStrategies}
+                            handleStrategyChange={handleStrategyChange}
+                            position={position}
+                            setPosition={setPosition}
+                            startDate={startDate}
+                            setStartDate={setStartDate}
+                            endDate={endDate}
+                            setEndDate={setEndDate}
+                            performBackTest={performBackTest}
+                            loading={loading}
+                        />
+                        {loading && <p>Loading data...</p>}
+                        {error && <p>{error}</p>}
+                        {trades.length > 0 && (
+                            <S.ResultContainer>
+                                <h4>실행 결과:</h4>
+                                <p>총 수익: ${totalReturn.toFixed(2)}</p>
+                                <p>연간 수익률: {(annualizedReturn * 100).toFixed(2)}%</p>
+                                <p>최대 손실: ${maxDrawdown.toFixed(2)}</p>
+                                <p>승률: {(winRate * 100).toFixed(2)}%</p>
+                                <p>평균 수익: ${averageGain.toFixed(2)}</p>
+                                <p>평균 손실: ${averageLoss.toFixed(2)}</p>
+                                <p>샤프 비율: {sharpeRatio.toFixed(2)}</p>
+                                <p>거래 횟수: {trades.length}</p>
+                                <p>평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days</p>
+                                <BackTestChart trades={trades} />
+                            </S.ResultContainer>
+                        )}
                     </S.WidgetContainer>
                 </S.MainContent>
             </S.Container>
