@@ -38,6 +38,13 @@ export interface Theme {
     breadcrumbEditInputBorderColor: string;
     skeletonBaseColor: string;
     skeletonHighlightColor: string;
+    //datePicker
+    highlightColor: string;
+    hoverColor: string;
+    borderColor: string;
+    //backtest
+    backTestButtonColor: string;
+    backTestButtonHoverColor: string;
 }
 
 export const lightTheme = {
@@ -79,8 +86,15 @@ export const lightTheme = {
     breadcrumbEditIconColor: '#6c757d',
     breadcrumbEditInputBorderColor: '#0056b3',
     //skeletonUI
-    skeletonBaseColor: '#b0b0b0',
-    skeletonHighlightColor: '#c8c8c8',
+    skeletonBaseColor: '#c0c0c0',
+    skeletonHighlightColor: '#e0e0e0',
+    //datePicker
+    highlightColor: '#B0C4DE',
+    hoverColor: '#d0d0d0',
+    borderColor: '#ccc',
+    //backtest
+    backTestButtonColor: '#1DB717',
+    backTestButtonHoverColor: '#e0e0e0',
 };
 
 export const darkTheme = {
@@ -122,6 +136,13 @@ export const darkTheme = {
     breadcrumbEditIconColor: '#aaa',
     breadcrumbEditInputBorderColor: '#4DA6FF',
     //skeletonUI
-    skeletonBaseColor: '#777',
-    skeletonHighlightColor: '#999',
+    skeletonBaseColor: '#666',
+    skeletonHighlightColor: '#888',
+    //datePicker
+    highlightColor: '#4682B4',
+    hoverColor: '#444',
+    borderColor: '#666',
+    //backtest
+    backTestButtonColor: '#1DA717',
+    backTestButtonHoverColor: '#444',
 };

@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaRocket } from "react-icons/fa";
 
 export const Container = styled.div`
     display: flex;
@@ -99,6 +101,10 @@ export const OptionToggleButton = styled.button<{ isVisible: boolean }>`
 `;
 
 export const OptionsContainer = styled.div<{ isVisible: boolean }>`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: ${({ theme }) => theme.backgroundColor};
     padding: ${({ isVisible }) => (isVisible ? '1rem 2rem' : '0 2rem')};
     border-radius: 0px 0px 8px 8px;
@@ -110,7 +116,7 @@ export const OptionsContainer = styled.div<{ isVisible: boolean }>`
     max-height: ${({ isVisible }) => (isVisible ? '1000px' : '0')};
     opacity: ${({ isVisible }) => (isVisible ? '1' : '0')};
     visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-    
+
     transition: 
         max-height 0.3s ease-in-out,
         opacity 0.3s ease-in-out,
@@ -122,18 +128,65 @@ export const OptionTitle = styled.h4`
     color: ${({ theme }) => theme.textColor};
 `
 
-export const OptionContent = styled.label`
-    color: ${({ theme }) => theme.textColor};
-`
+export const Option = styled.div`
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    > * {
+        margin-right: 10px;
+    }
+
+    &.date-picker-container {
+        flex-direction: column;
+        align-items: flex-start;
+
+        > * {
+            margin-right: 0;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+    }
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0px;
+    width: 100%;
+`;
 
 export const BackTestButton = styled.button`
     cursor: pointer;
     border: none;
     border-radius: 6px;
-    padding: 5px 10px;
+    padding: 10px 15px;
     float: right;
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    margin-top: 1rem;
+    transition: all 0.3 ease-in-out;
+    font-weight: 700;
+    background-color: ${({ theme }) => theme.backTestButtonColor};
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    :hover {
+        background-color: ${({ theme }) => theme.backTestButtonHoverColor};
+    }
+
+    :hover .RocketIcon {
+        transform: translate(30px, -30px);
+    }
+
+    .RocketIcon {
+        margin-right: 5px;
+        transition: transform 0.3s ease-in-out;
+    }
 `
+
+export const StyledRocketIcon = styled(FaRocket)`
+`;
 
 export const ResultContainer = styled.div`
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
@@ -155,12 +208,14 @@ export const ResultInnerContainer = styled.div`
 export const ResultTitle = styled.h4`
     color: ${({ theme }) => theme.textColor};
     width: 100%;
+    transition: all 0.3s ease;
 `
 
 export const ResultContent = styled.p`
     color: ${({ theme }) => theme.textColor};
     width: calc(50% - 0.5rem);
     margin: 0;
+    transition: all 0.3s ease;
 `
 
 export const ChartContainer = styled.div`
