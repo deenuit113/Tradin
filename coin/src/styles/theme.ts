@@ -28,6 +28,9 @@ export interface Theme {
     notificationUnreadMessageTextColor: string;
     notificationReadMessageTextColor: string;
     notificationVolumeSliderBackgroundColor: string;
+    notificationTrashIconColor: string;
+    notificationTrashIconHoverColor: string;
+    notificationToolTipBackgroundColor: string;
     //breadcrumb
     breadcrumbBackgroundColor: string;
     breadcrumbTextColor: string;
@@ -78,6 +81,9 @@ export const lightTheme = {
     notificationUnreadMessageTextColor: '#000',
     notificationReadMessageTextColor: '#888',
     notificationVolumeSliderBackgroundColor: '#ddd',
+    notificationTrashIconColor: '#888',
+    notificationTrashIconHoverColor: '#333',
+    notificationToolTipBackgroundColor: '#444',
     //breadcrumb
     breadcrumbBackgroundColor: '#B0C4DE',
     breadcrumbTextColor: '#333',
@@ -129,6 +135,9 @@ export const darkTheme = {
     notificationUnreadMessageTextColor: '#fff',
     notificationReadMessageTextColor: '#ccc',
     notificationVolumeSliderBackgroundColor: '#666',
+    notificationTrashIconColor: '#888',
+    notificationTrashIconHoverColor: '#555',
+    notificationToolTipBackgroundColor: '#555',
     //breadcrumb
     breadcrumbBackgroundColor: '#4682B4',
     breadcrumbTextColor: '#F0F0F0',

@@ -164,7 +164,7 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                     </S.ModalButtonContainer>
                     <S.RightContainer>
                          <S.DeleteAllIcon onClick={handleDeleteAll}>
-                            <FontAwesomeIcon icon={faTrashAlt} />
+                            <S.TrashAllIcon icon={faTrashAlt} />
                             <S.Tooltip>전체삭제</S.Tooltip>
                         </S.DeleteAllIcon>
                         <S.SwitchContainer>

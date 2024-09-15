@@ -285,12 +285,21 @@ export const ReadButton = styled.button<{ active: boolean }>`
 
 export const TrashIcon = styled(FontAwesomeIcon)`
     cursor: pointer;
-    color: #888;
+    color: ${({ theme }) => theme.notificationTrashIconColor};
     z-index: 1010;
     &:hover {
-        color: #333;
+        color: ${({ theme }) => theme.notificationTrashIconHoverColor};
     }
 `;
+
+export const TrashAllIcon = styled(FontAwesomeIcon)`
+    cursor: pointer
+    color: ${({ theme }) => theme.notificationTrashIconColor};
+    z-index: 1010;
+    &:hover {
+        color: ${({ theme }) => theme.notificationTrashIconHoverColor};
+    }
+`
 
 export const SwitchContainer = styled.div`
     display: flex;
@@ -326,7 +335,7 @@ export const DeleteAllIcon = styled.div`
 export const Tooltip = styled.div`
     display: none;
     position: absolute;
-    background-color: #333;
+    background-color: ${({ theme }) => theme.notificationToolTipBackgroundColor};
     color: #fff;
     padding: 5px;
     border-radius: 3px;
@@ -335,6 +344,7 @@ export const Tooltip = styled.div`
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
+    z-index: 1020;
 `;
 
 export const ConfirmDialog = styled.div`
