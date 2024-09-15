@@ -217,6 +217,13 @@ export const ResultContent = styled.p`
     width: calc(50% - 0.5rem);
     margin: 0;
     transition: all 0.3s ease;
+    display: flex;
+    align-content: center;
+    align-items: center;
+
+    .ResultIcon {
+        margin-right: 5px;
+    }
 `
 
 export const ChartContainer = styled.div`

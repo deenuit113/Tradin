@@ -11,6 +11,9 @@ import {
     calculateSharpeRatio,
     calculateAverageHoldingPeriod
 } from './CalculateMetrics';
+import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaArrowDown, FaArrowUp, FaBalanceScale, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy } from 'react-icons/fa';
 
 interface Trade {
     entryTime: string;
@@ -36,15 +39,42 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades }) => {
         <S.ResultContainer>
             <S.ResultInnerContainer>
                 <S.ResultTitle>실행 결과:</S.ResultTitle>
-                <S.ResultContent>총 수익: ${totalReturn.toFixed(2)}</S.ResultContent>
-                <S.ResultContent>연간 수익률: {(annualizedReturn * 100).toFixed(2)}%</S.ResultContent>
-                <S.ResultContent>최대 손실: ${maxDrawdown.toFixed(2)}</S.ResultContent>
-                <S.ResultContent>승률: {(winRate * 100).toFixed(2)}%</S.ResultContent>
-                <S.ResultContent>평균 수익: ${averageGain.toFixed(2)}</S.ResultContent>
-                <S.ResultContent>평균 손실: ${averageLoss.toFixed(2)}</S.ResultContent>
-                <S.ResultContent>샤프 비율: {sharpeRatio.toFixed(2)}</S.ResultContent>
-                <S.ResultContent>거래 횟수: {trades.length}</S.ResultContent>
-                <S.ResultContent>평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days</S.ResultContent>
+                <S.ResultContent>
+                    <FaDollarSign className='ResultIcon'/>
+                    총 수익: ${totalReturn.toFixed(2)}
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaChartLine className='ResultIcon'/>
+                    연간 수익률: {(annualizedReturn * 100).toFixed(2)}%
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaLevelDownAlt className='ResultIcon'/>
+                    최대 손실: ${maxDrawdown.toFixed(2)}
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaTrophy className='ResultIcon'/>
+                    승률: {(winRate * 100).toFixed(2)}%
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaArrowUp className='ResultIcon'/>
+                    평균 수익: ${averageGain.toFixed(2)}
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaArrowDown className='ResultIcon'/>
+                    평균 손실: ${averageLoss.toFixed(2)}
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaCrosshairs className='ResultIcon'/>
+                    샤프 비율: {sharpeRatio.toFixed(2)}
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaExchangeAlt className='ResultIcon'/>
+                    거래 횟수: {trades.length}
+                </S.ResultContent>
+                <S.ResultContent>
+                    <FaClock className='ResultIcon'/>
+                    평균 보유 기간: {averageHoldingPeriod.toFixed(2)} days
+                </S.ResultContent>
             </S.ResultInnerContainer>
             <BackTestChart trades={trades} />
         </S.ResultContainer>
