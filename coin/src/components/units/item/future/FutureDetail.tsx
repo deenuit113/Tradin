@@ -184,7 +184,7 @@ export default function FutureDetail(): JSX.Element {
 
                 {selectedOption && (
                     <S.WidgetDetailContainer>
-                        <S.WidgetHeader>현물 {selectedOption}</S.WidgetHeader>
+                        <S.WidgetHeader>선물 {selectedOption}</S.WidgetHeader>
                         <S.WidgetTable  selectedOption={selectedOption}>
                             <thead>
                                 <tr>
