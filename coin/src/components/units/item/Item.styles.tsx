@@ -119,7 +119,7 @@ export const WidgetTable = styled.table`
 `;
 
 export const StrategyInfo = styled.td`
-    border-left: 1px solid #ccc;
+    border-left: 1px solid ${({ theme }) => theme.innerbackgroundColor};;
     border-radius: 5px;
     padding: 0.5rem;
     text-align: center;
