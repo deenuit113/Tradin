@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useMemo } from 'react';
 import * as S from "../ItemDetail.styles";
 
 interface StrategyOptionProps {
@@ -6,7 +7,7 @@ interface StrategyOptionProps {
     selectedOption: number | null;
     handleCheckboxChange: (n: number) => void;
     filters: { [key: string]: boolean };
-    handleFilterChange: (key: string) => void;
+    handleFilterChange: (key: string, value: boolean) => void;
 }
 
 const filtersList = [
@@ -24,6 +25,49 @@ const filtersList = [
 export default function SpotDetailOption({
     isMenuOpen, availableOptions, selectedOption, handleCheckboxChange, filters, handleFilterChange 
 }: StrategyOptionProps): JSX.Element {
+    const [localFilters, setLocalFilters] = useState<{ [key: string]: boolean }>(filters);
+
+    useEffect(() => {
+        const savedFilters = localStorage.getItem('SpotDetailFilters');
+        if (savedFilters) {
+            const parsedFilters = JSON.parse(savedFilters) as { [key: string]: boolean };
+            setLocalFilters(parsedFilters);
+            
+            Object.entries(parsedFilters).forEach(([key, value]) => {
+                if (filters[key] !== value) {
+                    handleFilterChange(key, value);
+                }
+            });
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('SpotDetailFilters', JSON.stringify(localFilters));
+    }, [localFilters]);
+
+    useEffect(() => {
+        setLocalFilters(prevFilters => ({...prevFilters, ...filters}));
+    }, [filters]);
+
+    const handleLocalFilterChange = (key: string) => {
+        const newValue = !localFilters[key];
+        setLocalFilters(prev => ({ ...prev, [key]: newValue }));
+        handleFilterChange(key, newValue);
+    };
+
+    const filterOptions = useMemo(() => 
+        filtersList.map(filter => (
+            <S.FilterOption key={filter.key}>
+                <input
+                    type="checkbox"
+                    checked={localFilters[filter.key]}
+                    onChange={() => !filter.mandatory && handleLocalFilterChange(filter.key)}
+                    disabled={filter.mandatory}
+                />
+                {filter.label}
+            </S.FilterOption>
+        )), [localFilters, handleLocalFilterChange]);
+
     return(
         <>
             { isMenuOpen &&
@@ -44,17 +88,7 @@ export default function SpotDetailOption({
                     <S.OptionHorizontalDivider/>
                     <S.OptionFilterContainer>
                         <S.OptionTitle>필터:</S.OptionTitle>
-                        {filtersList.map(filter => (
-                            <S.FilterOption key={filter.key}>
-                                <input
-                                    type="checkbox"
-                                    checked={filters[filter.key]}
-                                    onChange={() => handleFilterChange(filter.key)}
-                                    disabled={filter.mandatory}
-                                />
-                                {filter.label}
-                            </S.FilterOption>
-                        ))}
+                        {filterOptions}
                     </S.OptionFilterContainer>
                 </S.StrategyOptionDrop>
             }

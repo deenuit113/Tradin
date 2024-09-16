@@ -31,7 +31,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, selectedOption: nu
     gap: 1rem;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
-    padding: 1rem;
+    padding: 1rem 3rem;
     height: 90%;
     overflow-y: auto;
 
@@ -73,11 +73,10 @@ export const SpotHeader = styled.div<{ sidebarOpen: boolean }>`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
     font-weight: bolder;
     color: ${({ theme }) => theme.textColor};
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
-    padding: 1rem;
+    padding: 0rem 1rem;
+    background-color: ${({ theme }) => theme.breadcrumbBackgroundColor};
     position: relative;
     font-size: 1rem;
 
@@ -123,6 +122,7 @@ export const WidgetTable = styled.table<{ selectedOption: number | null }>`
     color: ${({ theme }) => theme.textColor};
     border-radius: 10px;
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    font-size: ${({ selectedOption }) => (selectedOption ? '11px' : '15px')};
 
     .title{
         font-weight: bolder;

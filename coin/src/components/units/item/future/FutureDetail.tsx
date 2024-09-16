@@ -4,6 +4,7 @@ import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import { useState, useEffect } from 'react';
 import FutureDetailOption from './FutureDetailOpt';
 import { FaCaretUp, FaCaretDown, FaAngleRight, FaCog } from 'react-icons/fa';
+import Breadcrumb from '../../../commons/breadcrumb/BreadCrumb';
 
 type Position = '상승' | '하강';
 
@@ -101,7 +102,9 @@ export default function FutureDetail(): JSX.Element {
     return (
         <S.Container>
             <S.SpotHeader sidebarOpen={sidebarOpen} >
-                    <div><FaAngleRight/> 선물 <FaAngleRight/> 선물 {num} </div>
+                    <div>
+                        <Breadcrumb/>
+                    </div>
                     <S.StrategyOption onClick={onClickStrategyOption}><FaCog className="OptionIcon"/>옵션</S.StrategyOption>
                     <FutureDetailOption
                         isMenuOpen={isMenuOpen}
@@ -181,7 +184,7 @@ export default function FutureDetail(): JSX.Element {
 
                 {selectedOption && (
                     <S.WidgetDetailContainer>
-                        <S.WidgetHeader>현물 {selectedOption}</S.WidgetHeader>
+                        <S.WidgetHeader>선물 {selectedOption}</S.WidgetHeader>
                         <S.WidgetTable  selectedOption={selectedOption}>
                             <thead>
                                 <tr>

@@ -2,6 +2,7 @@ import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import { useRouter } from 'next/navigation';
 import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
+import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
 
 type Position = '상승' | '하강';
 
@@ -32,7 +33,7 @@ export default function SpotPage(): JSX.Element {
         <S.Container>
             <S.SpotHeader sidebarOpen={sidebarOpen}>
                 <div>
-                    <FaAngleRight/> 현물
+                    <Breadcrumb/>
                 </div>
             </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} >

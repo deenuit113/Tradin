@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Modal from "react-modal";
 import * as S from "./HeaderNotice.styles";
 import { useRecoilState } from "recoil";
-import { darkMode, notification } from "../atoms";
+import { darkMode, notification } from "../util/atoms";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { modalStyles } from "./HeaderNotice.styles";

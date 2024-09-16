@@ -2,6 +2,7 @@ import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import { useRouter } from 'next/navigation';
 import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
+import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
 
 type Position = '상승' | '하강';
 
@@ -32,13 +33,13 @@ export default function FuturePage(): JSX.Element {
         <S.Container>
             <S.SpotHeader sidebarOpen={sidebarOpen}>
                 <div>
-                    <FaAngleRight/> 선물
+                    <Breadcrumb/>
                 </div>
             </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} >
                 {[1, 2, 3, 4].map((num) => (
                     <S.WidgetContainer key={num} >
-                        <S.WidgetHeader onClick={() => onClickMoveToFutureStrategy(num)}>현물 {num}</S.WidgetHeader>
+                        <S.WidgetHeader onClick={() => onClickMoveToFutureStrategy(num)}>선물 {num}</S.WidgetHeader>
                         <S.WidgetTable>
                             <thead>
                                 <tr>

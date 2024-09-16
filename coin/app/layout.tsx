@@ -9,7 +9,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import SideBar from "../src/components/commons/sidebar/Sidebar";
 import { ThemeProvider } from "@emotion/react";
 import { lightTheme, darkTheme } from "../src/styles/theme";
-import { darkMode } from "../src/components/commons/atoms";
+import { darkMode } from "../src/components/commons/util/atoms";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (

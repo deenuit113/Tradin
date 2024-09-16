@@ -28,6 +28,27 @@ export interface Theme {
     notificationUnreadMessageTextColor: string;
     notificationReadMessageTextColor: string;
     notificationVolumeSliderBackgroundColor: string;
+    notificationTrashIconColor: string;
+    notificationTrashIconHoverColor: string;
+    notificationToolTipBackgroundColor: string;
+    //breadcrumb
+    breadcrumbBackgroundColor: string;
+    breadcrumbTextColor: string;
+    breadcrumbLinkColor: string;
+    breadcrumbLinkHoverColor: string;
+    breadcrumbSeparatorColor: string;
+    breadcrumbEditIconColor: string;
+    breadcrumbEditInputBorderColor: string;
+    skeletonBaseColor: string;
+    skeletonHighlightColor: string;
+    //datePicker
+    highlightColor: string;
+    hoverColor: string;
+    borderColor: string;
+    //backtest
+    backTestButtonColor: string;
+    backTestButtonHoverColor: string;
+    backTestInputBackgroundColor: string;
 }
 
 export const lightTheme = {
@@ -60,6 +81,28 @@ export const lightTheme = {
     notificationUnreadMessageTextColor: '#000',
     notificationReadMessageTextColor: '#888',
     notificationVolumeSliderBackgroundColor: '#ddd',
+    notificationTrashIconColor: '#888',
+    notificationTrashIconHoverColor: '#333',
+    notificationToolTipBackgroundColor: '#444',
+    //breadcrumb
+    breadcrumbBackgroundColor: '#B0C4DE',
+    breadcrumbTextColor: '#333',
+    breadcrumbLinkColor: '#0056b3',
+    breadcrumbLinkHoverColor: '#003d82',
+    breadcrumbSeparatorColor: '#6c757d',
+    breadcrumbEditIconColor: '#6c757d',
+    breadcrumbEditInputBorderColor: '#0056b3',
+    //skeletonUI
+    skeletonBaseColor: '#c0c0c0',
+    skeletonHighlightColor: '#e0e0e0',
+    //datePicker
+    highlightColor: '#B0C4DE',
+    hoverColor: '#d0d0d0',
+    borderColor: '#ccc',
+    //backtest
+    backTestButtonColor: '#1DB717',
+    backTestButtonHoverColor: '#e0e0e0',
+    backTestInputBackgroundColor: '#f0f0f0',
 };
 
 export const darkTheme = {
@@ -92,4 +135,26 @@ export const darkTheme = {
     notificationUnreadMessageTextColor: '#fff',
     notificationReadMessageTextColor: '#ccc',
     notificationVolumeSliderBackgroundColor: '#666',
+    notificationTrashIconColor: '#888',
+    notificationTrashIconHoverColor: '#555',
+    notificationToolTipBackgroundColor: '#555',
+    //breadcrumb
+    breadcrumbBackgroundColor: '#4682B4',
+    breadcrumbTextColor: '#F0F0F0',
+    breadcrumbLinkColor: '#F5FEFF',
+    breadcrumbLinkHoverColor: '#80BFFF',
+    breadcrumbSeparatorColor: '#aaa',
+    breadcrumbEditIconColor: '#aaa',
+    breadcrumbEditInputBorderColor: '#4DA6FF',
+    //skeletonUI
+    skeletonBaseColor: '#666',
+    skeletonHighlightColor: '#888',
+    //datePicker
+    highlightColor: '#4682B4',
+    hoverColor: '#444',
+    borderColor: '#666',
+    //backtest
+    backTestButtonColor: '#1DA717',
+    backTestButtonHoverColor: '#444',
+    backTestInputBackgroundColor: '#555',
 };

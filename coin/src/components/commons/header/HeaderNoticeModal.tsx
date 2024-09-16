@@ -4,7 +4,7 @@ import { faTrashAlt, faBell, faBellSlash } from '@fortawesome/free-solid-svg-ico
 import { useRef, useState, useCallback, useEffect } from "react";
 import Switch from "react-switch";
 import { useRecoilState } from "recoil";
-import { notification } from "../atoms";
+import { notification } from "../util/atoms";
 
 interface Notification {
     message: string;
@@ -164,7 +164,7 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                     </S.ModalButtonContainer>
                     <S.RightContainer>
                          <S.DeleteAllIcon onClick={handleDeleteAll}>
-                            <FontAwesomeIcon icon={faTrashAlt} />
+                            <S.TrashAllIcon icon={faTrashAlt} />
                             <S.Tooltip>전체삭제</S.Tooltip>
                         </S.DeleteAllIcon>
                         <S.SwitchContainer>
