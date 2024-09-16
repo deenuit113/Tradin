@@ -4,12 +4,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './BackTest.styles';
 import { StrategyKey } from './MockStrategy';
-import { FaRocket } from 'react-icons/fa';
 
 const StyledDatePickerWrapper = styled.div`
     position: relative;
     width: 100%;
-    margin-bottom: 100%;
+    margin-bottom: 5px;
 
     .react-datepicker-wrapper {
         width: 100%;
@@ -17,7 +16,8 @@ const StyledDatePickerWrapper = styled.div`
 
     .react-datepicker-popper {
         width: 100%;
-        position: absolute !important;
+        height: 80%;
+        position: relative !important;
         top: 100% !important;
         left: 0 !important;
         transform: none !important;
@@ -38,6 +38,7 @@ const StyledDatePickerWrapper = styled.div`
     .react-datepicker__month-container {
         width: 100%;
         border-radius: 0px 0px 4px 4px;
+        height: 100%;
     }
 
     .react-datepicker__header {
@@ -67,16 +68,19 @@ const StyledDatePickerWrapper = styled.div`
     }
 
     .react-datepicker__day {
-        width: 14.28%;
-        padding: 5.5% 6.5%;
-        margin: 0;
+        width: 13.28%;
+        padding: 1rem;
         text-align: center;
-        align-items: center
+        align-items: center;
     }
 
     .react-datepicker__day-name {
         width: 13.28%;
-        line-height: 1em;
+        padding: 0.5rem 1rem;
+    }
+
+    .react-datepicker__day-names {
+        padding: 0px 5px;
     }
 `;
 

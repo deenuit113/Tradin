@@ -104,16 +104,16 @@ export const OptionsContainer = styled.div<{ isVisible: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     background-color: ${({ theme }) => theme.backgroundColor};
     padding: ${({ isVisible }) => (isVisible ? '1rem 2rem' : '0 2rem')};
     border-radius: 0px 0px 8px 8px;
-    overflow: hidden;
+    overflow: visible;
     transform-origin: top center;
     position: relative;
     z-index: 1;
     margin-top: -1px;
-    max-height: ${({ isVisible }) => (isVisible ? '1000px' : '0')};
+    max-height: ${({ isVisible }) => (isVisible ? 'auto;' : '0')};
     opacity: ${({ isVisible }) => (isVisible ? '1' : '0')};
     visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 

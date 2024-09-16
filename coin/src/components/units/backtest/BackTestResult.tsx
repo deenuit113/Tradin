@@ -11,9 +11,7 @@ import {
     calculateSharpeRatio,
     calculateAverageHoldingPeriod
 } from './CalculateMetrics';
-import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FaArrowDown, FaArrowUp, FaBalanceScale, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy } from 'react-icons/fa';
+import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy } from 'react-icons/fa';
 
 interface Trade {
     entryTime: string;
