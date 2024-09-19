@@ -38,6 +38,7 @@ export default function BackTestPage(): JSX.Element {
     const [trades, setTrades] = useState<{ [key: string]: Trade[] } | null>(null);
     const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
     const [executedOptions, setExecutedOptions] = useState<string | null>(null);
+    const [showToggleButton, setShowToggleButton] = useState(false);
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);
 
@@ -76,10 +77,9 @@ export default function BackTestPage(): JSX.Element {
             }
             const data = await response.json();
             
-            // 데이터 변환이 필요 없어졌습니다. API에서 이미 올바른 형식으로 반환합니다.
             setTrades(data);
+            setShowToggleButton(true);
             
-            // Set executed options
             setExecutedOptions(`${marketType} / ${selectedStrategies.join(', ')} / ${position} / 기간 ${startDate} ~ ${endDate}`);
         } catch (err) {
             console.error('Backtest error:', err);
@@ -102,10 +102,12 @@ export default function BackTestPage(): JSX.Element {
                         <BackTestResults trades={trades} executedOptions={executedOptions} />
                     ) : null}
                     {error && <p>{error}</p>}
-                    <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
-                        <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
-                        {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
-                    </S.OptionToggleButton>
+                    {showToggleButton && (
+                        <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
+                            <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
+                            {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
+                        </S.OptionToggleButton>
+                    )}
                     <OptionsContainer
                         isVisible={optionsVisible}
                         selectedStrategies={selectedStrategies}
@@ -118,7 +120,7 @@ export default function BackTestPage(): JSX.Element {
                         setEndDate={setEndDate}
                         performBackTest={performBackTest}
                         loading={loading}
-                        showToggleButton={!!trades}
+                        showToggleButton={showToggleButton}
                         marketType={marketType}
                         setMarketType={setMarketType}
                     />
