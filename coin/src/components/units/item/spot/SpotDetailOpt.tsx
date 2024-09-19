@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import * as S from "../ItemDetail.styles";
 import { useRouter } from 'next/navigation';
-import { FaPlay, FaToggleOn } from 'react-icons/fa';
 
 interface StrategyOptionProps {
     isMenuOpen: boolean;
@@ -77,14 +76,19 @@ export default function SpotDetailOption({
             </S.FilterOption>
         )), [localFilters, handleLocalFilterChange]);
 
-        const handleBackTestClick = () => {
-            const strategies = [currentStrategy];
-            if (selectedOption !== null) {
-                strategies.push(selectedOption);
-            }
-            const queryString = `marketType=spot&strategies=${strategies.join(',')}`;
-            router.push(`/backtest?${queryString}`);
-        };
+    const handleBackTestClick = () => {
+        const strategies = [currentStrategy];
+        if (selectedOption !== null) {
+            strategies.push(selectedOption);
+        }
+        
+        const queryParams = new URLSearchParams({
+            marketType: 'spot',
+            strategies: strategies.join(',')
+        });
+        
+        router.push(`/backtest?${queryParams.toString()}`);
+    };
 
     return(
         <>

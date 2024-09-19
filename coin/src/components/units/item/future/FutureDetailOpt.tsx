@@ -69,8 +69,13 @@ export default function FutureDetailOption({
         if (selectedOption !== null) {
             strategies.push(selectedOption);
         }
-        const queryString = `marketType=futures&strategies=${strategies.join(',')}`;
-        router.push(`/backtest?${queryString}`);
+        
+        const queryParams = new URLSearchParams({
+            marketType: 'futures',
+            strategies: strategies.join(',')
+        });
+        
+        router.push(`/backtest?${queryParams.toString()}`);
     };
 
     const filterOptions = useMemo(() => 
