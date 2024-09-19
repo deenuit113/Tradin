@@ -26,7 +26,7 @@ export default function BackTestPage(): JSX.Element {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [trades, setTrades] = useState<{ [key: string]: Trade[] } | null>(null);
-    const [marketType, setMarketType] = useState<'futures' | 'spot' | null>(null);
+    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(null);
     const [executedOptions, setExecutedOptions] = useState<string | null>(null);
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);

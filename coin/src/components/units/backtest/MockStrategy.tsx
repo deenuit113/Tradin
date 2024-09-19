@@ -4,7 +4,7 @@ export type StrategyKey = 'F1' | 'F2' | 'F3' | 'S1' | 'S2' | 'S3';
 export const strategies = {
     // 선물 전략
     F1: {
-        type: 'futures',
+        type: '선물',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close < args.bar.open * 0.995) {
                 enterPosition();
@@ -20,7 +20,7 @@ export const strategies = {
         },
     },
     F2: {
-        type: 'futures',
+        type: '선물',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close < args.bar.low * 1.005) {
                 enterPosition();
@@ -36,7 +36,7 @@ export const strategies = {
         },
     },
     F3: {
-        type: 'futures',
+        type: '선물',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close < args.bar.low * 1.01) {
                 enterPosition();
@@ -53,7 +53,7 @@ export const strategies = {
     },
     // 현물 전략
     S1: {
-        type: 'spot',
+        type: '현물',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close < args.bar.open * 0.995) {
                 enterPosition();
@@ -69,7 +69,7 @@ export const strategies = {
         },
     },
     S2: {
-        type: 'spot',
+        type: '현물',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.volume > args.prevBar.volume * 1.2) {
                 enterPosition();
@@ -85,7 +85,7 @@ export const strategies = {
         },
     },
     S3: {
-        type: 'spot',
+        type: '현물',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close > args.bar.high * 0.995) {
                 enterPosition();

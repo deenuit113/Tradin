@@ -29,6 +29,8 @@ const StyledDatePickerWrapper = styled.div`
         background-color: ${({ theme }) => theme.backgroundColor};
         color: ${({ theme }) => theme.textColor};
         border: 1px solid ${({ theme }) => theme.borderColor};
+        border-top: none;
+        border-radius: 0px 0px 4px 4px;
     }
 
     .react-datepicker__triangle {
@@ -81,6 +83,15 @@ const StyledDatePickerWrapper = styled.div`
 
     .react-datepicker__day-names {
         padding: 0px 5px;
+    }
+
+    @media (max-width: 768px) {
+        .react-datepicker__day,
+        .react-datepicker__day-name {
+            padding: 0.25rem 0;
+            font-size: 0.8em;
+            width: 12%;
+        }
     }
 `;
 
@@ -174,8 +185,8 @@ interface OptionsContainerProps {
     performBackTest: () => void;
     loading: boolean;
     showToggleButton: boolean;
-    marketType: 'futures' | 'spot' | null;
-    setMarketType: (type: 'futures' | 'spot' | null) => void;
+    marketType: '선물' | '현물' | null;
+    setMarketType: (type: '선물' | '현물' | null) => void;
 }
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
@@ -203,15 +214,15 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
             </S.ButtonContainer>
             <OptionsLayout>
                 <OptionGroup>
-                    <OptionTitle>시장 유형</OptionTitle>
+                    <OptionTitle>유형</OptionTitle>
                     <OptionContent>
                         <S.Option>
                             <input
                                 type="radio"
                                 name="marketType"
                                 value="futures"
-                                checked={marketType === 'futures'}
-                                onChange={() => setMarketType('futures')}
+                                checked={marketType === '선물'}
+                                onChange={() => setMarketType('선물')}
                             />
                             선물
                         </S.Option>
@@ -220,8 +231,8 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 type="radio"
                                 name="marketType"
                                 value="spot"
-                                checked={marketType === 'spot'}
-                                onChange={() => setMarketType('spot')}
+                                checked={marketType === '현물'}
+                                onChange={() => setMarketType('현물')}
                             />
                             현물
                         </S.Option>
@@ -241,7 +252,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                             checked={selectedStrategies.includes(key as StrategyKey)}
                                             onChange={() => handleStrategyChange(key as StrategyKey)}
                                         />
-                                        {marketType === 'futures' ? '선물' : '현물'} 전략 {key.slice(1)}
+                                        {marketType === '선물' ? '선물' : '현물'} 전략 {key.slice(1)}
                                     </S.Option>
                                 ))}
                         </OptionContent>
@@ -269,7 +280,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                     value="short"
                                     checked={position === 'short'}
                                     onChange={() => setPosition('short')}
-                                    disabled={marketType === 'spot'}
+                                    disabled={marketType === '현물'}
                                 />
                                 Short
                             </S.Option>

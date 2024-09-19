@@ -32,14 +32,17 @@ export const BackTestHeader = styled.div<{ sidebarOpen: boolean }>`
 
 export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+    max-width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 2rem;
+    box-sizing: border-box;
 
     &::-webkit-scrollbar {
         width: 12px;
@@ -67,8 +70,9 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     }
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
-        padding: 1rem 2rem;
+        width: 100%;
+        margin-left: 0;
+        padding: 1rem;
     }
 `;
 
