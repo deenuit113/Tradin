@@ -53,7 +53,8 @@ export default function SideBar(): JSX.Element {
                                 현물 {num}
                             </S.MenuItem>
                         ))}
-                        <S.MenuItem index={0} isOpen={spotOpen}><FaPlusCircle /></S.MenuItem>
+                        {/* <S.MenuItem index={0} isOpen={spotOpen}><FaPlusCircle /></S.MenuItem> */}
+                        {/* 추후 전략 추가 기능 추가 */}
                     </S.SubMenu>
                     <S.ItemContainer onClick={onClickMoveToFutures}>
                         <S.MenuTitle>
@@ -69,7 +70,8 @@ export default function SideBar(): JSX.Element {
                                 선물 {num}
                             </S.MenuItem>
                         ))}
-                        <S.MenuItem index={0} isOpen={futuresOpen}><FaPlusCircle /></S.MenuItem>
+                        {/* <S.MenuItem index={0} isOpen={futuresOpen}><FaPlusCircle /></S.MenuItem> */}
+                        {/* 추후 전략 추가 기능 추가 */}
                     </S.SubMenu>
                     <S.ItemContainer>
                         <S.MenuTitle onClick={onClickMoveToBackTest}>

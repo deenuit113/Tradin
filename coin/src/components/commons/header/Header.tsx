@@ -80,11 +80,11 @@ export default function Header(): JSX.Element {
                 <NavBar />
             </S.Left>
             <S.Center>
-                <S.Marquee key={currentAnnouncement}>
+                {/* <S.Marquee key={currentAnnouncement}>
                     <p>
                         {`${announcements[currentAnnouncement].title}: ${announcements[currentAnnouncement].content}`}
                     </p>
-                </S.Marquee>
+                </S.Marquee> */}
             </S.Center>
             <S.Right>
                 <S.IconList>
@@ -107,9 +107,9 @@ export default function Header(): JSX.Element {
                         <HeaderNotice />
                     </S.IconListItem>
                     <S.IconListItem>
-                        <S.Login onClick={onClickMoveToLogin}>로그인</S.Login>
+                        {/* <S.Login onClick={onClickMoveToLogin}>로그인</S.Login>
                         <S.LoginSignUpLabel>&nbsp;/&nbsp;</S.LoginSignUpLabel>
-                        <S.SignUp onClick={onClickMoveToLogin}>회원가입</S.SignUp>
+                        <S.SignUp onClick={onClickMoveToLogin}>회원가입</S.SignUp> */}
                     </S.IconListItem>
                 </S.IconList>
             </S.Right>
