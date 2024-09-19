@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from "./BackTest.styles";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import Breadcrumb from "../../commons/breadcrumb/BreadCrumb";
@@ -21,14 +21,10 @@ interface Trade {
 
 export default function BackTestPage(): JSX.Element {
     const searchParams = useSearchParams();
-    const initialMarketType = searchParams.get('marketType') === 'spot' ? '현물' : 
-                          searchParams.get('marketType') === 'futures' ? '선물' : null;
-    const initialStrategies = searchParams.get('strategies')?.split(',').map(num => {
-        const prefix = initialMarketType === '현물' ? 'S' : 'F';
-        return `${prefix}${num}` as StrategyKey;
-    }).filter(Boolean) || [];
     const { sidebarOpen } = useSidebar();
-    const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>(initialStrategies);
+
+    const [initializedState, setInitializedState] = useState(false);
+    const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>([]);
     const [position, setPosition] = useState<string>('long');
     const [startDate, setStartDate] = useState<string>('2023-01-01');
     const [endDate, setEndDate] = useState<string>('2024-01-01');
@@ -36,10 +32,25 @@ export default function BackTestPage(): JSX.Element {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [trades, setTrades] = useState<{ [key: string]: Trade[] } | null>(null);
-    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
+    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(null);
     const [executedOptions, setExecutedOptions] = useState<string | null>(null);
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);
+
+    useEffect(() => {
+        if (!initializedState) {
+            const initialMarketType = searchParams.get('marketType') === 'spot' ? '현물' : 
+                                      searchParams.get('marketType') === 'futures' ? '선물' : null;
+            const initialStrategies = searchParams.get('strategies')?.split(',').map(num => {
+                const prefix = initialMarketType === '현물' ? 'S' : 'F';
+                return `${prefix}${num}` as StrategyKey;
+            }).filter(Boolean) || [];
+
+            setSelectedStrategies(initialStrategies);
+            setMarketType(initialMarketType);
+            setInitializedState(true);
+        }
+    }, [searchParams, initializedState]);
 
     const handleStrategyChange = (strategy: StrategyKey) => {
         setSelectedStrategies(prev =>
@@ -88,6 +99,10 @@ export default function BackTestPage(): JSX.Element {
             setLoading(false);
         }
     };
+
+    if (!initializedState) {
+        return <div>Loading...</div>; // 또는 다른 로딩 표시
+    }
 
     return (
         <S.Container>
