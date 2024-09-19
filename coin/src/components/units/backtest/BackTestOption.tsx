@@ -70,27 +70,27 @@ const StyledDatePickerWrapper = styled.div`
     }
 
     .react-datepicker__day {
-        width: 13.28%;
         padding: 1rem;
         text-align: center;
         align-items: center;
+        padding: 0.25rem 0;
+        font-size: 0.8em;
+        width: 12%;
     }
 
     .react-datepicker__day-name {
-        width: 13.28%;
-        padding: 0.5rem 1rem;
+        padding: 0.25rem 0;
+        font-size: 0.8em;
+        width: 12%;
     }
 
     .react-datepicker__day-names {
         padding: 0px 5px;
     }
 
-    @media (max-width: 768px) {
-        .react-datepicker__day,
-        .react-datepicker__day-name {
-            padding: 0.25rem 0;
-            font-size: 0.8em;
-            width: 12%;
+    @media (max-width: 600px) {
+        .react-datepicker-popper {
+            display: none;
         }
     }
 `;
