@@ -269,9 +269,10 @@ export const ChartContainer = styled.div`
 
 export const ChartControls = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-bottom: 1rem;
     gap: 1rem;
+    padding: 0 1rem;
 
     button {
         padding: 0.5rem 1rem;
@@ -290,5 +291,20 @@ export const ChartControls = styled.div`
             outline: none;
             box-shadow: 0 0 0 2px #777;
         }
+    }
+`;
+
+export const ChartSelect = styled.select`
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: 1px solid ${({ theme }) => theme.borderColor};
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    color: ${({ theme }) => theme.textColor};
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #777;
     }
 `;

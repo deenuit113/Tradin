@@ -54,6 +54,10 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
         };
     });
 
+    const handleMetricChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedMetric(event.target.value as 'profit' | 'equity' | 'drawdown');
+    };
+
     return (
         <S.ResultContainer>
             <S.ResultHeader>
@@ -102,9 +106,11 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                 </S.ResultInnerContainer>
             ))}
             <S.ChartControls>
-                <button onClick={() => setSelectedMetric('profit')}>손익</button>
-                <button onClick={() => setSelectedMetric('equity')}>자산</button>
-                <button onClick={() => setSelectedMetric('drawdown')}>최대 손실</button>
+                <S.ChartSelect onChange={handleMetricChange} value={selectedMetric}>
+                    <option value="profit">손익</option>
+                    <option value="equity">자산</option>
+                    <option value="drawdown">최대 손실</option>
+                </S.ChartSelect>
             </S.ChartControls>
             <BackTestChart trades={trades} selectedMetric={selectedMetric} />
         </S.ResultContainer>
