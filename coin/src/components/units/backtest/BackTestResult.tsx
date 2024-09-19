@@ -20,9 +20,10 @@ interface Trade {
 
 interface BackTestResultsProps {
     trades: Trade[];
+    executedOptions: string | null;
 }
 
-const BackTestResults: React.FC<BackTestResultsProps> = ({ trades }) => {
+const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptions }) => {
     const initialCapital = 10000;
     const totalReturn = calculateTotalReturn(trades);
     const annualizedReturn = calculateAnnualizedReturn(totalReturn, initialCapital, 1);
@@ -36,7 +37,10 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades }) => {
     return (
         <S.ResultContainer>
             <S.ResultInnerContainer>
-                <S.ResultTitle>실행 결과:</S.ResultTitle>
+                <S.ResultHeader>
+                    <S.ResultTitle>실행 결과:</S.ResultTitle>
+                    {executedOptions && <S.ExecutedOptions>{executedOptions}</S.ExecutedOptions>}
+                </S.ResultHeader>
                 <S.ResultContent>
                     <FaDollarSign className='ResultIcon'/>
                     총 수익: ${totalReturn.toFixed(2)}

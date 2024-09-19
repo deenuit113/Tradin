@@ -38,12 +38,21 @@ const ChartSkeletonContainer = styled(SkeletonBox)`
     border-radius: 8px;
 `;
 
+const ExecutedOptionsSkeletonBox = styled(SkeletonBox)`
+    width: 200px;
+    height: 20px;
+    border-radius: 4px;
+`;
+
 export const ResultSkeletonUI: React.FC = () => {
     return (
         <S.ResultContainer>
-            <S.ResultInnerContainer>
+            <S.ResultHeader>
                 <S.ResultTitle>실행 결과:</S.ResultTitle>
-                {[...Array(10)].map((_, index) => (
+                <ExecutedOptionsSkeletonBox />
+            </S.ResultHeader>
+            <S.ResultInnerContainer>
+                {[...Array(9)].map((_, index) => (
                     <ResultSkeletonContent key={index} />
                 ))}
             </S.ResultInnerContainer>

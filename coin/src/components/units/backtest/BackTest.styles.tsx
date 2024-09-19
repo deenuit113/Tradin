@@ -199,6 +199,19 @@ export const ResultContainer = styled.div`
     margin-bottom: 1rem;
 `;
 
+export const ResultHeader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+    width: 100%;
+`;
+
+export const ExecutedOptions = styled.span`
+    font-size: 0.9em;
+    color: ${({ theme }) => theme.timeTextColor};
+`;
+
 export const ResultInnerContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -208,9 +221,9 @@ export const ResultInnerContainer = styled.div`
 
 export const ResultTitle = styled.h4`
     color: ${({ theme }) => theme.textColor};
-    width: 100%;
+    margin-right: 1rem;
     transition: all 0.3s ease;
-`
+`;
 
 export const ResultContent = styled.p`
     color: ${({ theme }) => theme.textColor};

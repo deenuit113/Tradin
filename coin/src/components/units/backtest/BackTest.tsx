@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import * as S from "./BackTest.styles";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import Breadcrumb from "../../commons/breadcrumb/BreadCrumb";
@@ -21,10 +21,11 @@ export default function BackTestPage(): JSX.Element {
     const [startDate, setStartDate] = useState<string>('2023-01-01');
     const [endDate, setEndDate] = useState<string>('2024-01-01');
     const [optionsVisible, setOptionsVisible] = useState(true);
-    const [showToggleButton, setShowToggleButton] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [trades, setTrades] = useState<Trade[] | null>(null);
+    const [marketType, setMarketType] = useState<'futures' | 'spot' | null>(null);
+    const [executedOptions, setExecutedOptions] = useState<string | null>(null);
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);
 
@@ -37,8 +38,8 @@ export default function BackTestPage(): JSX.Element {
     };
 
     const performBackTest = async () => {
-        if (!selectedStrategies.length || !startDate || !endDate) {
-            alert("Please select strategies, position, and date range.");
+        if (!selectedStrategies.length || !startDate || !endDate || !marketType) {
+            alert("Please select market type, strategies, position, and date range.");
             return;
         }
         setLoading(true);
@@ -51,7 +52,7 @@ export default function BackTestPage(): JSX.Element {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ strategyKey: selectedStrategyKey, startDate, endDate, position }),
+                body: JSON.stringify({ strategyKey: selectedStrategyKey, startDate, endDate, position, marketType }),
             });
 
             if (!response.ok) {
@@ -59,7 +60,9 @@ export default function BackTestPage(): JSX.Element {
             }
             const data = await response.json();
             setTrades(data);
-            setShowToggleButton(true);  // 백테스트 실행 후 토글 버튼 표시
+            
+            // Set executed options
+            setExecutedOptions(`${marketType} / ${selectedStrategyKey} / ${position} / 기간 ${startDate} ~ ${endDate}`);
         } catch (err) {
             setError('Failed to perform backtest');
         } finally {
@@ -77,15 +80,15 @@ export default function BackTestPage(): JSX.Element {
                     {loading ? (
                         <ResultSkeletonUI />
                     ) : trades ? (
-                        <BackTestResults trades={trades} />
+                        <>
+                            <BackTestResults trades={trades} executedOptions={executedOptions}/>
+                        </>
                     ) : null}
                     {error && <p>{error}</p>}
-                    {showToggleButton && (
-                        <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
-                            <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
-                            {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
-                        </S.OptionToggleButton>
-                    )}
+                    <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
+                        <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
+                        {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
+                    </S.OptionToggleButton>
                     <OptionsContainer
                         isVisible={optionsVisible}
                         selectedStrategies={selectedStrategies}
@@ -98,7 +101,9 @@ export default function BackTestPage(): JSX.Element {
                         setEndDate={setEndDate}
                         performBackTest={performBackTest}
                         loading={loading}
-                        showToggleButton={showToggleButton}
+                        showToggleButton={!!trades}
+                        marketType={marketType}
+                        setMarketType={setMarketType}
                     />
                 </S.WidgetContainer>
             </S.MainContent>

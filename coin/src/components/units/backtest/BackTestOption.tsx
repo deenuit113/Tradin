@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -174,6 +174,8 @@ interface OptionsContainerProps {
     performBackTest: () => void;
     loading: boolean;
     showToggleButton: boolean;
+    marketType: 'futures' | 'spot' | null;
+    setMarketType: (type: 'futures' | 'spot' | null) => void;
 }
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
@@ -189,9 +191,9 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     performBackTest,
     loading,
     showToggleButton,
+    marketType,
+    setMarketType,
 }) => {
-    const [marketType, setMarketType] = useState<'futures' | 'spot' | null>(null);
-
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.ButtonContainer>
