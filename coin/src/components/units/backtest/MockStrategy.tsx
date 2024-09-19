@@ -6,61 +6,28 @@ export const strategies = {
     F1: {
         type: 'futures',
         entryRule: (enterPosition: any, args: any) => {
-            if (args.bar.close < args.bar.open) {
+            if (args.bar.close < args.bar.open * 0.995) {
                 enterPosition();
             }
         },
         exitRule: (exitPosition: any, args: any) => {
-            if (args.bar.close > args.bar.open) {
+            if (args.bar.close > args.bar.open * 1.005) {
                 exitPosition();
             }
         },
         stopLoss: (args: any) => {
-            return args.entryPrice * 0.95;
+            return args.entryPrice * 0.98;
         },
     },
     F2: {
         type: 'futures',
         entryRule: (enterPosition: any, args: any) => {
-            if (args.bar.close < args.bar.low) {
+            if (args.bar.close < args.bar.low * 1.005) {
                 enterPosition();
             }
         },
         exitRule: (exitPosition: any, args: any) => {
-            if (args.bar.close > args.bar.high) {
-                exitPosition();
-            }
-        },
-        stopLoss: (args: any) => {
-            return args.entryPrice * 0.90;
-        },
-    },
-    F3: {
-        type: 'futures',
-        entryRule: (enterPosition: any, args: any) => {
-            if (args.bar.close < args.bar.low * 0.98) {
-                enterPosition();
-            }
-        },
-        exitRule: (exitPosition: any, args: any) => {
-            if (args.bar.close > args.bar.high * 1.02) {
-                exitPosition();
-            }
-        },
-        stopLoss: (args: any) => {
-            return args.entryPrice * 0.92;
-        },
-    },
-    // 현물 전략
-    S1: {
-        type: 'spot',
-        entryRule: (enterPosition: any, args: any) => {
-            if (args.bar.close < args.bar.open * 0.99) {
-                enterPosition();
-            }
-        },
-        exitRule: (exitPosition: any, args: any) => {
-            if (args.bar.close > args.bar.open * 1.01) {
+            if (args.bar.close > args.bar.high * 0.995) {
                 exitPosition();
             }
         },
@@ -68,36 +35,69 @@ export const strategies = {
             return args.entryPrice * 0.97;
         },
     },
-    S2: {
-        type: 'spot',
+    F3: {
+        type: 'futures',
         entryRule: (enterPosition: any, args: any) => {
-            if (args.bar.volume > args.prevBar.volume * 1.5) {
+            if (args.bar.close < args.bar.low * 1.01) {
                 enterPosition();
             }
         },
         exitRule: (exitPosition: any, args: any) => {
-            if (args.bar.volume < args.prevBar.volume * 0.5) {
+            if (args.bar.close > args.bar.high * 0.99) {
                 exitPosition();
             }
         },
         stopLoss: (args: any) => {
-            return args.entryPrice * 0.95;
+            return args.entryPrice * 0.96;
+        },
+    },
+    // 현물 전략
+    S1: {
+        type: 'spot',
+        entryRule: (enterPosition: any, args: any) => {
+            if (args.bar.close < args.bar.open * 0.995) {
+                enterPosition();
+            }
+        },
+        exitRule: (exitPosition: any, args: any) => {
+            if (args.bar.close > args.bar.open * 1.005) {
+                exitPosition();
+            }
+        },
+        stopLoss: (args: any) => {
+            return args.entryPrice * 0.98;
+        },
+    },
+    S2: {
+        type: 'spot',
+        entryRule: (enterPosition: any, args: any) => {
+            if (args.bar.volume > args.prevBar.volume * 1.2) {
+                enterPosition();
+            }
+        },
+        exitRule: (exitPosition: any, args: any) => {
+            if (args.bar.volume < args.prevBar.volume * 0.8) {
+                exitPosition();
+            }
+        },
+        stopLoss: (args: any) => {
+            return args.entryPrice * 0.97;
         },
     },
     S3: {
         type: 'spot',
         entryRule: (enterPosition: any, args: any) => {
-            if (args.bar.close > args.bar.high * 1.01) {
+            if (args.bar.close > args.bar.high * 0.995) {
                 enterPosition();
             }
         },
         exitRule: (exitPosition: any, args: any) => {
-            if (args.bar.close < args.bar.low * 0.99) {
+            if (args.bar.close < args.bar.low * 1.005) {
                 exitPosition();
             }
         },
         stopLoss: (args: any) => {
-            return args.entryPrice * 0.93;
+            return args.entryPrice * 0.96;
         },
     },
 };

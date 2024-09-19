@@ -1,3 +1,10 @@
+interface Trade {
+    entryTime: string;
+    exitTime: string;
+    profit: number;
+    strategy: string;
+}
+
 export function calculateTotalReturn(trades: any[]) {
     return trades.reduce((acc, trade) => acc + trade.profit, 0);
 }
@@ -37,6 +44,16 @@ export function calculateSharpeRatio(meanReturn: number, stdDevReturn: number) {
     return stdDevReturn !== 0 ? meanReturn / stdDevReturn : 0;
 }
 
-export function calculateAverageHoldingPeriod(trades: any[]) {
-    return trades.reduce((sum, trade) => sum + trade.holdingPeriod, 0) / trades.length;
-}
+export const calculateAverageHoldingPeriod = (trades: Trade[]): number => {
+    const validTrades = trades.filter(trade => trade.entryTime && trade.exitTime);
+    if (validTrades.length === 0) return 0;
+
+    const totalHoldingPeriod = validTrades.reduce((sum, trade) => {
+        const entryDate = new Date(trade.entryTime);
+        const exitDate = new Date(trade.exitTime);
+        const holdingPeriod = (exitDate.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24); // Convert to days
+        return sum + holdingPeriod;
+    }, 0);
+
+    return totalHoldingPeriod / validTrades.length;
+};

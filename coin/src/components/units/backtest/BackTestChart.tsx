@@ -24,54 +24,76 @@ ChartJS.register(
     Legend
 );
 
+interface Trade {
+    entryTime: string;
+    profit: number;
+}
+
 interface BackTestChartProps {
-    trades: any[];
+    trades: { [key: string]: Trade[] };
+    selectedMetric: 'profit' | 'equity' | 'drawdown';
 };
 
 declare module "@emotion/react" {
     export interface Theme extends CustomTheme {}
 }
 
-const BackTestChart: React.FC<BackTestChartProps> = ({ trades }) => {
+const BackTestChart: React.FC<BackTestChartProps> = ({ trades, selectedMetric }) => {
     const theme = useTheme();
 
-    // 자산 곡선 계산
-    const equityCurve: number[] = trades.reduce((acc: number[], trade: any) => {
-        const lastEquity = acc.length ? acc[acc.length - 1] : 0;
-        return [...acc, lastEquity + trade.profit];
-    }, []);
+    const colors = [
+        'rgba(75, 192, 192, 1)',
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+    ];
 
-    // 최대 손실 계산
-    const drawdown: number[] = equityCurve.map((val: number, idx: number): number => {
-        const maxEquity = Math.max(...equityCurve.slice(0, idx + 1));
-        return (maxEquity - val) / maxEquity * 100; // Convert to percentage
+    const calculateMetrics = (tradeList: Trade[]) => {
+        const profits = tradeList.map(trade => trade.profit);
+        const equityCurve = profits.reduce((acc, profit) => [...acc, (acc[acc.length - 1] || 0) + profit], [0]);
+        const drawdown = equityCurve.map((equity, i) => {
+            const peak = Math.max(...equityCurve.slice(0, i + 1));
+            return (peak - equity) / peak * 100;
+        });
+
+        return { profits, equityCurve, drawdown };
+    };
+
+    const datasets = Object.entries(trades).map(([strategy, tradeList], index) => {
+        const { profits, equityCurve, drawdown } = calculateMetrics(tradeList);
+        const color = colors[index % colors.length];
+
+        let data;
+        let label;
+        switch (selectedMetric) {
+            case 'profit':
+                data = profits;
+                label = `${strategy} 손익($)`;
+                break;
+            case 'equity':
+                data = equityCurve;
+                label = `${strategy} 자산($)`;
+                break;
+            case 'drawdown':
+                data = drawdown;
+                label = `${strategy} 최대 손실(%)`;
+                break;
+        }
+
+        return {
+            label,
+            data,
+            borderColor: color,
+            backgroundColor: color.replace('1)', '0.2)'),
+            fill: false,
+        };
     });
 
     const data = {
-        labels: trades.map(trade => new Date(trade.entryTime).toLocaleDateString()),
-        datasets: [
-            {
-                label: '손익($)',
-                data: trades.map(trade => trade.profit),
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true,
-            },
-            {
-                label: '자산($)',
-                data: equityCurve,
-                borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                fill: false,
-            },
-            {
-                label: '최대 손실(%)',
-                data: drawdown,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                fill: true,
-            },
-        ],
+        labels: trades[Object.keys(trades)[0]].map(trade => new Date(trade.entryTime).toLocaleDateString()),
+        datasets,
     };
 
     const options = {

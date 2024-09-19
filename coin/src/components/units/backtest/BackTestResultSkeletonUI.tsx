@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import * as S from './BackTest.styles';
 
-// 스켈레톤 UI를 위한 애니메이션 효과
 const shimmer = keyframes`
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
@@ -42,6 +41,7 @@ const ExecutedOptionsSkeletonBox = styled(SkeletonBox)`
     width: 200px;
     height: 20px;
     border-radius: 4px;
+    align-content: center;
 `;
 
 export const ResultSkeletonUI: React.FC = () => {

@@ -11,7 +11,9 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 interface Trade {
     entryTime: string;
+    exitTime: string;
     profit: number;
+    strategy: string;
 }
 
 export default function BackTestPage(): JSX.Element {
@@ -23,7 +25,7 @@ export default function BackTestPage(): JSX.Element {
     const [optionsVisible, setOptionsVisible] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [trades, setTrades] = useState<Trade[] | null>(null);
+    const [trades, setTrades] = useState<{ [key: string]: Trade[] } | null>(null);
     const [marketType, setMarketType] = useState<'futures' | 'spot' | null>(null);
     const [executedOptions, setExecutedOptions] = useState<string | null>(null);
 
@@ -45,25 +47,32 @@ export default function BackTestPage(): JSX.Element {
         setLoading(true);
         setError(null);
         try {
-            const selectedStrategyKey = selectedStrategies[0];
-
             const response = await fetch('/api/backtest', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ strategyKey: selectedStrategyKey, startDate, endDate, position, marketType }),
+                body: JSON.stringify({ 
+                    strategies: selectedStrategies, 
+                    startDate, 
+                    endDate, 
+                    position, 
+                    marketType 
+                }),
             });
-
+    
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
+            
+            // 데이터 변환이 필요 없어졌습니다. API에서 이미 올바른 형식으로 반환합니다.
             setTrades(data);
             
             // Set executed options
-            setExecutedOptions(`${marketType} / ${selectedStrategyKey} / ${position} / 기간 ${startDate} ~ ${endDate}`);
+            setExecutedOptions(`${marketType} / ${selectedStrategies.join(', ')} / ${position} / 기간 ${startDate} ~ ${endDate}`);
         } catch (err) {
+            console.error('Backtest error:', err);
             setError('Failed to perform backtest');
         } finally {
             setLoading(false);
@@ -80,9 +89,7 @@ export default function BackTestPage(): JSX.Element {
                     {loading ? (
                         <ResultSkeletonUI />
                     ) : trades ? (
-                        <>
-                            <BackTestResults trades={trades} executedOptions={executedOptions}/>
-                        </>
+                        <BackTestResults trades={trades} executedOptions={executedOptions} />
                     ) : null}
                     {error && <p>{error}</p>}
                     <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>

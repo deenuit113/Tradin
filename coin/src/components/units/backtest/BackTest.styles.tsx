@@ -225,6 +225,18 @@ export const ResultTitle = styled.h4`
     transition: all 0.3s ease;
 `;
 
+export const ResultSubtitle = styled.h5`
+    color: ${({ theme }) => theme.textColor};
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+    width: 100%;
+    transition: all 0.3s ease;
+`;
+
 export const ResultContent = styled.p`
     color: ${({ theme }) => theme.textColor};
     width: calc(50% - 0.5rem);
@@ -252,5 +264,31 @@ export const ChartContainer = styled.div`
     }
     @media all and (max-width: 800px) {
         padding: 0;
+    }
+`;
+
+export const ChartControls = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+
+    button {
+        padding: 0.5rem 1rem;
+        background-color: #333;
+        color: #f0f0f0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #555;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #777;
+        }
     }
 `;
