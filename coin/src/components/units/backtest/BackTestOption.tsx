@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './BackTest.styles';
-import { StrategyKey } from './MockStrategy';
+import { StrategyKey, strategies } from './MockStrategy';
 
 const StyledDatePickerWrapper = styled.div`
     position: relative;
@@ -163,7 +163,7 @@ const DatePickerLabel = styled.span`
 
 interface OptionsContainerProps {
     isVisible: boolean;
-    selectedStrategies: string[];
+    selectedStrategies: StrategyKey[];
     handleStrategyChange: (strategy: StrategyKey) => void;
     position: string;
     setPosition: (position: 'long' | 'short') => void;
@@ -190,69 +190,90 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     loading,
     showToggleButton,
 }) => {
+    const [marketType, setMarketType] = useState<'futures' | 'spot' | null>(null);
+
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.ButtonContainer>
                 <S.BackTestButton onClick={performBackTest} disabled={loading}>
-                <S.StyledRocketIcon className="RocketIcon" />BackTest Run
+                    <S.StyledRocketIcon className="RocketIcon" />BackTest Run
                 </S.BackTestButton>
             </S.ButtonContainer>
             <OptionsLayout>
                 <OptionGroup>
-                    <OptionTitle>전략</OptionTitle>
+                    <OptionTitle>시장 유형</OptionTitle>
                     <OptionContent>
                         <S.Option>
                             <input
-                                type="checkbox"
-                                checked={selectedStrategies.includes('A')}
-                                onChange={() => handleStrategyChange('A')}
+                                type="radio"
+                                name="marketType"
+                                value="futures"
+                                checked={marketType === 'futures'}
+                                onChange={() => setMarketType('futures')}
                             />
-                            전략 A
+                            선물
                         </S.Option>
                         <S.Option>
                             <input
-                                type="checkbox"
-                                checked={selectedStrategies.includes('B')}
-                                onChange={() => handleStrategyChange('B')}
+                                type="radio"
+                                name="marketType"
+                                value="spot"
+                                checked={marketType === 'spot'}
+                                onChange={() => setMarketType('spot')}
                             />
-                            전략 B
-                        </S.Option>
-                        <S.Option>
-                            <input
-                                type="checkbox"
-                                checked={selectedStrategies.includes('C')}
-                                onChange={() => handleStrategyChange('C')}
-                            />
-                            전략 C
+                            현물
                         </S.Option>
                     </OptionContent>
                 </OptionGroup>
+
+                {marketType && (
+                    <OptionGroup>
+                        <OptionTitle>전략</OptionTitle>
+                        <OptionContent>
+                            {Object.entries(strategies)
+                                .filter(([_, strategy]) => strategy.type === marketType)
+                                .map(([key, _]) => (
+                                    <S.Option key={key}>
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedStrategies.includes(key as StrategyKey)}
+                                            onChange={() => handleStrategyChange(key as StrategyKey)}
+                                        />
+                                        {marketType === 'futures' ? '선물' : '현물'} 전략 {key.slice(1)}
+                                    </S.Option>
+                                ))}
+                        </OptionContent>
+                    </OptionGroup>
+                )}
                 
-                <OptionGroup>
-                    <OptionTitle>포지션</OptionTitle>
-                    <OptionContent>
-                        <S.Option>
-                            <input
-                                type="radio"
-                                name="position"
-                                value="long"
-                                checked={position === 'long'}
-                                onChange={() => setPosition('long')}
-                            />
-                            Long
-                        </S.Option>
-                        <S.Option>
-                            <input
-                                type="radio"
-                                name="position"
-                                value="short"
-                                checked={position === 'short'}
-                                onChange={() => setPosition('short')}
-                            />
-                            Short
-                        </S.Option>
-                    </OptionContent>
-                </OptionGroup>
+                {marketType && (
+                    <OptionGroup>
+                        <OptionTitle>포지션</OptionTitle>
+                        <OptionContent>
+                            <S.Option>
+                                <input
+                                    type="radio"
+                                    name="position"
+                                    value="long"
+                                    checked={position === 'long'}
+                                    onChange={() => setPosition('long')}
+                                />
+                                Long
+                            </S.Option>
+                            <S.Option>
+                                <input
+                                    type="radio"
+                                    name="position"
+                                    value="short"
+                                    checked={position === 'short'}
+                                    onChange={() => setPosition('short')}
+                                    disabled={marketType === 'spot'}
+                                />
+                                Short
+                            </S.Option>
+                        </OptionContent>
+                    </OptionGroup>
+                )}
 
                 <OptionGroup>
                     <OptionTitle>기간 선택</OptionTitle>

@@ -1,8 +1,10 @@
 // src/strategies/mockStrategies.ts
-export type StrategyKey = 'A' | 'B' | 'C';
+export type StrategyKey = 'F1' | 'F2' | 'F3' | 'S1' | 'S2' | 'S3';
 
 export const strategies = {
-    A: {
+    // 선물 전략
+    F1: {
+        type: 'futures',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close < args.bar.open) {
                 enterPosition();
@@ -17,7 +19,8 @@ export const strategies = {
             return args.entryPrice * 0.95;
         },
     },
-    B: {
+    F2: {
+        type: 'futures',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close < args.bar.low) {
                 enterPosition();
@@ -32,7 +35,8 @@ export const strategies = {
             return args.entryPrice * 0.90;
         },
     },
-    C: {
+    F3: {
+        type: 'futures',
         entryRule: (enterPosition: any, args: any) => {
             if (args.bar.close < args.bar.low * 0.98) {
                 enterPosition();
@@ -45,6 +49,55 @@ export const strategies = {
         },
         stopLoss: (args: any) => {
             return args.entryPrice * 0.92;
+        },
+    },
+    // 현물 전략
+    S1: {
+        type: 'spot',
+        entryRule: (enterPosition: any, args: any) => {
+            if (args.bar.close < args.bar.open * 0.99) {
+                enterPosition();
+            }
+        },
+        exitRule: (exitPosition: any, args: any) => {
+            if (args.bar.close > args.bar.open * 1.01) {
+                exitPosition();
+            }
+        },
+        stopLoss: (args: any) => {
+            return args.entryPrice * 0.97;
+        },
+    },
+    S2: {
+        type: 'spot',
+        entryRule: (enterPosition: any, args: any) => {
+            if (args.bar.volume > args.prevBar.volume * 1.5) {
+                enterPosition();
+            }
+        },
+        exitRule: (exitPosition: any, args: any) => {
+            if (args.bar.volume < args.prevBar.volume * 0.5) {
+                exitPosition();
+            }
+        },
+        stopLoss: (args: any) => {
+            return args.entryPrice * 0.95;
+        },
+    },
+    S3: {
+        type: 'spot',
+        entryRule: (enterPosition: any, args: any) => {
+            if (args.bar.close > args.bar.high * 1.01) {
+                enterPosition();
+            }
+        },
+        exitRule: (exitPosition: any, args: any) => {
+            if (args.bar.close < args.bar.low * 0.99) {
+                exitPosition();
+            }
+        },
+        stopLoss: (args: any) => {
+            return args.entryPrice * 0.93;
         },
     },
 };
