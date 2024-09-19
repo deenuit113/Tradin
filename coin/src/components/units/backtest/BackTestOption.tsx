@@ -173,6 +173,7 @@ interface OptionsContainerProps {
     setEndDate: (date: string) => void;
     performBackTest: () => void;
     loading: boolean;
+    showToggleButton: boolean;
 }
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
@@ -186,10 +187,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     endDate,
     setEndDate,
     performBackTest,
-    loading
+    loading,
+    showToggleButton,
 }) => {
     return (
-        <S.OptionsContainer isVisible={isVisible}>
+        <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.ButtonContainer>
                 <S.BackTestButton onClick={performBackTest} disabled={loading}>
                 <S.StyledRocketIcon className="RocketIcon" />BackTest Run

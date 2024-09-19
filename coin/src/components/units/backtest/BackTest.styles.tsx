@@ -100,14 +100,14 @@ export const OptionToggleButton = styled.button<{ isVisible: boolean }>`
     }
 `;
 
-export const OptionsContainer = styled.div<{ isVisible: boolean }>`
+export const OptionsContainer = styled.div<{ isVisible: boolean, showToggleButton: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
     background-color: ${({ theme }) => theme.backgroundColor};
     padding: ${({ isVisible }) => (isVisible ? '1rem 2rem' : '0 2rem')};
-    border-radius: 0px 0px 8px 8px;
+    border-radius: ${({ showToggleButton }) => (showToggleButton ? '0px 0px 8px 8px' : '8px')};
     overflow: visible;
     transform-origin: top center;
     position: relative;

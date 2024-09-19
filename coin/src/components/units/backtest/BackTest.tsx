@@ -21,6 +21,7 @@ export default function BackTestPage(): JSX.Element {
     const [startDate, setStartDate] = useState<string>('2023-01-01');
     const [endDate, setEndDate] = useState<string>('2024-01-01');
     const [optionsVisible, setOptionsVisible] = useState(true);
+    const [showToggleButton, setShowToggleButton] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [trades, setTrades] = useState<Trade[] | null>(null);
@@ -58,6 +59,7 @@ export default function BackTestPage(): JSX.Element {
             }
             const data = await response.json();
             setTrades(data);
+            setShowToggleButton(true);  // 백테스트 실행 후 토글 버튼 표시
         } catch (err) {
             setError('Failed to perform backtest');
         } finally {
@@ -78,10 +80,12 @@ export default function BackTestPage(): JSX.Element {
                         <BackTestResults trades={trades} />
                     ) : null}
                     {error && <p>{error}</p>}
-                    <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
-                        <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
-                        {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
-                    </S.OptionToggleButton>
+                    {showToggleButton && (
+                        <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
+                            <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
+                            {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
+                        </S.OptionToggleButton>
+                    )}
                     <OptionsContainer
                         isVisible={optionsVisible}
                         selectedStrategies={selectedStrategies}
@@ -94,6 +98,7 @@ export default function BackTestPage(): JSX.Element {
                         setEndDate={setEndDate}
                         performBackTest={performBackTest}
                         loading={loading}
+                        showToggleButton={showToggleButton}
                     />
                 </S.WidgetContainer>
             </S.MainContent>
