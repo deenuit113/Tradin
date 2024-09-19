@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import * as S from "../ItemDetail.styles";
+import { useRouter } from 'next/navigation';
 
 interface StrategyOptionProps {
     isMenuOpen: boolean;
@@ -8,6 +9,7 @@ interface StrategyOptionProps {
     handleCheckboxChange: (n: number) => void;
     filters: { [key: string]: boolean };
     handleFilterChange: (key: string, value: boolean) => void;
+    currentStrategy: number;
 }
 
 const filtersList = [
@@ -23,8 +25,15 @@ const filtersList = [
 ];
 
 export default function FutureDetailOption({
-    isMenuOpen, availableOptions, selectedOption, handleCheckboxChange, filters, handleFilterChange 
+    isMenuOpen,
+    availableOptions,
+    selectedOption,
+    handleCheckboxChange,
+    filters,
+    handleFilterChange,
+    currentStrategy
 }: StrategyOptionProps): JSX.Element {
+    const router = useRouter();
     const [localFilters, setLocalFilters] = useState<{ [key: string]: boolean }>(filters);
 
     useEffect(() => {
@@ -53,6 +62,15 @@ export default function FutureDetailOption({
         const newValue = !localFilters[key];
         setLocalFilters(prev => ({ ...prev, [key]: newValue }));
         handleFilterChange(key, newValue);
+    };
+    
+    const handleBackTestClick = () => {
+        const strategies = [currentStrategy];
+        if (selectedOption !== null) {
+            strategies.push(selectedOption);
+        }
+        const queryString = `marketType=futures&strategies=${strategies.join(',')}`;
+        router.push(`/backtest?${queryString}`);
     };
 
     const filterOptions = useMemo(() => 
@@ -90,6 +108,12 @@ export default function FutureDetailOption({
                         <S.OptionTitle>필터:</S.OptionTitle>
                         {filterOptions}
                     </S.OptionFilterContainer>
+                    <S.OptionHorizontalDivider/>
+                    <S.ButtonContainer>
+                        <S.BackTestButton onClick={handleBackTestClick}>
+                            <S.styledPlayIcon className='BackTestIcon'/>BackTest
+                        </S.BackTestButton>
+                    </S.ButtonContainer>
                 </S.StrategyOptionDrop>
             }
         </>

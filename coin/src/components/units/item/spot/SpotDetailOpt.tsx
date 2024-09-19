@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import * as S from "../ItemDetail.styles";
+import { useRouter } from 'next/navigation';
+import { FaPlay, FaToggleOn } from 'react-icons/fa';
 
 interface StrategyOptionProps {
     isMenuOpen: boolean;
@@ -7,7 +9,8 @@ interface StrategyOptionProps {
     selectedOption: number | null;
     handleCheckboxChange: (n: number) => void;
     filters: { [key: string]: boolean };
-    handleFilterChange: (key: string, value: boolean) => void;
+    handleFilterChange: (key: string) => void;
+    currentStrategy: number;
 }
 
 const filtersList = [
@@ -23,8 +26,15 @@ const filtersList = [
 ];
 
 export default function SpotDetailOption({
-    isMenuOpen, availableOptions, selectedOption, handleCheckboxChange, filters, handleFilterChange 
+    isMenuOpen,
+    availableOptions,
+    selectedOption,
+    handleCheckboxChange,
+    filters,
+    handleFilterChange,
+    currentStrategy
 }: StrategyOptionProps): JSX.Element {
+    const router = useRouter();
     const [localFilters, setLocalFilters] = useState<{ [key: string]: boolean }>(filters);
 
     useEffect(() => {
@@ -35,7 +45,7 @@ export default function SpotDetailOption({
             
             Object.entries(parsedFilters).forEach(([key, value]) => {
                 if (filters[key] !== value) {
-                    handleFilterChange(key, value);
+                    handleFilterChange(key);
                 }
             });
         }
@@ -50,9 +60,8 @@ export default function SpotDetailOption({
     }, [filters]);
 
     const handleLocalFilterChange = (key: string) => {
-        const newValue = !localFilters[key];
-        setLocalFilters(prev => ({ ...prev, [key]: newValue }));
-        handleFilterChange(key, newValue);
+        setLocalFilters(prev => ({ ...prev, [key]: !prev[key] }));
+        handleFilterChange(key);
     };
 
     const filterOptions = useMemo(() => 
@@ -67,6 +76,15 @@ export default function SpotDetailOption({
                 {filter.label}
             </S.FilterOption>
         )), [localFilters, handleLocalFilterChange]);
+
+        const handleBackTestClick = () => {
+            const strategies = [currentStrategy];
+            if (selectedOption !== null) {
+                strategies.push(selectedOption);
+            }
+            const queryString = `marketType=spot&strategies=${strategies.join(',')}`;
+            router.push(`/backtest?${queryString}`);
+        };
 
     return(
         <>
@@ -90,6 +108,12 @@ export default function SpotDetailOption({
                         <S.OptionTitle>필터:</S.OptionTitle>
                         {filterOptions}
                     </S.OptionFilterContainer>
+                    <S.OptionHorizontalDivider/>
+                    <S.ButtonContainer>
+                        <S.BackTestButton onClick={handleBackTestClick}>
+                            <S.styledPlayIcon className='BackTestIcon'/>BackTest
+                        </S.BackTestButton>
+                    </S.ButtonContainer>
                 </S.StrategyOptionDrop>
             }
         </>

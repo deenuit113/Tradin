@@ -26,7 +26,8 @@ export default function SpotPage(): JSX.Element {
     const router = useRouter();
 
     const onClickMoveToSpotStrategy = (num: number) => {
-        router.push(`./spot/${num}`);
+        const queryString = `currentStrategy=${num}`;
+        router.push(`./spot/${num}?${queryString}`);
     };
 
     return (
@@ -37,7 +38,7 @@ export default function SpotPage(): JSX.Element {
                 </div>
             </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} >
-                {[1, 2, 3, 4].map((num) => (
+                {[1, 2, 3].map((num) => (
                     <S.WidgetContainer key={num} >
                         <S.WidgetHeader onClick={() => onClickMoveToSpotStrategy(num)}>현물 {num}</S.WidgetHeader>
                         <S.WidgetTable>

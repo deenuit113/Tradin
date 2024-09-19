@@ -37,6 +37,8 @@ const coinData: CoinData[] = [
 
 export default function SpotDetail(): JSX.Element {
     const { num } = useParams();
+    const searchParams = useSearchParams();
+    const currentStrategy = Number(searchParams.get('currentStrategy')) || Number(num);
     const { sidebarOpen } = useSidebar();
     const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
     const [filters, setFilters] = useState<{ [key: string]: boolean }>(initialFilters);
@@ -75,7 +77,7 @@ export default function SpotDetail(): JSX.Element {
     };
 
 
-    const availableOptions = [1, 2, 3, 4].filter(n => n !== Number(num));
+    const availableOptions = [1, 2, 3].filter(n => n !== Number(num));
     
     useEffect(() => {
         setSelectedOption(null);
@@ -111,7 +113,8 @@ export default function SpotDetail(): JSX.Element {
                         handleCheckboxChange={handleCheckboxChange}
                         filters={filters}
                         handleFilterChange={handleFilterChange}
-                    />    
+                        currentStrategy={currentStrategy}
+                />    
                 </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} selectedOption={selectedOption}>
                 <S.WidgetDetailContainer>

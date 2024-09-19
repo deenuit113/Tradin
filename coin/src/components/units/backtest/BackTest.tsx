@@ -8,6 +8,7 @@ import ResultSkeletonUI from './BackTestResultSkeletonUI';
 import BackTestResults from './BackTestResult';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { useSearchParams } from 'next/navigation';
 
 interface Trade {
     entryTime: string;
@@ -17,8 +18,15 @@ interface Trade {
 }
 
 export default function BackTestPage(): JSX.Element {
+    const searchParams = useSearchParams();
+    const initialMarketType = searchParams.get('marketType') === 'spot' ? '현물' : 
+                          searchParams.get('marketType') === 'futures' ? '선물' : null;
+    const initialStrategies = searchParams.get('strategies')?.split(',').map(num => {
+        const prefix = initialMarketType === '현물' ? 'S' : 'F';
+        return `${prefix}${num}` as StrategyKey;
+    }).filter(Boolean) || [];
     const { sidebarOpen } = useSidebar();
-    const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>([]);
+    const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>(initialStrategies);
     const [position, setPosition] = useState<string>('long');
     const [startDate, setStartDate] = useState<string>('2023-01-01');
     const [endDate, setEndDate] = useState<string>('2024-01-01');
@@ -26,7 +34,7 @@ export default function BackTestPage(): JSX.Element {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [trades, setTrades] = useState<{ [key: string]: Trade[] } | null>(null);
-    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(null);
+    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
     const [executedOptions, setExecutedOptions] = useState<string | null>(null);
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);

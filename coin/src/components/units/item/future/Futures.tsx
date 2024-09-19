@@ -26,7 +26,8 @@ export default function FuturePage(): JSX.Element {
     const router = useRouter();
 
     const onClickMoveToFutureStrategy = (num: number) => {
-        router.push(`./future/${num}`);
+        const queryString = `currentStrategy=${num}`;
+        router.push(`./future/${num}?${queryString}`);
     };
 
     return (
@@ -37,7 +38,7 @@ export default function FuturePage(): JSX.Element {
                 </div>
             </S.SpotHeader>
             <S.MainContent sidebarOpen={sidebarOpen} >
-                {[1, 2, 3, 4].map((num) => (
+                {[1, 2, 3].map((num) => (
                     <S.WidgetContainer key={num} >
                         <S.WidgetHeader onClick={() => onClickMoveToFutureStrategy(num)}>선물 {num}</S.WidgetHeader>
                         <S.WidgetTable>

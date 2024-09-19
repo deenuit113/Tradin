@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { FaPlay } from "react-icons/fa";
 
 /*const getTransactionTypeColor = (transactionType: string) => {
     switch(transactionType) {
@@ -62,6 +63,7 @@ export const MainContent = styled.div<{ sidebarOpen: boolean, selectedOption: nu
 
     @media all and (min-width:359px) and (max-width: 799px) {
         margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "30%" : "0")};
+        padding: 1rem 1rem;
     }
 `;
 
@@ -301,4 +303,35 @@ export const OptionHorizontalDivider = styled.div`
 export const FilterOption = styled.label`
 
 `;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+`
+
+export const BackTestButton = styled.button`
+    background-color: ${({ theme }) => theme.backTestButtonColor};
+    font-weight: 700;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.backTestButtonHoverColor};
+    }
+
+    .BackTestIcon {
+        margin-right: 5px;
+    }
+`;
+
+export const styledPlayIcon = styled(FaPlay)`
+
+`
 

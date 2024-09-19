@@ -48,7 +48,7 @@ export default function SideBar(): JSX.Element {
                         </S.Icon>
                     </S.ItemContainer>
                     <S.SubMenu isOpen={spotOpen}>
-                        {[1, 2, 3, 4].map((num, index) => (
+                        {[1, 2, 3].map((num, index) => (
                             <S.MenuItem key={num} index={4 - index} isOpen={spotOpen} onClick={() => onClickMoveToSpotStrategy(num)}>
                                 현물 {num}
                             </S.MenuItem>
@@ -65,7 +65,7 @@ export default function SideBar(): JSX.Element {
                         </S.Icon>
                     </S.ItemContainer>
                     <S.SubMenu isOpen={futuresOpen}>
-                        {[1, 2, 3, 4].map((num, index) => (
+                        {[1, 2, 3].map((num, index) => (
                             <S.MenuItem key={num} index={4 - index} isOpen={futuresOpen} onClick={() => onClickMoveToFutureStrategy(num)}>
                                 선물 {num}
                             </S.MenuItem>
