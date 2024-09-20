@@ -314,25 +314,6 @@ export const ChartControls = styled.div`
     margin-bottom: 1rem;
     gap: 1rem;
     padding: 0 1rem;
-
-    button {
-        padding: 0.5rem 1rem;
-        background-color: #333;
-        color: #f0f0f0;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: #555;
-        }
-
-        &:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px #777;
-        }
-    }
 `;
 
 export const ChartSelect = styled.select`
@@ -340,7 +321,7 @@ export const ChartSelect = styled.select`
     font-size: 1rem;
     border: 1px solid ${({ theme }) => theme.borderColor};
     border-radius: 4px;
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    background-color: ${({ theme }) => theme.backgroundColor};
     color: ${({ theme }) => theme.textColor};
     cursor: pointer;
 

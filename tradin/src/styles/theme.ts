@@ -101,7 +101,7 @@ export const lightTheme = {
     borderColor: '#ccc',
     //backtest
     backTestButtonColor: '#1DB717',
-    backTestButtonHoverColor: '#e0e0e0',
+    backTestButtonHoverColor: '#d0d0d0',
     backTestInputBackgroundColor: '#f0f0f0',
 };
 
@@ -155,6 +155,6 @@ export const darkTheme = {
     borderColor: '#666',
     //backtest
     backTestButtonColor: '#1DA717',
-    backTestButtonHoverColor: '#444',
+    backTestButtonHoverColor: '#555',
     backTestInputBackgroundColor: '#555',
 };

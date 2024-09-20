@@ -46,13 +46,15 @@ const StyledDatePickerWrapper = styled.div`
         padding: 0;
         display: grid;
         grid-template-rows: repeat(6, 1fr);
+        gap: 3px;
         height: 240px;
     }
 
     .react-datepicker__week {
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0 2%;
     }
 
     .react-datepicker__header {
@@ -82,7 +84,7 @@ const StyledDatePickerWrapper = styled.div`
 
     .react-datepicker__day,
     .react-datepicker__day-name {
-        width: 14.28%;
+        width: 12%;
         height: 40px;
         line-height: 40px;
         margin: 0;
@@ -97,7 +99,8 @@ const StyledDatePickerWrapper = styled.div`
 
     .react-datepicker__day-names {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0 2%;
     }
 
     @media (max-width: 600px) {
