@@ -30,8 +30,8 @@ export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>(initialStrategies);
     const [position, setPosition] = useState<string>('long');
-    const [startDate, setStartDate] = useState<string>('2023-01-01');
-    const [endDate, setEndDate] = useState<string>('2024-01-01');
+    const [startDate, setStartDate] = useState<string>('');
+    const [endDate, setEndDate] = useState<string>('');
     const [optionsVisible, setOptionsVisible] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);

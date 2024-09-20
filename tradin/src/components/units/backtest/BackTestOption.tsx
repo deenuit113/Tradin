@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -16,7 +16,6 @@ const StyledDatePickerWrapper = styled.div`
 
     .react-datepicker-popper {
         width: 100%;
-        height: 80%;
         position: relative !important;
         top: 100% !important;
         left: 0 !important;
@@ -40,17 +39,29 @@ const StyledDatePickerWrapper = styled.div`
     .react-datepicker__month-container {
         width: 100%;
         border-radius: 0px 0px 4px 4px;
-        height: 100%;
+    }
+
+    .react-datepicker__month {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        height: 240px; // 6주 * 40px (각 주의 높이)
+    }
+
+    .react-datepicker__week {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 
     .react-datepicker__header {
         background-color: ${({ theme }) => theme.backgroundColor};
         border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+        padding-top: 10px;
     }
 
-    .react-datepicker__current-month,
-    .react-datepicker__navigation {
-        margin-top: 10px;
+    .react-datepicker__current-month {
         margin-bottom: 10px;
     }
 
@@ -69,22 +80,24 @@ const StyledDatePickerWrapper = styled.div`
         color: ${({ theme }) => theme.backgroundColor};
     }
 
-    .react-datepicker__day {
-        padding: 0.25rem 0;
+    .react-datepicker__day,
+    .react-datepicker__day-name {
+        width: 14.28%; // 100% / 7
+        height: 40px;
+        line-height: 40px;
+        margin: 0;
+        padding: 0;
         text-align: center;
-        align-items: center;
         font-size: 0.8em;
-        width: 12%;
     }
 
-    .react-datepicker__day-name {
-        padding: 0.25rem 0;
-        font-size: 0.8em;
-        width: 12%;
+    .react-datepicker__day--outside-month {
+        visibility: hidden;
     }
 
     .react-datepicker__day-names {
-        padding: 0px 5px;
+        display: flex;
+        justify-content: space-around;
     }
 
     @media (max-width: 600px) {
@@ -184,20 +197,35 @@ const DatePickerLabelInputContainer = styled.div`
     justify-content: center;
 `;
 
-const DatePickerLabel = styled.span`
-    width: 100%;
-    text-align: center;
-    margin-right: 5%;
-    margin-bottom: 5px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.textColor};
-`;
-
 const HorizontalDivider = styled.div`
     width: 100%;
     height: 1px;
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     margin-bottom: 1rem;
+`;
+
+const DateRangeSelectContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`
+
+const DateOptionTitle = styled.h4`
+    font-size: 1.2em;
+    color: ${({ theme }) => theme.textColor};
+`;
+
+const DateRangeSelect = styled.select`
+    width: 30%;
+    padding: 4px 8px;
+    border: 1px solid ${({ theme }) => theme.borderColor};
+    background-color: ${({ theme }) => theme.backTestInputBackgroundColor};
+    color: ${({ theme }) => theme.textColor};
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-top: 2rem;
+    cursor: pointer;
 `;
 
 interface OptionsContainerProps {
@@ -235,16 +263,45 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     setMarketType,
     setSelectedStrategies,
 }) => {
+    const [dateRange, setDateRange] = useState('1개월');
 
     useEffect(() => {
         setSelectedStrategies([]);
         setPosition('long');
     }, [marketType, setSelectedStrategies, setPosition]);
 
-    const handleMarketTypeChange = (newMarketType: '선물' | '현물' | null) => {
-        setMarketType(newMarketType);
-        setSelectedStrategies([]);
-        setPosition('long');
+    const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedRange = e.target.value;
+        setDateRange(selectedRange);
+
+        const endDate = new Date();
+        let startDate = new Date();
+
+        switch (selectedRange) {
+            case '1개월':
+                startDate.setMonth(endDate.getMonth() - 1);
+                break;
+            case '3개월':
+                startDate.setMonth(endDate.getMonth() - 3);
+                break;
+            case '6개월':
+                startDate.setMonth(endDate.getMonth() - 6);
+                break;
+            case '1년':
+                startDate.setFullYear(endDate.getFullYear() - 1);
+                break;
+            case '3년':
+                startDate.setFullYear(endDate.getFullYear() - 3);
+                break;
+            case '5년':
+                startDate.setFullYear(endDate.getFullYear() - 5);
+                break;
+            default:
+                return;
+        }
+
+        setStartDate(startDate.toISOString().split('T')[0]);
+        setEndDate(endDate.toISOString().split('T')[0]);
     };
 
     return (
@@ -317,7 +374,18 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 )}
 
                 <OptionGroup>
-                    <OptionTitle>기간 선택</OptionTitle>
+                    <DateRangeSelectContainer>
+                        <DateOptionTitle>기간 선택</DateOptionTitle>
+                        <DateRangeSelect value={dateRange} onChange={handleDateRangeChange}>
+                            <option value="1개월">최근 1개월</option>
+                            <option value="3개월">최근 3개월</option>
+                            <option value="6개월">최근 6개월</option>
+                            <option value="1년">최근 1년</option>
+                            <option value="3년">최근 3년</option>
+                            <option value="5년">최근 5년</option>
+                            <option value="사용자 지정">사용자 지정</option>
+                        </DateRangeSelect>
+                    </DateRangeSelectContainer>
                     <HorizontalDivider/>
                     <DatePickerOptionContent>
                         <DatePickersRow>
