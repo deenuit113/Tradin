@@ -70,10 +70,9 @@ const StyledDatePickerWrapper = styled.div`
     }
 
     .react-datepicker__day {
-        padding: 1rem;
+        padding: 0.25rem 0;
         text-align: center;
         align-items: center;
-        padding: 0.25rem 0;
         font-size: 0.8em;
         width: 12%;
     }
@@ -118,24 +117,38 @@ const OptionTitle = styled(S.OptionTitle)`
 const OptionContent = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: row;
-    gap: 5%;
+    flex-wrap: wrap;
+    gap: 15px;
     margin-left: 5%;
+`;
+
+const OptionButton = styled.button<{ isSelected: boolean }>`
+    padding: 10px 15px;
+    border: 1px solid ${({ theme }) => theme.borderColor};
+    border-radius: 20px;
+    background-color: ${({ isSelected, theme }) => (isSelected ? theme.highlightColor : theme.backgroundColor)};
+    color: ${({ isSelected, theme }) => (isSelected ? theme.backgroundColor : theme.textColor)};
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.hoverColor};
+    }
 `;
 
 const DatePickerOptionContent = styled.div`
     display: flex;
     width: 100%;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    gap: 5%;
+    gap: 10px;
 `;
 
 const DatePickersRow = styled.div`
     display: flex;
     flex-direction: row;
-    gap: 5%;
+    align-items: center;
     width: 100%;
 `;
 
@@ -148,6 +161,14 @@ const DatePickerInput = styled.input`
     color: ${({ theme }) => theme.textColor};
     border-radius: 4px 4px 0px 0px;
     font-size: 1em;
+`;
+
+const DateRangeSeparator = styled.span`
+    font-size: 1.5em;
+    color: ${({ theme }) => theme.textColor};
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
 `;
 
 const DatePickerContainer = styled.div`
@@ -170,6 +191,13 @@ const DatePickerLabel = styled.span`
     margin-bottom: 5px;
     font-weight: 700;
     color: ${({ theme }) => theme.textColor};
+`;
+
+const HorizontalDivider = styled.div`
+    width: 100%;
+    height: 1px;
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    margin-bottom: 1rem;
 `;
 
 interface OptionsContainerProps {
@@ -215,45 +243,38 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
             <OptionsLayout>
                 <OptionGroup>
                     <OptionTitle>유형</OptionTitle>
+                    <HorizontalDivider/>
                     <OptionContent>
-                        <S.Option>
-                            <input
-                                type="radio"
-                                name="marketType"
-                                value="futures"
-                                checked={marketType === '선물'}
-                                onChange={() => setMarketType('선물')}
-                            />
+                        <OptionButton
+                            isSelected={marketType === '선물'}
+                            onClick={() => setMarketType('선물')}
+                        >
                             선물
-                        </S.Option>
-                        <S.Option>
-                            <input
-                                type="radio"
-                                name="marketType"
-                                value="spot"
-                                checked={marketType === '현물'}
-                                onChange={() => setMarketType('현물')}
-                            />
+                        </OptionButton>
+                        <OptionButton
+                            isSelected={marketType === '현물'}
+                            onClick={() => setMarketType('현물')}
+                        >
                             현물
-                        </S.Option>
+                        </OptionButton>
                     </OptionContent>
                 </OptionGroup>
 
                 {marketType && (
                     <OptionGroup>
                         <OptionTitle>전략</OptionTitle>
+                        <HorizontalDivider/>
                         <OptionContent>
                             {Object.entries(strategies)
                                 .filter(([_, strategy]) => strategy.type === marketType)
                                 .map(([key, _]) => (
-                                    <S.Option key={key}>
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedStrategies.includes(key as StrategyKey)}
-                                            onChange={() => handleStrategyChange(key as StrategyKey)}
-                                        />
+                                    <OptionButton
+                                        key={key}
+                                        isSelected={selectedStrategies.includes(key as StrategyKey)}
+                                        onClick={() => handleStrategyChange(key as StrategyKey)}
+                                    >
                                         {marketType === '선물' ? '선물' : '현물'} 전략 {key.slice(1)}
-                                    </S.Option>
+                                    </OptionButton>
                                 ))}
                         </OptionContent>
                     </OptionGroup>
@@ -262,39 +283,32 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 {marketType && (
                     <OptionGroup>
                         <OptionTitle>포지션</OptionTitle>
+                        <HorizontalDivider/>
                         <OptionContent>
-                            <S.Option>
-                                <input
-                                    type="radio"
-                                    name="position"
-                                    value="long"
-                                    checked={position === 'long'}
-                                    onChange={() => setPosition('long')}
-                                />
+                            <OptionButton
+                                isSelected={position === 'long'}
+                                onClick={() => setPosition('long')}
+                            >
                                 Long
-                            </S.Option>
-                            <S.Option>
-                                <input
-                                    type="radio"
-                                    name="position"
-                                    value="short"
-                                    checked={position === 'short'}
-                                    onChange={() => setPosition('short')}
-                                    disabled={marketType === '현물'}
-                                />
+                            </OptionButton>
+                            <OptionButton
+                                isSelected={position === 'short'}
+                                onClick={() => setPosition('short')}
+                                disabled={marketType === '현물'}
+                            >
                                 Short
-                            </S.Option>
+                            </OptionButton>
                         </OptionContent>
                     </OptionGroup>
                 )}
 
                 <OptionGroup>
                     <OptionTitle>기간 선택</OptionTitle>
+                    <HorizontalDivider/>
                     <DatePickerOptionContent>
                         <DatePickersRow>
                             <DatePickerContainer>
                                 <DatePickerLabelInputContainer>
-                                    <DatePickerLabel>시작 날짜</DatePickerLabel>
                                     <StyledDatePickerWrapper>
                                         <DatePicker
                                             selected={startDate ? new Date(startDate) : null}
@@ -308,9 +322,9 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                     </StyledDatePickerWrapper>
                                 </DatePickerLabelInputContainer>
                             </DatePickerContainer>
+                            <DateRangeSeparator>~</DateRangeSeparator>
                             <DatePickerContainer>
                                 <DatePickerLabelInputContainer>
-                                    <DatePickerLabel>종료 날짜</DatePickerLabel>
                                     <StyledDatePickerWrapper>
                                         <DatePicker
                                             selected={endDate ? new Date(endDate) : null}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
 import * as S from "./BackTest.styles";
 import BackTestChart from './BackTestChart';
 import {
@@ -11,7 +12,7 @@ import {
     calculateSharpeRatio,
     calculateAverageHoldingPeriod
 } from './CalculateMetrics';
-import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy } from 'react-icons/fa';
+import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt } from 'react-icons/fa';
 
 interface Trade {
     entryTime: string;
@@ -24,6 +25,26 @@ interface BackTestResultsProps {
     trades: { [key: string]: Trade[] };
     executedOptions: string | null;
 }
+
+const ExecutedOptionsContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+`;
+
+const ExecutedOptionItem = styled.div`
+    display: flex;
+    align-items: center;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor|| '#f0f0f0'};
+    color: ${({ theme }) => theme.timeTextColor};
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9em;
+
+    .OptionIcon {
+        margin-right: 5px;
+    }
+`;
 
 const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptions }) => {
     const [selectedMetric, setSelectedMetric] = useState<'profit' | 'equity' | 'drawdown'>('profit');
@@ -58,11 +79,38 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
         setSelectedMetric(event.target.value as 'profit' | 'equity' | 'drawdown');
     };
 
+    const renderExecutedOptions = () => {
+        if (!executedOptions) return null;
+
+        const [marketType, strategies, position, dateRange] = executedOptions.split(' / ');
+
+        return (
+            <ExecutedOptionsContainer>
+                <ExecutedOptionItem>
+                    <FaGlobe className="OptionIcon" />
+                    {marketType}
+                </ExecutedOptionItem>
+                <ExecutedOptionItem>
+                    <FaChartBar className="OptionIcon" />
+                    {strategies}
+                </ExecutedOptionItem>
+                <ExecutedOptionItem>
+                    {position === 'long' ? <FaLongArrowAltUp className="OptionIcon" /> : <FaLongArrowAltDown className="OptionIcon" />}
+                    {position}
+                </ExecutedOptionItem>
+                <ExecutedOptionItem>
+                    <FaCalendarAlt className="OptionIcon" />
+                    {dateRange.replace('기간 ', '')}
+                </ExecutedOptionItem>
+            </ExecutedOptionsContainer>
+        );
+    };
+
     return (
         <S.ResultContainer>
             <S.ResultHeader>
                 <S.ResultTitle>실행 결과:</S.ResultTitle>
-                {executedOptions && <S.ExecutedOptions>{executedOptions}</S.ExecutedOptions>}
+                {renderExecutedOptions()}
             </S.ResultHeader>
             {results.map((result, index) => (
                 <S.ResultInnerContainer key={index}>

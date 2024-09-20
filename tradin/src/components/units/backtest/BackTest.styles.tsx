@@ -84,6 +84,10 @@ export const WidgetContainer = styled.div`
     flex-direction: column;
     align-items: stretch;
     overflow: visible;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        padding: 1rem;
+    }
 `;
 
 export const OptionToggleButton = styled.button<{ isVisible: boolean }>`
@@ -121,8 +125,6 @@ export const OptionsContainer = styled.div<{ isVisible: boolean, showToggleButto
 
     transition: 
         max-height 0.3s ease-in-out,
-        opacity 0.3s ease-in-out,
-        visibility 0.3s ease-in-out,
         padding 0.3s ease-in-out;
 `;
 
@@ -195,7 +197,7 @@ export const ResultContainer = styled.div`
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
     width: 100%;
     flex-grow: 1;
-    padding: 1rem 2rem;
+    padding: 1rem;
     border-radius: 8px;
     overflow: auto;
     margin-bottom: 1rem;
@@ -225,6 +227,7 @@ export const ResultTitle = styled.h4`
     color: ${({ theme }) => theme.textColor};
     margin-right: 1rem;
     transition: all 0.3s ease;
+    width: auto;
 `;
 
 export const ResultSubtitle = styled.h5`
