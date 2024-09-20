@@ -39,8 +39,19 @@ export default function BackTestPage(): JSX.Element {
     const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
     const [executedOptions, setExecutedOptions] = useState<string | null>(null);
     const [showToggleButton, setShowToggleButton] = useState(false);
+    const [isOptionHidden, setOptionIsHidden] = useState(!optionsVisible);
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);
+
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+        if (!optionsVisible) {
+            timeoutId = setTimeout(() => setOptionIsHidden(true), 300); // 애니메이션 지속 시간과 일치
+        } else {
+            setOptionIsHidden(false);
+        }
+        return () => clearTimeout(timeoutId);
+    }, [optionsVisible]);
 
     useEffect(() => {
         const end = new Date();
@@ -103,7 +114,7 @@ export default function BackTestPage(): JSX.Element {
                 <Breadcrumb />
             </S.BackTestHeader>
             <S.MainContent sidebarOpen={sidebarOpen}>
-                <S.WidgetContainer>
+                <S.BackTestContainer>
                     {loading ? (
                         <ResultSkeletonUI />
                     ) : trades ? (
@@ -118,6 +129,7 @@ export default function BackTestPage(): JSX.Element {
                     )}
                     <OptionsContainer
                         isVisible={optionsVisible}
+                        aria-hidden={isOptionHidden}
                         selectedStrategies={selectedStrategies}
                         handleStrategyChange={handleStrategyChange}
                         position={position}
@@ -133,7 +145,7 @@ export default function BackTestPage(): JSX.Element {
                         setMarketType={setMarketType}
                         setSelectedStrategies={setSelectedStrategies}
                     />
-                </S.WidgetContainer>
+                </S.BackTestContainer>
             </S.MainContent>
         </S.Container>
     );

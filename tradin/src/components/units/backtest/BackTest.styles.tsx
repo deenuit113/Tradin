@@ -1,6 +1,29 @@
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaRocket } from "react-icons/fa";
+import { css, keyframes } from "@emotion/react";
+
+const expandAnimation = keyframes`
+    from {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+`;
+
+const collapseAnimation = keyframes`
+    from {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    to {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+`;
 
 export const Container = styled.div`
     display: flex;
@@ -69,15 +92,14 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
         }
     }
 
-    @media all and (min-width:359px) and (max-width: 799px) {
-        padding: 1rem 1rem;
+    @media (max-width: 799px) {
+        padding: 0.5rem;
     }
 `;
 
-export const WidgetContainer = styled.div`
+export const BackTestContainer = styled.div`
     width: 100%;
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
-    padding: 2rem;
+    background-color: ${({ theme }) => theme.backgroundColor};
     border-radius: 8px;
     margin-bottom: 1rem;
     display: flex;
@@ -111,21 +133,29 @@ export const OptionsContainer = styled.div<{ isVisible: boolean, showToggleButto
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    background-color: ${({ theme }) => theme.backgroundColor};
-    padding: ${({ isVisible }) => (isVisible ? '1rem 2rem' : '0 2rem')};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     border-radius: ${({ showToggleButton }) => (showToggleButton ? '0px 0px 8px 8px' : '8px')};
-    overflow: visible;
+    overflow: hidden;
     transform-origin: top center;
     position: relative;
     z-index: 1;
     margin-top: -1px;
-    max-height: ${({ isVisible }) => (isVisible ? 'auto;' : '0')};
-    opacity: ${({ isVisible }) => (isVisible ? '1' : '0')};
-    visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-
-    transition: 
-        max-height 0.3s ease-in-out,
-        padding 0.3s ease-in-out;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, padding 0.3s ease-in-out;
+    
+    ${({ isVisible }) => isVisible
+        ? css`
+            max-height: 2000px; // 충분히 큰 값으로 설정
+            opacity: 1;
+            visibility: visible;
+            padding: 1rem 2rem;
+          `
+        : css`
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            padding: 0;
+          `
+    }
 `;
 
 export const OptionTitle = styled.h4`
@@ -200,10 +230,10 @@ export const StyledRocketIcon = styled(FaRocket)`
 `;
 
 export const ResultContainer = styled.div`
-    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     width: 100%;
     flex-grow: 1;
-    padding: 1rem;
+    padding: 2rem;
     border-radius: 8px;
     overflow: auto;
     margin-bottom: 1rem;

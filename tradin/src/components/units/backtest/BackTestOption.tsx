@@ -212,7 +212,7 @@ const DatePickerLabelInputContainer = styled.div`
 const HorizontalDivider = styled.div`
     width: 100%;
     height: 1px;
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    border: 1px solid ${({ theme }) => theme.moreinnerbackgroundColor};
     margin-bottom: 1rem;
 `;
 
