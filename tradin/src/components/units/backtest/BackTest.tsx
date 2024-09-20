@@ -144,6 +144,7 @@ export default function BackTestPage(): JSX.Element {
                         marketType={marketType}
                         setMarketType={setMarketType}
                         setSelectedStrategies={setSelectedStrategies}
+                        initialStrategies={initialStrategies}
                     />
                 </S.BackTestContainer>
             </S.MainContent>

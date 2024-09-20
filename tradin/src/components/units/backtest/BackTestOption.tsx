@@ -263,6 +263,7 @@ interface OptionsContainerProps {
     marketType: '선물' | '현물' | null;
     setMarketType: (type: '선물' | '현물' | null) => void;
     setSelectedStrategies: React.Dispatch<React.SetStateAction<StrategyKey[]>>;
+    initialStrategies: StrategyKey[];
 }
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
@@ -281,13 +282,18 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     marketType,
     setMarketType,
     setSelectedStrategies,
+    initialStrategies,
 }) => {
     const [dateRange, setDateRange] = useState('1개월');
 
     useEffect(() => {
-        setSelectedStrategies([]);
+        if (initialStrategies.length > 0) {
+            setSelectedStrategies(initialStrategies);
+        } else {
+            setSelectedStrategies([]);
+        }
         setPosition('long');
-    }, [marketType, setSelectedStrategies, setPosition]);
+    }, [marketType, initialStrategies, setSelectedStrategies, setPosition]);
 
     const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedRange = e.target.value;
