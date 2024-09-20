@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@emotion/styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -215,6 +215,7 @@ interface OptionsContainerProps {
     showToggleButton: boolean;
     marketType: '선물' | '현물' | null;
     setMarketType: (type: '선물' | '현물' | null) => void;
+    setSelectedStrategies: React.Dispatch<React.SetStateAction<StrategyKey[]>>;
 }
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
@@ -232,7 +233,20 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     showToggleButton,
     marketType,
     setMarketType,
+    setSelectedStrategies,
 }) => {
+
+    useEffect(() => {
+        setSelectedStrategies([]);
+        setPosition('long');
+    }, [marketType, setSelectedStrategies, setPosition]);
+
+    const handleMarketTypeChange = (newMarketType: '선물' | '현물' | null) => {
+        setMarketType(newMarketType);
+        setSelectedStrategies([]);
+        setPosition('long');
+    };
+
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.ButtonContainer>

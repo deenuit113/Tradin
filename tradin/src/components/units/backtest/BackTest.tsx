@@ -52,7 +52,7 @@ export default function BackTestPage(): JSX.Element {
 
     const performBackTest = async () => {
         if (!selectedStrategies.length || !startDate || !endDate || !marketType) {
-            alert("Please select market type, strategies, position, and date range.");
+            alert("옵션을 선택해주세요.");
             return;
         }
         setLoading(true);
@@ -123,6 +123,7 @@ export default function BackTestPage(): JSX.Element {
                         showToggleButton={showToggleButton}
                         marketType={marketType}
                         setMarketType={setMarketType}
+                        setSelectedStrategies={setSelectedStrategies}
                     />
                 </S.WidgetContainer>
             </S.MainContent>
