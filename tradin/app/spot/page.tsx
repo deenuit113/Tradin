@@ -1,6 +1,6 @@
 'use client';
 
-import SpotPage from "../../src/components/units/item/spot/Spot";
+import SpotPage from "../../src/components/units/strategy/spot/Spot";
 
 export default function Spot() {
     return (
