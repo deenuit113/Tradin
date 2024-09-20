@@ -10,6 +10,7 @@ import SideBar from "../src/components/commons/sidebar/Sidebar";
 import { ThemeProvider } from "@emotion/react";
 import { lightTheme, darkTheme } from "../src/styles/theme";
 import { darkMode } from "../src/components/commons/util/atoms";
+import './globals.css';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
