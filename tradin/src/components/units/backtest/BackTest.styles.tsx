@@ -188,6 +188,12 @@ export const BackTestButton = styled.button`
         margin-right: 5px;
         transition: transform 0.3s ease-in-out;
     }
+
+    @media (max-width: 799px) {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: 550;
+    }
 `
 
 export const StyledRocketIcon = styled(FaRocket)`
@@ -311,5 +317,10 @@ export const ChartSelect = styled.select`
     &:focus {
         outline: none;
         box-shadow: 0 0 0 2px #777;
+    }
+
+    @media (max-width: 799px) {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
     }
 `;

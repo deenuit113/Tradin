@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from "./BackTest.styles";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
 import Breadcrumb from "../../commons/breadcrumb/BreadCrumb";
@@ -41,6 +41,14 @@ export default function BackTestPage(): JSX.Element {
     const [showToggleButton, setShowToggleButton] = useState(false);
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);
+
+    useEffect(() => {
+        const end = new Date();
+        const start = new Date();
+        start.setMonth(start.getMonth() - 1);
+        setStartDate(start.toISOString().split('T')[0]);
+        setEndDate(end.toISOString().split('T')[0]);
+    }, []);
 
     const handleStrategyChange = (strategy: StrategyKey) => {
         setSelectedStrategies(prev =>

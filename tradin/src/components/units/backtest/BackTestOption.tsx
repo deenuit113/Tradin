@@ -229,7 +229,7 @@ const DateOptionTitle = styled.h4`
 `;
 
 const DateRangeSelect = styled.select`
-    width: 30%;
+    width: 20%;
     padding: 4px 8px;
     border: 1px solid ${({ theme }) => theme.borderColor};
     background-color: ${({ theme }) => theme.backTestInputBackgroundColor};
@@ -238,6 +238,10 @@ const DateRangeSelect = styled.select`
     font-size: 0.8em;
     margin-top: 2rem;
     cursor: pointer;
+
+    @media (max-width: 799px) {
+        width: 30%;
+    }
 `;
 
 interface OptionsContainerProps {
@@ -408,9 +412,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                             selected={startDate ? new Date(startDate) : null}
                                             onChange={(date: Date | null) => {
                                                 setStartDate(date ? date.toISOString().split('T')[0] : '');
+                                                setDateRange('사용자 지정');
                                             }}
                                             dateFormat="yyyy-MM-dd"
                                             customInput={<DatePickerInput />}
+                                            openToDate={startDate ? new Date(startDate) : undefined}
                                             open={true}
                                         />
                                     </StyledDatePickerWrapper>
