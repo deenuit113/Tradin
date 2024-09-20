@@ -46,7 +46,7 @@ const StyledDatePickerWrapper = styled.div`
         padding: 0;
         display: grid;
         grid-template-rows: repeat(6, 1fr);
-        height: 240px; // 6주 * 40px (각 주의 높이)
+        height: 240px;
     }
 
     .react-datepicker__week {
@@ -82,7 +82,7 @@ const StyledDatePickerWrapper = styled.div`
 
     .react-datepicker__day,
     .react-datepicker__day-name {
-        width: 14.28%; // 100% / 7
+        width: 14.28%;
         height: 40px;
         line-height: 40px;
         margin: 0;
@@ -103,6 +103,18 @@ const StyledDatePickerWrapper = styled.div`
     @media (max-width: 600px) {
         .react-datepicker-popper {
             display: none;
+        }
+    }
+
+    @media (max-width: 799px) {
+        .react-datepicker__month {
+            height: 150px;
+        }
+
+        .react-datepicker__day,
+        .react-datepicker__day-name {
+            height: 25px;
+            line-height: 25px;
         }
     }
 `;
