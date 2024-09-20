@@ -154,7 +154,7 @@ const OptionButton = styled.button<{ isSelected: boolean }>`
     padding: 10px 15px;
     border: 1px solid ${({ theme }) => theme.borderColor};
     border-radius: 20px;
-    background-color: ${({ isSelected, theme }) => (isSelected ? theme.highlightColor : theme.backgroundColor)};
+    background-color: ${({ isSelected, theme }) => (isSelected ? theme.OptionHighlightColor : theme.backgroundColor)};
     color: ${({ isSelected, theme }) => (isSelected ? theme.backgroundColor : theme.textColor)};
     cursor: pointer;
     transition: all 0.3s ease;
@@ -285,15 +285,21 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     initialStrategies,
 }) => {
     const [dateRange, setDateRange] = useState('1개월');
+    const [isInitialRender, setIsInitialRender] = useState(true);
 
     useEffect(() => {
         if (initialStrategies.length > 0) {
             setSelectedStrategies(initialStrategies);
-        } else {
-            setSelectedStrategies([]);
+            setIsInitialRender(false);
         }
-        setPosition('long');
-    }, [marketType, initialStrategies, setSelectedStrategies, setPosition]);
+    }, []);
+
+    useEffect(() => {
+        if (!isInitialRender) {
+            setSelectedStrategies([]);
+            setPosition('long');
+        }
+    }, [marketType]);
 
     const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedRange = e.target.value;

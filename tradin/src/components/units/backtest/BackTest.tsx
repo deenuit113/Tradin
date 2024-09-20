@@ -22,7 +22,7 @@ interface Trade {
 export default function BackTestPage(): JSX.Element {
     const searchParams = useSearchParams();
     const initialMarketType = searchParams.get('marketType') === 'spot' ? '현물' : 
-                          searchParams.get('marketType') === 'futures' ? '선물' : null;
+                              searchParams.get('marketType') === 'futures' ? '선물' : null;
     const initialStrategies = searchParams.get('strategies')?.split(',').map(num => {
         const prefix = initialMarketType === '현물' ? 'S' : 'F';
         return `${prefix}${num}` as StrategyKey;
@@ -43,6 +43,20 @@ export default function BackTestPage(): JSX.Element {
 
     const toggleOptions = () => setOptionsVisible(!optionsVisible);
 
+    const handleMarketTypeChange = (newMarketType: '선물' | '현물' | null) => {
+        setMarketType(newMarketType);
+        setSelectedStrategies([]);
+        setPosition('long');
+    };
+
+    const handleStrategyChange = (strategy: StrategyKey) => {
+        setSelectedStrategies(prev =>
+            prev.includes(strategy)
+                ? prev.filter(s => s !== strategy)
+                : [...prev, strategy]
+        );
+    };
+
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
         if (!optionsVisible) {
@@ -60,14 +74,6 @@ export default function BackTestPage(): JSX.Element {
         setStartDate(start.toISOString().split('T')[0]);
         setEndDate(end.toISOString().split('T')[0]);
     }, []);
-
-    const handleStrategyChange = (strategy: StrategyKey) => {
-        setSelectedStrategies(prev =>
-            prev.includes(strategy)
-                ? prev.filter(s => s !== strategy)
-                : [...prev, strategy]
-        );
-    };
 
     const performBackTest = async () => {
         if (!selectedStrategies.length || !startDate || !endDate || !marketType) {
@@ -142,7 +148,7 @@ export default function BackTestPage(): JSX.Element {
                         loading={loading}
                         showToggleButton={showToggleButton}
                         marketType={marketType}
-                        setMarketType={setMarketType}
+                        setMarketType={handleMarketTypeChange}
                         setSelectedStrategies={setSelectedStrategies}
                         initialStrategies={initialStrategies}
                     />

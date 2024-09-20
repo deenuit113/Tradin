@@ -49,6 +49,7 @@ export interface Theme {
     backTestButtonColor: string;
     backTestButtonHoverColor: string;
     backTestInputBackgroundColor: string;
+    OptionHighlightColor: string;
 }
 
 export const lightTheme = {
@@ -103,6 +104,7 @@ export const lightTheme = {
     backTestButtonColor: '#1DB717',
     backTestButtonHoverColor: '#d0d0d0',
     backTestInputBackgroundColor: '#f0f0f0',
+    OptionHighlightColor: '#4682B4',
 };
 
 export const darkTheme = {
@@ -157,4 +159,5 @@ export const darkTheme = {
     backTestButtonColor: '#1DA717',
     backTestButtonHoverColor: '#555',
     backTestInputBackgroundColor: '#555',
+    OptionHighlightColor: '#B0C4DE',
 };
