@@ -56,7 +56,7 @@ export const useBackTest = () => {
     useEffect(() => {
         const end = new Date();
         const start = new Date();
-        start.setMonth(start.getMonth() - 1);
+        start.setFullYear(start.getFullYear() - 1);
         setStartDate(start.toISOString().split('T')[0]);
         setEndDate(end.toISOString().split('T')[0]);
     }, []);
