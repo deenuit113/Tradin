@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import * as S from './BackTest.styles';
-import { StrategyKey, strategies } from './MockStrategy';
+import * as S from '../main/BackTest.styles';
+import { StrategyKey, strategies } from '../mockdata/MockStrategy';
 
 const StyledDatePickerWrapper = styled.div`
     position: relative;

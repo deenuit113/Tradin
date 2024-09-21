@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import * as S from "./BackTest.styles";
-import BackTestChart from './BackTestChart';
+import * as S from "../main/BackTest.styles";
+import BackTestChart from '../chart/BackTestChart';
 import {
     calculateTotalReturn,
     calculateAnnualizedReturn,
@@ -11,7 +11,7 @@ import {
     calculateAverageLoss,
     calculateSharpeRatio,
     calculateAverageHoldingPeriod
-} from './CalculateMetrics';
+} from '../CalculateMetrics';
 import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt } from 'react-icons/fa';
 
 interface Trade {

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { backtest } from 'grademark';
 import { DataFrame } from 'data-forge';
 import axios from 'axios';
-import { strategies, StrategyKey } from '../../../src/components/units/backtest/MockStrategy';
+import { strategies, StrategyKey } from '../../../src/components/units/backtest/mockdata/MockStrategy';
 
 interface Trade {
     entryTime: string;

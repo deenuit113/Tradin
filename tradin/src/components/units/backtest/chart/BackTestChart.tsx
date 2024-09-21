@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import * as S from "./BackTest.styles";
+import * as S from "../main/BackTest.styles";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -11,7 +11,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Theme as CustomTheme } from '../../../styles/theme'
+import { Theme as CustomTheme } from '../../../../styles/theme'
 import { useTheme } from '@emotion/react';
 
 ChartJS.register(

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import * as S from "./BackTest.styles";
-import { useSidebar } from "../../commons/sidebar/SidebarContext";
-import Breadcrumb from "../../commons/breadcrumb/BreadCrumb";
-import { StrategyKey } from './MockStrategy';
-import OptionsContainer from './BackTestOption';
-import ResultSkeletonUI from './BackTestResultSkeletonUI';
-import BackTestResults from './BackTestResult';
+import { useSidebar } from "../../../commons/sidebar/SidebarContext";
+import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
+import { StrategyKey } from '../mockdata/MockStrategy';
+import OptionsContainer from '../option/BackTestOption';
+import ResultSkeletonUI from '../result/BackTestResultSkeletonUI';
+import BackTestResults from '../result/BackTestResult';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams } from 'next/navigation';
