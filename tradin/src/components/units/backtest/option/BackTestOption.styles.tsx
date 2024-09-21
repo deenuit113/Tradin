@@ -79,6 +79,13 @@ export const BackTestButton = styled.button`
 export const StyledRocketIcon = styled(FaRocket)`
 `;
 
+export const ErrorMessage = styled.p`
+    color: #ff6b6b;
+    font-size: 0.9em;
+    margin-top: 5px;
+    margin-bottom: 0;
+`;
+
 // Option Select
 
 export const OptionsLayout = styled.div`
@@ -96,9 +103,25 @@ export const OptionGroup = styled.div`
     padding: 1rem;
 `;
 
-export const OptionTitle = styled.h4`
+export const OptionHeaderContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 20%;
+`
+
+export const OptionHeaderInnerContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+`
+
+export const OptionTitle = styled.label`
     margin-bottom: 2%;
     font-size: 1.2em;
+    font-weight: 600;
     color: ${({ theme }) => theme.textColor};
 `;
 
@@ -129,13 +152,14 @@ export const HorizontalDivider = styled.div`
     height: 1px;
     border: 1px solid ${({ theme }) => theme.moreinnerbackgroundColor};
     margin-bottom: 1rem;
+    margin-top: 0.5rem;
 `;
 
 // DatePicker
 export const StyledDatePickerWrapper = styled.div`
     position: relative;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 0.1px;
 
     .react-datepicker-wrapper {
         width: 100%;
@@ -174,7 +198,7 @@ export const StyledDatePickerWrapper = styled.div`
         display: grid;
         grid-template-rows: repeat(6, 1fr);
         gap: 3px;
-        height: 240px;
+        height: 261px;
     }
 
     .react-datepicker__week {
@@ -238,7 +262,7 @@ export const StyledDatePickerWrapper = styled.div`
 
     @media (max-width: 799px) {
         .react-datepicker__month {
-            height: 150px;
+            height: 171px;
         }
 
         .react-datepicker__day,
@@ -265,11 +289,11 @@ export const DatePickersRow = styled.div`
     width: 100%;
 `;
 
-export const DatePickerInput = styled.input`
+export const DatePickerInput = styled.input<{ hasError?: boolean }>`
     text-align: center;
     width: 100%;
     padding: 2%;
-    border: 1px solid ${({ theme }) => theme.borderColor};
+    border: 1px solid ${({ theme, hasError }) => hasError ? '#ff6b6b' : theme.borderColor};
     background-color: ${({ theme }) => theme.backTestInputBackgroundColor};
     color: ${({ theme }) => theme.textColor};
     border-radius: 4px 4px 0px 0px;
@@ -284,10 +308,14 @@ export const DateRangeSeparator = styled.span`
     align-items: center;
 `;
 
-export const DatePickerContainer = styled.div`
+export const DatePickerContainer = styled.div<{ hasError?: boolean }>`
     display: flex;
     flex-direction: column;
     width: 50%;
+    ${({ hasError }) => hasError && css`
+        border: 1px solid #ff6b6b;
+        border-radius: 4px;
+    `}
 `;
 
 export const DatePickerLabelInputContainer = styled.div`
@@ -295,18 +323,6 @@ export const DatePickerLabelInputContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-`;
-
-export const DateRangeSelectContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-`
-
-export const DateOptionTitle = styled.h4`
-    font-size: 1.2em;
-    color: ${({ theme }) => theme.textColor};
 `;
 
 export const DateRangeSelect = styled.select`

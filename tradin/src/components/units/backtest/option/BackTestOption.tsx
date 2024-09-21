@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './BackTestOption.styles';
@@ -25,6 +25,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
 }) => {
     const [dateRange, setDateRange] = useState('1년');
     const [isInitialRender, setIsInitialRender] = useState(true);
+    const [dateError, setDateError] = useState(false);
 
     useEffect(() => {
         if (initialStrategies.length > 0) {
@@ -72,6 +73,45 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
 
         setStartDate(startDate.toISOString().split('T')[0]);
         setEndDate(endDate.toISOString().split('T')[0]);
+    };
+
+    const endDatePickerRef = useRef<DatePicker>(null);
+
+    const validateDateRange = (start: Date, end: Date) => {
+        if (end < start) {
+            setDateError(true);
+            endDatePickerRef.current?.setFocus();
+            return false;
+        }
+        setDateError(false);
+        return true;
+    };
+
+    const handleStartDateChange = (date: Date | null) => {
+        if (date) {
+            const newStartDate = date.toISOString().split('T')[0];
+            setStartDate(newStartDate);
+            setDateRange('사용자 지정');
+
+            if (endDate) {
+                validateDateRange(date, new Date(endDate));
+            }
+        } else {
+            setStartDate('');
+        }
+    };
+
+    const handleEndDateChange = (date: Date | null) => {
+        if (date) {
+            const newEndDate = date.toISOString().split('T')[0];
+            if (startDate && validateDateRange(new Date(startDate), date)) {
+                setEndDate(newEndDate);
+            } else if (!startDate) {
+                setEndDate(newEndDate);
+            }
+        } else {
+            setEndDate('');
+        }
     };
 
     return (
@@ -144,8 +184,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 )}
 
                 <S.OptionGroup>
-                    <S.DateRangeSelectContainer>
-                        <S.DateOptionTitle>기간 선택</S.DateOptionTitle>
+                    <S.OptionHeaderContainer>
+                        <S.OptionHeaderInnerContainer>
+                            <S.OptionTitle>기간 선택</S.OptionTitle>
+                            {dateError && <S.ErrorMessage>기간을 다시 설정해주세요.</S.ErrorMessage>}
+                        </S.OptionHeaderInnerContainer>
                         <S.DateRangeSelect value={dateRange} onChange={handleDateRangeChange}>
                             <option value="1개월">최근 1개월</option>
                             <option value="3개월">최근 3개월</option>
@@ -155,19 +198,16 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                             <option value="5년">최근 5년</option>
                             <option value="사용자 지정">사용자 지정</option>
                         </S.DateRangeSelect>
-                    </S.DateRangeSelectContainer>
+                    </S.OptionHeaderContainer>
                     <S.HorizontalDivider/>
                     <S.DatePickerOptionContent>
                         <S.DatePickersRow>
-                            <S.DatePickerContainer>
+                            <S.DatePickerContainer hasError={dateError}>
                                 <S.DatePickerLabelInputContainer>
                                     <S.StyledDatePickerWrapper>
                                         <DatePicker
                                             selected={startDate ? new Date(startDate) : null}
-                                            onChange={(date: Date | null) => {
-                                                setStartDate(date ? date.toISOString().split('T')[0] : '');
-                                                setDateRange('사용자 지정');
-                                            }}
+                                            onChange={handleStartDateChange}
                                             dateFormat="yyyy-MM-dd"
                                             customInput={<S.DatePickerInput />}
                                             openToDate={startDate ? new Date(startDate) : undefined}
@@ -177,14 +217,12 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 </S.DatePickerLabelInputContainer>
                             </S.DatePickerContainer>
                             <S.DateRangeSeparator>~</S.DateRangeSeparator>
-                            <S.DatePickerContainer>
+                            <S.DatePickerContainer hasError={dateError}>
                                 <S.DatePickerLabelInputContainer>
                                     <S.StyledDatePickerWrapper>
                                         <DatePicker
                                             selected={endDate ? new Date(endDate) : null}
-                                            onChange={(date: Date | null) => {
-                                                setEndDate(date ? date.toISOString().split('T')[0] : '');
-                                            }}
+                                            onChange={handleEndDateChange}
                                             dateFormat="yyyy-MM-dd"
                                             customInput={<S.DatePickerInput />}
                                             open={true}
