@@ -4,6 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './BackTestOption.styles';
 import { StrategyKey, strategies } from '../mockdata/MockStrategy';
 import { OptionsContainerProps } from './BackTestOption.types';
+import { validateAllOptions } from '../utils/validateOptions';
+import { useBackTestOptionError } from '../../../../hooks/useBackTestOptionError';
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
     isVisible,
@@ -25,12 +27,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
 }) => {
     const [dateRange, setDateRange] = useState('1년');
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [dateError, setDateError] = useState(false);
-    const [typeError, setTypeError] = useState(false);
-    const [strategyError, setStrategyError] = useState(false);
-    const [positionError, setPositionError] = useState(false);
-
-    const endDatePickerRef = useRef<DatePicker>(null);
+    const { errors, setError, resetErrors } = useBackTestOptionError();
 
     useEffect(() => {
         if (initialStrategies.length > 0) {
@@ -80,25 +77,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         setEndDate(endDate.toISOString().split('T')[0]);
     };
 
-    const validateDateRange = (start: Date, end: Date) => {
-        if (end < start) {
-            setDateError(true);
-            endDatePickerRef.current?.setFocus();
-            return false;
-        }
-        setDateError(false);
-        return true;
-    };
-
     const handleStartDateChange = (date: Date | null) => {
         if (date) {
             const newStartDate = date.toISOString().split('T')[0];
             setStartDate(newStartDate);
             setDateRange('사용자 지정');
-
-            if (endDate) {
-                validateDateRange(date, new Date(endDate));
-            }
         } else {
             setStartDate('');
         }
@@ -107,47 +90,28 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     const handleEndDateChange = (date: Date | null) => {
         if (date) {
             const newEndDate = date.toISOString().split('T')[0];
-            if (startDate && validateDateRange(new Date(startDate), date)) {
-                setEndDate(newEndDate);
-            } else if (!startDate) {
-                setEndDate(newEndDate);
-            }
+            setEndDate(newEndDate);
         } else {
             setEndDate('');
         }
     };
 
-    const validateOptions = () => {
-        let isValid = true;
-        if (!marketType) {
-            setTypeError(true);
-            isValid = false;
-        } else {
-            setTypeError(false);
-        }
-        if (selectedStrategies.length === 0) {
-            setStrategyError(true);
-            isValid = false;
-        } else {
-            setStrategyError(false);
-        }
-        if (!position) {
-            setPositionError(true);
-            isValid = false;
-        } else {
-            setPositionError(false);
-        }
-        if (!startDate || !endDate || new Date(endDate) < new Date(startDate)) {
-            setDateError(true);
-            isValid = false;
-        } else {
-            setDateError(false);
-        }
-        return isValid;
-    };
-
     const handlePerformBackTest = () => {
-        if (validateOptions()) {
+        const { isValid, typeError, strategyError, positionError, dateError } = validateAllOptions(
+            marketType,
+            selectedStrategies,
+            position,
+            startDate,
+            endDate
+        );
+
+        resetErrors();
+        setError('typeError', typeError);
+        setError('strategyError', strategyError);
+        setError('positionError', positionError);
+        setError('dateError', dateError);
+
+        if (isValid) {
             performBackTest();
         } else {
             const errorElements = document.querySelectorAll('.error');
@@ -165,11 +129,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 </S.BackTestButton>
             </S.RunButtonContainer>
             <S.OptionsLayout>
-                <S.OptionGroup className={typeError ? 'error' : ''}>
+                <S.OptionGroup className={errors.typeError ? 'error' : ''}>
                     <S.OptionHeaderContainer>
                         <S.OptionHeaderInnerContainer>
                             <S.OptionTitle>유형</S.OptionTitle>
-                            {typeError && <S.ErrorMessage>유형을 다시 설정해주세요.</S.ErrorMessage>}
+                            {errors.typeError && <S.ErrorMessage>유형을 다시 설정해주세요.</S.ErrorMessage>}
                         </S.OptionHeaderInnerContainer>
                     </S.OptionHeaderContainer>
                     <S.HorizontalDivider/>
@@ -177,14 +141,14 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                         <S.OptionButton
                             isSelected={marketType === '선물'}
                             onClick={() => setMarketType('선물')}
-                            hasError={typeError}
+                            hasError={errors.typeError}
                         >
                             선물
                         </S.OptionButton>
                         <S.OptionButton
                             isSelected={marketType === '현물'}
                             onClick={() => setMarketType('현물')}
-                            hasError={typeError}
+                            hasError={errors.typeError}
                         >
                             현물
                         </S.OptionButton>
@@ -192,11 +156,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 </S.OptionGroup>
 
                 {marketType && (
-                    <S.OptionGroup className={strategyError ? 'error' : ''}>
+                    <S.OptionGroup className={errors.strategyError ? 'error' : ''}>
                         <S.OptionHeaderContainer>
                             <S.OptionHeaderInnerContainer>
                                 <S.OptionTitle>전략</S.OptionTitle>
-                                {strategyError && <S.ErrorMessage>전략을 다시 설정해주세요.</S.ErrorMessage>}
+                                {errors.strategyError && <S.ErrorMessage>전략을 다시 설정해주세요.</S.ErrorMessage>}
                             </S.OptionHeaderInnerContainer>
                         </S.OptionHeaderContainer>
                         <S.HorizontalDivider/>
@@ -208,7 +172,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                         key={key}
                                         isSelected={selectedStrategies.includes(key as StrategyKey)}
                                         onClick={() => handleStrategyChange(key as StrategyKey)}
-                                        hasError={strategyError}
+                                        hasError={errors.strategyError}
                                     >
                                         {marketType === '선물' ? '선물' : '현물'} 전략 {key.slice(1)}
                                     </S.OptionButton>
@@ -218,11 +182,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 )}
                 
                 {marketType && (
-                    <S.OptionGroup className={positionError ? 'error' : ''}>
+                    <S.OptionGroup className={errors.positionError ? 'error' : ''}>
                         <S.OptionHeaderContainer>
                             <S.OptionHeaderInnerContainer>
                                 <S.OptionTitle>포지션</S.OptionTitle>
-                                {positionError && <S.ErrorMessage>포지션을 다시 설정해주세요.</S.ErrorMessage>}
+                                {errors.positionError && <S.ErrorMessage>포지션을 다시 설정해주세요.</S.ErrorMessage>}
                             </S.OptionHeaderInnerContainer>
                         </S.OptionHeaderContainer>
                         <S.HorizontalDivider/>
@@ -230,7 +194,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                             <S.OptionButton
                                 isSelected={position === 'long'}
                                 onClick={() => setPosition('long')}
-                                hasError={positionError}
+                                hasError={errors.positionError}
                             >
                                 Long
                             </S.OptionButton>
@@ -238,7 +202,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 isSelected={position === 'short'}
                                 onClick={() => setPosition('short')}
                                 disabled={marketType === '현물'}
-                                hasError={positionError}
+                                hasError={errors.positionError}
                             >
                                 Short
                             </S.OptionButton>
@@ -246,11 +210,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                     </S.OptionGroup>
                 )}
 
-                <S.OptionGroup className={dateError ? 'error' : ''}>
+                <S.OptionGroup className={errors.dateError ? 'error' : ''}>
                     <S.OptionHeaderContainer>
                         <S.OptionHeaderInnerContainer>
                             <S.OptionTitle>기간 선택</S.OptionTitle>
-                            {dateError && <S.ErrorMessage>기간을 다시 설정해주세요.</S.ErrorMessage>}
+                            {errors.dateError && <S.ErrorMessage>기간을 다시 설정해주세요.</S.ErrorMessage>}
                         </S.OptionHeaderInnerContainer>
                         <S.DateRangeSelect value={dateRange} onChange={handleDateRangeChange}>
                             <option value="1개월">최근 1개월</option>
@@ -265,7 +229,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                     <S.HorizontalDivider/>
                     <S.DatePickerOptionContent>
                         <S.DatePickersRow>
-                            <S.DatePickerContainer hasError={dateError}>
+                            <S.DatePickerContainer hasError={errors.dateError}>
                                 <S.DatePickerLabelInputContainer>
                                     <S.StyledDatePickerWrapper>
                                         <DatePicker
@@ -280,7 +244,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 </S.DatePickerLabelInputContainer>
                             </S.DatePickerContainer>
                             <S.DateRangeSeparator>~</S.DateRangeSeparator>
-                            <S.DatePickerContainer hasError={dateError}>
+                            <S.DatePickerContainer hasError={errors.dateError}>
                                 <S.DatePickerLabelInputContainer>
                                     <S.StyledDatePickerWrapper>
                                         <DatePicker
