@@ -26,6 +26,11 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     const [dateRange, setDateRange] = useState('1년');
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [dateError, setDateError] = useState(false);
+    const [typeError, setTypeError] = useState(false);
+    const [strategyError, setStrategyError] = useState(false);
+    const [positionError, setPositionError] = useState(false);
+
+    const endDatePickerRef = useRef<DatePicker>(null);
 
     useEffect(() => {
         if (initialStrategies.length > 0) {
@@ -75,8 +80,6 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         setEndDate(endDate.toISOString().split('T')[0]);
     };
 
-    const endDatePickerRef = useRef<DatePicker>(null);
-
     const validateDateRange = (start: Date, end: Date) => {
         if (end < start) {
             setDateError(true);
@@ -114,27 +117,74 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         }
     };
 
+    const validateOptions = () => {
+        let isValid = true;
+        if (!marketType) {
+            setTypeError(true);
+            isValid = false;
+        } else {
+            setTypeError(false);
+        }
+        if (selectedStrategies.length === 0) {
+            setStrategyError(true);
+            isValid = false;
+        } else {
+            setStrategyError(false);
+        }
+        if (!position) {
+            setPositionError(true);
+            isValid = false;
+        } else {
+            setPositionError(false);
+        }
+        if (!startDate || !endDate || new Date(endDate) < new Date(startDate)) {
+            setDateError(true);
+            isValid = false;
+        } else {
+            setDateError(false);
+        }
+        return isValid;
+    };
+
+    const handlePerformBackTest = () => {
+        if (validateOptions()) {
+            performBackTest();
+        } else {
+            const errorElements = document.querySelectorAll('.error');
+            if (errorElements.length > 0) {
+                errorElements[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    };
+
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.RunButtonContainer>
-                <S.BackTestButton onClick={performBackTest} disabled={loading}>
+                <S.BackTestButton onClick={handlePerformBackTest} disabled={loading}>
                     <S.StyledRocketIcon className="RocketIcon" />BackTest Run
                 </S.BackTestButton>
             </S.RunButtonContainer>
             <S.OptionsLayout>
-                <S.OptionGroup>
-                    <S.OptionTitle>유형</S.OptionTitle>
+                <S.OptionGroup className={typeError ? 'error' : ''}>
+                    <S.OptionHeaderContainer>
+                        <S.OptionHeaderInnerContainer>
+                            <S.OptionTitle>유형</S.OptionTitle>
+                            {typeError && <S.ErrorMessage>유형을 다시 설정해주세요.</S.ErrorMessage>}
+                        </S.OptionHeaderInnerContainer>
+                    </S.OptionHeaderContainer>
                     <S.HorizontalDivider/>
                     <S.OptionContent>
                         <S.OptionButton
                             isSelected={marketType === '선물'}
                             onClick={() => setMarketType('선물')}
+                            hasError={typeError}
                         >
                             선물
                         </S.OptionButton>
                         <S.OptionButton
                             isSelected={marketType === '현물'}
                             onClick={() => setMarketType('현물')}
+                            hasError={typeError}
                         >
                             현물
                         </S.OptionButton>
@@ -142,8 +192,13 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 </S.OptionGroup>
 
                 {marketType && (
-                    <S.OptionGroup>
-                        <S.OptionTitle>전략</S.OptionTitle>
+                    <S.OptionGroup className={strategyError ? 'error' : ''}>
+                        <S.OptionHeaderContainer>
+                            <S.OptionHeaderInnerContainer>
+                                <S.OptionTitle>전략</S.OptionTitle>
+                                {strategyError && <S.ErrorMessage>전략을 다시 설정해주세요.</S.ErrorMessage>}
+                            </S.OptionHeaderInnerContainer>
+                        </S.OptionHeaderContainer>
                         <S.HorizontalDivider/>
                         <S.OptionContent>
                             {Object.entries(strategies)
@@ -153,6 +208,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                         key={key}
                                         isSelected={selectedStrategies.includes(key as StrategyKey)}
                                         onClick={() => handleStrategyChange(key as StrategyKey)}
+                                        hasError={strategyError}
                                     >
                                         {marketType === '선물' ? '선물' : '현물'} 전략 {key.slice(1)}
                                     </S.OptionButton>
@@ -162,13 +218,19 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 )}
                 
                 {marketType && (
-                    <S.OptionGroup>
-                        <S.OptionTitle>포지션</S.OptionTitle>
+                    <S.OptionGroup className={positionError ? 'error' : ''}>
+                        <S.OptionHeaderContainer>
+                            <S.OptionHeaderInnerContainer>
+                                <S.OptionTitle>포지션</S.OptionTitle>
+                                {positionError && <S.ErrorMessage>포지션을 다시 설정해주세요.</S.ErrorMessage>}
+                            </S.OptionHeaderInnerContainer>
+                        </S.OptionHeaderContainer>
                         <S.HorizontalDivider/>
                         <S.OptionContent>
                             <S.OptionButton
                                 isSelected={position === 'long'}
                                 onClick={() => setPosition('long')}
+                                hasError={positionError}
                             >
                                 Long
                             </S.OptionButton>
@@ -176,6 +238,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 isSelected={position === 'short'}
                                 onClick={() => setPosition('short')}
                                 disabled={marketType === '현물'}
+                                hasError={positionError}
                             >
                                 Short
                             </S.OptionButton>
@@ -183,7 +246,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                     </S.OptionGroup>
                 )}
 
-                <S.OptionGroup>
+                <S.OptionGroup className={dateError ? 'error' : ''}>
                     <S.OptionHeaderContainer>
                         <S.OptionHeaderInnerContainer>
                             <S.OptionTitle>기간 선택</S.OptionTitle>

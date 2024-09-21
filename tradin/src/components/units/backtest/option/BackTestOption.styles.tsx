@@ -17,6 +17,7 @@ export const OptionsContainer = styled.div<{ isVisible: boolean, showToggleButto
     z-index: 1;
     margin-top: -1px;
     transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, padding 0.3s ease-in-out;
+    height: auto;
     
     ${({ isVisible }) => isVisible
         ? css`
@@ -81,9 +82,13 @@ export const StyledRocketIcon = styled(FaRocket)`
 
 export const ErrorMessage = styled.p`
     color: #ff6b6b;
-    font-size: 0.9em;
-    margin-top: 5px;
+    font-size: 0.6em;
+    margin-top: 3px;
     margin-bottom: 0;
+    height: 1em;
+    line-height: 1em;
+    opacity: 1;
+    transition: all 0.3s ease;
 `;
 
 // Option Select
@@ -101,15 +106,17 @@ export const OptionGroup = styled.div`
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    transition: all 0.3s ease;
 `;
+
 
 export const OptionHeaderContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    height: 20%;
-`
+    align-items: flex-start;
+    min-height: 2.5em;
+`;
 
 export const OptionHeaderInnerContainer = styled.div`
     display: flex;
@@ -133,9 +140,12 @@ export const OptionContent = styled.div`
     margin-left: 5%;
 `;
 
-export const OptionButton = styled.button<{ isSelected: boolean }>`
+export const OptionButton = styled.button<{ isSelected: boolean, hasError?: boolean }>`
     padding: 10px 15px;
-    border: 1px solid ${({ theme }) => theme.borderColor};
+    border: 1px solid ${({ isSelected, hasError, theme }) => 
+        hasError ? '#ff6b6b' : 
+        isSelected ? theme.OptionHighlightColor : 
+        theme.borderColor};
     border-radius: 20px;
     background-color: ${({ isSelected, theme }) => (isSelected ? theme.OptionHighlightColor : theme.backgroundColor)};
     color: ${({ isSelected, theme }) => (isSelected ? theme.backgroundColor : theme.textColor)};
@@ -152,7 +162,7 @@ export const HorizontalDivider = styled.div`
     height: 1px;
     border: 1px solid ${({ theme }) => theme.moreinnerbackgroundColor};
     margin-bottom: 1rem;
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
 `;
 
 // DatePicker
@@ -333,7 +343,7 @@ export const DateRangeSelect = styled.select`
     color: ${({ theme }) => theme.textColor};
     border-radius: 4px;
     font-size: 0.8em;
-    margin-top: 2rem;
+    margin-top: 1rem;
     cursor: pointer;
 
     @media (max-width: 799px) {
