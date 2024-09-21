@@ -11,7 +11,7 @@ import {
     calculateAverageLoss,
     calculateSharpeRatio,
     calculateAverageHoldingPeriod
-} from '../CalculateMetrics';
+} from './CalculateMetrics';
 import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt } from 'react-icons/fa';
 
 interface Trade {

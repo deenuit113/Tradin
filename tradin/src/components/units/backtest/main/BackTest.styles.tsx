@@ -1,29 +1,6 @@
 import styled from "@emotion/styled";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaRocket } from "react-icons/fa";
-import { css, keyframes } from "@emotion/react";
-
-const expandAnimation = keyframes`
-    from {
-        transform: scaleY(0);
-        opacity: 0;
-    }
-    to {
-        transform: scaleY(1);
-        opacity: 1;
-    }
-`;
-
-const collapseAnimation = keyframes`
-    from {
-        transform: scaleY(1);
-        opacity: 1;
-    }
-    to {
-        transform: scaleY(0);
-        opacity: 0;
-    }
-`;
+import { css} from "@emotion/react";
 
 export const Container = styled.div`
     display: flex;
