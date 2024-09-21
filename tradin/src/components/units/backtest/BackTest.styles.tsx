@@ -327,7 +327,7 @@ export const ChartSelect = styled.select`
 
     &:focus {
         outline: none;
-        box-shadow: 0 0 0 2px #777;
+        box-shadow: 0 0 0 1px #777;
     }
 
     @media (max-width: 799px) {
