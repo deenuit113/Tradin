@@ -1,6 +1,8 @@
 'use client';
 
 import { ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import Header from "../src/components/commons/header/Header";
 import { SidebarProvider } from "../src/components/commons/sidebar/SidebarContext";
 import { RecoilRoot, useRecoilState } from "recoil";
@@ -10,7 +12,8 @@ import SideBar from "../src/components/commons/sidebar/Sidebar";
 import { ThemeProvider } from "@emotion/react";
 import { lightTheme, darkTheme } from "../src/styles/theme";
 import { darkMode } from "../src/components/commons/util/atoms";
-import './globals.css';
+
+const queryClient = new QueryClient();
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
@@ -20,15 +23,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </head>
             <body>
                 <RecoilRoot>
-                    <ThemeWrapper>
-                        <DndProvider backend={HTML5Backend}>
-                            <SidebarProvider>
-                                <Header />
-                                <SideBar />
-                                {children}
-                            </SidebarProvider>
-                        </DndProvider>
-                    </ThemeWrapper>
+                    <QueryClientProvider client={queryClient}>
+                        <ThemeWrapper>
+                            <DndProvider backend={HTML5Backend}>
+                                <SidebarProvider>
+                                    <Header />
+                                    <SideBar />
+                                    {children}
+                                </SidebarProvider>
+                            </DndProvider>
+                        </ThemeWrapper>
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    </QueryClientProvider>
                 </RecoilRoot>
                 <style jsx global>{`
                     html, body, #__next {
