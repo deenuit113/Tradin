@@ -83,7 +83,7 @@ export const StyledRocketIcon = styled(FaRocket)`
 export const ErrorMessage = styled.p`
     color: #ff6b6b;
     font-size: 0.6em;
-    margin-top: 3px;
+    margin-top: 4px;
     margin-bottom: 0;
     height: 1em;
     line-height: 1em;
@@ -137,7 +137,7 @@ export const OptionContent = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    margin-left: 5%;
+    margin: 0 3%;
 `;
 
 export const OptionButton = styled.button<{ isSelected: boolean, hasError?: boolean }>`
@@ -207,8 +207,8 @@ export const StyledDatePickerWrapper = styled.div`
         padding: 0;
         display: grid;
         grid-template-rows: repeat(6, 1fr);
-        gap: 3px;
-        height: 261px;
+        gap: 2px;
+        height: 194px;
     }
 
     .react-datepicker__week {
@@ -243,11 +243,15 @@ export const StyledDatePickerWrapper = styled.div`
         color: ${({ theme }) => theme.backgroundColor};
     }
 
+    .react-datepicker__day {
+        border-radius: 20px;
+    }
+
     .react-datepicker__day,
     .react-datepicker__day-name {
         width: 12%;
-        height: 40px;
-        line-height: 40px;
+        height: 30px;
+        line-height: 30px;
         margin: 0;
         padding: 0;
         text-align: center;
@@ -272,13 +276,13 @@ export const StyledDatePickerWrapper = styled.div`
 
     @media (max-width: 799px) {
         .react-datepicker__month {
-            height: 171px;
+            height: 134px;
         }
 
         .react-datepicker__day,
         .react-datepicker__day-name {
-            height: 25px;
-            line-height: 25px;
+            height: 20px;
+            line-height: 20px;
         }
     }
 `;
@@ -288,15 +292,21 @@ export const DatePickerOptionContent = styled.div`
     width: 100%;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    justify-content: flex-start;
+    margin: 0 3%;
 `;
 
 export const DatePickersRow = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    width: 50%;
+    gap: 12px;
+
+    @media (max-width: 799px) {
+        width: 100%;
+    }
 `;
 
 export const DatePickerInput = styled.input<{ hasError?: boolean }>`
@@ -336,7 +346,7 @@ export const DatePickerLabelInputContainer = styled.div`
 `;
 
 export const DateRangeSelect = styled.select`
-    width: 20%;
+    width: 15%;
     padding: 4px 8px;
     border: 1px solid ${({ theme }) => theme.borderColor};
     background-color: ${({ theme }) => theme.backTestInputBackgroundColor};
