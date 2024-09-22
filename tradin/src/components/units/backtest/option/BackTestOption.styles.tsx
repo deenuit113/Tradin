@@ -239,7 +239,7 @@ export const StyledDatePickerWrapper = styled.div`
     }
 
     .react-datepicker__day--selected {
-        background-color: ${({ theme }) => theme.highlightColor};
+        background-color: ${({ theme }) => theme.OptionHighlightColor};
         color: ${({ theme }) => theme.backgroundColor};
     }
 
@@ -305,7 +305,8 @@ export const DatePickersRow = styled.div`
     gap: 12px;
 
     @media (max-width: 799px) {
-        width: 100%;
+        width: 95%;
+        gap: none;
     }
 `;
 
@@ -326,6 +327,10 @@ export const DateRangeSeparator = styled.span`
     margin: 0 10px;
     display: flex;
     align-items: center;
+
+    @media (max-width: 799px) {
+        margin: 0;
+    }
 `;
 
 export const DatePickerContainer = styled.div<{ hasError?: boolean }>`
@@ -356,7 +361,11 @@ export const DateRangeSelect = styled.select`
     margin-top: 1rem;
     cursor: pointer;
 
-    @media (max-width: 799px) {
+    @media (max-width: 600px) {
+        width: 45%;
+    }
+
+    @media (max-width: 899px) {
         width: 30%;
     }
 `;
