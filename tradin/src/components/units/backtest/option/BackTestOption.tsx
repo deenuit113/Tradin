@@ -28,6 +28,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     const [dateRange, setDateRange] = useState('1년');
     const [isInitialRender, setIsInitialRender] = useState(true);
     const { errors, setError, resetErrors } = useBackTestOptionError();
+    const [errorScroll, setErrorScroll] = useState(false);
 
     useEffect(() => {
         if (initialStrategies.length > 0) {
@@ -42,6 +43,16 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
             setPosition('long');
         }
     }, [marketType]);
+
+    useEffect(() => {
+        if (errorScroll) {
+            const errorElements = document.querySelectorAll('.error');
+            if (errorElements.length > 0) {
+                errorElements[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            setErrorScroll(false);
+        }
+    }, [errorScroll, errors]);
 
     const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedRange = e.target.value;
@@ -114,10 +125,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         if (isValid) {
             performBackTest();
         } else {
-            const errorElements = document.querySelectorAll('.error');
-            if (errorElements.length > 0) {
-                errorElements[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
+            setErrorScroll(true);
         }
     };
 
