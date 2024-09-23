@@ -2,6 +2,7 @@ export interface Theme {
     backgroundColor: string;
     innerbackgroundColor: string;
     moreinnerbackgroundColor: string;
+    moreinnerborderColor: string;
     textColor: string;
     iconColor: string;
     timeTextColor: string;
@@ -50,12 +51,15 @@ export interface Theme {
     backTestButtonHoverColor: string;
     backTestInputBackgroundColor: string;
     OptionHighlightColor: string;
+    ProfitPositiveColor: string;
+    ProfitNegativeColor: string;
 }
 
 export const lightTheme = {
     backgroundColor: '#f0f0f0',
     innerbackgroundColor: '#e0e0e0',
     moreinnerbackgroundColor: '#d0d0d0',
+    moreinnerborderColor: '#b0b0b0',
     textColor: '#333',
     iconColor: '#333',
     timeTextColor: 'grey',
@@ -105,12 +109,15 @@ export const lightTheme = {
     backTestButtonHoverColor: '#d0d0d0',
     backTestInputBackgroundColor: '#f0f0f0',
     OptionHighlightColor: '#4682B4',
+    ProfitPositiveColor: '#28a745',
+    ProfitNegativeColor: '#dc3545',
 };
 
 export const darkTheme = {
     backgroundColor: '#333',
     innerbackgroundColor: '#444',
     moreinnerbackgroundColor: '#555',
+    moreinnerborderColor: '#888',
     textColor: '#f0f0f0',
     iconColor: '#f0f0f0',
     timeTextColor: 'lightgrey',
@@ -160,4 +167,6 @@ export const darkTheme = {
     backTestButtonHoverColor: '#555',
     backTestInputBackgroundColor: '#555',
     OptionHighlightColor: '#B0C4DE',
+    ProfitPositiveColor: '#4caf50',
+    ProfitNegativeColor: '#f44336',
 };
