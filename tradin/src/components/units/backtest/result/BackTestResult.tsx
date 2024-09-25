@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import * as S from "./BackTestResult.styles";
 import BackTestChart from './BackTestChart';
 import { calculateAllMetrics } from '../utils/calculateMetrics';
-import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt } from 'react-icons/fa';
+import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BackTestResultsProps } from './BackTestResult.types';
 import ResultTransactionHistory from './ResultTransactionHistory';
 
+const CarouselPage: React.FC<{ pageNumber: number; currentPage: number; children: React.ReactNode }> = ({ pageNumber, currentPage, children }) => (
+    <S.CarouselPage isActive={pageNumber === currentPage}>
+        {children}
+    </S.CarouselPage>
+);
+
 const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptions }) => {
     const [selectedMetric, setSelectedMetric] = useState<'profit' | 'equity' | 'drawdown'>('profit');
+    const [currentPage, setCurrentPage] = useState(0);
     
     const initialCapital = 10000;
     
@@ -20,6 +27,14 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
 
     const handleMetricChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedMetric(event.target.value as 'profit' | 'equity' | 'drawdown');
+    };
+
+    const handleNextPage = () => {
+        setCurrentPage((prev) => (prev + 1) % 2);
+    };
+
+    const handlePrevPage = () => {
+        setCurrentPage((prev) => (prev - 1 + 2) % 2);
     };
     
     const renderExecutedOptions = () => {
@@ -63,23 +78,43 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                 {renderExecutedOptions()}
             </S.ResultHeader>
             <S.ResultInnerContainer>
-                <S.ResultContentGroup strategyCount={strategyCount}>
-                    {results.map((result, index) => (
-                        <S.ResultContentContainer key={index} strategyCount={strategyCount}>
-                            <S.ResultSubtitle>{result.strategy}</S.ResultSubtitle>
-                            {renderResultItem('총 수익', `$${result.totalReturn.toFixed(2)}`, <FaDollarSign className='ResultIcon'/>)}
-                            {renderResultItem('연간 수익률', `${(result.annualizedReturn * 100).toFixed(2)}%`, <FaChartLine className='ResultIcon'/>)}
-                            {renderResultItem('최대 손실', `$${result.maxDrawdown.toFixed(2)}`, <FaLevelDownAlt className='ResultIcon'/>)}
-                            {renderResultItem('승률', `${(result.winRate * 100).toFixed(2)}%`, <FaTrophy className='ResultIcon'/>)}
-                            {renderResultItem('평균 수익', `$${result.averageGain.toFixed(2)}`, <FaArrowUp className='ResultIcon'/>)}
-                            {renderResultItem('평균 손실', `$${result.averageLoss.toFixed(2)}`, <FaArrowDown className='ResultIcon'/>)}
-                            {renderResultItem('샤프 비율', result.sharpeRatio.toFixed(2), <FaCrosshairs className='ResultIcon'/>)}
-                            {renderResultItem('거래 횟수', result.tradeCount, <FaExchangeAlt className='ResultIcon'/>)}
-                            {renderResultItem('평균 보유 기간', `${isNaN(result.averageHoldingPeriod) ? '0.00' : result.averageHoldingPeriod.toFixed(2)}일`, <FaClock className='ResultIcon'/>)}
-                        </S.ResultContentContainer>
-                    ))}
-                </S.ResultContentGroup>
-                <ResultTransactionHistory trades={trades} initialCapital={initialCapital} />
+                <S.CarouselContainer>
+                    <S.CarouselContent>
+                        <CarouselPage pageNumber={0} currentPage={currentPage}>
+                            <S.ResultContentGroup strategyCount={strategyCount}>
+                                {results.map((result, index) => (
+                                    <S.ResultContentContainer key={index} strategyCount={strategyCount}>
+                                        <S.ResultSubtitle>{result.strategy}</S.ResultSubtitle>
+                                        {renderResultItem('총 수익', `$${result.totalReturn.toFixed(2)}`, <FaDollarSign className='ResultIcon'/>)}
+                                        {renderResultItem('연간 수익률', `${(result.annualizedReturn * 100).toFixed(2)}%`, <FaChartLine className='ResultIcon'/>)}
+                                        {renderResultItem('최대 손실', `$${result.maxDrawdown.toFixed(2)}`, <FaLevelDownAlt className='ResultIcon'/>)}
+                                        {renderResultItem('승률', `${(result.winRate * 100).toFixed(2)}%`, <FaTrophy className='ResultIcon'/>)}
+                                        {renderResultItem('평균 수익', `$${result.averageGain.toFixed(2)}`, <FaArrowUp className='ResultIcon'/>)}
+                                        {renderResultItem('평균 손실', `$${result.averageLoss.toFixed(2)}`, <FaArrowDown className='ResultIcon'/>)}
+                                        {renderResultItem('샤프 비율', result.sharpeRatio.toFixed(2), <FaCrosshairs className='ResultIcon'/>)}
+                                        {renderResultItem('거래 횟수', result.tradeCount, <FaExchangeAlt className='ResultIcon'/>)}
+                                        {renderResultItem('평균 보유 기간', `${isNaN(result.averageHoldingPeriod) ? '0.00' : result.averageHoldingPeriod.toFixed(2)}일`, <FaClock className='ResultIcon'/>)}
+                                    </S.ResultContentContainer>
+                                ))}
+                            </S.ResultContentGroup>
+                        </CarouselPage>
+                        <CarouselPage pageNumber={1} currentPage={currentPage}>
+                            <ResultTransactionHistory trades={trades} initialCapital={initialCapital} />
+                        </CarouselPage>
+                    </S.CarouselContent>
+                </S.CarouselContainer>
+                <S.CarouselControls>
+                    <S.CarouselButton onClick={handlePrevPage}>
+                        <FaChevronLeft />
+                    </S.CarouselButton>
+                    <S.CarouselButton onClick={handleNextPage}>
+                        <FaChevronRight />
+                    </S.CarouselButton>
+                </S.CarouselControls>
+                <S.CarouselDots>
+                    <S.CarouselDot active={currentPage === 0} onClick={() => setCurrentPage(0)} />
+                    <S.CarouselDot active={currentPage === 1} onClick={() => setCurrentPage(1)} />
+                </S.CarouselDots>
             </S.ResultInnerContainer>
             
             <S.ChartControls>

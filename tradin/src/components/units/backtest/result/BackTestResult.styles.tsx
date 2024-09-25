@@ -29,24 +29,23 @@ export const ResultTitle = styled.h4`
 `;
 
 export const ResultInnerContainer = styled.div`
+    position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     width: 100%;
-    margin-bottom: 1rem;
     height: 80vh;
-    gap: 1rem;
     overflow: hidden;
-`
+`;
 
 export const ResultContentGroup = styled.div<{ strategyCount: number }>`
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 100%;
     gap: 1rem;
     height: ${props => props.strategyCount === 1 ? '50%' : '100%'};
     overflow-y: auto;
-`
+    flex-shrink: 0;
+`;
 
 export const ResultContentContainer = styled.div<{ strategyCount: number }>`
     display: flex;
@@ -135,6 +134,62 @@ export const ExecutedOptionItem = styled.div`
     }
 `;
 
+// BackTest 결과 캐러셀
+
+export const CarouselContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid red;
+`;
+
+export const CarouselPage = styled.div<{ isActive: boolean }>`
+  display: ${props => props.isActive ? 'block' : 'none'};
+  width: 100%;
+  height: 100%;
+`;
+
+export const CarouselContent = styled.div`
+    width: 100%;
+    height: 100%;
+`;
+
+export const CarouselControls = styled.div`
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+`;
+
+export const CarouselButton = styled.button`
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+`;
+
+export const CarouselDots = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+`;
+
+export const CarouselDot = styled.div<{ active: boolean }>`
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: ${props => props.active ? '#333' : '#ccc'};
+    margin: 0 5px;
+    cursor: pointer;
+`;
+
 // BackTest 차트 보기 방식
 
 export const ChartControls = styled.div`
@@ -176,6 +231,7 @@ export const TransactionHistoryContainer = styled.div`
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
     padding: 0.5rem 0.5rem 1rem 0.5rem;
     border-radius: 6px;
+    flex-shrink: 0;
 `;
 
 export const TransactionHistoryScroll = styled.div<{ strategyCount: number }>`
