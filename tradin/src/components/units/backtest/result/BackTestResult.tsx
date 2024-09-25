@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import * as S from "./BackTestResult.styles";
 import BackTestChart from './BackTestChart';
-import { calculateAllMetrics } from '../utils/calculateMetrics';
-import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BackTestResultsProps } from './BackTestResult.types';
 import ResultTransactionHistory from './ResultTransactionHistory';
+import ResultContent from './ResultContent';
 
 const CarouselPage: React.FC<{
     pageNumber: number;
@@ -23,13 +23,6 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
     const [isNext, setIsNext] = useState(true);
     
     const initialCapital = 10000;
-    
-    const results = Object.entries(trades).map(([strategy, strategyTrades]) => ({
-        strategy,
-        ...calculateAllMetrics(strategyTrades, initialCapital)
-    }));
-
-    const strategyCount = Object.keys(trades).length;
 
     const handleMetricChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedMetric(event.target.value as 'profit' | 'equity' | 'drawdown');
@@ -44,6 +37,7 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
         setIsNext(false);
         setCurrentPage((prev) => (prev - 1 + 2) % 2);
     };
+
     const renderExecutedOptions = () => {
         if (!executedOptions) return null;
 
@@ -71,13 +65,6 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
         );
     };
 
-    const renderResultItem = (label: string, value: string | number, icon: React.ReactNode) => (
-        <S.ResultContent strategyCount={strategyCount}>
-            {icon}
-            {label}: {value}
-        </S.ResultContent>
-    );
-
     return (
         <S.ResultContainer>
             <S.ResultHeader>
@@ -88,36 +75,22 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                 <S.CarouselContainer>
                     <S.CarouselContent currentPage={currentPage}>
                         <CarouselPage pageNumber={0} currentPage={currentPage} isNext={isNext}>
-                            <S.ResultContentGroup strategyCount={strategyCount}>
-                                {results.map((result, index) => (
-                                    <S.ResultContentContainer key={index} strategyCount={strategyCount}>
-                                        <S.ResultSubtitle>{result.strategy}</S.ResultSubtitle>
-                                        {renderResultItem('총 수익', `$${result.totalReturn.toFixed(2)}`, <FaDollarSign className='ResultIcon'/>)}
-                                        {renderResultItem('연간 수익률', `${(result.annualizedReturn * 100).toFixed(2)}%`, <FaChartLine className='ResultIcon'/>)}
-                                        {renderResultItem('최대 손실', `$${result.maxDrawdown.toFixed(2)}`, <FaLevelDownAlt className='ResultIcon'/>)}
-                                        {renderResultItem('승률', `${(result.winRate * 100).toFixed(2)}%`, <FaTrophy className='ResultIcon'/>)}
-                                        {renderResultItem('평균 수익', `$${result.averageGain.toFixed(2)}`, <FaArrowUp className='ResultIcon'/>)}
-                                        {renderResultItem('평균 손실', `$${result.averageLoss.toFixed(2)}`, <FaArrowDown className='ResultIcon'/>)}
-                                        {renderResultItem('샤프 비율', result.sharpeRatio.toFixed(2), <FaCrosshairs className='ResultIcon'/>)}
-                                        {renderResultItem('거래 횟수', result.tradeCount, <FaExchangeAlt className='ResultIcon'/>)}
-                                        {renderResultItem('평균 보유 기간', `${isNaN(result.averageHoldingPeriod) ? '0.00' : result.averageHoldingPeriod.toFixed(2)}일`, <FaClock className='ResultIcon'/>)}
-                                    </S.ResultContentContainer>
-                                ))}
-                            </S.ResultContentGroup>
+                            <ResultContent 
+                                    strategies={trades}
+                                    initialCapital={initialCapital}
+                            />
                         </CarouselPage>
                         <CarouselPage pageNumber={1} currentPage={currentPage} isNext={isNext}>
                             <ResultTransactionHistory trades={trades} initialCapital={initialCapital} />
                         </CarouselPage>
                     </S.CarouselContent>
                 </S.CarouselContainer>
-                <S.CarouselControls>
-                    <S.CarouselButton onClick={handlePrevPage}>
-                        <FaChevronLeft />
-                    </S.CarouselButton>
-                    <S.CarouselButton onClick={handleNextPage}>
-                        <FaChevronRight />
-                    </S.CarouselButton>
-                </S.CarouselControls>
+                <S.PrevButton onClick={handlePrevPage}>
+                    <FaChevronLeft />
+                </S.PrevButton>
+                <S.NextButton onClick={handleNextPage}>
+                    <FaChevronRight />
+                </S.NextButton>
                 <S.CarouselDots>
                     <S.CarouselDot active={currentPage === 0} onClick={() => setCurrentPage(0)} />
                     <S.CarouselDot active={currentPage === 1} onClick={() => setCurrentPage(1)} />

@@ -40,13 +40,13 @@ export const ResultInnerContainer = styled.div`
     gap: 10px;
 `;
 
-export const ResultContentGroup = styled.div<{ strategyCount: number }>`
+export const ResultContentGroup = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     width: 100%;
     gap: 1rem;
-    height: ${props => props.strategyCount === 1 ? '50%' : '100%'};
+    height: 100%;
     overflow-y: auto;
     flex-shrink: 0;
 `;
@@ -205,17 +205,13 @@ export const CarouselContent = styled.div<{ currentPage: number }>`
     overflow: hidden;
 `;
 
-export const CarouselControls = styled.div`
-    display: flex;
-    justify-content: space-between;
+export const CarouselButton = styled.button`
     position: absolute;
     top: 50%;
-    left: 0;
-    right: 0;
     transform: translateY(-50%);
-`;
-
-export const CarouselButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
@@ -223,6 +219,15 @@ export const CarouselButton = styled.button`
     cursor: pointer;
     font-size: 10px;
     border-radius: 50%;
+    z-index: 2;
+`;
+
+export const PrevButton = styled(CarouselButton)`
+    left: 0;
+`;
+
+export const NextButton = styled(CarouselButton)`
+    right: 0;
 `;
 
 export const CarouselDots = styled.div`
@@ -284,8 +289,8 @@ export const TransactionHistoryContainer = styled.div`
     display: flex;
     flex-direction: row;
     height: 100%;
-    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
-    padding: 0.5rem 1rem 1rem 0.5rem;
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    padding: 0;
     border-radius: 6px;
     flex-shrink: 0;
 `;
@@ -317,9 +322,9 @@ export const TransactionList = styled.div<{ isSkeleton : boolean }>`
     flex-direction: column;
     height: 100%;
     margin: 0.5rem;
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
     border-radius: 4px;
-    padding: 0.5rem 0.5rem;
+    padding: 1rem;
     overflow-y: ${props => props.isSkeleton ? 'hidden' : 'auto'};
 
     &::-webkit-scrollbar {
