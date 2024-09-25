@@ -6,9 +6,9 @@ export const ResultContainer = styled.div`
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     width: 100%;
     flex-grow: 1;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 8px;
-    overflow: auto;
+    overflow-x: hidden;
     margin-bottom: 1rem;
     overflow-y: hidden;
 `;
@@ -17,7 +17,7 @@ export const ResultHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin-bottom: 1rem;
+    margin: 0rem 1rem 1rem 1rem;
     width: 100%;
 `;
 
@@ -35,11 +35,15 @@ export const ResultInnerContainer = styled.div`
     width: 100%;
     height: 80vh;
     overflow: hidden;
+    margin-bottom: 1rem;
+    padding: 0 2rem;
+    gap: 10px;
 `;
 
 export const ResultContentGroup = styled.div<{ strategyCount: number }>`
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     width: 100%;
     gap: 1rem;
     height: ${props => props.strategyCount === 1 ? '50%' : '100%'};
@@ -176,7 +180,6 @@ export const CarouselContainer = styled.div`
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border: 1px solid red;
 `;
 
 export const CarouselPage = styled.div<{ isActive: boolean; isNext: boolean }>`
@@ -216,24 +219,29 @@ export const CarouselButton = styled.button`
     background: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    padding: 10px;
+    padding: 8px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 10px;
+    border-radius: 50%;
 `;
 
 export const CarouselDots = styled.div`
-    position: absolute;
+    top: 95%;
+    width: 100%;
+    margin: 0;
+    padding: 1% 0;
+    height: 3%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    margin-top: 10px;
+    align-items: center;
+    gap: 5px;
 `;
-
 export const CarouselDot = styled.div<{ active: boolean }>`
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: ${props => props.active ? '#333' : '#ccc'};
+    background: ${({ active, theme }) => (active ? theme.CarouselDotActiveColor : theme.CarouselDotDefaultColor)};
     margin: 0 5px;
     cursor: pointer;
 `;
@@ -277,7 +285,7 @@ export const TransactionHistoryContainer = styled.div`
     flex-direction: row;
     height: 100%;
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
-    padding: 0.5rem 0.5rem 1rem 0.5rem;
+    padding: 0.5rem 1rem 1rem 0.5rem;
     border-radius: 6px;
     flex-shrink: 0;
 `;
@@ -374,7 +382,7 @@ export const ChartContainer = styled.div`
     height: 50vh;
     overflow: hidden;
     canvas {
-        width: 100% !important;
+        width: 95% !important;
         height: auto !important;
     }
     @media all and (max-width: 800px) {

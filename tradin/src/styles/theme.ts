@@ -53,6 +53,8 @@ export interface Theme {
     OptionHighlightColor: string;
     ProfitPositiveColor: string;
     ProfitNegativeColor: string;
+    CarouselDotActiveColor: string;
+    CarouselDotDefaultColor: string;
 }
 
 export const lightTheme = {
@@ -111,6 +113,8 @@ export const lightTheme = {
     OptionHighlightColor: '#4682B4',
     ProfitPositiveColor: '#28a745',
     ProfitNegativeColor: '#dc3545',
+    CarouselDotActiveColor: '#333',
+    CarouselDotDefaultColor: '#ccc'
 };
 
 export const darkTheme = {
@@ -169,4 +173,6 @@ export const darkTheme = {
     OptionHighlightColor: '#B0C4DE',
     ProfitPositiveColor: '#4caf50',
     ProfitNegativeColor: '#f44336',
+    CarouselDotActiveColor: '#ccc',
+    CarouselDotDefaultColor: '#333'
 };
