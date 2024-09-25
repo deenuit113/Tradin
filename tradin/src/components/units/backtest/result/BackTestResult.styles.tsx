@@ -33,7 +33,7 @@ export const ResultInnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 80vh;
+    height: 90vh;
     overflow: hidden;
     margin-bottom: 1rem;
     padding: 0 2rem;
@@ -43,7 +43,7 @@ export const ResultInnerContainer = styled.div`
 export const ResultContentGroup = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 100%;
     gap: 1rem;
     height: 100%;
