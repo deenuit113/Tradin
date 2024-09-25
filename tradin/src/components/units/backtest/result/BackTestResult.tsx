@@ -6,8 +6,13 @@ import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSig
 import { BackTestResultsProps } from './BackTestResult.types';
 import ResultTransactionHistory from './ResultTransactionHistory';
 
-const CarouselPage: React.FC<{ pageNumber: number; currentPage: number; children: React.ReactNode }> = ({ pageNumber, currentPage, children }) => (
-    <S.CarouselPage isActive={pageNumber === currentPage}>
+const CarouselPage: React.FC<{
+    pageNumber: number;
+    currentPage: number;
+    isNext: boolean;
+    children: React.ReactNode;
+}> = ({ pageNumber, currentPage, isNext, children }) => (
+    <S.CarouselPage isActive={pageNumber === currentPage} isNext={isNext}>
         {children}
     </S.CarouselPage>
 );
@@ -15,6 +20,7 @@ const CarouselPage: React.FC<{ pageNumber: number; currentPage: number; children
 const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptions }) => {
     const [selectedMetric, setSelectedMetric] = useState<'profit' | 'equity' | 'drawdown'>('profit');
     const [currentPage, setCurrentPage] = useState(0);
+    const [isNext, setIsNext] = useState(true);
     
     const initialCapital = 10000;
     
@@ -30,13 +36,14 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
     };
 
     const handleNextPage = () => {
+        setIsNext(true);
         setCurrentPage((prev) => (prev + 1) % 2);
     };
-
+    
     const handlePrevPage = () => {
+        setIsNext(false);
         setCurrentPage((prev) => (prev - 1 + 2) % 2);
     };
-    
     const renderExecutedOptions = () => {
         if (!executedOptions) return null;
 
@@ -79,8 +86,8 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
             </S.ResultHeader>
             <S.ResultInnerContainer>
                 <S.CarouselContainer>
-                    <S.CarouselContent>
-                        <CarouselPage pageNumber={0} currentPage={currentPage}>
+                    <S.CarouselContent currentPage={currentPage}>
+                        <CarouselPage pageNumber={0} currentPage={currentPage} isNext={isNext}>
                             <S.ResultContentGroup strategyCount={strategyCount}>
                                 {results.map((result, index) => (
                                     <S.ResultContentContainer key={index} strategyCount={strategyCount}>
@@ -98,7 +105,7 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                                 ))}
                             </S.ResultContentGroup>
                         </CarouselPage>
-                        <CarouselPage pageNumber={1} currentPage={currentPage}>
+                        <CarouselPage pageNumber={1} currentPage={currentPage} isNext={isNext}>
                             <ResultTransactionHistory trades={trades} initialCapital={initialCapital} />
                         </CarouselPage>
                     </S.CarouselContent>

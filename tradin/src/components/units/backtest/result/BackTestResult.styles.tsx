@@ -136,6 +136,42 @@ export const ExecutedOptionItem = styled.div`
 
 // BackTest 결과 캐러셀
 
+const slideInFromRight = keyframes`
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+`;
+
+const slideOutToLeft = keyframes`
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+`;
+
+const slideInFromLeft = keyframes`
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+`;
+
+const slideOutToRight = keyframes`
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+`;
+
 export const CarouselContainer = styled.div`
     width: 100%;
     height: 100%;
@@ -143,15 +179,27 @@ export const CarouselContainer = styled.div`
     border: 1px solid red;
 `;
 
-export const CarouselPage = styled.div<{ isActive: boolean }>`
-  display: ${props => props.isActive ? 'block' : 'none'};
-  width: 100%;
-  height: 100%;
-`;
-
-export const CarouselContent = styled.div`
+export const CarouselPage = styled.div<{ isActive: boolean; isNext: boolean }>`
+    position: absolute;
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
+    animation: ${props => {
+        if (props.isActive) {
+            return props.isNext ? slideInFromRight : slideInFromLeft;
+        } else {
+            return props.isNext ? slideOutToLeft : slideOutToRight;
+        }
+    }} 0.3s ease-in-out;
+    animation-fill-mode: forwards;
+`;
+
+export const CarouselContent = styled.div<{ currentPage: number }>`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 `;
 
 export const CarouselControls = styled.div`
