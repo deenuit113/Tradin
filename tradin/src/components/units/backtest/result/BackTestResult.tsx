@@ -4,11 +4,10 @@ import BackTestChart from './BackTestChart';
 import { calculateAllMetrics } from '../utils/calculateMetrics';
 import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt } from 'react-icons/fa';
 import { BackTestResultsProps } from './BackTestResult.types';
-import { Trade } from '../main/BackTest.types';
+import ResultTransactionHistory from './ResultTransactionHistory';
 
 const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptions }) => {
     const [selectedMetric, setSelectedMetric] = useState<'profit' | 'equity' | 'drawdown'>('profit');
-    const isSkeleton = false;
     
     const initialCapital = 10000;
     
@@ -57,46 +56,6 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
         </S.ResultContent>
     );
 
-    const renderTransactionHistory = () => {
-        return (
-            <S.TransactionHistoryContainer>
-                <S.TransactionHistoryScroll strategyCount={strategyCount}>
-                    {Object.entries(trades).map(([strategy, strategyTrades]) => {
-                        let cumulativeProfit = 0;
-                        return (
-                            <S.StrategyTransactions key={strategy} strategyCount={strategyCount}>
-                                <S.StrategyTitle>{strategy}</S.StrategyTitle>
-                                <S.TransactionList isSkeleton={isSkeleton}>
-                                    {strategyTrades.map((trade: Trade, index: number) => {
-                                        cumulativeProfit += trade.profit;
-                                        const profitPercentage = (trade.profit / initialCapital) * 100;
-                                        const cumulativeProfitPercentage = (cumulativeProfit / initialCapital) * 100;
-                                        
-                                        return (
-                                            <S.TransactionItem key={index} strategyCount={strategyCount}>
-                                                <S.TransactionDetail strategyCount={strategyCount}>진입: {new Date(trade.entryTime).toLocaleString()}</S.TransactionDetail>
-                                                <S.TransactionDetail strategyCount={strategyCount}>청산: {new Date(trade.exitTime).toLocaleString()}</S.TransactionDetail>
-                                                <S.TransactionDetail strategyCount={strategyCount}>
-                                                    수익: <S.ProfitAmount isPositive={trade.profit > 0}>${trade.profit.toFixed(2)}</S.ProfitAmount>
-                                                </S.TransactionDetail>
-                                                <S.TransactionDetail strategyCount={strategyCount}>
-                                                    수익률: <S.ProfitAmount isPositive={profitPercentage > 0}>{profitPercentage.toFixed(2)}%</S.ProfitAmount>
-                                                </S.TransactionDetail>
-                                                <S.TransactionDetail strategyCount={strategyCount}>
-                                                    누적 수익률: <S.ProfitAmount isPositive={cumulativeProfitPercentage > 0}>{cumulativeProfitPercentage.toFixed(2)}%</S.ProfitAmount>
-                                                </S.TransactionDetail>
-                                            </S.TransactionItem>
-                                        );
-                                    })}
-                                </S.TransactionList>
-                            </S.StrategyTransactions>
-                        );
-                    })}
-                </S.TransactionHistoryScroll>
-            </S.TransactionHistoryContainer>
-        );
-    };
-
     return (
         <S.ResultContainer>
             <S.ResultHeader>
@@ -120,7 +79,7 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                         </S.ResultContentContainer>
                     ))}
                 </S.ResultContentGroup>
-                {renderTransactionHistory()}
+                <ResultTransactionHistory trades={trades} initialCapital={initialCapital} />
             </S.ResultInnerContainer>
             
             <S.ChartControls>
