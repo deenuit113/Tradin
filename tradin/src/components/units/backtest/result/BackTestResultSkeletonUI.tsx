@@ -16,7 +16,7 @@ const ResultSkeletonUI: React.FC = () => {
                 </S.ExecutedOptionsContainer>
             </S.ResultHeader>
             <S.ResultInnerContainer>
-                <S.ResultContentGroup>
+                <S.ResultContentContainer1>
                     {[...Array(strategyCount)].map((_, strategyIndex) => (
                         <S.ResultContentContainer key={strategyIndex} strategyCount={strategyCount}>
                             <S.ResultSkeletonContent style={{ width: '100%', height: '20px', marginBottom: '10px' }} /> {/* Strategy title */}
@@ -25,7 +25,7 @@ const ResultSkeletonUI: React.FC = () => {
                             ))}
                         </S.ResultContentContainer>
                     ))}
-                </S.ResultContentGroup>
+                </S.ResultContentContainer1>
                 <S.TransactionHistoryContainer>
                     <S.TransactionHistoryScroll strategyCount={strategyCount}>
                         {[...Array(strategyCount)].map((_, strategyIndex) => (

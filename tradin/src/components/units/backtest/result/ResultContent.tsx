@@ -11,111 +11,6 @@ interface ResultContentProps {
     initialCapital: number;
 }
 
-const Container = styled.div<{ strategyCount: number }>`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    gap: ${props => `${0.1 / props.strategyCount}rem`};
-`;
-
-const MetricContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    height: 4rem;
-    padding: 0 1rem;
-`;
-
-const MetricTitle = styled.h3`
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    width: 7rem;
-    color: ${({ theme }) => theme.textColor};
-    z-index: 1;
-
-    @media (max-width: 799px) {
-        width: 5rem;
-        font-size: 0.7rem;
-    }
-`;
-
-const BarChartContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    align-items: center;
-`;
-
-const BarChartGroup = styled.div<{ strategyCount: number }>`
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    height: ${props => `${props.strategyCount * 1.05}rem`};
-    position: relative;
-    border-radius: 0.3rem;
-    overflow: hidden;
-    gap: 0.1rem;
-`;
-
-const fillAnimation = keyframes`
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-`;
-
-const BarChart = styled.div<{ width: number; color: string; isAnimating: boolean; index: number; total: number }>`
-    width: ${props => props.isAnimating ? '0' : `${props.width}%`};
-    height: ${props => `${100 / props.total}%`};
-    background-color: ${props => props.color};
-    opacity: 0.8;
-    position: absolute;
-    left: 0;
-    top: ${props => `${(props.index * 100) / props.total}%`};
-    transition: width 0.5s ease-out, opacity 0.3s ease;
-    border-radius: 0.2rem;
-    box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(3px);
-    display: flex;
-    align-items: center;
-    padding-left: 0.5rem;
-
-    ${props => props.isAnimating && `
-        animation: ${fillAnimation} 1s ease-out forwards;
-    `}
-
-    &:hover {
-        opacity: 1;
-    }
-`;
-
-const StrategyName = styled.span`
-    color: white;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 90%;
-`;
-
-const ResultValue = styled.div<{ strategyCount: number }>`
-    width: 6rem;
-    text-align: right;
-    color: ${({ theme }) => theme.timeTextColor};
-    font-size: ${props => `${1 - (props.strategyCount - 1) * 0.1}rem`};
-
-    @media (max-width: 799px) {
-        font-size: ${props => `${0.9 - (props.strategyCount - 1) * 0.1}rem`};
-    }
-`;
-
 const colors = [
     'rgba(78, 121, 167, 0.7)',
     'rgba(242, 142, 44, 0.7)',
@@ -158,22 +53,22 @@ const ResultContent: React.FC<ResultContentProps> = ({ strategies, initialCapita
     }, []);
 
     return (
-        <S.ResultContentGroup>
-            <Container strategyCount={results.length}>
+        <S.ResultContentContainer1>
+            <S.ResultContent strategyCount={results.length}>
                 {metrics.map(metric => {
                     const maxValue = Math.max(...results.map(r => Math.abs(r[metric.key as keyof typeof r] as number)));
                     return (
-                        <MetricContainer 
+                        <S.MetricContainer 
                             key={metric.key}
                         >
-                            <MetricTitle>
+                            <S.MetricTitle>
                                 {metric.icon}
                                 {metric.label}
-                            </MetricTitle>
-                            <BarChartContainer>
-                                <BarChartGroup strategyCount={results.length}>
+                            </S.MetricTitle>
+                            <S.BarChartContainer>
+                                <S.BarChartGroup strategyCount={results.length}>
                                     {results.map((result, index) => (
-                                        <BarChart
+                                        <S.BarChart
                                             key={result.strategy}
                                             width={(Math.abs(result[metric.key as keyof typeof result] as number) / maxValue) * 100}
                                             color={colors[index % colors.length]}
@@ -181,23 +76,23 @@ const ResultContent: React.FC<ResultContentProps> = ({ strategies, initialCapita
                                             index={index}
                                             total={results.length}
                                         >
-                                            <StrategyName>{result.strategy}</StrategyName>
-                                        </BarChart>
+                                            <S.StrategyName>{result.strategy}</S.StrategyName>
+                                        </S.BarChart>
                                     ))}
-                                </BarChartGroup>
+                                </S.BarChartGroup>
                                 <div>
                                     {results.map((result, index) => (
-                                        <ResultValue key={result.strategy} strategyCount={results.length}>
+                                        <S.ResultValue key={result.strategy} strategyCount={results.length}>
                                             {metric.format(result[metric.key as keyof typeof result] as number)}
-                                        </ResultValue>
+                                        </S.ResultValue>
                                     ))}
                                 </div>
-                            </BarChartContainer>
-                        </MetricContainer>
+                            </S.BarChartContainer>
+                        </S.MetricContainer>
                     );
                 })}
-            </Container>
-        </S.ResultContentGroup>
+            </S.ResultContent>
+        </S.ResultContentContainer1>
     );
 };
 
