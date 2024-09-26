@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { StrategyKey } from '../components/units/backtest/mockdata/MockStrategy';
 
 interface BackTestContextType {
@@ -19,28 +18,26 @@ interface BackTestContextType {
 
 const BackTestContext = createContext<BackTestContextType | undefined>(undefined);
 
-export const BackTestProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const searchParams = useSearchParams();
-    const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>([]);
+interface BackTestProviderProps {
+    children: React.ReactNode;
+    initialMarketType: '선물' | '현물' | null;
+    initialStrategies: StrategyKey[];
+}
+
+export const BackTestProvider: React.FC<BackTestProviderProps> = ({ 
+    children, 
+    initialMarketType, 
+    initialStrategies 
+}) => {
+    const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>(initialStrategies);
     const [position, setPosition] = useState<string>('long');
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
-    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(null);
-    const [isInitialRender, setIsInitialRender] = useState(true);
+    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
+    const [isInitialRender, setIsInitialRender] = useState(initialStrategies.length === 0);
 
-    useEffect(() => { // 상태 초기화
-        const initialMarketType = searchParams.get('marketType') === 'spot' ? '현물' : 
-                                  searchParams.get('marketType') === 'futures' ? '선물' : null;
-        const initialStrategies = searchParams.get('strategies')?.split(',').map(num => {
-            const prefix = initialMarketType === '현물' ? 'S' : 'F';
-            return `${prefix}${num}` as StrategyKey;
-        }).filter(Boolean) || [];
-
-        if (initialStrategies.length > 0) {
-            setSelectedStrategies(initialStrategies);
-            setIsInitialRender(false);
-        }
-
+    useEffect(() => {
+        setSelectedStrategies(initialStrategies);
         setMarketType(initialMarketType);
 
         const end = new Date();
@@ -48,14 +45,16 @@ export const BackTestProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         start.setFullYear(start.getFullYear() - 1);
         setStartDate(start.toISOString().split('T')[0]);
         setEndDate(end.toISOString().split('T')[0]);
-    }, [searchParams]);
+
+        setIsInitialRender(false);
+    }, [initialMarketType, initialStrategies]);
 
     useEffect(() => {
-        if (!isInitialRender) {
+        if (!isInitialRender && marketType !== initialMarketType) {
             setSelectedStrategies([]);
             setPosition('long');
         }
-    }, [marketType, isInitialRender]);
+    }, [marketType, isInitialRender, initialMarketType]);
 
     return (
         <BackTestContext.Provider value={{
