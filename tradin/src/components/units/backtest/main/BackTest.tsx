@@ -12,25 +12,13 @@ import { useBackTest } from '../../../../hooks/useBackTest';
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const {
-        selectedStrategies,
-        position,
-        startDate,
-        endDate,
         optionsVisible,
-        marketType,
         executedOptions,
         showToggleButton,
         trades,
         backTestMutation,
         toggleOptions,
-        handleMarketTypeChange,
-        handleStrategyChange,
-        setPosition,
-        setStartDate,
-        setEndDate,
         performBackTest,
-        setSelectedStrategies,
-        initialStrategies
     } = useBackTest();
 
     return (
@@ -54,21 +42,9 @@ export default function BackTestPage(): JSX.Element {
                     )}
                     <OptionsContainer
                         isVisible={optionsVisible}
-                        selectedStrategies={selectedStrategies}
-                        handleStrategyChange={handleStrategyChange}
-                        position={position}
-                        setPosition={setPosition}
-                        startDate={startDate}
-                        setStartDate={setStartDate}
-                        endDate={endDate}
-                        setEndDate={setEndDate}
-                        performBackTest={performBackTest}
                         loading={backTestMutation.isLoading}
                         showToggleButton={showToggleButton}
-                        marketType={marketType}
-                        setMarketType={handleMarketTypeChange}
-                        setSelectedStrategies={setSelectedStrategies}
-                        initialStrategies={initialStrategies}
+                        performBackTest={performBackTest}
                     />
                 </S.BackTestContainer>
             </S.MainContent>

@@ -6,43 +6,30 @@ import { StrategyKey, strategies } from '../mockdata/MockStrategy';
 import { OptionsContainerProps } from './BackTestOption.types';
 import { validateAllOptions } from '../utils/validateOptions';
 import { useBackTestOptionError } from '../../../../hooks/useBackTestOptionError';
+import { useBackTestContext } from '../../../../contexts/BackTestContext';
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
     isVisible,
-    selectedStrategies,
-    handleStrategyChange,
-    position,
-    setPosition,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    performBackTest,
     loading,
     showToggleButton,
-    marketType,
-    setMarketType,
-    setSelectedStrategies,
-    initialStrategies,
+    performBackTest,
 }) => {
+    const {
+        selectedStrategies,
+        setSelectedStrategies,
+        position,
+        setPosition,
+        startDate,
+        setStartDate,
+        endDate,
+        setEndDate,
+        marketType,
+        setMarketType,
+    } = useBackTestContext();
+
     const [dateRange, setDateRange] = useState('1년');
-    const [isInitialRender, setIsInitialRender] = useState(true);
     const { errors, setError, resetErrors } = useBackTestOptionError();
     const [errorScroll, setErrorScroll] = useState(false);
-
-    useEffect(() => {
-        if (initialStrategies.length > 0) {
-            setSelectedStrategies(initialStrategies);
-            setIsInitialRender(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (!isInitialRender) {
-            setSelectedStrategies([]);
-            setPosition('long');
-        }
-    }, [marketType]);
 
     useEffect(() => {
         if (errorScroll) {
@@ -53,6 +40,14 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
             setErrorScroll(false);
         }
     }, [errorScroll, errors]);
+
+    const handleStrategyChange = (strategy: StrategyKey) => {
+        setSelectedStrategies(prev =>
+            prev.includes(strategy)
+                ? prev.filter(s => s !== strategy)
+                : [...prev, strategy]
+        );
+    };
 
     const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedRange = e.target.value;
