@@ -2,8 +2,7 @@ import React from 'react';
 import * as S from './BackTestResult.styles';
 
 const ResultSkeletonUI: React.FC = () => {
-    const strategyCount = 2;
-    const isSkeleton = true;
+    const metricCount = 8;
 
     return (
         <S.ResultContainer>
@@ -16,36 +15,32 @@ const ResultSkeletonUI: React.FC = () => {
                 </S.ExecutedOptionsContainer>
             </S.ResultHeader>
             <S.ResultInnerContainer>
-                <S.ResultContentContainer1>
-                    {[...Array(strategyCount)].map((_, strategyIndex) => (
-                        <S.ResultContentContainer key={strategyIndex} strategyCount={strategyCount}>
-                            <S.ResultSkeletonContent style={{ width: '100%', height: '20px', marginBottom: '10px' }} /> {/* Strategy title */}
-                            {[...Array(8)].map((_, index) => (
-                                <S.ResultSkeletonContent key={index} />
-                            ))}
-                        </S.ResultContentContainer>
-                    ))}
-                </S.ResultContentContainer1>
-                <S.TransactionHistoryContainer>
-                    <S.TransactionHistoryScroll strategyCount={strategyCount}>
-                        {[...Array(strategyCount)].map((_, strategyIndex) => (
-                            <S.StrategyTransactions key={strategyIndex} strategyCount={strategyCount}>
-                                <S.StrategyTitle>
-                                    <S.ResultSkeletonContent style={{ width: '50%', height: '20px' }} />
-                                </S.StrategyTitle>
-                                <S.TransactionList isSkeleton={isSkeleton}>
-                                    {[...Array(5)].map((_, index) => (
-                                        <S.TransactionItem key={index} strategyCount={2}>
-                                            {[...Array(5)].map((_, detailIndex) => (
-                                                <S.ResultSkeletonContent key={detailIndex} style={{ width: '100%', height: '15px', marginBottom: '5px' }} />
-                                            ))}
-                                        </S.TransactionItem>
+                <S.CarouselContainer>
+                    <S.CarouselContent currentPage={0}>
+                        <S.CarouselPage isActive={true} isNext={false}>
+                            <S.ResultContentContainer>
+                                <S.ResultContent strategyCount={2}>
+                                    {[...Array(metricCount)].map((_, metricIndex) => (
+                                        <S.ResultSkeletonContent 
+                                            key={metricIndex}
+                                            style={{
+                                                width: '100%',
+                                                height: '4rem', // MetricContainer의 높이와 동일하게 설정
+                                                marginBottom: '1rem', // 각 MetricContainer 사이의 간격
+                                                backgroundColor: 'rgba(200, 200, 200, 0.5)',
+                                                borderRadius: '0.2rem'
+                                            }}
+                                        />
                                     ))}
-                                </S.TransactionList>
-                            </S.StrategyTransactions>
-                        ))}
-                    </S.TransactionHistoryScroll>
-                </S.TransactionHistoryContainer>
+                                </S.ResultContent>
+                            </S.ResultContentContainer>
+                        </S.CarouselPage>
+                    </S.CarouselContent>
+                </S.CarouselContainer>
+                <S.CarouselDots>
+                    <S.CarouselDot active={true} />
+                    <S.CarouselDot active={false} />
+                </S.CarouselDots>
             </S.ResultInnerContainer>
             <S.ChartControls>
                 <S.ResultSkeletonContent style={{ width: '100px', height: '30px' }} />

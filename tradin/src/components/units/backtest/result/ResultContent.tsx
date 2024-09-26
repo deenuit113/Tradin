@@ -53,7 +53,7 @@ const ResultContent: React.FC<ResultContentProps> = ({ strategies, initialCapita
     }, []);
 
     return (
-        <S.ResultContentContainer1>
+        <S.ResultContentContainer>
             <S.ResultContent strategyCount={results.length}>
                 {metrics.map(metric => {
                     const maxValue = Math.max(...results.map(r => Math.abs(r[metric.key as keyof typeof r] as number)));
@@ -92,7 +92,7 @@ const ResultContent: React.FC<ResultContentProps> = ({ strategies, initialCapita
                     );
                 })}
             </S.ResultContent>
-        </S.ResultContentContainer1>
+        </S.ResultContentContainer>
     );
 };
 

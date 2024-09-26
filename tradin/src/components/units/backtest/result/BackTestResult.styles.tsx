@@ -40,7 +40,7 @@ export const ResultInnerContainer = styled.div`
     gap: 10px;
 `;
 
-export const ResultContentContainer1 = styled.div`
+export const ResultContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -50,22 +50,6 @@ export const ResultContentContainer1 = styled.div`
     overflow-y: auto;
     flex-shrink: 0;
 `;
-
-export const ResultContentContainer = styled.div<{ strategyCount: number }>`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 1rem;
-    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
-    border-radius: 6px;
-    height: ${props => {
-        if (props.strategyCount === 1) return '100%';
-        if (props.strategyCount === 2) return '50%';
-        return '33.33%';
-    }};
-    overflow-y: hidden;
-`
 
 export const ResultSubtitle = styled.label`
     color: ${({ theme }) => theme.textColor};
