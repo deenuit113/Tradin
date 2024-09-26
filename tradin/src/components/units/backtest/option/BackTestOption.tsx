@@ -7,6 +7,7 @@ import { OptionsContainerProps } from './BackTestOption.types';
 import { validateAllOptions } from '../utils/validateOptions';
 import { useBackTestOptionError } from '../../../../hooks/useBackTestOptionError';
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
+import { useBackTestOptionDate } from '../../../../hooks/useBackTestOptionDate';
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
     isVisible,
@@ -19,15 +20,19 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         setSelectedStrategies,
         position,
         setPosition,
-        startDate,
-        setStartDate,
-        endDate,
-        setEndDate,
         marketType,
         setMarketType,
     } = useBackTestContext();
 
-    const [dateRange, setDateRange] = useState('1년');
+    const {
+        dateRange,
+        startDate,
+        endDate,
+        handleDateRangeChange,
+        handleStartDateChange,
+        handleEndDateChange
+    } = useBackTestOptionDate();
+
     const { errors, setError, resetErrors } = useBackTestOptionError();
     const [errorScroll, setErrorScroll] = useState(false);
 
@@ -47,59 +52,6 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                 ? prev.filter(s => s !== strategy)
                 : [...prev, strategy]
         );
-    };
-
-    const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedRange = e.target.value;
-        setDateRange(selectedRange);
-
-        const endDate = new Date();
-        let startDate = new Date();
-
-        switch (selectedRange) {
-            case '1개월':
-                startDate.setMonth(endDate.getMonth() - 1);
-                break;
-            case '3개월':
-                startDate.setMonth(endDate.getMonth() - 3);
-                break;
-            case '6개월':
-                startDate.setMonth(endDate.getMonth() - 6);
-                break;
-            case '1년':
-                startDate.setFullYear(endDate.getFullYear() - 1);
-                break;
-            case '3년':
-                startDate.setFullYear(endDate.getFullYear() - 3);
-                break;
-            case '5년':
-                startDate.setFullYear(endDate.getFullYear() - 5);
-                break;
-            default:
-                return;
-        }
-
-        setStartDate(startDate.toISOString().split('T')[0]);
-        setEndDate(endDate.toISOString().split('T')[0]);
-    };
-
-    const handleStartDateChange = (date: Date | null) => {
-        if (date) {
-            const newStartDate = date.toISOString().split('T')[0];
-            setStartDate(newStartDate);
-            setDateRange('사용자 지정');
-        } else {
-            setStartDate('');
-        }
-    };
-
-    const handleEndDateChange = (date: Date | null) => {
-        if (date) {
-            const newEndDate = date.toISOString().split('T')[0];
-            setEndDate(newEndDate);
-        } else {
-            setEndDate('');
-        }
     };
 
     const handlePerformBackTest = () => {
@@ -123,6 +75,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
             setErrorScroll(true);
         }
     };
+
 
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
