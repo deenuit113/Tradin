@@ -42,6 +42,77 @@ export const RunButtonContainer = styled.div`
     width: 100%;
 `;
 
+export const SavedOptionsWrapper = styled.div`
+    position: relative;
+    display: inline-block;
+`;
+
+export const SavedOptionsButton = styled.button<{ isActive: boolean }>`
+    background-color: ${props => props.isActive ? '#4CAF50' : '#f0f0f0'};
+    color: ${props => props.isActive ? 'white' : 'black'};
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: ${props => props.isActive ? '#45a049' : '#e0e0e0'};
+    }
+`;
+
+export const SavedOptionsDropdown = styled.div`
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    min-width: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+`;
+
+export const SavedOptionItem = styled.div`
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+`;
+
+export const SavedOptionContent = styled.div`
+    flex: 1;
+    cursor: pointer;
+`;
+
+export const SavedOptionName = styled.div`
+    font-weight: bold;
+`;
+
+export const SavedOptionDescription = styled.div`
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 2px;
+`;
+
+export const RemoveButton = styled.button`
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    margin-left: 10px;
+`;
+
 export const BackTestButton = styled.button`
     cursor: pointer;
     border: none;

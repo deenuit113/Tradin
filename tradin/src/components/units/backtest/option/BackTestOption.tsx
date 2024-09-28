@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './BackTestOption.styles';
@@ -8,6 +8,7 @@ import { validateAllOptions } from '../utils/validateOptions';
 import { useBackTestOptionError } from '../../../../hooks/useBackTestOptionError';
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
 import { useBackTestOptionDate } from '../../../../hooks/useBackTestOptionDate';
+import { set } from 'react-datepicker/dist/date_utils';
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
     isVisible,
@@ -22,6 +23,12 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         setPosition,
         marketType,
         setMarketType,
+        setStartDate,
+        setEndDate,
+        savedOptions,
+        removeOption,
+        savedMarketType,
+        setSavedMarketType
     } = useBackTestContext();
 
     const {
@@ -35,6 +42,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
 
     const { errors, setError, resetErrors } = useBackTestOptionError();
     const [errorScroll, setErrorScroll] = useState(false);
+    const [showSavedOptions, setShowSavedOptions] = useState(false);
 
     useEffect(() => {
         if (errorScroll) {
@@ -76,10 +84,47 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         }
     };
 
-
+    const applySavedOption = useCallback((option: string) => {
+        const [newMarketType, savedStrategies, savedPosition, savedDateRange] = option.split(' / ');
+        
+        setSavedMarketType(newMarketType as '선물' | '현물');
+        setMarketType(newMarketType as '선물' | '현물');
+        
+        setSelectedStrategies(savedStrategies.split(', ') as StrategyKey[]);
+    
+        setPosition(savedPosition as 'long' | 'short');
+        
+        const [savedStartDate, savedEndDate] = savedDateRange.replace('기간 ', '').split(' ~ ');
+        setStartDate(savedStartDate);
+        setEndDate(savedEndDate);
+    }, [setSavedMarketType, setMarketType, setSelectedStrategies, setPosition, setStartDate, setEndDate]);
+    
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.RunButtonContainer>
+                {savedOptions.length > 0 && (
+                    <S.SavedOptionsWrapper>
+                        <S.SavedOptionsButton 
+                            onClick={() => setShowSavedOptions(!showSavedOptions)}
+                            isActive={showSavedOptions}
+                        >
+                            저장된 옵션 ({savedOptions.length})
+                        </S.SavedOptionsButton>
+                        {showSavedOptions && (
+                            <S.SavedOptionsDropdown>
+                                {savedOptions.map(({ name, description, option }) => (
+                                    <S.SavedOptionItem key={name}>
+                                        <S.SavedOptionContent onClick={() => applySavedOption(option)}>
+                                            <S.SavedOptionName>{name}</S.SavedOptionName>
+                                            <S.SavedOptionDescription>{description}</S.SavedOptionDescription>
+                                        </S.SavedOptionContent>
+                                        <S.RemoveButton onClick={() => removeOption(name)}>X</S.RemoveButton>
+                                    </S.SavedOptionItem>
+                                ))}
+                            </S.SavedOptionsDropdown>
+                        )}
+                    </S.SavedOptionsWrapper>
+                )}
                 <S.BackTestButton onClick={handlePerformBackTest} disabled={loading}>
                     <S.StyledRocketIcon className="RocketIcon" />BackTest Run
                 </S.BackTestButton>

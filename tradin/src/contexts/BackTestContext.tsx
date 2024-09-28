@@ -1,6 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { StrategyKey } from '../components/units/backtest/mockdata/MockStrategy';
 
+interface SavedOption {
+    name: string;
+    option: string;
+    description: string;
+  }
+
 interface BackTestContextType {
     selectedStrategies: StrategyKey[];
     setSelectedStrategies: React.Dispatch<React.SetStateAction<StrategyKey[]>>;
@@ -13,7 +19,11 @@ interface BackTestContextType {
     marketType: '선물' | '현물' | null;
     setMarketType: React.Dispatch<React.SetStateAction<'선물' | '현물' | null>>;
     isInitialRender: boolean;
-    setIsInitialRender: React.Dispatch<React.SetStateAction<boolean>>;
+    savedOptions: SavedOption[];
+    saveOption: (name: string, option: string, description: string) => void;
+    removeOption: (option: string) => void;
+    savedMarketType: '선물' | '현물' | null;
+    setSavedMarketType: React.Dispatch<React.SetStateAction<'선물' | '현물' | null>>;
 }
 
 const BackTestContext = createContext<BackTestContextType | undefined>(undefined);
@@ -35,6 +45,8 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
     const [endDate, setEndDate] = useState<string>('');
     const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
     const [isInitialRender, setIsInitialRender] = useState(initialStrategies.length === 0);
+    const [savedOptions, setSavedOptions] = useState<SavedOption[]>([]);
+    const [savedMarketType, setSavedMarketType] = useState<'선물' | '현물' | null>(null);
 
     useEffect(() => {
         setSelectedStrategies(initialStrategies);
@@ -49,12 +61,37 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
         setIsInitialRender(false);
     }, [initialMarketType, initialStrategies]);
 
-    useEffect(() => {
-        if (!isInitialRender && marketType !== initialMarketType) {
+    useEffect(() => { // 시장 유형을 바꿨을 때 전략이 초기화 되게
+        if (!isInitialRender && marketType !== savedMarketType) {
             setSelectedStrategies([]);
             setPosition('long');
+            setSavedMarketType(marketType);
         }
-    }, [marketType, isInitialRender, initialMarketType]);
+    }, [marketType, isInitialRender, savedMarketType]);
+
+    useEffect(() => { // 저장된 옵션 불러오기
+        const storedOptions = localStorage.getItem('savedBackTestOptions');
+        if (storedOptions) {
+            setSavedOptions(JSON.parse(storedOptions));
+        }
+    }, []);
+
+    const saveOption = (name: string, description: string, option: string) => { // 실행한 옵션 저장
+        const newOption = { name, description, option };
+        setSavedOptions(prev => {
+            const updated = [...prev, newOption];
+            localStorage.setItem('savedBackTestOptions', JSON.stringify(updated));
+            return updated;
+        });
+    };
+
+    const removeSavedOption = (name: string) => { // 저장된 실행 옵션 저장
+        setSavedOptions(prev => {
+            const updated = prev.filter(opt => opt.name !== name);
+            localStorage.setItem('savedBackTestOptions', JSON.stringify(updated));
+            return updated;
+        });
+    };
 
     return (
         <BackTestContext.Provider value={{
@@ -69,7 +106,11 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
             marketType,
             setMarketType,
             isInitialRender,
-            setIsInitialRender,
+            savedOptions,
+            saveOption,
+            removeOption: removeSavedOption,
+            savedMarketType,
+            setSavedMarketType,
         }}>
             {children}
         </BackTestContext.Provider>

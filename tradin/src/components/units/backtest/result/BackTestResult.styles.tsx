@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { keyframes } from "@emotion/react";
+import { css, keyframes } from "@emotion/react";
+import { CSSProperties } from 'react';
 
 // BackTest 결과 화면
 export const ResultContainer = styled.div`
@@ -91,6 +92,67 @@ export const ExecutedOptionItem = styled.div`
         font-size: 0.5em;
         padding: 3px 6px;
     }
+`;
+
+export const SaveButton = styled.button`
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #45a049;
+    }
+`;
+
+interface SaveOptionModalStyle {
+    content?: CSSProperties;
+    overlay?: CSSProperties;
+  }
+  
+export const saveOptionModalStyle: SaveOptionModalStyle = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: 'white',
+        padding: '20px',
+        borderRadius: '8px',
+        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+    },
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 1200,
+    }
+};
+
+export const ModalContent = styled.div`
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1200;
+`;
+
+export const ModalInput = styled.input`
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+`;
+
+export const ModalButton = styled.button`
+    padding: 10px 20px;
+    margin-right: 10px;
 `;
 
 // BackTest 결과 캐러셀
@@ -260,12 +322,12 @@ export const BarChartGroup = styled.div<{ strategyCount: number }>`
 `;
 
 const fillAnimation = keyframes`
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 `;
 
 export const BarChart = styled.div<{ width: number; color: string; isAnimating: boolean; index: number; total: number }>`
@@ -284,7 +346,7 @@ export const BarChart = styled.div<{ width: number; color: string; isAnimating: 
     align-items: center;
     padding-left: 0.5rem;
 
-    ${props => props.isAnimating && `
+    ${props => props.isAnimating && css`
         animation: ${fillAnimation} 1s ease-out forwards;
     `}
 

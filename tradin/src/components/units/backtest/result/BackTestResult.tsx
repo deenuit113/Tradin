@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import * as S from "./BackTestResult.styles";
 import BackTestChart from './BackTestChart';
 import { FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BackTestResultsProps } from './BackTestResult.types';
 import ResultTransactionHistory from './ResultTransactionHistory';
 import ResultContent from './ResultContent';
+import { useBackTestContext } from '../../../../contexts/BackTestContext';
+import { saveOptionModalStyle } from './BackTestResult.styles';
 
 const CarouselPage: React.FC<{
     pageNumber: number;
@@ -21,6 +24,9 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
     const [selectedMetric, setSelectedMetric] = useState<'profit' | 'equity' | 'drawdown'>('profit');
     const [currentPage, setCurrentPage] = useState(0);
     const [isNext, setIsNext] = useState(true);
+    const { saveOption } = useBackTestContext();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [optionName, setOptionName] = useState('');
     
     const initialCapital = 10000;
 
@@ -36,6 +42,18 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
     const handlePrevPage = () => {
         setIsNext(false);
         setCurrentPage((prev) => (prev - 1 + 2) % 2);
+    };
+
+    const handleSave = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmSave = () => {
+        if (optionName && executedOptions) {
+            saveOption(optionName, executedOptions, executedOptions);
+            setIsModalOpen(false);
+            setOptionName('');
+        }
     };
 
     const renderExecutedOptions = () => {
@@ -61,6 +79,25 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                     <FaCalendarAlt className="OptionIcon" />
                     {dateRange.replace('기간 ', '')}
                 </S.ExecutedOptionItem>
+                <S.SaveButton onClick={handleSave}>저장</S.SaveButton>
+
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={() => setIsModalOpen(false)}
+                    style={saveOptionModalStyle}
+                    contentLabel="옵션 저장"
+                >
+                    <S.ModalContent>
+                        <S.ModalInput
+                            type="text"
+                            value={optionName}
+                            onChange={(e) => setOptionName(e.target.value)}
+                            placeholder="옵션 이름 입력"
+                        />
+                        <S.ModalButton onClick={handleConfirmSave}>확인</S.ModalButton>
+                        <S.ModalButton onClick={() => setIsModalOpen(false)}>취소</S.ModalButton>
+                    </S.ModalContent>
+                </Modal>
             </S.ExecutedOptionsContainer>
         );
     };
