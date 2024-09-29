@@ -55,35 +55,79 @@ export const SavedOptionsButton = styled.button<{ isActive: boolean }>`
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
-    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 1rem;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
     transition: background-color 0.3s;
+    color: black;
 
     &:hover {
         background-color: ${props => props.isActive ? '#45a049' : '#e0e0e0'};
+    }
+
+    @media (max-width: 799px) {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: 550;
     }
 `;
 
 export const SavedOptionsDropdown = styled.div`
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0%;
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     z-index: 1000;
-    min-width: 200px;
+    min-width: 360px;
     max-height: 200px;
     overflow-y: auto;
+    background-color: ${({ theme }) => theme.backgroundColor};
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color:  ${({ theme }) => theme.scrollbarThumbColor};
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 8px;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+    }
+
+    @media (max-width: 799px) {
+        right: 0%;
+        min-width: 200px;
+    }
 `;
 
 export const SavedOptionItem = styled.div`
-    padding: 10px 15px;
+    padding: 10px 5px 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
         background-color: #f0f0f0;
@@ -97,11 +141,12 @@ export const SavedOptionContent = styled.div`
 
 export const SavedOptionName = styled.div`
     font-weight: bold;
+    color: ${({ theme }) => theme.textColor};
 `;
 
 export const SavedOptionDescription = styled.div`
     font-size: 0.8em;
-    color: #666;
+    color: ${({ theme }) => theme.timeTextColor};
     margin-top: 2px;
 `;
 
@@ -127,6 +172,7 @@ export const BackTestButton = styled.button`
     position: relative;
     display: flex;
     align-items: center;
+    font-size: 0.9rem;
 
     :hover {
         background-color: ${({ theme }) => theme.backTestButtonHoverColor};

@@ -73,6 +73,10 @@ export const ExecutedOptionsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+
+    @media (max-width: 799px) {
+        gap: 7px;
+    }
 `;
 
 export const ExecutedOptionItem = styled.div`
@@ -103,13 +107,21 @@ export const SaveButton = styled.button`
     text-decoration: none;
     display: inline-block;
     font-size: 12px;
-    margin: 4px 2px;
+    margin: 10px;
     cursor: pointer;
     border-radius: 20px;
     transition: background-color 0.3s;
+    font-size: 800;
 
     &:hover {
         background-color: #45a049;
+    }
+
+    
+    @media (max-width: 799px) {
+        font-size: 0.5em;
+        padding: 3px 6px;
+        margin: 4px 2px 4px 10px;
     }
 `;
 
@@ -126,10 +138,10 @@ export const saveOptionModalStyle: SaveOptionModalStyle = {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        backgroundColor: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#333',
+        border: 'none',
+        borderRadius: '6px',
+        padding: '0'
     },
     overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -138,21 +150,41 @@ export const saveOptionModalStyle: SaveOptionModalStyle = {
 };
 
 export const ModalContent = styled.div`
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
+    background-color: ${({ theme }) => theme.backgroundColor};
+    padding: 2rem 1rem 1rem 1rem;
+    border-radius: 6px;
     z-index: 1200;
+    width: 50vw;
+    max-height: 30vh;
+    margin: 0;
 `;
 
 export const ModalInput = styled.input`
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    box-shadow: none;
+    color: ${({ theme }) => theme.textColor};
 `;
 
+export const ModalButtonWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+`
+
 export const ModalButton = styled.button`
-    padding: 10px 20px;
-    margin-right: 10px;
+    padding: 4px 7px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    background-color:  ${({ theme }) => theme.innerbackgroundColor};
+    color:  ${({ theme }) => theme.textColor};
 `;
 
 // BackTest 결과 캐러셀

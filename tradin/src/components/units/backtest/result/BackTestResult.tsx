@@ -79,6 +79,16 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                     <FaCalendarAlt className="OptionIcon" />
                     {dateRange.replace('기간 ', '')}
                 </S.ExecutedOptionItem>
+                
+            </S.ExecutedOptionsContainer>
+        );
+    };
+
+    return (
+        <S.ResultContainer>
+            <S.ResultHeader>
+                <S.ResultTitle>실행 결과:</S.ResultTitle>
+                {renderExecutedOptions()}
                 <S.SaveButton onClick={handleSave}>저장</S.SaveButton>
 
                 <Modal
@@ -94,19 +104,12 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                             onChange={(e) => setOptionName(e.target.value)}
                             placeholder="옵션 이름 입력"
                         />
-                        <S.ModalButton onClick={handleConfirmSave}>확인</S.ModalButton>
-                        <S.ModalButton onClick={() => setIsModalOpen(false)}>취소</S.ModalButton>
+                        <S.ModalButtonWrapper>
+                            <S.ModalButton onClick={handleConfirmSave}>확인</S.ModalButton>
+                            <S.ModalButton onClick={() => setIsModalOpen(false)}>취소</S.ModalButton>
+                        </S.ModalButtonWrapper>
                     </S.ModalContent>
                 </Modal>
-            </S.ExecutedOptionsContainer>
-        );
-    };
-
-    return (
-        <S.ResultContainer>
-            <S.ResultHeader>
-                <S.ResultTitle>실행 결과:</S.ResultTitle>
-                {renderExecutedOptions()}
             </S.ResultHeader>
             <S.ResultInnerContainer>
                 <S.CarouselContainer>
