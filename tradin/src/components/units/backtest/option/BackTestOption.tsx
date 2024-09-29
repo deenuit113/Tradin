@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as S from './BackTestOption.styles';
@@ -6,43 +6,43 @@ import { StrategyKey, strategies } from '../mockdata/MockStrategy';
 import { OptionsContainerProps } from './BackTestOption.types';
 import { validateAllOptions } from '../utils/validateOptions';
 import { useBackTestOptionError } from '../../../../hooks/useBackTestOptionError';
+import { useBackTestContext } from '../../../../contexts/BackTestContext';
+import { useBackTestOptionDate } from '../../../../hooks/useBackTestOptionDate';
+import { set } from 'react-datepicker/dist/date_utils';
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
     isVisible,
-    selectedStrategies,
-    handleStrategyChange,
-    position,
-    setPosition,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    performBackTest,
     loading,
     showToggleButton,
-    marketType,
-    setMarketType,
-    setSelectedStrategies,
-    initialStrategies,
+    performBackTest,
 }) => {
-    const [dateRange, setDateRange] = useState('1년');
-    const [isInitialRender, setIsInitialRender] = useState(true);
+    const {
+        selectedStrategies,
+        setSelectedStrategies,
+        position,
+        setPosition,
+        marketType,
+        setMarketType,
+        setStartDate,
+        setEndDate,
+        savedOptions,
+        removeOption,
+        savedMarketType,
+        setSavedMarketType
+    } = useBackTestContext();
+
+    const {
+        dateRange,
+        startDate,
+        endDate,
+        handleDateRangeChange,
+        handleStartDateChange,
+        handleEndDateChange
+    } = useBackTestOptionDate();
+
     const { errors, setError, resetErrors } = useBackTestOptionError();
     const [errorScroll, setErrorScroll] = useState(false);
-
-    useEffect(() => {
-        if (initialStrategies.length > 0) {
-            setSelectedStrategies(initialStrategies);
-            setIsInitialRender(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (!isInitialRender) {
-            setSelectedStrategies([]);
-            setPosition('long');
-        }
-    }, [marketType]);
+    const [showSavedOptions, setShowSavedOptions] = useState(false);
 
     useEffect(() => {
         if (errorScroll) {
@@ -54,57 +54,12 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         }
     }, [errorScroll, errors]);
 
-    const handleDateRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedRange = e.target.value;
-        setDateRange(selectedRange);
-
-        const endDate = new Date();
-        let startDate = new Date();
-
-        switch (selectedRange) {
-            case '1개월':
-                startDate.setMonth(endDate.getMonth() - 1);
-                break;
-            case '3개월':
-                startDate.setMonth(endDate.getMonth() - 3);
-                break;
-            case '6개월':
-                startDate.setMonth(endDate.getMonth() - 6);
-                break;
-            case '1년':
-                startDate.setFullYear(endDate.getFullYear() - 1);
-                break;
-            case '3년':
-                startDate.setFullYear(endDate.getFullYear() - 3);
-                break;
-            case '5년':
-                startDate.setFullYear(endDate.getFullYear() - 5);
-                break;
-            default:
-                return;
-        }
-
-        setStartDate(startDate.toISOString().split('T')[0]);
-        setEndDate(endDate.toISOString().split('T')[0]);
-    };
-
-    const handleStartDateChange = (date: Date | null) => {
-        if (date) {
-            const newStartDate = date.toISOString().split('T')[0];
-            setStartDate(newStartDate);
-            setDateRange('사용자 지정');
-        } else {
-            setStartDate('');
-        }
-    };
-
-    const handleEndDateChange = (date: Date | null) => {
-        if (date) {
-            const newEndDate = date.toISOString().split('T')[0];
-            setEndDate(newEndDate);
-        } else {
-            setEndDate('');
-        }
+    const handleStrategyChange = (strategy: StrategyKey) => {
+        setSelectedStrategies(prev =>
+            prev.includes(strategy)
+                ? prev.filter(s => s !== strategy)
+                : [...prev, strategy]
+        );
     };
 
     const handlePerformBackTest = () => {
@@ -129,9 +84,47 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         }
     };
 
+    const applySavedOption = useCallback((option: string) => {
+        const [newMarketType, savedStrategies, savedPosition, savedDateRange] = option.split(' / ');
+        
+        setSavedMarketType(newMarketType as '선물' | '현물');
+        setMarketType(newMarketType as '선물' | '현물');
+        
+        setSelectedStrategies(savedStrategies.split(', ') as StrategyKey[]);
+    
+        setPosition(savedPosition as 'long' | 'short');
+        
+        const [savedStartDate, savedEndDate] = savedDateRange.replace('기간 ', '').split(' ~ ');
+        setStartDate(savedStartDate);
+        setEndDate(savedEndDate);
+    }, [setSavedMarketType, setMarketType, setSelectedStrategies, setPosition, setStartDate, setEndDate]);
+    
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.RunButtonContainer>
+                {savedOptions.length > 0 && (
+                    <S.SavedOptionsWrapper>
+                        <S.SavedOptionsButton 
+                            onClick={() => setShowSavedOptions(!showSavedOptions)}
+                            isActive={showSavedOptions}
+                        >
+                            저장된 옵션 ({savedOptions.length})
+                        </S.SavedOptionsButton>
+                        {showSavedOptions && (
+                            <S.SavedOptionsDropdown>
+                                {savedOptions.map(({ name, description, option }) => (
+                                    <S.SavedOptionItem key={name}>
+                                        <S.SavedOptionContent onClick={() => applySavedOption(option)}>
+                                            <S.SavedOptionName>{name}</S.SavedOptionName>
+                                            <S.SavedOptionDescription>{description}</S.SavedOptionDescription>
+                                        </S.SavedOptionContent>
+                                        <S.RemoveButton onClick={() => removeOption(name)}>X</S.RemoveButton>
+                                    </S.SavedOptionItem>
+                                ))}
+                            </S.SavedOptionsDropdown>
+                        )}
+                    </S.SavedOptionsWrapper>
+                )}
                 <S.BackTestButton onClick={handlePerformBackTest} disabled={loading}>
                     <S.StyledRocketIcon className="RocketIcon" />BackTest Run
                 </S.BackTestButton>

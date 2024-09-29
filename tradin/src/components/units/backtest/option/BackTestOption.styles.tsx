@@ -42,6 +42,122 @@ export const RunButtonContainer = styled.div`
     width: 100%;
 `;
 
+export const SavedOptionsWrapper = styled.div`
+    position: relative;
+    display: inline-block;
+`;
+
+export const SavedOptionsButton = styled.button<{ isActive: boolean }>`
+    background-color: ${props => props.isActive ? '#4CAF50' : '#f0f0f0'};
+    color: ${props => props.isActive ? 'white' : 'black'};
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    margin-top: 1rem;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: background-color 0.3s;
+    color: black;
+
+    &:hover {
+        background-color: ${props => props.isActive ? '#45a049' : '#e0e0e0'};
+    }
+
+    @media (max-width: 799px) {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: 550;
+    }
+`;
+
+export const SavedOptionsDropdown = styled.div`
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    min-width: 360px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: ${({ theme }) => theme.backgroundColor};
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color:  ${({ theme }) => theme.scrollbarThumbColor};
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+        border-radius: 8px;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+    }
+
+    @media (max-width: 799px) {
+        right: 0%;
+        min-width: 200px;
+    }
+`;
+
+export const SavedOptionItem = styled.div`
+    padding: 10px 5px 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+`;
+
+export const SavedOptionContent = styled.div`
+    flex: 1;
+    cursor: pointer;
+`;
+
+export const SavedOptionName = styled.div`
+    font-weight: bold;
+    color: ${({ theme }) => theme.textColor};
+`;
+
+export const SavedOptionDescription = styled.div`
+    font-size: 0.8em;
+    color: ${({ theme }) => theme.timeTextColor};
+    margin-top: 2px;
+`;
+
+export const RemoveButton = styled.button`
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+    margin-left: 10px;
+`;
+
 export const BackTestButton = styled.button`
     cursor: pointer;
     border: none;
@@ -56,6 +172,7 @@ export const BackTestButton = styled.button`
     position: relative;
     display: flex;
     align-items: center;
+    font-size: 0.9rem;
 
     :hover {
         background-color: ${({ theme }) => theme.backTestButtonHoverColor};
@@ -83,7 +200,7 @@ export const StyledRocketIcon = styled(FaRocket)`
 export const ErrorMessage = styled.p`
     color: #ff6b6b;
     font-size: 0.6em;
-    margin-top: 3px;
+    margin-top: 4px;
     margin-bottom: 0;
     height: 1em;
     line-height: 1em;
@@ -137,7 +254,7 @@ export const OptionContent = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    margin-left: 5%;
+    margin: 0 3%;
 `;
 
 export const OptionButton = styled.button<{ isSelected: boolean, hasError?: boolean }>`
@@ -207,8 +324,8 @@ export const StyledDatePickerWrapper = styled.div`
         padding: 0;
         display: grid;
         grid-template-rows: repeat(6, 1fr);
-        gap: 3px;
-        height: 261px;
+        gap: 2px;
+        height: 194px;
     }
 
     .react-datepicker__week {
@@ -239,15 +356,19 @@ export const StyledDatePickerWrapper = styled.div`
     }
 
     .react-datepicker__day--selected {
-        background-color: ${({ theme }) => theme.highlightColor};
+        background-color: ${({ theme }) => theme.OptionHighlightColor};
         color: ${({ theme }) => theme.backgroundColor};
+    }
+
+    .react-datepicker__day {
+        border-radius: 20px;
     }
 
     .react-datepicker__day,
     .react-datepicker__day-name {
         width: 12%;
-        height: 40px;
-        line-height: 40px;
+        height: 30px;
+        line-height: 30px;
         margin: 0;
         padding: 0;
         text-align: center;
@@ -272,13 +393,13 @@ export const StyledDatePickerWrapper = styled.div`
 
     @media (max-width: 799px) {
         .react-datepicker__month {
-            height: 171px;
+            height: 134px;
         }
 
         .react-datepicker__day,
         .react-datepicker__day-name {
-            height: 25px;
-            line-height: 25px;
+            height: 20px;
+            line-height: 20px;
         }
     }
 `;
@@ -288,15 +409,22 @@ export const DatePickerOptionContent = styled.div`
     width: 100%;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    justify-content: flex-start;
+    margin: 0 3%;
 `;
 
 export const DatePickersRow = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    width: 50%;
+    gap: 12px;
+
+    @media (max-width: 799px) {
+        width: 95%;
+        gap: none;
+    }
 `;
 
 export const DatePickerInput = styled.input<{ hasError?: boolean }>`
@@ -316,6 +444,10 @@ export const DateRangeSeparator = styled.span`
     margin: 0 10px;
     display: flex;
     align-items: center;
+
+    @media (max-width: 799px) {
+        margin: 0;
+    }
 `;
 
 export const DatePickerContainer = styled.div<{ hasError?: boolean }>`
@@ -336,7 +468,7 @@ export const DatePickerLabelInputContainer = styled.div`
 `;
 
 export const DateRangeSelect = styled.select`
-    width: 20%;
+    width: 15%;
     padding: 4px 8px;
     border: 1px solid ${({ theme }) => theme.borderColor};
     background-color: ${({ theme }) => theme.backTestInputBackgroundColor};
@@ -346,7 +478,11 @@ export const DateRangeSelect = styled.select`
     margin-top: 1rem;
     cursor: pointer;
 
-    @media (max-width: 799px) {
+    @media (max-width: 600px) {
+        width: 45%;
+    }
+
+    @media (max-width: 899px) {
         width: 30%;
     }
 `;

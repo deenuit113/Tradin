@@ -1,28 +1,61 @@
 import React, { useState } from 'react';
+import Modal from 'react-modal';
 import * as S from "./BackTestResult.styles";
 import BackTestChart from './BackTestChart';
-import { calculateAllMetrics } from '../utils/calculateMetrics';
-import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy, FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt } from 'react-icons/fa';
+import { FaGlobe, FaChartBar, FaLongArrowAltUp, FaLongArrowAltDown, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BackTestResultsProps } from './BackTestResult.types';
+import ResultTransactionHistory from './ResultTransactionHistory';
+import ResultContent from './ResultContent';
+import { useBackTestContext } from '../../../../contexts/BackTestContext';
+import { saveOptionModalStyle } from './BackTestResult.styles';
+
+const CarouselPage: React.FC<{
+    pageNumber: number;
+    currentPage: number;
+    isNext: boolean;
+    children: React.ReactNode;
+}> = ({ pageNumber, currentPage, isNext, children }) => (
+    <S.CarouselPage isActive={pageNumber === currentPage} isNext={isNext}>
+        {children}
+    </S.CarouselPage>
+);
 
 const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptions }) => {
     const [selectedMetric, setSelectedMetric] = useState<'profit' | 'equity' | 'drawdown'>('profit');
-
-    // 백테스트 자본금 > 추후 옵션 표시?
-    const initialCapital = 10000;
+    const [currentPage, setCurrentPage] = useState(0);
+    const [isNext, setIsNext] = useState(true);
+    const { saveOption } = useBackTestContext();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [optionName, setOptionName] = useState('');
     
-    // 자본금으로 결과 계산
-    const results = Object.entries(trades).map(([strategy, strategyTrades]) => ({
-        strategy,
-        ...calculateAllMetrics(strategyTrades, initialCapital)
-    }));
+    const initialCapital = 10000;
 
-    // 그래프 표시 방식 변경
     const handleMetricChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedMetric(event.target.value as 'profit' | 'equity' | 'drawdown');
     };
+
+    const handleNextPage = () => {
+        setIsNext(true);
+        setCurrentPage((prev) => (prev + 1) % 2);
+    };
     
-    // 실행 옵션 표시
+    const handlePrevPage = () => {
+        setIsNext(false);
+        setCurrentPage((prev) => (prev - 1 + 2) % 2);
+    };
+
+    const handleSave = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmSave = () => {
+        if (optionName && executedOptions) {
+            saveOption(optionName, executedOptions, executedOptions);
+            setIsModalOpen(false);
+            setOptionName('');
+        }
+    };
+
     const renderExecutedOptions = () => {
         if (!executedOptions) return null;
 
@@ -46,37 +79,64 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
                     <FaCalendarAlt className="OptionIcon" />
                     {dateRange.replace('기간 ', '')}
                 </S.ExecutedOptionItem>
+                
             </S.ExecutedOptionsContainer>
         );
     };
-    // 항목별 결과 표시
-    const renderResultItem = (label: string, value: string | number, icon: React.ReactNode) => (
-        <S.ResultContent>
-            {icon}
-            {label}: {value}
-        </S.ResultContent>
-    );
 
     return (
         <S.ResultContainer>
             <S.ResultHeader>
                 <S.ResultTitle>실행 결과:</S.ResultTitle>
                 {renderExecutedOptions()}
+                <S.SaveButton onClick={handleSave}>저장</S.SaveButton>
+
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={() => setIsModalOpen(false)}
+                    style={saveOptionModalStyle}
+                    contentLabel="옵션 저장"
+                >
+                    <S.ModalContent>
+                        <S.ModalInput
+                            type="text"
+                            value={optionName}
+                            onChange={(e) => setOptionName(e.target.value)}
+                            placeholder="옵션 이름 입력"
+                        />
+                        <S.ModalButtonWrapper>
+                            <S.ModalButton onClick={handleConfirmSave}>확인</S.ModalButton>
+                            <S.ModalButton onClick={() => setIsModalOpen(false)}>취소</S.ModalButton>
+                        </S.ModalButtonWrapper>
+                    </S.ModalContent>
+                </Modal>
             </S.ResultHeader>
-            {results.map((result, index) => (
-                <S.ResultInnerContainer key={index}>
-                    <S.ResultSubtitle>{result.strategy}</S.ResultSubtitle>
-                    {renderResultItem('총 수익', `$${result.totalReturn.toFixed(2)}`, <FaDollarSign className='ResultIcon'/>)}
-                    {renderResultItem('연간 수익률', `${(result.annualizedReturn * 100).toFixed(2)}%`, <FaChartLine className='ResultIcon'/>)}
-                    {renderResultItem('최대 손실', `$${result.maxDrawdown.toFixed(2)}`, <FaLevelDownAlt className='ResultIcon'/>)}
-                    {renderResultItem('승률', `${(result.winRate * 100).toFixed(2)}%`, <FaTrophy className='ResultIcon'/>)}
-                    {renderResultItem('평균 수익', `$${result.averageGain.toFixed(2)}`, <FaArrowUp className='ResultIcon'/>)}
-                    {renderResultItem('평균 손실', `$${result.averageLoss.toFixed(2)}`, <FaArrowDown className='ResultIcon'/>)}
-                    {renderResultItem('샤프 비율', result.sharpeRatio.toFixed(2), <FaCrosshairs className='ResultIcon'/>)}
-                    {renderResultItem('거래 횟수', result.tradeCount, <FaExchangeAlt className='ResultIcon'/>)}
-                    {renderResultItem('평균 보유 기간', `${isNaN(result.averageHoldingPeriod) ? '0.00' : result.averageHoldingPeriod.toFixed(2)} days`, <FaClock className='ResultIcon'/>)}
-                </S.ResultInnerContainer>
-            ))}
+            <S.ResultInnerContainer>
+                <S.CarouselContainer>
+                    <S.CarouselContent currentPage={currentPage}>
+                        <CarouselPage pageNumber={0} currentPage={currentPage} isNext={isNext}>
+                            <ResultContent 
+                                    strategies={trades}
+                                    initialCapital={initialCapital}
+                            />
+                        </CarouselPage>
+                        <CarouselPage pageNumber={1} currentPage={currentPage} isNext={isNext}>
+                            <ResultTransactionHistory trades={trades} initialCapital={initialCapital} />
+                        </CarouselPage>
+                    </S.CarouselContent>
+                </S.CarouselContainer>
+                <S.PrevButton onClick={handlePrevPage}>
+                    <FaChevronLeft />
+                </S.PrevButton>
+                <S.NextButton onClick={handleNextPage}>
+                    <FaChevronRight />
+                </S.NextButton>
+                <S.CarouselDots>
+                    <S.CarouselDot active={currentPage === 0} onClick={() => setCurrentPage(0)} />
+                    <S.CarouselDot active={currentPage === 1} onClick={() => setCurrentPage(1)} />
+                </S.CarouselDots>
+            </S.ResultInnerContainer>
+            
             <S.ChartControls>
                 <S.ChartSelect onChange={handleMetricChange} value={selectedMetric}>
                     <option value="profit">손익</option>
