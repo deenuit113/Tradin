@@ -64,6 +64,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setShowSavedOptions(false);
+                handleInputBlur();
             }
         };
 
