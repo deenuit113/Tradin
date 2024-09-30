@@ -9,6 +9,7 @@ import { useBackTestOptionError } from '../../../../hooks/useBackTestOptionError
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
 import { useBackTestOptionDate } from '../../../../hooks/useBackTestOptionDate';
 import { set } from 'react-datepicker/dist/date_utils';
+import { FaCheck, FaPencilAlt } from 'react-icons/fa';
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
     isVisible,
@@ -27,6 +28,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         setEndDate,
         savedOptions,
         removeOption,
+        updateOptionName,
         savedMarketType,
         setSavedMarketType
     } = useBackTestContext();
@@ -43,6 +45,10 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
     const { errors, setError, resetErrors } = useBackTestOptionError();
     const [errorScroll, setErrorScroll] = useState(false);
     const [showSavedOptions, setShowSavedOptions] = useState(false);
+    const [editingOption, setEditingOption] = useState<string | null>(null);
+    const [newName, setNewName] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (errorScroll) {
@@ -53,6 +59,19 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
             setErrorScroll(false);
         }
     }, [errorScroll, errors]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setShowSavedOptions(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const handleStrategyChange = (strategy: StrategyKey) => {
         setSelectedStrategies(prev =>
@@ -98,12 +117,31 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
         setStartDate(savedStartDate);
         setEndDate(savedEndDate);
     }, [setSavedMarketType, setMarketType, setSelectedStrategies, setPosition, setStartDate, setEndDate]);
+
+    const handleEditClick = (name: string) => {
+        setEditingOption(name);
+        setNewName(name);
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
+    };
+
+    const handleUpdateName = (oldName: string) => {
+        if (newName && newName !== oldName) {
+            updateOptionName(oldName, newName);
+        }
+        setEditingOption(null);
+    };
+
+    const handleInputBlur = () => {
+        setEditingOption(null);
+    };
     
     return (
         <S.OptionsContainer isVisible={isVisible} showToggleButton={showToggleButton}>
             <S.RunButtonContainer>
                 {savedOptions.length > 0 && (
-                    <S.SavedOptionsWrapper>
+                    <S.SavedOptionsWrapper ref={dropdownRef}>
                         <S.SavedOptionsButton 
                             onClick={() => setShowSavedOptions(!showSavedOptions)}
                             isActive={showSavedOptions}
@@ -115,10 +153,37 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 {savedOptions.map(({ name, description, option }) => (
                                     <S.SavedOptionItem key={name}>
                                         <S.SavedOptionContent onClick={() => applySavedOption(option)}>
-                                            <S.SavedOptionName>{name}</S.SavedOptionName>
+                                            {editingOption === name ? (
+                                                <S.EditNameInput
+                                                    value={newName}
+                                                    ref={inputRef}
+                                                    onBlur={handleInputBlur}
+                                                    onChange={(e) => setNewName(e.target.value)}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                />
+                                            ) : (
+                                                <S.SavedOptionName>{name}</S.SavedOptionName>
+                                            )}
                                             <S.SavedOptionDescription>{description}</S.SavedOptionDescription>
                                         </S.SavedOptionContent>
-                                        <S.RemoveButton onClick={() => removeOption(name)}>X</S.RemoveButton>
+                                        <S.ButtonGroup>
+                                            {editingOption === name ? (
+                                                <S.EditButton onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleUpdateName(name);
+                                                }}>
+                                                    <FaCheck />
+                                                </S.EditButton>
+                                            ) : (
+                                                <S.EditButton onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleEditClick(name);
+                                                }}>
+                                                    <FaPencilAlt />
+                                                </S.EditButton>
+                                            )}
+                                            <S.RemoveButton onClick={() => removeOption(name)}>X</S.RemoveButton>
+                                        </S.ButtonGroup>
                                     </S.SavedOptionItem>
                                 ))}
                             </S.SavedOptionsDropdown>

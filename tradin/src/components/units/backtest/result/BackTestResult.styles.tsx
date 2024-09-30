@@ -154,9 +154,13 @@ export const ModalContent = styled.div`
     padding: 2rem 1rem 1rem 1rem;
     border-radius: 6px;
     z-index: 1200;
-    width: 50vw;
+    width: 20vw;
     max-height: 30vh;
     margin: 0;
+
+    @media (max-width: 799px) {
+        width: 50vw;
+    }
 `;
 
 export const ModalInput = styled.input`

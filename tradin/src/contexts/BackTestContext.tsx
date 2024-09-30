@@ -22,6 +22,7 @@ interface BackTestContextType {
     savedOptions: SavedOption[];
     saveOption: (name: string, option: string, description: string) => void;
     removeOption: (option: string) => void;
+    updateOptionName: (oldName: string, newName: string) => void;
     savedMarketType: '선물' | '현물' | null;
     setSavedMarketType: React.Dispatch<React.SetStateAction<'선물' | '현물' | null>>;
 }
@@ -47,7 +48,7 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
     const [isInitialRender, setIsInitialRender] = useState(initialStrategies.length === 0);
     const [savedOptions, setSavedOptions] = useState<SavedOption[]>([]);
     const [savedMarketType, setSavedMarketType] = useState<'선물' | '현물' | null>(null);
-
+    
     useEffect(() => {
         setSelectedStrategies(initialStrategies);
         setMarketType(initialMarketType);
@@ -76,10 +77,31 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
         }
     }, []);
 
-    const saveOption = (name: string, description: string, option: string) => { // 실행한 옵션 저장
+    const saveOption = (name: string, description: string, option: string) => {
         const newOption = { name, description, option };
         setSavedOptions(prev => {
+            // 이미 저장된 옵션인지 확인
+            const isDuplicate = prev.some(savedOption => 
+                savedOption.option === option
+            );
+    
+            if (isDuplicate) {
+                alert("이미 저장된 옵션입니다.");
+                return prev; // 중복된 경우 기존 배열을 그대로 반환
+            }
+    
+            // 중복이 아닌 경우 새 옵션 추가
             const updated = [...prev, newOption];
+            localStorage.setItem('savedBackTestOptions', JSON.stringify(updated));
+            return updated;
+        });
+    };
+
+    const updateOptionName = (oldName: string, newName: string) => {
+        setSavedOptions(prev => {
+            const updated = prev.map(opt => 
+                opt.name === oldName ? { ...opt, name: newName } : opt
+            );
             localStorage.setItem('savedBackTestOptions', JSON.stringify(updated));
             return updated;
         });
@@ -109,6 +131,7 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
             savedOptions,
             saveOption,
             removeOption: removeSavedOption,
+            updateOptionName,
             savedMarketType,
             setSavedMarketType,
         }}>
