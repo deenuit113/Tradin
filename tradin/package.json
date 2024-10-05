@@ -39,6 +39,7 @@
     "react-switch": "^7.0.0",
     "react-toastify": "^10.0.5",
     "recoil": "^0.7.7",
+    "redux-persist": "^6.0.0",
     "styled-components": "^6.1.12",
     "technicalindicators": "^3.1.0",
     "tradingview-widget": "^0.0.1",
