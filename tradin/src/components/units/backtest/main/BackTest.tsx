@@ -10,8 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { useBackTest } from '../../../../hooks/useBackTest';
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
-import { RootState } from '../../../../store/store';
-import { setBacktestResults, setExecutedOptions } from '../../../../store/backtestResultSlice';
+import { RootState } from '../../../../store/rootReducer';
+import { setBacktestResults, setExecutedOptions, clearBacktestResults } from '../../../../store/backtestResultSlice';
 
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -30,6 +30,12 @@ export default function BackTestPage(): JSX.Element {
     } = useBackTest();
 
     const [optionsVisible, setOptionsVisible] = useState(true);
+
+    useEffect(() => {
+        if (!results && !executedOptions) {
+            dispatch(clearBacktestResults());
+        }
+    }, []);
 
     useEffect(() => {
         if (backTestMutation.isSuccess && backTestMutation.data) {
