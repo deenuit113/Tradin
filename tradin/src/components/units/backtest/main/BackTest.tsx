@@ -16,7 +16,7 @@ import { setBacktestResults, setExecutedOptions, clearBacktestResults } from '..
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const dispatch = useDispatch();
-    const { results, executedOptions } = useSelector((state: RootState) => state.backtest);
+    const { results, executedOptions } = useSelector((state: RootState) => state.backtest ?? {});
     const {
         selectedStrategies,
         marketType,
@@ -53,7 +53,8 @@ export default function BackTestPage(): JSX.Element {
         setOptionsVisible(!optionsVisible);
     };
 
-    const showResults = results && executedOptions;
+    const state = useSelector((state: RootState) => state);
+    console.log('Current Redux State:', state);
 
     return (
         <S.Container>
@@ -64,7 +65,7 @@ export default function BackTestPage(): JSX.Element {
                 <S.BackTestContainer>
                     {backTestMutation.isLoading ? (
                         <ResultSkeletonUI />
-                    ) : showResults ? (
+                    ) : results && executedOptions ? (
                         <BackTestResults trades={results} executedOptions={executedOptions} />
                     ) : null}
                     
