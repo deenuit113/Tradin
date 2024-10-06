@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface BacktestState {
+export interface BacktestState {
     results: any;
     executedOptions: string | null;
 }
