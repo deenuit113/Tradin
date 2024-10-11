@@ -9,7 +9,7 @@ import { useBackTestOptionError } from '../../../../hooks/useBackTestOptionError
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
 import { useBackTestOptionDate } from '../../../../hooks/useBackTestOptionDate';
 import { set } from 'react-datepicker/dist/date_utils';
-import { FaCheck, FaPencilAlt } from 'react-icons/fa';
+import { FaArrowDown, FaArrowUp, FaCheck, FaPencilAlt } from 'react-icons/fa';
 
 const OptionsContainer: React.FC<OptionsContainerProps> = ({
     isVisible,
@@ -264,6 +264,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 hasError={errors.positionError}
                             >
                                 Long
+                                <S.ArrowUpIcon isSelected={position === 'long'}/>
                             </S.OptionButton>
                             <S.OptionButton
                                 isSelected={position === 'short'}
@@ -272,6 +273,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 hasError={errors.positionError}
                             >
                                 Short
+                                <S.ArrowDownIcon isSelected={position === 'short'}/>
                             </S.OptionButton>
                         </S.OptionContent>
                     </S.OptionGroup>

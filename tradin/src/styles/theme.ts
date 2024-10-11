@@ -4,6 +4,7 @@ export interface Theme {
     moreinnerbackgroundColor: string;
     moreinnerborderColor: string;
     textColor: string;
+    reversedTextColor: string;
     iconColor: string;
     timeTextColor: string;
     widgetBackgroundColor: string;
@@ -63,6 +64,7 @@ export const lightTheme = {
     moreinnerbackgroundColor: '#d0d0d0',
     moreinnerborderColor: '#b0b0b0',
     textColor: '#333',
+    reversedTextColor: '#f0f0f0',
     iconColor: '#333',
     timeTextColor: 'grey',
     widgetBackgroundColor: '#fff',
@@ -123,6 +125,7 @@ export const darkTheme = {
     moreinnerbackgroundColor: '#555',
     moreinnerborderColor: '#888',
     textColor: '#f0f0f0',
+    reversedTextColor: '#333',
     iconColor: '#f0f0f0',
     timeTextColor: 'lightgrey',
     widgetBackgroundColor: '#333',
