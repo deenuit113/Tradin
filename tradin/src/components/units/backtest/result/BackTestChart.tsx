@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import * as S from "./BackTestResult.styles";
 import {
@@ -10,6 +10,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    ChartOptions,
 } from 'chart.js';
 import { useTheme } from '@emotion/react';
 import { BackTestChartProps } from './BackTestResult.types';
@@ -27,6 +28,7 @@ ChartJS.register(
 
 const BackTestChart: React.FC<BackTestChartProps> = ({ trades, selectedMetric }) => {
     const theme = useTheme();
+    const chartRef = useRef<ChartJS<"line">>(null!);
 
     const colors = [
         'rgba(75, 192, 192, 1)',
@@ -73,14 +75,56 @@ const BackTestChart: React.FC<BackTestChartProps> = ({ trades, selectedMetric })
             datasets,
         };
     }, [trades, selectedMetric]);
-    // 백테스트 실행 시 & 차트 지표를 바꿀 때 차트 데이터 재계산
 
-    const options = useMemo(() => getChartOptions(theme), [theme]);
-    // Theme 변경 (다크모드) 있을 때만 option 재계산
+    const options: ChartOptions<'line'> = useMemo(() => {
+        const baseOptions = getChartOptions(theme);
+        return {
+            ...baseOptions,
+            plugins: {
+                ...baseOptions.plugins,
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: (context) => {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                const value = context.parsed.y;
+                                if (selectedMetric === 'drawdown') {
+                                    label += value.toFixed(2) + '%';
+                                } else {
+                                    label += new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    }).format(value);
+                                }
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: false,
+                axis: 'x'
+            },
+            elements: {
+                point: {
+                    radius: 0,
+                    hitRadius: 10,
+                    hoverRadius: 5
+                }
+            }
+        };
+    }, [theme, selectedMetric]);
 
     return (
         <S.ChartContainer>
-            <Line className='BackTestChart' data={chartData} options={options} />
+            <Line ref={chartRef} className='BackTestChart' data={chartData} options={options} />
         </S.ChartContainer>
     );
 };
