@@ -1,5 +1,7 @@
 'use client';
 
+import './ui/global.css';
+import { noto_sans_kr } from './ui/fonts';
 import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -17,7 +19,7 @@ const queryClient = new QueryClient();
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
-        <html lang="ko">
+        <html lang="ko" className={noto_sans_kr.className}>
             <head>
                 <title>Tradin</title>
             </head>

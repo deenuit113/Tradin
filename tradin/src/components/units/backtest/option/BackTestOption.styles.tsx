@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { css } from "@emotion/react";
-import { FaRocket } from "react-icons/fa";
+import { FaArrowDown, FaArrowUp, FaRocket } from "react-icons/fa";
 
 // Option
 
@@ -16,12 +16,12 @@ export const OptionsContainer = styled.div<{ isVisible: boolean, showToggleButto
     position: relative;
     z-index: 1;
     margin-top: -1px;
-    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, padding 0.3s ease-in-out;
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, padding 0.5s ease-in-out;
     height: auto;
     
     ${({ isVisible }) => isVisible
         ? css`
-            max-height: 2000px; // 충분히 큰 값으로 설정
+            max-height: 2000px;
             opacity: 1;
             visibility: visible;
             padding: 1rem 2rem;
@@ -48,8 +48,8 @@ export const SavedOptionsWrapper = styled.div`
 `;
 
 export const SavedOptionsButton = styled.button<{ isActive: boolean }>`
-    background-color: ${props => props.isActive ? '#4CAF50' : '#f0f0f0'};
-    color: ${props => props.isActive ? 'white' : 'black'};
+    background-color: ${({ isActive, theme }) => (isActive ? theme.OptionHighlightColor : theme.backgroundColor)};
+    color: ${({ isActive, theme }) => (isActive ? theme.reversedTextColor : theme.textColor)};
     border: none;
     padding: 10px 15px;
     text-align: center;
@@ -62,10 +62,9 @@ export const SavedOptionsButton = styled.button<{ isActive: boolean }>`
     font-size: 0.9rem;
     font-weight: 700;
     transition: background-color 0.3s;
-    color: black;
 
     &:hover {
-        background-color: ${props => props.isActive ? '#45a049' : '#e0e0e0'};
+        background-color: ${({ isActive, theme }) => (isActive ? theme.OptionHighlightColor : theme.innerbackgroundColor)};
     }
 
     @media (max-width: 799px) {
@@ -116,7 +115,7 @@ export const SavedOptionsDropdown = styled.div`
 
     @media (max-width: 799px) {
         right: 0%;
-        min-width: 200px;
+        min-width: 250px;
     }
 `;
 
@@ -130,7 +129,7 @@ export const SavedOptionItem = styled.div`
     justify-content: center;
 
     &:hover {
-        background-color: #f0f0f0;
+        background-color: ${({ theme }) => theme.widgetDropDownHoverColor};
     }
 `;
 
@@ -140,14 +139,54 @@ export const SavedOptionContent = styled.div`
 `;
 
 export const SavedOptionName = styled.div`
-    font-weight: bold;
+    width: 95%;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    padding: 5px;
     color: ${({ theme }) => theme.textColor};
 `;
 
 export const SavedOptionDescription = styled.div`
-    font-size: 0.8em;
+    font-size: 0.7em;
+    font-weight: 100;
     color: ${({ theme }) => theme.timeTextColor};
     margin-top: 2px;
+`;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+export const EditButton = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${({ theme }) => theme.textColor};
+`;
+
+export const EditNameInput = styled.input`
+    width: 95%;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    background-color: transparent;
+    padding: 5px;
+    border: none;
+    border-bottom: 3px solid ${({ theme }) => theme.textColor};
+    color: ${({ theme }) => theme.textColor};
+    outline: none; 
+
+    &:focus {
+        border: none;
+        border-bottom: 3px solid ${({ theme }) => theme.textColor};
+    }
 `;
 
 export const RemoveButton = styled.button`
@@ -155,7 +194,10 @@ export const RemoveButton = styled.button`
     border: none;
     color: red;
     cursor: pointer;
-    margin-left: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const BackTestButton = styled.button`
@@ -258,6 +300,9 @@ export const OptionContent = styled.div`
 `;
 
 export const OptionButton = styled.button<{ isSelected: boolean, hasError?: boolean }>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 10px 15px;
     border: 1px solid ${({ isSelected, hasError, theme }) => 
         hasError ? '#ff6b6b' : 
@@ -268,11 +313,22 @@ export const OptionButton = styled.button<{ isSelected: boolean, hasError?: bool
     color: ${({ isSelected, theme }) => (isSelected ? theme.backgroundColor : theme.textColor)};
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight: 500;
 
     &:hover {
         background-color: ${({ theme }) => theme.hoverColor};
     }
 `;
+
+export const ArrowUpIcon = styled(FaArrowUp)<{ isSelected: boolean }>`
+    color: ${({ isSelected, theme }) => (isSelected ? 'red' : theme.textColor)};
+    margin-left: 5px; 
+`
+
+export const ArrowDownIcon = styled(FaArrowDown)<{ isSelected: boolean }>`
+    color: ${({ isSelected, theme }) => (isSelected ? 'blue' : theme.textColor)};
+    margin-left: 5px; 
+`
 
 export const HorizontalDivider = styled.div`
     width: 100%;

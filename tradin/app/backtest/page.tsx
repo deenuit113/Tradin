@@ -1,9 +1,12 @@
 'use client';
 
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import BackTestPage from "../../src/components/units/backtest/main/BackTest";
 import { BackTestProvider } from "../../src/contexts/BackTestContext";
 import { useSearchParams } from "next/navigation";
 import { StrategyKey } from "../../src/components/units/backtest/mockdata/MockStrategy";
+import { store, persistor } from '../../src/store/store';
 
 export default function BackTest() {
     const searchParams = useSearchParams();
@@ -15,11 +18,15 @@ export default function BackTest() {
     }).filter(Boolean) || [];
 
     return (
-        <BackTestProvider
-            initialMarketType={initialMarketType} 
-            initialStrategies={initialStrategies}
-            >
-            <BackTestPage />
-        </BackTestProvider>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <BackTestProvider
+                    initialMarketType={initialMarketType} 
+                    initialStrategies={initialStrategies}
+                >
+                    <BackTestPage />
+                </BackTestProvider>
+            </PersistGate>
+        </Provider>
     );
 }
