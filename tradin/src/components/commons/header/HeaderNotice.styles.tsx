@@ -201,6 +201,7 @@ export const NotificationItem = styled.li<{ read: boolean; isRemoving: boolean; 
     overflow: hidden;
     z-index: 1010;
     user-select: none;
+
 `;
 
 export const NotificationText = styled.span`
@@ -224,7 +225,7 @@ export const DeletedZone = styled.div<{ opacity: number }>`
     bottom: 0;
     width: 100px;
     padding-right: 20px;
-    background-color: red;
+    background-color: #DC143C;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -243,7 +244,7 @@ export const ModalContainer = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: ${({ theme }) => theme.backgroundColor};
-    padding: 30px 20px 30px 20px;
+    padding: 1.5rem 2rem 1.5rem 2rem;
     border: 1px solid ${({ theme }) => theme.backgroundColor};
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -252,9 +253,9 @@ export const ModalContainer = styled.div`
     z-index: 1002;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
-        width: 80%;
+        width: 60%;
         height: 80%;
-        padding-left: 10px;
+        padding: 1.5rem;
     }
 `;
 
@@ -308,19 +309,28 @@ export const SwitchContainer = styled.div`
 `;
 
 export const NotificationIcon = styled.div`
-    font-size: 20px;
+    display: flex;
+    align-item: center;
+    justify-content: center;
+    font-size: 23px;
+    width: 25px;
 `;
 
 export const RightContainer = styled.div`
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
     gap: 15px;
+    max-width: 30%;
 `;
 
 export const DeleteAllIcon = styled.div`
     position: relative;
+    display: flex;
+    align-item: center;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 22px;
     color: #888;
 
     &:hover {
@@ -352,8 +362,10 @@ export const ConfirmDialog = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
+    background-color: ${({ theme }) => theme.backgroundColor};
+    color: ${({ theme }) => theme.textColor};
+    padding: 20px; 
+    border: 1px solid ${({ theme }) => theme.borderColor};
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1020;
