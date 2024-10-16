@@ -566,16 +566,12 @@ export const SkeletonBox = styled.div`
     background: ${({ theme }) => theme.skeletonBaseColor};
     background-image: linear-gradient(
         90deg,
-        ${({ theme }) => theme.skeletonBaseColor} 0%, 
-        ${({ theme }) => theme.skeletonHighlightColor} 20%, 
-        ${({ theme }) => theme.skeletonBaseColor} 40%, 
+        ${({ theme }) => theme.skeletonBaseColor} 0%,
+        ${({ theme }) => theme.skeletonHighlightColor} 50%,
         ${({ theme }) => theme.skeletonBaseColor} 100%
     );
-    background-repeat: no-repeat;
     background-size: 200% 100%;
-    display: inline-block;
-    position: relative;
-    animation: ${shimmer} 1.5s infinite linear;
+    animation: ${shimmer} 2s infinite linear;
 `;
 
 export const ResultSkeletonContent = styled(SkeletonBox)`
