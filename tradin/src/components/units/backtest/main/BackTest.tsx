@@ -27,6 +27,7 @@ export default function BackTestPage(): JSX.Element {
     const {
         backTestMutation,
         performBackTest,
+        showToggleButton,
     } = useBackTest();
 
     const [optionsVisible, setOptionsVisible] = useState(true);
@@ -69,15 +70,20 @@ export default function BackTestPage(): JSX.Element {
                         <BackTestResults trades={results} executedOptions={executedOptions} />
                     ) : null}
                     
-                    <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
+                    {showToggleButton ? (
+                        <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
                         <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
                         {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
-                    </S.OptionToggleButton>
+                        </S.OptionToggleButton>
+                    ) :
+                        (<></>)
+                    }
+                    
                     
                     <OptionsContainer
                         isVisible={optionsVisible}
                         loading={backTestMutation.isLoading}
-                        showToggleButton={true}
+                        showToggleButton={showToggleButton}
                         performBackTest={handlePerformBackTest}
                     />
                     
