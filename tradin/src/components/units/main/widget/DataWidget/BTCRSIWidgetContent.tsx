@@ -14,6 +14,11 @@ const GaugeContainer = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 80%;
+        height: 80%;
+    }
 `;
 
 const GaugeSvg = styled.svg`
@@ -34,7 +39,7 @@ const GaugeNeedle = styled.line`
     stroke-width: 6;
     stroke-linecap: round;
     transition: transform 1s cubic-bezier(0.68, -1.00, 0.27, 1.55);
-    transform-origin: 50% 80%; /* 중심점을 맞춰줍니다 */
+    transform-origin: 50% 80%;
 `;
 
 const GaugeText = styled.text`

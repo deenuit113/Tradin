@@ -24,7 +24,7 @@ export const SelectorHeader = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-bottom: 10px;
+    padding: 1rem 1rem;
     border-bottom: 1px solid #ccc;
 `;
 
@@ -33,12 +33,19 @@ export const SelectorHeaderTitle = styled.h3`
 `
 
 export const CloseButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: none;
     border: none;
-    font-size: 30px;
+    font-size: 20px;
     cursor: pointer;
     transition: transform 0.3s ease;
     color: ${({ theme }) => theme.iconColor};
+    width: 30px;
+    height: 30px;
+    transform-origin: center center;
+    padding: 0;
     
     &:hover {
         transform: rotate(180deg);
