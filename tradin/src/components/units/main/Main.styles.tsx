@@ -24,7 +24,7 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     justify-content: flex-end;
-    padding: 5px 10px 20px 10px;
+    padding: 5px 10px 15px 10px;
     background-color: transparent;
     gap: 15px;
 
@@ -36,6 +36,7 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
         color: ${({ theme }) => theme.textColor};
     }
     sub {
+        display: none;
         font-size: 12px;
         font-weight: 350;
         color: ${({ theme }) => theme.timeTextColor};
@@ -50,16 +51,17 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
     p:hover sub {
         visibility: visible;
         opacity: 1;
+        display: block;
     }
 
     @media all and (min-width: 359px) and (max-width: 799px) {
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         p {
-            font-size: 14px;
+            font-size: 13px;
         }
 
         sub {
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .Currency-Unit-Switch {
@@ -239,6 +241,7 @@ export const WidgetTitle = styled.div`
     align-items: center;
     font-size: 15px;
     font-weight: 600;
+    gap: 5px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         font-size: 12px;
@@ -289,6 +292,7 @@ export const WidgetContent = styled.div`
     border-radius: 8px;
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
     overflow: hidden;
+
     #LoadingIcon{
         font-size: 30px;
     }
@@ -319,7 +323,7 @@ export const AddWidgetButton = styled.button`
     font-size: 1;
 
     .PlusIcon {
-        font-size: 4rem;
+        font-size: 3rem;
     }
 `;
 

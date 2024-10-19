@@ -37,8 +37,8 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                     <Switch
                             onChange={() => setIsCurrencyKRW(prev => !prev)}
                             checked={isCurrencyKRW}
-                            offColor="#add836"
-                            onColor="#add836"
+                            offColor="#ffd700"
+                            onColor="#85bb65"
                             uncheckedIcon={<FontAwesomeIcon icon={faWon} style={{ color: 'green', padding: '3.5px', paddingTop:'6px', fontSize: '14px'}} />}
                             checkedIcon={<FontAwesomeIcon icon={faDollar} style={{ color: 'green', padding: '6px', fontSize: '15px'}} />}
                             height={30}

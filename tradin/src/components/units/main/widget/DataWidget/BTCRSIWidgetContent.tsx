@@ -58,6 +58,7 @@ const Explanation = styled.text<{ hovered: boolean }>`
     alignment-baseline: middle;
     opacity: ${({ hovered }) => hovered ? 1 : 0};
     transition: opacity 0.3s ease-in-out;
+    display: ${({ hovered }) => hovered ? 'block' : 'none'};
 `
 
 const RSIWidgetContent: React.FC = () => {
