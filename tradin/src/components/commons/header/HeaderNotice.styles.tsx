@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { CSSProperties } from "react";
 import { keyframes } from "@emotion/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaBell } from "react-icons/fa";
 
 const shakeAnimation = keyframes`
     0%, 100% {
@@ -84,6 +85,10 @@ export const VolumeSliderContainer = styled.div`
     left: 50%;
     transform: translateX(-50%);
     width: 120px;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        width: 80px;
+    }
 `;
 
 export const VolumeSlider = styled.div<{ volume: number }>`
@@ -110,18 +115,30 @@ export const UnreadBadge = styled.div`
     background-color: red;
     color: white;
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 10px;
     font-weight: 800;
     user-select: none;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        top: -3px;
+        right: -3px;
+        width: 15px;
+        height: 15px;
+        font-size: 8px;
+        font-weight: 800;
+    }
 `;
 
-export const BellIcon = styled.div`
-    display: inline-block;
+export const FaBellContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     transition: transform 0.3s ease;
     
@@ -130,6 +147,16 @@ export const BellIcon = styled.div`
         transform-origin: top center;
     }
 `;
+
+export const FaBellIcon = styled(FaBell)`
+    color: ${({ theme }) => theme.iconColor};
+    cursor: pointer;
+    font-size: 1.6rem;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        font-size: 1.5rem;
+    }
+`
 
 export const CloseButton = styled.button`
     position: fixed;
@@ -179,6 +206,18 @@ export const NotificationList = styled.ul`
             width: 12px;
         }
     }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        &:hover {
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+        }
+    }
 `;
 
 export const NotificationItem = styled.li<{ read: boolean; isRemoving: boolean; moveUp: boolean; dragX: number, isActive: boolean }>`
@@ -210,12 +249,22 @@ export const NotificationText = styled.span`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 1rem;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        font-size: 0.9rem;
+    }
 `;
 
 export const NewBadge = styled.span`
-    color: orange;
+    color: #FA3E3E;
     font-weight: bold;
     margin-right: 5px;
+    font-size: 1rem;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        font-size: 0.9rem;
+    }
 `;
 
 export const DeletedZone = styled.div<{ opacity: number }>`
@@ -231,9 +280,14 @@ export const DeletedZone = styled.div<{ opacity: number }>`
     justify-content: center;
     color: white;
     font-weight: bold;
+    font-size: 1rem;
     z-index: 1000;
     opacity: ${props => props.opacity};
     transition: opacity 0.3s ease;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        font-size: 0.9rem;
+    }
 `;
 
 export const ModalContainer = styled.div`
@@ -253,7 +307,7 @@ export const ModalContainer = styled.div`
     z-index: 1002;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
-        width: 60%;
+        width: 55%;
         height: 80%;
         padding: 1.5rem;
     }
@@ -279,6 +333,9 @@ export const ReadButton = styled.button<{ active: boolean }>`
     padding: 5px 10px;
     cursor: pointer;
     outline: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+
     &:hover {
         background-color: ${({ active, theme }) => (active ? theme.notificationActiveButtonHoverBgColor : theme.notificationButtonHoverBgColor)};
     }
@@ -297,8 +354,14 @@ export const TrashAllIcon = styled(FontAwesomeIcon)`
     cursor: pointer
     color: ${({ theme }) => theme.notificationTrashIconColor};
     z-index: 1010;
+    font-size: 1.3rem;
+
     &:hover {
         color: ${({ theme }) => theme.notificationTrashIconHoverColor};
+    }
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        font-size: 1.2rem;
     }
 `
 
@@ -312,8 +375,12 @@ export const NotificationIcon = styled.div`
     display: flex;
     align-item: center;
     justify-content: center;
-    font-size: 23px;
+    font-size: 1.3rem;
     width: 25px;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        font-size: 1.2rem;
+    }
 `;
 
 export const RightContainer = styled.div`
@@ -350,7 +417,7 @@ export const Tooltip = styled.div`
     padding: 5px;
     border-radius: 3px;
     font-size: 12px;
-    bottom: -25px;
+    bottom: -30px;
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;

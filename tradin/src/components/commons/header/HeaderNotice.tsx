@@ -255,14 +255,12 @@ export default function HeaderNotice() {
                 isDragging={isDragging}
                 dragDistance={dragDistance}
             >
-                <S.BellIcon>
-                    <FontAwesomeIcon
-                        icon={faBell}
-                        style={{ cursor: 'pointer', color: isDarkMode ? '#f0f0f0' : '#333', fontSize: '26px'}}
+                <S.FaBellContainer>
+                    <S.FaBellIcon
                         onClick={handleNotificationClick}
                         className="Notification-Icon"
                     />
-                </S.BellIcon>
+                </S.FaBellContainer>
                 {unreadCount > 0 && (
                     <S.UnreadBadge>{unreadCount}</S.UnreadBadge>
                 )}
