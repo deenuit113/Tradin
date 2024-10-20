@@ -328,14 +328,14 @@ export const MetricTitle = styled.h3`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 7rem;
     color: ${({ theme }) => theme.textColor};
     z-index: 1;
 
     @media (max-width: 799px) {
         width: 5rem;
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
 `;
 
@@ -475,6 +475,7 @@ export const StrategyTransactions = styled.div<{ strategyCount: number }>`
 export const StrategyTitle = styled.h3`
     margin-bottom: 10px;
     color: ${({ theme }) => theme.textColor};
+    padding: 0 1rem;
 `;
 
 export const TransactionList = styled.div<{ isSkeleton : boolean }>`
@@ -530,6 +531,14 @@ export const TransactionDetail = styled.p<{ strategyCount: number }>`
         if (props.strategyCount === 1) return '1em';
         return '0.8em';
     }};
+    font-weight: 700;
+
+    @media all and (min-width: 359px) and (max-width: 799px) {
+        font-size: ${props => {
+            if (props.strategyCount === 1) return '0.9em';
+            return '0.7em';
+        }};
+    }
 `;
 
 export const ProfitAmount = styled.span<{ isPositive: boolean }>`

@@ -492,6 +492,7 @@ export const DatePickerInput = styled.input<{ hasError?: boolean }>`
     color: ${({ theme }) => theme.textColor};
     border-radius: 4px 4px 0px 0px;
     font-size: 1em;
+    font-weight: 700;
 `;
 
 export const DateRangeSeparator = styled.span`

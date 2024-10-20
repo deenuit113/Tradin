@@ -17,7 +17,7 @@ const ResultTransactionHistory: React.FC<ResultTransactionHistoryProps> = ({ tra
                     let cumulativeProfit = 0;
                     return (
                         <S.StrategyTransactions key={strategy} strategyCount={strategyCount}>
-                            <S.StrategyTitle>{strategy}</S.StrategyTitle>
+                            <S.StrategyTitle>{strategy} 거래내역</S.StrategyTitle>
                             <S.TransactionList isSkeleton={false}>
                                 {strategyTrades.map((trade: Trade, index: number) => {
                                     cumulativeProfit += trade.profit;
