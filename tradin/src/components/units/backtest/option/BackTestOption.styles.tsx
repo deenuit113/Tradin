@@ -316,7 +316,7 @@ export const OptionButton = styled.button<{ isSelected: boolean, hasError?: bool
     font-weight: 500;
 
     &:hover {
-        background-color: ${({ theme }) => theme.hoverColor};
+        background-color: ${({ isSelected, theme }) => (isSelected ? theme.OptionHighlightColor : theme.hoverColor)};
     }
 `;
 
