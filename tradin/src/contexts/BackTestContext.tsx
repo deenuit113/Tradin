@@ -62,10 +62,8 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
             setSelectedStrategies([]);
             setPosition('long');
             setSavedMarketType(marketType);
-            console.log("initial render finished1");
         } else {
             setIsInitialRender(false);
-            console.log("initial render finished2");
         }
     }, [marketType]);
 

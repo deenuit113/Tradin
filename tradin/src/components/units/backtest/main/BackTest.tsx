@@ -16,7 +16,11 @@ import { setBacktestResults, setExecutedOptions, clearBacktestResults } from '..
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const dispatch = useDispatch();
-    const { results, executedOptions } = useSelector((state: RootState) => state.backtest ?? {});
+
+    // 필요한 상태 조각만 선택
+    const results = useSelector((state: RootState) => state.backtest.results);
+    const executedOptions = useSelector((state: RootState) => state.backtest.executedOptions);
+
     const {
         selectedStrategies,
         marketType,
@@ -24,6 +28,7 @@ export default function BackTestPage(): JSX.Element {
         startDate,
         endDate
     } = useBackTestContext();
+
     const {
         backTestMutation,
         performBackTest,
@@ -36,7 +41,7 @@ export default function BackTestPage(): JSX.Element {
         if (!results && !executedOptions) {
             dispatch(clearBacktestResults());
         }
-    }, []);
+    }, [dispatch, results, executedOptions]);
 
     useEffect(() => {
         if (backTestMutation.isSuccess && backTestMutation.data) {
@@ -54,9 +59,6 @@ export default function BackTestPage(): JSX.Element {
         setOptionsVisible(!optionsVisible);
     };
 
-    const state = useSelector((state: RootState) => state);
-    console.log('Current Redux State:', state);
-
     return (
         <S.Container>
             <S.BackTestHeader sidebarOpen={sidebarOpen}>
@@ -72,13 +74,10 @@ export default function BackTestPage(): JSX.Element {
                     
                     {showToggleButton ? (
                         <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
-                        <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
-                        {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
+                            <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
+                            {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
                         </S.OptionToggleButton>
-                    ) :
-                        (<></>)
-                    }
-                    
+                    ) : (<></>)}
                     
                     <OptionsContainer
                         isVisible={optionsVisible}
