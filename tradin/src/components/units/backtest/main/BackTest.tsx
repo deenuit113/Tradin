@@ -4,7 +4,7 @@ import * as S from "./BackTest.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
 import OptionsContainer from '../option/BackTestOption';
-import ResultSkeletonUI from '../result/BackTestResultSkeletonUI';
+import ResultSkeletonUI from '../result/ResultSkeletonUI';
 import BackTestResults from '../result/BackTestResult';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from "./BackTestResult.styles";
+import * as S from "./ResultTransactionHistory.styles";
 import { Trade } from '../main/BackTest.types';
 
 interface ResultTransactionHistoryProps {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowDown, FaArrowUp, FaChartLine, FaClock, FaCrosshairs, FaDollarSign, FaExchangeAlt, FaLevelDownAlt, FaTrophy } from 'react-icons/fa';
 import { calculateAllMetrics } from '../utils/calculateMetrics';
 import { Trade } from '../main/BackTest.types';
-import * as S from "./BackTestResult.styles";
+import * as S from "./ResultContent.styles";
 
 interface ResultContentProps {
     strategies: { [key: string]: Trade[] };
