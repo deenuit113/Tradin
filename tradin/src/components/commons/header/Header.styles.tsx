@@ -210,6 +210,7 @@ export const UserProfile = styled.div`
 
     &:hover {
         .userDropDown {
+            display: flex;
             opacity: 1;
             transition-duration: 1s;
         }
@@ -229,7 +230,7 @@ export const UserImg = styled.img`
 
 export const UserDropDown = styled.div`
     position: absolute;
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 5px;
     top: 50px;
