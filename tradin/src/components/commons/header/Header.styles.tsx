@@ -207,6 +207,13 @@ export const UserProfile = styled.div`
     width: 35px;
     height: 35px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .userIcon {
+        font-size: 20px;
+    }
 
     &:hover {
         .userDropDown {

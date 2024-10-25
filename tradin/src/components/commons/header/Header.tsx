@@ -11,6 +11,7 @@ import HeaderNotice from "./HeaderNotice";
 import SidebarButton from "./SidebarButton";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app, auth } from "../util/firebase";
+import { FaUser } from "react-icons/fa";
 
 export default function Header(): JSX.Element {
     const pathname = usePathname();
@@ -86,12 +87,20 @@ export default function Header(): JSX.Element {
     }
 
     const onClickSignOut = () => {
-        signOut(auth)
+        signOut(auth) // 구글 로그아웃
         .then(() => {
             setUserData(null);
         }).catch((error) => {
             console.log(error);
         })
+
+        if ((window as any).Kakao?.Auth) { // 카카오 로그아웃
+            (window as any).Kakao.Auth.logout(() => {
+                console.log("Logged out from Kakao");
+                setUserData(null); // 사용자 정보 초기화
+                setIsLoggedIn(false); // 로그인 상태 초기화
+            });
+        }
     }
 
     return (
@@ -142,10 +151,14 @@ export default function Header(): JSX.Element {
                     <S.IconListItem>
                         {isLoggedIn ? 
                         <S.UserProfile>
-                            <S.UserImg
-                                src={userData?.photoUrl ?? ''}
-                                alt={userData?.displayName ?? 'User profile picture'}
-                            />
+                            {userData?.photoUrl ? (
+                                <S.UserImg
+                                    src={userData.photoUrl}
+                                    alt={userData.displayName ?? 'User profile picture'}
+                                    />
+                                ) : (
+                                    <FaUser className="userIcon"/>
+                                )}
                             <S.UserDropDown className="userDropDown">
                                 <S.UserDropDownItem onClick={onClickSignOut}>Sign Out</S.UserDropDownItem>
                                 <S.UserDropDownItem>Profile</S.UserDropDownItem>
