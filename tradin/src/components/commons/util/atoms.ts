@@ -17,3 +17,20 @@ export const currencyKRW = atom({
     key: 'CurrencyKRW',
     default: true,
 })
+
+interface UserInfo {
+    id: string;
+    email: string | null; // 사용자 이메일
+    displayName: string | null; // 사용자 표시 이름
+    photoUrl: string | null; // 사용자 프로필 사진 URL
+}
+
+export const loggedIn = atom({
+    key: 'loggedIn',
+    default: false,
+})
+
+export const userInfo = atom<UserInfo | null>({
+    key: 'userInfo',
+    default: null,
+});

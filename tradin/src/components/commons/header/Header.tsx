@@ -5,10 +5,12 @@ import { useSidebar } from "../sidebar/SidebarContext";
 import Switch from 'react-switch';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from "recoil";
-import { darkMode } from "../util/atoms";
+import { darkMode, loggedIn, userInfo } from "../util/atoms";
 import NavBar from "../nav/Nav";
 import HeaderNotice from "./HeaderNotice";
 import SidebarButton from "./SidebarButton";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { app, auth } from "../util/firebase";
 
 export default function Header(): JSX.Element {
     const pathname = usePathname();
@@ -16,6 +18,8 @@ export default function Header(): JSX.Element {
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     const { toggleSidebar } = useSidebar();
     const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedIn);
+    const [userData ,setUserData] = useRecoilState(userInfo);
 
     const announcements = [
         { title: "공시 1", content: "공시 1에 대한 내용" },
@@ -24,6 +28,26 @@ export default function Header(): JSX.Element {
         { title: "공시 4", content: "공시 4에 대한 내용" },
         { title: "공시 5", content: "공시 5에 대한 내용" },
     ];
+
+    useEffect(() => {
+        const auth = getAuth(app);
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsLoggedIn(true);
+                setUserData({
+                    id: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoUrl: user.photoURL,
+                });
+            } else {
+                setIsLoggedIn(false);
+                setUserData(null);
+            }
+        });
+
+        return () => unsubscribe();
+    }, [setIsLoggedIn, setUserData]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -59,6 +83,15 @@ export default function Header(): JSX.Element {
 
     const onClickMoveToLogin = () => {
         router.push("/login");
+    }
+
+    const onClickSignOut = () => {
+        signOut(auth)
+        .then(() => {
+            setUserData(null);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     return (
@@ -107,9 +140,24 @@ export default function Header(): JSX.Element {
                         <HeaderNotice />
                     </S.IconListItem>
                     <S.IconListItem>
-                        {/* <S.Login onClick={onClickMoveToLogin}>로그인</S.Login>
-                        <S.LoginSignUpLabel>&nbsp;/&nbsp;</S.LoginSignUpLabel>
-                        <S.SignUp onClick={onClickMoveToLogin}>회원가입</S.SignUp> */}
+                        {isLoggedIn ? 
+                        <S.UserProfile>
+                            <S.UserImg
+                                src={userData?.photoUrl ?? ''}
+                                alt={userData?.displayName ?? 'User profile picture'}
+                            />
+                            <S.UserDropDown className="userDropDown">
+                                <S.UserDropDownItem onClick={onClickSignOut}>Sign Out</S.UserDropDownItem>
+                                <S.UserDropDownItem>Profile</S.UserDropDownItem>
+                            </S.UserDropDown>
+                        </S.UserProfile>
+
+                         :
+                            <S.SignInUpContainer>
+                                <S.SignInUp onClick={onClickMoveToLogin}>Sign in / up</S.SignInUp>
+                            </S.SignInUpContainer>
+                        }
+
                     </S.IconListItem>
                 </S.IconList>
             </S.Right>

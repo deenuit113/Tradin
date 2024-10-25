@@ -21,7 +21,6 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     padding: 1rem;
     height: 90%;
     overflow-y: auto;
-    border: 3px solid red;
     flex-direction: column;
 
     #naverIdLogin {

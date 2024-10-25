@@ -70,7 +70,6 @@ export const Center = styled.div`
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 40%;
-        width: 40%;
         margin-left: 20px;
     }
 `;
@@ -80,12 +79,6 @@ export const Marquee = styled.div`
     overflow: hidden;
     white-space: nowrap;
     background-color: ${({ theme }) => theme.innerbackgroundColor};
-    position: relative;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 0px 10px 0px;
     position: relative;
     height: 50px;
     display: flex;
@@ -121,24 +114,16 @@ export const Marquee = styled.div`
 `;
 
 export const Right = styled.div`
-    width: 25%;
-    width: 25%;
+    width: 30%;
     display: flex;
     align-items: center;
     align-text: center;
-    justify-content: space-between;
-    margin-left: 10px;
-    padding: 0px;
-
-    align-text: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-left: 10px;
     padding: 0px 10px 0px 10px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 30%;
-        width: 30%;
-        margin-right: 20px;
+        width: 40%;
     }
 `;
 
@@ -148,7 +133,8 @@ export const IconList = styled.ul`
     list-style: none;
     padding: 0;
     margin: 0;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 2rem;
 
     .DarkMode-Switch{
         &:hover .SunIcon {
@@ -156,6 +142,13 @@ export const IconList = styled.ul`
         }
         &:hover .MoonIcon {
             transform: rotate(-30deg);
+        }
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        gap: 1.5rem;
+        .DarkMode-Switch{
+            scale: 0.8;
         }
     }
 `;
@@ -172,8 +165,8 @@ export const MoonIcon = styled(FontAwesomeIcon)`
 export const IconListItem = styled.li`
     display: flex;
     align-items: center;
-    width: 30%;
     justify-content: center;
+    margin-right: 10px;
 
     p {
         color: ${({ theme }) => theme.textColor};
@@ -192,32 +185,85 @@ export const ToggleButton = styled.button`
     }
 `;
 
-export const Login = styled.p`
-    font-size: 11px;
+export const SignInUpContainer = styled.div`
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 0px 10px;
     &:hover {
         cursor: pointer;
-    }
-    @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 7px;
     }
 `
 
-export const LoginSignUpLabel = styled.p`
+export const SignInUp = styled.p`
     font-size: 11px;
-    &:hover {
-        cursor: pointer;
-    }
+    font-weight: 700;
+
     @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 7px;
+        font-size: 10px;
     }
 `
 
-export const SignUp = styled.p`
-    font-size: 11px;
+export const UserProfile = styled.div`
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+
     &:hover {
-        cursor: pointer;
+        .userDropDown {
+            opacity: 1;
+            transition-duration: 1s;
+        }
     }
+
     @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 7px;
+        width: 30px;
+        height: 30px;
+    }
+`
+
+export const UserImg = styled.img`
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+`
+
+export const UserDropDown = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    top: 50px;
+    right: 10px;
+    background: ${({ theme }) => theme.backgroundColor};
+    color: ${({ theme }) => theme.textColor};
+    border: 1px solid rgba(151, 151, 151, 0.34);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    width: 120px;
+    opacity: 0;
+    z-index: 1250;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+    }
+`
+
+export const UserDropDownItem = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px;
+    padding: 5px 10px;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.sidebarMenuHoverColor};
+    }
+    &:not(:last-child) {
+        border-bottom: ${({ theme }) => theme.borderColor};
     }
 `
