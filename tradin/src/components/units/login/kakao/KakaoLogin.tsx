@@ -1,34 +1,47 @@
 import { useEffect } from "react";
-import * as S from "../main/Login.styles"
+import * as S from "../main/Login.styles";
+import { useSetRecoilState } from 'recoil';
+import { userInfo, loggedIn } from "../../../commons/util/atoms";
 
 export default function KakaoLogin(): JSX.Element {
+    const setUserData = useSetRecoilState(userInfo);
+    const setIsLoggedIn = useSetRecoilState(loggedIn);
 
     useEffect(() => {
         const script = document.createElement("script");
         script.src = "https://developers.kakao.com/sdk/js/kakao.js";
         script.async = true;
         document.body.appendChild(script);
+        
         const kakaoAppKey: string | undefined = process.env.NEXT_PUBLIC_KAKAO_API_KEY;
         script.onload = () => {
-            if (window.Kakao && kakaoAppKey !== undefined) {
-                window.Kakao.init(kakaoAppKey); // 카카오 앱 키를 사용하여 초기화
-                console.log(window.Kakao.isInitialized()); // Kakao SDK 초기화 확인
-              } else {
+            if ((window as any).Kakao && kakaoAppKey !== undefined) {
+                (window as any).Kakao.init(kakaoAppKey);
+                console.log((window as any).Kakao.isInitialized());
+            } else {
                 console.error("Kakao App Key is undefined.");
-              }
+            }
         };
     }, []);
 
     const onClickKakaoLogin = () => {
-        if (!window.Kakao?.Auth) return; // Kakao가 초기화되지 않았다면 함수 종료
+        if (!(window as any).Kakao?.Auth) return;
 
-        window.Kakao.Auth.login({
+        (window as any).Kakao.Auth.login({
             success: function (authObj: any) {
                 console.log(authObj);
-                window.Kakao?.API.request({
+                (window as any).Kakao.API.request({
                     url: "/v2/user/me",
                     success: (res: any) => {
                         console.log(res);
+                        const userData = {
+                            id: res.id,
+                            email: res.kakao_account?.email ?? null,
+                            displayName: res.properties?.nickname ?? null,
+                            photoUrl: res.properties?.profile_image ?? null,
+                        };
+                        setUserData(userData); // Recoil 상태 업데이트
+                        setIsLoggedIn(true); // 로그인 상태 업데이트
                     },
                     fail: function (error: any) {
                         console.log(error);
@@ -41,6 +54,15 @@ export default function KakaoLogin(): JSX.Element {
         });
     };
 
+    const onClickKakaoLogout = () => {
+        if (!(window as any).Kakao?.Auth) return;
+
+        (window as any).Kakao.Auth.logout(() => {
+            console.log("Logged out from Kakao");
+            setUserData(null); // 사용자 정보 초기화
+            setIsLoggedIn(false); // 로그인 상태 초기화
+        });
+    };
 
     return (
         <>

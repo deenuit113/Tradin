@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
-import * as S from "./BackTestResult.styles";
+import * as S from "./BackTestChart.styles";
 import {
     Chart as ChartJS,
     CategoryScale,

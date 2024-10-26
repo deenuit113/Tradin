@@ -13,6 +13,11 @@ const ProgressBarContainer = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 70%;
+        height: 70%;
+    }
 `;
 
 const SvgContainer = styled.svg`
@@ -79,7 +84,7 @@ const FearGreedWidgetContent: React.FC = () => {
         <S.WidgetContent>
             <ProgressBarContainer>
                 <SvgContainer 
-                    xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"
+                    xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
                 >

@@ -16,6 +16,10 @@ export const SelectorContainer = styled(animated.div)`
     flex-direction: column;
     align-items: center;
     opacity: 0.9;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        padding: 10px;
+    }
 `;
 
 export const SelectorHeader = styled.div`
@@ -24,24 +28,39 @@ export const SelectorHeader = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-bottom: 10px;
+    padding: 0.5rem 1rem 1rem 1rem;
     border-bottom: 1px solid #ccc;
 `;
 
 export const SelectorHeaderTitle = styled.h3`
     color: ${({ theme }) => theme.textColor};
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 1rem;
+    }
 `
 
 export const CloseButton = styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: none;
     border: none;
-    font-size: 30px;
+    font-size: 20px;
     cursor: pointer;
     transition: transform 0.3s ease;
     color: ${({ theme }) => theme.iconColor};
+    width: 30px;
+    height: 30px;
+    transform-origin: center center;
+    padding: 0;
     
     &:hover {
         transform: rotate(180deg);
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 15px;
     }
 `;
 
@@ -52,7 +71,9 @@ export const WidgetOptionContainer = styled.div`
     justify-content: center;
     overflow-x: auto;
     white-space: nowrap;
-    height: 250px; /* 높이 고정 */
+    height: 250px;
+    padding: 10px 0px;
+
     &::-webkit-scrollbar {
         height: 12px;
     }
@@ -73,6 +94,10 @@ export const WidgetOptionContainer = styled.div`
             height: 12px;
         }
     }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        height: 180px;
+    }
 `;
 
 export const WidgetOption = styled.div`
@@ -80,8 +105,11 @@ export const WidgetOption = styled.div`
     margin: 10px;
     cursor: pointer;
     width: 250px;
+    
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 180px;
+    }
 `;
-
 export const NoWidgetMessage = styled.div`
     display: flex;
     justify-content: center;

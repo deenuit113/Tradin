@@ -4,7 +4,7 @@ import * as S from "./BackTest.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
 import OptionsContainer from '../option/BackTestOption';
-import ResultSkeletonUI from '../result/BackTestResultSkeletonUI';
+import ResultSkeletonUI from '../result/ResultSkeletonUI';
 import BackTestResults from '../result/BackTestResult';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +16,11 @@ import { setBacktestResults, setExecutedOptions, clearBacktestResults } from '..
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
     const dispatch = useDispatch();
-    const { results, executedOptions } = useSelector((state: RootState) => state.backtest ?? {});
+
+    // 필요한 상태 조각만 선택
+    const results = useSelector((state: RootState) => state.backtest.results);
+    const executedOptions = useSelector((state: RootState) => state.backtest.executedOptions);
+
     const {
         selectedStrategies,
         marketType,
@@ -24,9 +28,11 @@ export default function BackTestPage(): JSX.Element {
         startDate,
         endDate
     } = useBackTestContext();
+
     const {
         backTestMutation,
         performBackTest,
+        showToggleButton,
     } = useBackTest();
 
     const [optionsVisible, setOptionsVisible] = useState(true);
@@ -35,7 +41,7 @@ export default function BackTestPage(): JSX.Element {
         if (!results && !executedOptions) {
             dispatch(clearBacktestResults());
         }
-    }, []);
+    }, [dispatch, results, executedOptions]);
 
     useEffect(() => {
         if (backTestMutation.isSuccess && backTestMutation.data) {
@@ -53,9 +59,6 @@ export default function BackTestPage(): JSX.Element {
         setOptionsVisible(!optionsVisible);
     };
 
-    const state = useSelector((state: RootState) => state);
-    console.log('Current Redux State:', state);
-
     return (
         <S.Container>
             <S.BackTestHeader sidebarOpen={sidebarOpen}>
@@ -69,15 +72,17 @@ export default function BackTestPage(): JSX.Element {
                         <BackTestResults trades={results} executedOptions={executedOptions} />
                     ) : null}
                     
-                    <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
-                        <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
-                        {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
-                    </S.OptionToggleButton>
+                    {showToggleButton ? (
+                        <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
+                            <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
+                            {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
+                        </S.OptionToggleButton>
+                    ) : (<></>)}
                     
                     <OptionsContainer
                         isVisible={optionsVisible}
                         loading={backTestMutation.isLoading}
-                        showToggleButton={true}
+                        showToggleButton={showToggleButton}
                         performBackTest={handlePerformBackTest}
                     />
                     

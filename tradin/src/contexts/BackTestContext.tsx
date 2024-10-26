@@ -41,34 +41,31 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
     initialStrategies 
 }) => {
     const [selectedStrategies, setSelectedStrategies] = useState<StrategyKey[]>(initialStrategies);
+    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
     const [position, setPosition] = useState<string>('long');
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
-    const [marketType, setMarketType] = useState<'선물' | '현물' | null>(initialMarketType);
-    const [isInitialRender, setIsInitialRender] = useState(initialStrategies.length === 0);
+    const [isInitialRender, setIsInitialRender] = useState(initialStrategies.length === 0 ? false : true);
     const [savedOptions, setSavedOptions] = useState<SavedOption[]>([]);
     const [savedMarketType, setSavedMarketType] = useState<'선물' | '현물' | null>(null);
     
     useEffect(() => {
-        setSelectedStrategies(initialStrategies);
-        setMarketType(initialMarketType);
-
         const end = new Date();
         const start = new Date();
         start.setFullYear(start.getFullYear() - 1);
         setStartDate(start.toISOString().split('T')[0]);
         setEndDate(end.toISOString().split('T')[0]);
-
-        setIsInitialRender(false);
-    }, [initialMarketType, initialStrategies]);
+    }, []);
 
     useEffect(() => { // 시장 유형을 바꿨을 때 전략이 초기화 되게
-        if (!isInitialRender && marketType !== savedMarketType) {
+        if (!isInitialRender) {
             setSelectedStrategies([]);
             setPosition('long');
             setSavedMarketType(marketType);
+        } else {
+            setIsInitialRender(false);
         }
-    }, [marketType, isInitialRender, savedMarketType]);
+    }, [marketType]);
 
     useEffect(() => { // 저장된 옵션 불러오기
         const storedOptions = localStorage.getItem('savedBackTestOptions');

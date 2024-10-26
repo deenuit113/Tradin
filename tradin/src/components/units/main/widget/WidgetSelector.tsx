@@ -5,6 +5,7 @@ import { currencyKRW } from "../../../commons/util/atoms";
 import { useRecoilState } from "recoil";
 import { useSpring, animated } from "react-spring";
 import { useExchangeRate } from "../../../../hooks/useExchangeRate";
+import { FaTimes } from "react-icons/fa";
 
 interface WidgetSelectorProps {
     addWidget: (widgetType: string) => void;
@@ -66,7 +67,7 @@ const WidgetSelector = ({ addWidget, setIsSelectorOpen, availableWidgets, isOpen
         <S.SelectorContainer ref={WidgetSelectorRef} style={slideInAnimation}>
             <S.SelectorHeader>
                 <S.SelectorHeaderTitle>위젯 추가</S.SelectorHeaderTitle>
-                <S.CloseButton onClick={OnClickCloseWidgetSelector}>&times;</S.CloseButton>
+                <S.CloseButton onClick={OnClickCloseWidgetSelector}><FaTimes/></S.CloseButton>
             </S.SelectorHeader>
             <S.WidgetOptionContainer>
                 {availableWidgets.length > 0 ? (

@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { Theme as CustomTheme } from '../../../styles/theme'
+import Switch from 'react-switch';
+import { FaDollarSign, FaWonSign } from "react-icons/fa";
 
 declare module "@emotion/react" {
     export interface Theme extends CustomTheme {}
@@ -22,20 +24,19 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
     transition: width 0.3s ease, margin-left 0.3s ease;
     justify-content: flex-end;
-    padding: 5px 10px;
-
-    .Currency-Unit-Switch {
-        margin: 0px 15px 0px 15px;
-    }
+    padding: 5px 10px 15px 10px;
+    background-color: transparent;
+    gap: 15px;
 
     p {
         font-size: 16px;
         margin: 0;
         position: relative;
-        font-weight: 550;
+        font-weight: 700;
         color: ${({ theme }) => theme.textColor};
     }
     sub {
+        display: none;
         font-size: 12px;
         font-weight: 350;
         color: ${({ theme }) => theme.timeTextColor};
@@ -50,10 +51,22 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
     p:hover sub {
         visibility: visible;
         opacity: 1;
+        display: block;
     }
 
     @media all and (min-width: 359px) and (max-width: 799px) {
-        padding-bottom: 20px;
+        padding-bottom: 10px;
+        p {
+            font-size: 13px;
+        }
+
+        sub {
+            font-size: 10px;
+        }
+
+        .Currency-Unit-Switch {
+            transform: scale(0.8);
+        }
     }
 `;
 
@@ -62,10 +75,11 @@ export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean }>`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
+    row-gap: 3rem;
     text-align: center;
     margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0%")};
     transition: width 0.3s ease, margin-left 0.3s ease;
-    padding: 0rem 1rem 0rem 1rem;
+    padding: 1.5rem 1rem 1rem 1rem;
     height: 100%;
     overflow-y: auto;
     justify-items: center;
@@ -97,7 +111,9 @@ export const WidgetGridContainer = styled.div<{ sidebarOpen: boolean }>`
     }
 
     @media all and (min-width: 359px) and (max-width: 799px) {
-        
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 0.5rem;
+        row-gap: 2rem;
     }
 `;
 
@@ -162,8 +178,9 @@ export const Widget = styled.div<{ isDragging: boolean }>`
     }
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 230px;
-        height: 190px;
+        width: 180px;
+        height: 150px;
+        padding: 0.5rem;
     }
 `;
 
@@ -185,8 +202,12 @@ export const WidgetAdd = styled.div`
     }
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 230px;
-        height: 190px;
+        width: 180px;
+        height: 150px;
+
+        .PlusIcon {
+            font-size: 30px;
+        }
     }
 `;
 
@@ -197,6 +218,7 @@ export const CoinTimeStamp = styled.p`
 
     @media all and (min-width:359px) and (max-width: 799px) {
         margin-top: 10px;
+        font-size: 9px !important;
     }
 `
 
@@ -219,6 +241,11 @@ export const WidgetTitle = styled.div`
     align-items: center;
     font-size: 15px;
     font-weight: 600;
+    gap: 5px;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 12px;
+    }
 `
 
 export const MenuIcon = styled.div`
@@ -237,6 +264,7 @@ export const DropdownMenu = styled.div`
     border-radius: 8px;
     right: 1rem;
     top: 2rem;
+    z-index: 1050;
 `;
 
 export const DropdownItem = styled.div`
@@ -247,6 +275,10 @@ export const DropdownItem = styled.div`
     &:hover {
         background-color: ${({ theme }) => theme.widgetDropDownHoverColor};
         border-radius: 8px;
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 12px;
     }
 `;
 
@@ -259,9 +291,20 @@ export const WidgetContent = styled.div`
     height: 100%;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    overflow: hidden;
 
     #LoadingIcon{
-            font-size: 30px;
+        font-size: 30px;
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        p {
+            font-size: 12px;
+        }
+
+        span {
+            font-size: 12px;
+        }
     }
 `;
 
@@ -280,7 +323,7 @@ export const AddWidgetButton = styled.button`
     font-size: 1;
 
     .PlusIcon {
-        font-size: 4rem;
+        font-size: 3rem;
     }
 `;
 

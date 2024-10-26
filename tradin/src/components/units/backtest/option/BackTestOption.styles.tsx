@@ -299,34 +299,34 @@ export const OptionContent = styled.div`
     margin: 0 3%;
 `;
 
-export const OptionButton = styled.button<{ isSelected: boolean, hasError?: boolean }>`
+export const OptionButton = styled.button<{ selected: boolean, hasError?: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px 15px;
-    border: 1px solid ${({ isSelected, hasError, theme }) => 
+    border: 1px solid ${({ selected, hasError, theme }) => 
         hasError ? '#ff6b6b' : 
-        isSelected ? theme.OptionHighlightColor : 
+        selected ? theme.OptionHighlightColor : 
         theme.borderColor};
     border-radius: 20px;
-    background-color: ${({ isSelected, theme }) => (isSelected ? theme.OptionHighlightColor : theme.backgroundColor)};
-    color: ${({ isSelected, theme }) => (isSelected ? theme.backgroundColor : theme.textColor)};
+    background-color: ${({ selected, theme }) => (selected ? theme.OptionHighlightColor : theme.backgroundColor)};
+    color: ${({ selected: selected, theme }) => (selected ? theme.backgroundColor : theme.textColor)};
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: 500;
 
     &:hover {
-        background-color: ${({ theme }) => theme.hoverColor};
+        background-color: ${({ selected: selected, theme }) => (selected ? theme.OptionHighlightColor : theme.hoverColor)};
     }
 `;
 
-export const ArrowUpIcon = styled(FaArrowUp)<{ isSelected: boolean }>`
-    color: ${({ isSelected, theme }) => (isSelected ? 'red' : theme.textColor)};
+export const ArrowUpIcon = styled(FaArrowUp)<{ selected: boolean }>`
+    color: ${({ selected: selected, theme }) => (selected ? 'red' : theme.textColor)};
     margin-left: 5px; 
 `
 
-export const ArrowDownIcon = styled(FaArrowDown)<{ isSelected: boolean }>`
-    color: ${({ isSelected, theme }) => (isSelected ? 'blue' : theme.textColor)};
+export const ArrowDownIcon = styled(FaArrowDown)<{ selected: boolean }>`
+    color: ${({ selected: selected, theme }) => (selected ? 'blue' : theme.textColor)};
     margin-left: 5px; 
 `
 
@@ -492,6 +492,7 @@ export const DatePickerInput = styled.input<{ hasError?: boolean }>`
     color: ${({ theme }) => theme.textColor};
     border-radius: 4px 4px 0px 0px;
     font-size: 1em;
+    font-weight: 700;
 `;
 
 export const DateRangeSeparator = styled.span`

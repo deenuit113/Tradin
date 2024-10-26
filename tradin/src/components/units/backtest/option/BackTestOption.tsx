@@ -206,14 +206,14 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                     <S.HorizontalDivider/>
                     <S.OptionContent>
                         <S.OptionButton
-                            isSelected={marketType === '선물'}
+                            selected={marketType === '선물'}
                             onClick={() => setMarketType('선물')}
                             hasError={errors.typeError}
                         >
                             선물
                         </S.OptionButton>
                         <S.OptionButton
-                            isSelected={marketType === '현물'}
+                            selected={marketType === '현물'}
                             onClick={() => setMarketType('현물')}
                             hasError={errors.typeError}
                         >
@@ -237,7 +237,7 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                                 .map(([key, _]) => (
                                     <S.OptionButton
                                         key={key}
-                                        isSelected={selectedStrategies.includes(key as StrategyKey)}
+                                        selected={selectedStrategies.includes(key as StrategyKey)}
                                         onClick={() => handleStrategyChange(key as StrategyKey)}
                                         hasError={errors.strategyError}
                                     >
@@ -259,21 +259,21 @@ const OptionsContainer: React.FC<OptionsContainerProps> = ({
                         <S.HorizontalDivider/>
                         <S.OptionContent>
                             <S.OptionButton
-                                isSelected={position === 'long'}
+                                selected={position === 'long'}
                                 onClick={() => setPosition('long')}
                                 hasError={errors.positionError}
                             >
                                 Long
-                                <S.ArrowUpIcon isSelected={position === 'long'}/>
+                                <S.ArrowUpIcon selected={position === 'long'}/>
                             </S.OptionButton>
                             <S.OptionButton
-                                isSelected={position === 'short'}
+                                selected={position === 'short'}
                                 onClick={() => setPosition('short')}
                                 disabled={marketType === '현물'}
                                 hasError={errors.positionError}
                             >
                                 Short
-                                <S.ArrowDownIcon isSelected={position === 'short'}/>
+                                <S.ArrowDownIcon selected={position === 'short'}/>
                             </S.OptionButton>
                         </S.OptionContent>
                     </S.OptionGroup>

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from './BackTestResult.styles';
+import * as S from './ResultSkeletonUI.styles';
 
 const ResultSkeletonUI: React.FC = () => {
     const metricCount = 8;

@@ -171,7 +171,7 @@ const ModalContainer = (props: IModalProps): JSX.Element => {
                             <S.NotificationIcon>
                                 <FontAwesomeIcon 
                                     icon={isNotification ? faBell : faBellSlash} 
-                                    color={isNotification ? "#4CAF50" : "#F44336"}
+                                    color={isNotification ? "#4CAF50" : "#FA3E3E"}
                                 />
                             </S.NotificationIcon>
                             <Switch 

@@ -51,6 +51,10 @@ export const LongRatioBar = styled.div<{ width: number }>`
             background-position: 0% 50%;
         }
     }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 10px;
+    }
 `;
 
 export const ShortRatioBar = styled.div<{ width: number }>`
@@ -87,6 +91,10 @@ export const ShortRatioBar = styled.div<{ width: number }>`
         100% {
             background-position: 0% 50%;
         }
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 10px;
     }
 `;
 
