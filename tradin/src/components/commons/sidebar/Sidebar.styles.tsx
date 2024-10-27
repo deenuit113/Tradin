@@ -32,11 +32,14 @@ export const MenuItem = styled.li<{ index: number, isOpen: boolean }>`
     cursor: pointer;
     width: 100%;
     border-radius: 5px;
-    padding-left: 2rem;
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(-20px)')};
     transition: transform 0.3s ease, opacity 0.3s ease;
     transition-delay: ${({ index }) => `${index * 0.1}s`};
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 11px;
+    }
 `;
 
 export const MenuTitle = styled.div`
@@ -104,5 +107,9 @@ export const ItemContainer = styled.div`
 
     &:hover {
         background-color: ${({ theme }) => theme.sidebarMenuHoverColor};
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        height: 8%;
     }
 `;
