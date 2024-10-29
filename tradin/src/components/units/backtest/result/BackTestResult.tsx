@@ -8,6 +8,7 @@ import ResultTransactionHistory from './ResultTransactionHistory';
 import ResultContent from './ResultContent';
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
 import { saveOptionModalStyle } from './BackTestResult.styles';
+import pako from 'pako';
 
 const CarouselPage: React.FC<{
     pageNumber: number;
@@ -84,12 +85,35 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
         );
     };
 
+    const generateShareableURL = () => {
+        // JSON으로 변환 후 압축
+        const jsonData = JSON.stringify(trades);
+        const compressedData = pako.deflate(jsonData);
+    
+        // Base64 인코딩
+        const base64CompressedData = btoa(String.fromCharCode.apply(null, Array.from(compressedData)));
+        
+        const baseUrl = `${window.location.protocol}//${window.location.host}/backtestdisplay`;
+        return `${baseUrl}?data=${encodeURIComponent(base64CompressedData)}`;
+    };
+    
+    // URL 복사 함수
+    const handleShare = () => {
+        const shareableURL = generateShareableURL();
+        navigator.clipboard.writeText(shareableURL).then(() => {
+            alert('URL이 클립보드에 복사되었습니다.');
+        }).catch(err => {
+            console.error('Failed to copy!', err);
+        });
+    };
+
     return (
         <S.ResultContainer>
             <S.ResultHeader>
                 <S.ResultTitle>실행 결과:</S.ResultTitle>
                 {renderExecutedOptions()}
                 <S.SaveButton onClick={handleSave}>저장</S.SaveButton>
+                <button onClick={handleShare}>공유</button>
 
                 <Modal
                     isOpen={isModalOpen}
