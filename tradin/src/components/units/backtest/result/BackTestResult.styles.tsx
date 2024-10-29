@@ -3,15 +3,51 @@ import { css, keyframes } from "@emotion/react";
 import { CSSProperties } from 'react';
 
 // BackTest 결과 화면
-export const ResultContainer = styled.div<{ isDisplay: boolean }>`
+export const ResultContainer = styled.div`
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     width: 100%;
     flex-grow: 1;
     padding: 1.5rem;
-    border-radius: ${({ isDisplay }) => (isDisplay ? "0px" : "8px")};
+    border-radius: 8px;
     overflow-x: hidden;
     margin-bottom: 1rem;
     overflow-y: hidden;
+`;
+
+export const ResultDisplayContainer = styled.div`
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    width: 100%;
+    flex-grow: 1;
+    padding: 1.5rem;
+    border-radius: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const DisplayMainContent = styled.div<{ sidebarOpen: boolean }>`
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+    max-width: 100%;
+    display: flex;
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
+    transition: width 0.3s ease, margin-left 0.3s ease;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+    @media (max-width: 799px) {
+        padding: 0.5rem;
+    }
+`;
+
+export const DisplayContainer = styled.div`
+    display: flex;
+    width: 100%;
+    height: 90vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: ${({ theme }) => theme.backgroundColor};
 `;
 
 export const ResultHeader = styled.div`

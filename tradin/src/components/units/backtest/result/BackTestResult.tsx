@@ -109,7 +109,7 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
     };
 
     return (
-        <S.ResultContainer isDisplay={false}>
+        <S.ResultContainer>
             <S.ResultHeader>
                 <S.ResultTitle>실행 결과:</S.ResultTitle>
                 {renderExecutedOptions()}
