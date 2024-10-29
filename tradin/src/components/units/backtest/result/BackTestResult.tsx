@@ -9,6 +9,7 @@ import ResultContent from './ResultContent';
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
 import { saveOptionModalStyle } from './BackTestResult.styles';
 import pako from 'pako';
+import { Container, MainContent } from '../main/BackTest.styles';
 
 const CarouselPage: React.FC<{
     pageNumber: number;
@@ -108,12 +109,12 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
     };
 
     return (
-        <S.ResultContainer>
+        <S.ResultContainer isDisplay={false}>
             <S.ResultHeader>
                 <S.ResultTitle>실행 결과:</S.ResultTitle>
                 {renderExecutedOptions()}
                 <S.SaveButton onClick={handleSave}>저장</S.SaveButton>
-                <button onClick={handleShare}>공유</button>
+                <S.ShareButton onClick={handleShare}>공유</S.ShareButton>
 
                 <Modal
                     isOpen={isModalOpen}

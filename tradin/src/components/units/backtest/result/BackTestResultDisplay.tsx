@@ -64,7 +64,7 @@ const BacktestDisplayPage = () => {
     };
 
     return (
-        <S.ResultContainer>
+        <S.ResultContainer isDisplay={true}>
             <S.ResultHeader>
                 <S.ResultTitle>결과 보기:</S.ResultTitle>
             </S.ResultHeader>

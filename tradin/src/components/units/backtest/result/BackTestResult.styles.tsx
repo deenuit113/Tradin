@@ -3,12 +3,12 @@ import { css, keyframes } from "@emotion/react";
 import { CSSProperties } from 'react';
 
 // BackTest 결과 화면
-export const ResultContainer = styled.div`
+export const ResultContainer = styled.div<{ isDisplay: boolean }>`
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     width: 100%;
     flex-grow: 1;
     padding: 1.5rem;
-    border-radius: 8px;
+    border-radius: ${({ isDisplay }) => (isDisplay ? "0px" : "8px")};
     overflow-x: hidden;
     margin-bottom: 1rem;
     overflow-y: hidden;
@@ -90,6 +90,33 @@ export const ExecutedOptionItem = styled.div`
 `;
 
 export const SaveButton = styled.button`
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    font-size: 800;
+
+    &:hover {
+        background-color: #45a049;
+    }
+
+    
+    @media (max-width: 799px) {
+        font-size: 0.5em;
+        padding: 3px 6px;
+        margin: 4px 2px 4px 10px;
+    }
+`;
+
+export const ShareButton = styled.button`
     background-color: #4CAF50;
     border: none;
     color: white;
