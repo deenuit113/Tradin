@@ -93,7 +93,7 @@ const BackTestResults: React.FC<BackTestResultsProps> = ({ trades, executedOptio
         // Base64 인코딩
         const base64CompressedData = btoa(String.fromCharCode.apply(null, Array.from(compressedData)));
         
-        const baseUrl = `${window.location.protocol}//${window.location.host}/backtestdisplay`;
+        const baseUrl = `${window.location.protocol}//${window.location.host}/backtest/display`;
         return `${baseUrl}?data=${encodeURIComponent(base64CompressedData)}`;
     };
     
