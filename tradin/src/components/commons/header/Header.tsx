@@ -123,11 +123,11 @@ export default function Header(): JSX.Element {
                 <NavBar />
             </S.Left>
             <S.Center>
-                {/* <S.Marquee key={currentAnnouncement}>
+                <S.Marquee key={currentAnnouncement}>
                     <p>
                         {`${announcements[currentAnnouncement].title}: ${announcements[currentAnnouncement].content}`}
                     </p>
-                </S.Marquee> */}
+                </S.Marquee>
             </S.Center>
             <S.Right>
                 <S.IconList>
