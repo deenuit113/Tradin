@@ -59,8 +59,19 @@ export const Title = styled.h1`
         width: 77px;
     }
 
+    .Title-SVP {
+        font-size: 20px;
+        display: none;
+    }
+
     @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 15px;
+        .logo {
+            display: none;
+        }
+
+        .Title-SVP {
+            display: inline-block;
+        }
     }
 `;
 

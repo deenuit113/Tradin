@@ -118,6 +118,7 @@ export default function Header(): JSX.Element {
                             radin
                         </text>
                     </svg>
+                    <text className="Title-SVP">Tradin</text>
                 </S.Title>
                 <NavBar />
             </S.Left>
