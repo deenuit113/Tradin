@@ -34,10 +34,6 @@ export const DisplayMainContent = styled.div<{ sidebarOpen: boolean }>`
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
-
-    @media (max-width: 799px) {
-        padding: 0.5rem;
-    }
 `;
 
 export const DisplayContainer = styled.div`
