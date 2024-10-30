@@ -26,6 +26,10 @@ export const BackTestHeader = styled.div<{ sidebarOpen: boolean }>`
     .FaAngleRight{
         margin-left: 10px;
     }
+
+    @media (max-width: 799px) {
+        height: 8%;
+    }
 `;
 
 export const MainContent = styled.div<{ sidebarOpen: boolean }>`

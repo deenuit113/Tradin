@@ -59,8 +59,19 @@ export const Title = styled.h1`
         width: 77px;
     }
 
+    .Title-SVP {
+        font-size: 20px;
+        display: none;
+    }
+
     @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 15px;
+        .logo {
+            display: none;
+        }
+
+        .Title-SVP {
+            display: inline-block;
+        }
     }
 `;
 
@@ -114,7 +125,7 @@ export const Marquee = styled.div`
 `;
 
 export const Right = styled.div`
-    width: 30%;
+    width: 20%;
     display: flex;
     align-items: center;
     align-text: center;
@@ -123,7 +134,7 @@ export const Right = styled.div`
     padding: 0px 10px 0px 10px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 40%;
+        width: 35%;
     }
 `;
 

@@ -53,10 +53,38 @@ const ToggleButtonContainer = styled.button`
         transform: rotate(-45deg) translate(0px, 0px); /* X 표시를 위한 회전과 이동 */
         width: 27.2px; /* 너비를 조정 */
     }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        width: 32px;
+        height: 32px;
+        
+        .stick {
+            width: 19.2px;
+            height: 3.2px;
+        }
+
+        .stick:nth-of-type(1) {
+            transform-origin: 0px 4px;
+        }
+
+        .stick:nth-of-type(3) {
+            transform-origin: 0px 0px;
+        }
+
+        &.close .stick:nth-of-type(1) {
+            transform: rotate(45deg) translate(0px, 0px);
+            width: 21.76px;
+        }
+
+        &.close .stick:nth-of-type(3) {
+            transform: rotate(-45deg) translate(0px, 0px);
+            width: 21.76px;
+        }
+    }
 `;
 
 export default function SidebarButton (props: ToggleButtonProps): JSX.Element {
-    const [isClose, setIsClose] = useState(false);
+    const [isClose, setIsClose] = useState(true);
 
     const handleClick = () => {
         setIsClose(!isClose);

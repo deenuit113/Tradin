@@ -14,6 +14,38 @@ export const ResultContainer = styled.div`
     overflow-y: hidden;
 `;
 
+export const ResultDisplayContainer = styled.div`
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
+    width: 100%;
+    flex-grow: 1;
+    padding: 1.5rem;
+    border-radius: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`;
+
+export const DisplayMainContent = styled.div<{ sidebarOpen: boolean }>`
+    width: ${({ sidebarOpen }) => (sidebarOpen ? "85%" : "100%")};
+    max-width: 100%;
+    display: flex;
+    margin-left: ${({ sidebarOpen }) => (sidebarOpen ? "15%" : "0")};
+    transition: width 0.3s ease, margin-left 0.3s ease;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+`;
+
+export const DisplayContainer = styled.div`
+    display: flex;
+    width: 100%;
+    height: 90vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: ${({ theme }) => theme.backgroundColor};
+`;
+
 export const ResultHeader = styled.div`
     display: flex;
     align-items: center;
@@ -90,6 +122,33 @@ export const ExecutedOptionItem = styled.div`
 `;
 
 export const SaveButton = styled.button`
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    font-size: 800;
+
+    &:hover {
+        background-color: #45a049;
+    }
+
+    
+    @media (max-width: 799px) {
+        font-size: 0.5em;
+        padding: 3px 6px;
+        margin: 4px 2px 4px 10px;
+    }
+`;
+
+export const ShareButton = styled.button`
     background-color: #4CAF50;
     border: none;
     color: white;
