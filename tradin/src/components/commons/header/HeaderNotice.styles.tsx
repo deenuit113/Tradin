@@ -39,34 +39,6 @@ const moveUp = keyframes`
     }
 `;
 
-const fadeIn = keyframes`
-    from { opacity: 0; }
-    to { opacity: 1; }
-`;
-
-interface ModalStyles {
-    overlay?: CSSProperties;
-    content?: CSSProperties;
-}
-
-export const modalStyles: ModalStyles = {
-    overlay: {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 1000,
-    },
-    content: {
-        top: '50%',
-        left: '50%',
-        width: '5%',
-        height: '1%',
-    }
-};
-
 export const BellIconContainer = styled.div<{ isDragging: boolean; dragDistance: number }>`
     position: relative;
     display: inline-block;
@@ -290,13 +262,50 @@ export const DeletedZone = styled.div<{ opacity: number }>`
     }
 `;
 
+interface ModalStyles {
+    overlay?: CSSProperties;
+    content?: CSSProperties;
+}
+
+export const modalStyles: ModalStyles = {
+    overlay: {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        bottom: '0',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 1000,
+    },
+    content: {
+        top: '50%',
+        left: '50%',
+        width: '5%',
+        height: '1%',
+        backgroundColor: 'transparent',
+        border: 'none',
+    }
+};
+
+const fadeIn = keyframes`
+    from {
+        opacity: 0;
+        transform: scale(0.5); /* 크기만 변화 */
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1); /* 원래 크기로 */
+    }
+`;
+
 export const ModalContainer = styled.div`
     position: fixed;
     width: 30%;
     height: 80%;
     top: 55%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    translate: -50% -50%; /* 중앙에 고정 */
     background-color: ${({ theme }) => theme.backgroundColor};
     padding: 1.5rem 2rem 1.5rem 2rem;
     border: 1px solid ${({ theme }) => theme.backgroundColor};
@@ -305,6 +314,10 @@ export const ModalContainer = styled.div`
     box-sizing: border-box;
     overflow-y: hidden;
     z-index: 1002;
+    transform-origin: center;
+
+    /* 애니메이션 적용 */
+    animation: ${fadeIn} 200ms ease-out;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
         width: 55%;
