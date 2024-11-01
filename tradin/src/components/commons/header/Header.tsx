@@ -5,13 +5,14 @@ import { useSidebar } from "../sidebar/SidebarContext";
 import Switch from 'react-switch';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { useRecoilState } from "recoil";
-import { darkMode, loggedIn, userInfo } from "../util/atoms";
+import { darkMode } from "../util/atoms";
 import NavBar from "../nav/Nav";
 import HeaderNotice from "./HeaderNotice";
 import SidebarButton from "./SidebarButton";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app, auth } from "../util/firebase";
 import { FaUser } from "react-icons/fa";
+import { useUser } from "../../../contexts/UserContext";
 
 export default function Header(): JSX.Element {
     const pathname = usePathname();
@@ -19,8 +20,7 @@ export default function Header(): JSX.Element {
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     const { toggleSidebar } = useSidebar();
     const [currentAnnouncement, setCurrentAnnouncement] = useState(0);
-    const [isLoggedIn, setIsLoggedIn] = useRecoilState(loggedIn);
-    const [userData ,setUserData] = useRecoilState(userInfo);
+    const { user, setUser, loggedIn, setLoggedIn } = useUser();
 
     const announcements = [
         { title: "공시 1", content: "공시 1에 대한 내용" },
@@ -30,26 +30,40 @@ export default function Header(): JSX.Element {
         { title: "공시 5", content: "공시 5에 대한 내용" },
     ];
 
+    // 디버깅용 로그 추가
+    useEffect(() => {
+        console.log("Logged in state:", loggedIn);
+        console.log("User data:", user);
+    }, [loggedIn, user]);
+
+    // Firebase Auth 상태 감지
     useEffect(() => {
         const auth = getAuth(app);
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setIsLoggedIn(true);
-                setUserData({
+                setLoggedIn(true);
+                setUser({
                     id: user.uid,
                     email: user.email,
                     displayName: user.displayName,
                     photoUrl: user.photoURL,
                 });
             } else {
-                setIsLoggedIn(false);
-                setUserData(null);
+                console.log("No user logged in");
+                setLoggedIn(false);
+                setUser({
+                    id: null,
+                    email: null,
+                    displayName: null,
+                    photoUrl: null,
+                });
             }
         });
 
         return () => unsubscribe();
-    }, [setIsLoggedIn, setUserData]);
+    }, [setLoggedIn, setUser]);
 
+    // 공시 변경 로직
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentAnnouncement((prev) => (prev + 1) % announcements.length);
@@ -58,22 +72,24 @@ export default function Header(): JSX.Element {
         return () => clearInterval(interval);
     }, []);
 
+    // 다크 모드 설정 로직
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedDarkMode = localStorage.getItem('DarkMode');
-            console.log(savedDarkMode);
             if (savedDarkMode === 'night') {
                 setIsDarkMode(true);
             }
         }
     }, []);
 
+    // 다크 모드 상태를 localStorage에 저장
     useEffect(() => {
         if (typeof window !== 'undefined') {
             localStorage.setItem('DarkMode', isDarkMode ? 'night' : 'day');
         }
     }, [isDarkMode]);
 
+    // 타이틀 클릭 시 홈으로 이동 또는 새로고침
     const handleTitleClick = () => {
         if (pathname === "/") {
             router.refresh();
@@ -82,35 +98,48 @@ export default function Header(): JSX.Element {
         }
     };
 
+    // 로그인 페이지로 이동
     const onClickMoveToLogin = () => {
         router.push("/login");
     }
 
+    // 로그아웃 처리
     const onClickSignOut = () => {
         signOut(auth) // 구글 로그아웃
-        .then(() => {
-            setUserData(null);
-        }).catch((error) => {
-            console.log(error);
-        })
+            .then(() => {
+                console.log("Signed out successfully");
+                setUser({
+                    id: null,
+                    email: null,
+                    displayName: null,
+                    photoUrl: null,
+                });
+                setLoggedIn(false);
+            }).catch((error) => {
+                console.log(error);
+            });
 
         if ((window as any).Kakao?.Auth) { // 카카오 로그아웃
             (window as any).Kakao.Auth.logout(() => {
                 console.log("Logged out from Kakao");
-                setUserData(null); // 사용자 정보 초기화
-                setIsLoggedIn(false); // 로그인 상태 초기화
+                setUser({
+                    id: null,
+                    email: null,
+                    displayName: null,
+                    photoUrl: null,
+                });
+                setLoggedIn(false);
             });
         }
     }
 
-    return (
+   return (
         <S.HeaderContainer>
             <S.Left>
                 <S.SidebarButtonContainer>
                     <SidebarButton onClick={toggleSidebar}/>
                 </S.SidebarButtonContainer>
-                <S.Title
-                    onClick={handleTitleClick}>
+                <S.Title onClick={handleTitleClick}>
                     <svg className="logo" xmlns="http://www.w3.org/2000/svg" width="264" height="132">
                         <rect x="8" y="53.7" width="18" height="3.4" className="logo" id="t-bar" fill="#2c3e50"/>
                         <rect x="14.91" y="54.91" width="3.4" height="22.1" className="logo" fill="#2c3e50"/>
@@ -137,7 +166,7 @@ export default function Header(): JSX.Element {
                             checked={isDarkMode}
                             offColor="#888"
                             onColor="#0d6efd"
-                            uncheckedIcon={<S.SunIcon icon={faSun} style={{ color: 'yellow', padding: '5px' }} className="SunIcon" />}
+                            uncheckedIcon={<S.SunIcon icon={faSun} style={{ color: 'yellow', padding: '5px' }} className="SunIcon"/>}
                             checkedIcon={<S.MoonIcon icon={faMoon} style={{ color: 'white', padding: '5px' }} className="MoonIcon"/>}
                             height={30}
                             width={50}
@@ -149,32 +178,36 @@ export default function Header(): JSX.Element {
                     <S.IconListItem>
                         <HeaderNotice />
                     </S.IconListItem>
+
                     <S.IconListItem>
-                        {isLoggedIn ? 
-                        <S.UserProfile>
-                            {userData?.photoUrl ? (
-                                <S.UserImg
-                                    src={userData.photoUrl}
-                                    alt={userData.displayName ?? 'User profile picture'}
-                                    />
-                                ) : (
-                                    <FaUser className="userIcon"/>
-                                )}
-                            <S.UserDropDown className="userDropDown">
-                                <S.UserDropDownItem onClick={onClickSignOut}>Sign Out</S.UserDropDownItem>
-                                <S.UserDropDownItem>Profile</S.UserDropDownItem>
-                            </S.UserDropDown>
-                        </S.UserProfile>
-
-                         :
-                            <S.SignInUpContainer>
-                                <S.SignInUp onClick={onClickMoveToLogin}>Sign in / up</S.SignInUp>
-                            </S.SignInUpContainer>
-                        }
-
+                        {(loggedIn && user && user.id) ? (
+                            <>
+                                <S.UserProfile>
+                                    {user?.photoUrl ? (
+                                        <S.UserImg
+                                            src={user.photoUrl}
+                                            alt={user.displayName ?? 'User profile picture'}
+                                        />
+                                    ) : (
+                                        <FaUser className="userIcon"/>
+                                    )}
+                                    <S.UserDropDown className="userDropDown">
+                                        <S.UserDropDownItem onClick={onClickSignOut}>Sign Out</S.UserDropDownItem>
+                                        <S.UserDropDownItem>Profile</S.UserDropDownItem>
+                                    </S.UserDropDown>
+                                </S.UserProfile>
+                            </>
+                        ) : (
+                            <>
+                                <S.SignInUpContainer>
+                                    <S.SignInUp onClick={onClickMoveToLogin}>Sign in / up</S.SignInUp>
+                                </S.SignInUpContainer>
+                            </>
+                        )}
                     </S.IconListItem>
+
                 </S.IconList>
             </S.Right>
         </S.HeaderContainer>
-    );
+   );
 }

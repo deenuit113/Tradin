@@ -14,6 +14,7 @@ import SideBar from "../src/components/commons/sidebar/Sidebar";
 import { ThemeProvider } from "@emotion/react";
 import { lightTheme, darkTheme } from "../src/styles/theme";
 import { darkMode } from "../src/components/commons/util/atoms";
+import { UserProvider } from '../src/contexts/UserContext';
 
 const queryClient = new QueryClient();
 
@@ -26,15 +27,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <body>
                 <RecoilRoot>
                     <QueryClientProvider client={queryClient}>
+                        <UserProvider>
                         <ThemeWrapper>
-                            <DndProvider backend={HTML5Backend}>
-                                <SidebarProvider>
-                                    <Header />
-                                    <SideBar />
-                                    {children}
-                                </SidebarProvider>
-                            </DndProvider>
-                        </ThemeWrapper>
+                                <DndProvider backend={HTML5Backend}>
+                                    <SidebarProvider>
+                                        <Header />
+                                        <SideBar />
+                                        {children}
+                                    </SidebarProvider>
+                                </DndProvider>
+                            </ThemeWrapper>
+                        </UserProvider>
                         <ReactQueryDevtools initialIsOpen={false} />
                     </QueryClientProvider>
                 </RecoilRoot>
