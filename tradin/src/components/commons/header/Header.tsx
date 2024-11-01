@@ -103,6 +103,10 @@ export default function Header(): JSX.Element {
         router.push("/login");
     }
 
+    const onClickMoveToProfile = () => {
+        router.push("/profile");
+    }
+
     // 로그아웃 처리
     const onClickSignOut = () => {
         signOut(auth) // 구글 로그아웃
@@ -193,7 +197,7 @@ export default function Header(): JSX.Element {
                                     )}
                                     <S.UserDropDown className="userDropDown">
                                         <S.UserDropDownItem onClick={onClickSignOut}>Sign Out</S.UserDropDownItem>
-                                        <S.UserDropDownItem>Profile</S.UserDropDownItem>
+                                        <S.UserDropDownItem onClick={onClickMoveToProfile}>Profile</S.UserDropDownItem>
                                     </S.UserDropDown>
                                 </S.UserProfile>
                             </>
