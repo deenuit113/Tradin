@@ -1,3 +1,5 @@
+import BackTestPageSkeletonUI from "../../src/components/units/backtest/skeleton/SkeletonUI";
+
 export default function Loading() {
-    return <div>Loading BackTest...</div>
+    return <BackTestPageSkeletonUI/>
 }
