@@ -17,6 +17,9 @@ export interface Theme {
     sidebarMenuHoverColor: string;
     darkModeSwitchBoxShadow: string;
     selectorBackgroundColor: string;
+    // MainPage widget
+    priceUpIconColor: string;
+    priceDownIconColor: string;
     //notification
     notificationButtonBgColor: string;
     notificationButtonTextColor: string;
@@ -77,6 +80,9 @@ export const lightTheme = {
     sidebarMenuHoverColor: '#d0d0d0',
     darkModeSwitchBoxShadow: '0px 0px 10px yellow',
     selectorBackgroundColor: 'rgba(240, 240, 240, 0.9)',
+    // MainPage widget
+    priceUpIconColor: '#ff0000',
+    priceDownIconColor: '#0000ff',
     //notification
     notificationButtonBgColor: '#f0f0f0',
     notificationButtonTextColor: '#333',
@@ -138,6 +144,9 @@ export const darkTheme = {
     sidebarMenuHoverColor: '#555',
     darkModeSwitchBoxShadow: '0px 0px 10px lightblue',
     selectorBackgroundColor: 'rgba(51, 51, 51, 0.9)',
+    // MainPage widget
+    priceUpIconColor: '#FF474C',
+    priceDownIconColor: '#4AA8D8',
     // notification
     notificationButtonBgColor: '#555',
     notificationButtonTextColor: '#f0f0f0',

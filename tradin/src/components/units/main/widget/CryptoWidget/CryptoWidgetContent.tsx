@@ -30,10 +30,10 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
                 const formattedChange = priceChange.toFixed(2) + "%";
 
                 if (priceData.price > priceData.prevPrice) {
-                    setPriceChangeIcon(<FaCaretUp color="red" />);
+                    setPriceChangeIcon(<S.PriceUPIcon />);
                     setPriceChangePercentage(`+${formattedChange}`);
                 } else if (priceData.price < priceData.prevPrice) {
-                    setPriceChangeIcon(<FaCaretDown color="blue" />);
+                    setPriceChangeIcon(<S.PriceDownIcon />);
                     setPriceChangePercentage(formattedChange);
                 }
 
@@ -51,12 +51,7 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
                 }
                 
                 {priceChangeIcon && (
-                    <span
-                        style={{
-                            color: priceChangeIcon.props.color,
-                            marginLeft: "8px",
-                        }}
-                    >
+                    <span>
                         {priceChangeIcon} {priceChangePercentage}
                     </span>
                 )}
