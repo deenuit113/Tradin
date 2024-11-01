@@ -56,7 +56,7 @@ export const VolumeSliderContainer = styled.div`
     bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
-    width: 120px;
+    width: 90px;
 
     @media all and (min-width: 359px) and (max-width: 799px) {
         width: 80px;
