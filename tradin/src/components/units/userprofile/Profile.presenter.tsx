@@ -1,6 +1,6 @@
 import * as S from "./Profile.styles";
 import { useSidebar } from "../../commons/sidebar/SidebarContext";
-import Breadcrumb from "../../commons/breadcrumb/BreadCrumb";
+import Breadcrumb from "../../commons/breadcrumb/BreadCrumb.container";
 import { useUser } from "../../../contexts/UserContext";
 import { FaUser } from "react-icons/fa";
 import { useEffect } from "react";

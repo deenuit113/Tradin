@@ -2,7 +2,7 @@ import * as S from "../Item.styles";
 import { useSidebar } from "../../../commons/sidebar/SidebarContext";
 import { useRouter } from 'next/navigation';
 import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
-import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
+import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb.container";
 
 type Position = '상승' | '하강';
 

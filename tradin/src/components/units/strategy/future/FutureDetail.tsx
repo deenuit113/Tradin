@@ -4,7 +4,7 @@ import { useSidebar } from '../../../commons/sidebar/SidebarContext';
 import { useState, useEffect } from 'react';
 import FutureDetailOption from './FutureDetailOpt';
 import { FaCaretUp, FaCaretDown, FaAngleRight, FaCog } from 'react-icons/fa';
-import Breadcrumb from '../../../commons/breadcrumb/BreadCrumb';
+import Breadcrumb from '../../../commons/breadcrumb/BreadCrumb.container';
 
 type Position = '상승' | '하강';
 
