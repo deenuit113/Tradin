@@ -113,7 +113,7 @@ export const UserInfoContainer = styled.div`
     justify-content: flex-start;
     
     @media (max-width: 799px) {
-        width: 30%;
+        width: 35%;
     }
 `
 

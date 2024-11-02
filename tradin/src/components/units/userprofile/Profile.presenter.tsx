@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { signOut } from "firebase/auth";
 import { auth } from "../../commons/util/firebase";
 
-export default function ProfilePage() {
+export default function ProfilePageUI() {
     const { sidebarOpen } = useSidebar();
     const { user, setUser, loggedIn, setLoggedIn } = useUser();
     const router = useRouter();
