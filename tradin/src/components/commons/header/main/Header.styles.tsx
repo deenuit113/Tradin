@@ -25,10 +25,6 @@ export const Left = styled.div`
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 15%;
     }
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        width: 15%;
-    }
 `;
 
 export const SidebarButtonContainer = styled.div`

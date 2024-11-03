@@ -5,7 +5,7 @@ import { noto_sans_kr } from './ui/fonts';
 import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import Header from "../src/components/commons/header/Header";
+import Header from "../src/components/commons/header/main/Header.container";
 import { SidebarProvider } from "../src/components/commons/sidebar/SidebarContext";
 import { RecoilRoot, useRecoilState } from "recoil";
 import { DndProvider } from "react-dnd";
