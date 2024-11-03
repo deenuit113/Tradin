@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Modal from "react-modal";
 import { useRecoilState } from "recoil";
-import { darkMode, notification } from "../../util/atoms";
+import { darkMode, notification } from "../../../../util/atoms";
 import NoticeModal from "./modal/NoticeModal.container";
 import { toast } from 'react-toastify'; 
 import { Notification } from "./Notice.types";

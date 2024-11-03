@@ -9,8 +9,8 @@ import { HeaderUIProps } from "./Header.types";
 import { announcements } from "./MockAnnouncements";
 import { useUser } from "../../../../contexts/UserContext";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../../util/atoms";
-import { useSidebar } from "../../sidebar/SidebarContext";
+import { darkMode } from "../../../../util/atoms";
+import { useSidebar } from "../../../../contexts/SidebarContext";
 
 export default function HeaderUI(props: HeaderUIProps): JSX.Element {
     const { user, loggedIn } = useUser();

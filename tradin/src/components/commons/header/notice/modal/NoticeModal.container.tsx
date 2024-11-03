@@ -1,7 +1,7 @@
 import { faTrashAlt, faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState, useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { notification } from "../../../util/atoms";
+import { notification } from "../../../../../util/atoms";
 import { NoticeModalProps } from "./NoticeModal.types";
 import NoticeModalUI from "./NoticeModal.presenter";
 

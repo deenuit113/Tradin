@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { darkMode } from '../../../commons/util/atoms';
+import { darkMode } from '../../../../util/atoms';
 
 declare global {
     interface Window {

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
-import { app } from "../../../commons/util/firebase";
+import { app } from "../../../../util/firebase";
 import * as S from "../main/Login.styles";
 import GoogleIcon from '@mui/icons-material/Google';
 import { useRouter } from "next/navigation";

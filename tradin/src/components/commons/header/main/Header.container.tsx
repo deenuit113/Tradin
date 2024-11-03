@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useSidebar } from "../../sidebar/SidebarContext";
+import { useSidebar } from "../../../../contexts/SidebarContext";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { app, auth } from "../../util/firebase";
+import { app, auth } from "../../../../util/firebase";
 import { useUser } from "../../../../contexts/UserContext";
 import HeaderUI from "./Header.presenter";
 import { announcements } from "./MockAnnouncements";
 import { useRecoilState } from "recoil";
-import { darkMode } from "../../util/atoms";
+import { darkMode } from "../../../../util/atoms";
 
 export default function Header(): JSX.Element {
     const pathname = usePathname();

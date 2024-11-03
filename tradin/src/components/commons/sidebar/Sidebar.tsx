@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaAngleDown, FaCalendarAlt, FaClock, FaExchangeAlt, FaPlusCircle } from "react-icons/fa";
 import * as S from "./Sidebar.styles";
-import { useSidebar } from "./SidebarContext";
+import { useSidebar } from "../../../contexts/SidebarContext";
 import { useRouter } from 'next/navigation';
 
 export default function SideBar(): JSX.Element {

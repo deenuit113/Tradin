@@ -6,14 +6,14 @@ import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import Header from "../src/components/commons/header/main/Header.container";
-import { SidebarProvider } from "../src/components/commons/sidebar/SidebarContext";
+import { SidebarProvider } from "../src/contexts/SidebarContext";
 import { RecoilRoot, useRecoilState } from "recoil";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import SideBar from "../src/components/commons/sidebar/Sidebar";
 import { ThemeProvider } from "@emotion/react";
 import { lightTheme, darkTheme } from "../src/styles/theme";
-import { darkMode } from "../src/components/commons/util/atoms";
+import { darkMode } from "../src/util/atoms";
 import { UserProvider } from '../src/contexts/UserContext';
 
 const queryClient = new QueryClient();

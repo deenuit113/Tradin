@@ -1,5 +1,5 @@
 import * as S from "./Login.styles"
-import { useSidebar } from "../../../commons/sidebar/SidebarContext";
+import { useSidebar } from "../../../../contexts/SidebarContext";
 import NaverLogin from "../naver/NaverLogin";
 import GoogleLogin from "../google/GoogleLogin";
 import KakaoLogin from "../kakao/KakaoLogin";

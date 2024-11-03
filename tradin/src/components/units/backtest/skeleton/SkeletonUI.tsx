@@ -1,6 +1,6 @@
 'use client'
 
-import { useSidebar } from "../../../commons/sidebar/SidebarContext";
+import { useSidebar } from "../../../../contexts/SidebarContext";
 import * as S from "./SkeletonUI.styles";
 
 export default function BackTestPageSkeletonUI() {

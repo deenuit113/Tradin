@@ -4,7 +4,7 @@ import { faTrashAlt, faBell, faBellSlash } from '@fortawesome/free-solid-svg-ico
 import Switch from "react-switch";
 import { NoticeModalUIProps } from "./NoticeModal.types";
 import { useRecoilState } from "recoil";
-import { notification } from "../../../util/atoms";
+import { notification } from "../../../../../util/atoms";
 
 
 export default function NoticeModalUI (props: NoticeModalUIProps): JSX.Element {

@@ -1,6 +1,6 @@
 import { useSearchParams, useParams } from 'next/navigation';
 import * as S from "../ItemDetail.styles";
-import { useSidebar } from '../../../commons/sidebar/SidebarContext';
+import { useSidebar } from '../../../../contexts/SidebarContext';
 import { useState, useEffect } from 'react';
 import SpotDetailOption from './SpotDetailOpt';
 import { FaCaretUp, FaCaretDown, FaAngleRight, FaCog, FaExchangeAlt } from 'react-icons/fa';

@@ -1,12 +1,12 @@
 import * as S from "./Profile.styles";
-import { useSidebar } from "../../commons/sidebar/SidebarContext";
+import { useSidebar } from "../../../contexts/SidebarContext";
 import Breadcrumb from "../../commons/breadcrumb/BreadCrumb.container";
 import { useUser } from "../../../contexts/UserContext";
 import { FaUser } from "react-icons/fa";
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { signOut } from "firebase/auth";
-import { auth } from "../../commons/util/firebase";
+import { auth } from "../../../util/firebase";
 
 export default function ProfilePageUI() {
     const { sidebarOpen } = useSidebar();

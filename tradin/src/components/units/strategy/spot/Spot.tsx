@@ -1,5 +1,5 @@
 import * as S from "../Item.styles";
-import { useSidebar } from "../../../commons/sidebar/SidebarContext";
+import { useSidebar } from "../../../../contexts/SidebarContext";
 import { useRouter } from 'next/navigation';
 import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
 import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb.container";
