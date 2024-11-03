@@ -1,16 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import * as S from "../ItemDetail.styles";
+import * as S from "../../../ItemDetailOption.styles";
 import { useRouter } from 'next/navigation';
-
-interface StrategyOptionProps {
-    isMenuOpen: boolean;
-    availableOptions: number[];
-    selectedOption: number | null;
-    handleCheckboxChange: (n: number) => void;
-    filters: { [key: string]: boolean };
-    handleFilterChange: (key: string) => void;
-    currentStrategy: number;
-}
+import { StrategyOptionProps } from './SpotDetailOption.types';
+import SpotDetailOptionUI from './SpotDetailOption.presenter';
 
 const filtersList = [
     { key: "coin", label: "코인", mandatory: true },
@@ -63,19 +55,6 @@ export default function SpotDetailOption({
         handleFilterChange(key);
     };
 
-    const filterOptions = useMemo(() => 
-        filtersList.map(filter => (
-            <S.FilterOption key={filter.key}>
-                <input
-                    type="checkbox"
-                    checked={localFilters[filter.key]}
-                    onChange={() => !filter.mandatory && handleLocalFilterChange(filter.key)}
-                    disabled={filter.mandatory}
-                />
-                {filter.label}
-            </S.FilterOption>
-        )), [localFilters, handleLocalFilterChange]);
-
     const handleBackTestClick = () => {
         const strategies = [currentStrategy];
         if (selectedOption !== null) {
@@ -92,34 +71,16 @@ export default function SpotDetailOption({
 
     return(
         <>
-            { isMenuOpen &&
-                <S.StrategyOptionDrop>
-                    <S.OptionInnerContainer>
-                        <S.OptionTitle> 비교: </S.OptionTitle>
-                        {availableOptions.map(n => (
-                            <S.ComparisonOption key={n} >
-                                <input
-                                    type="checkbox"
-                                    checked={selectedOption === n}
-                                    onChange={() => handleCheckboxChange(n)}
-                                />
-                                현물 {n}
-                            </S.ComparisonOption>
-                        ))}
-                    </S.OptionInnerContainer>
-                    <S.OptionHorizontalDivider/>
-                    <S.OptionFilterContainer>
-                        <S.OptionTitle>필터:</S.OptionTitle>
-                        {filterOptions}
-                    </S.OptionFilterContainer>
-                    <S.OptionHorizontalDivider/>
-                    <S.ButtonContainer>
-                        <S.BackTestButton onClick={handleBackTestClick}>
-                            <S.styledPlayIcon className='BackTestIcon'/>BackTest
-                        </S.BackTestButton>
-                    </S.ButtonContainer>
-                </S.StrategyOptionDrop>
-            }
+            <SpotDetailOptionUI
+                filtersList={filtersList}
+                localFilters={localFilters}
+                handleLocalFilterChange={handleLocalFilterChange}
+                isMenuOpen={isMenuOpen}
+                availableOptions={availableOptions}
+                selectedOption={selectedOption}
+                handleCheckboxChange={handleCheckboxChange}
+                handleBackTestClick={handleBackTestClick}
+            />
         </>
     );
 }
