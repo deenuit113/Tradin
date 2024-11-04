@@ -14,7 +14,7 @@ export default function NaverLogin(): JSX.Element {
                 clientId: "mBumTUOt1vMDFmGCay8f",
                 callbackUrl: "http://localhost:3000", // 콜백 URL
                 isPopup: true, 
-                loginButton: { color: "green", type: 3, height: 50 }, 
+                loginButton: { color: "green", type: 3, width: 200, height: 50 }, 
             });
             naverLogin.init();
         };

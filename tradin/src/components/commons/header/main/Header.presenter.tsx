@@ -11,17 +11,26 @@ import { useUser } from "../../../../contexts/UserContext";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../../../util/atoms";
 import { useSidebar } from "../../../../contexts/SidebarContext";
+import { usePathname } from "next/navigation";
 
 export default function HeaderUI(props: HeaderUIProps): JSX.Element {
     const { user, loggedIn } = useUser();
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     const { toggleSidebar } = useSidebar();
 
+    const pathname = usePathname();
+    const excludedPaths = ['/login'];
+    const shouldShowLayout = !excludedPaths.includes(pathname);
+
    return (
         <S.HeaderContainer>
             <S.Left>
                 <S.SidebarButtonContainer>
-                    <SidebarButton onClick={toggleSidebar}/>
+                    {shouldShowLayout && (
+                        <>
+                            <SidebarButton onClick={toggleSidebar}/>
+                        </>
+                    )}
                 </S.SidebarButtonContainer>
                 <S.Title onClick={props.handleTitleClick}>
                     <svg className="logo" xmlns="http://www.w3.org/2000/svg" width="264" height="132">

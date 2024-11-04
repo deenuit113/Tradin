@@ -15,10 +15,15 @@ import { ThemeProvider } from "@emotion/react";
 import { lightTheme, darkTheme } from "../src/styles/theme";
 import { darkMode } from "../src/util/atoms";
 import { UserProvider } from '../src/contexts/UserContext';
+import { usePathname } from 'next/navigation';
 
 const queryClient = new QueryClient();
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+    const pathname = usePathname();
+    const excludedPaths = ['/login'];
+    const shouldShowLayout = !excludedPaths.includes(pathname);
+
     return (
         <html lang="ko" className={noto_sans_kr.className}>
             <head>
@@ -31,11 +36,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                         <ThemeWrapper>
                                 <DndProvider backend={HTML5Backend}>
                                     <SidebarProvider>
-                                        <Header />
-                                        <SideBar />
+                                        {shouldShowLayout && (
+                                            <>
+                                                <Header/>
+                                                <SideBar />
+                                            </>
+                                        )}
                                         {children}
                                     </SidebarProvider>
-                                </DndProvider>
+                                </DndProvider>``
                             </ThemeWrapper>
                         </UserProvider>
                         <ReactQueryDevtools initialIsOpen={false} />
