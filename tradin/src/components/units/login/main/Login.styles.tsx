@@ -27,6 +27,7 @@ export const MainContainer = styled.div`
 `;
 
 export const PageTitle = styled.h1`
+    font-size: 40px;
     cursor: pointer;
 `
 

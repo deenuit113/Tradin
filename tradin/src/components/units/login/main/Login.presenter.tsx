@@ -44,6 +44,15 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
         console.log("value",emailValue); // 이메일 필드의 현재 값을 감시
     }, [emailValue]);
 
+    // 숫자와 영문자만 허용
+    const checkCharCode = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        const regExp = /[^0-9a-zA-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
+        const ele = event.currentTarget;
+        if (regExp.test(ele.value)) {
+            ele.value = ele.value.replace(regExp, '');
+        }
+    };
+
     // 로그인 폼 제출 처리
     const onSubmit = (data: LoginForm) => {
         if (saveIdChecked) {
@@ -81,6 +90,7 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
                                 placeholder=""
                                 {...register("password")}
                                 defaultValue=""
+                                onKeyUp={checkCharCode}
                             />
                             <S.InputPlaceHolder htmlFor="password">비밀번호</S.InputPlaceHolder>
                             <S.PasswordToggleIcon onClick={togglePasswordVisibility}>
