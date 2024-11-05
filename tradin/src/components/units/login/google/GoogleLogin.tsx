@@ -9,7 +9,7 @@ import { useUser } from "../../../../contexts/UserContext";
 export default function GoogleLogin(): JSX.Element {
     const provider = new GoogleAuthProvider();
     const auth = getAuth(app);
-    const { setUser, setLoggedIn } = useUser();
+    const { setUser, setLoggedIn, setLoginType } = useUser();
     const router = useRouter();
 
     const onClickGoogleLogin = () => {
@@ -22,6 +22,7 @@ export default function GoogleLogin(): JSX.Element {
                     photoUrl: result.user.photoURL,
                 });
                 setLoggedIn(true);
+                setLoginType("google");
             })
             .catch((error) => {
                 console.error(error);

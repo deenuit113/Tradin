@@ -3,7 +3,7 @@ import * as S from "../main/Login.styles";
 import { useUser } from "../../../../contexts/UserContext";
 
 export default function KakaoLogin(): JSX.Element {
-    const { setUser, setLoggedIn } = useUser();
+    const { setUser, setLoggedIn, setLoginType } = useUser();
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -40,6 +40,7 @@ export default function KakaoLogin(): JSX.Element {
                         };
                         setUser(userData);
                         setLoggedIn(true);
+                        setLoginType("kakao");
                     },
                     fail: function (error: any) {
                         console.log(error);

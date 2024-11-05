@@ -12,43 +12,38 @@ import { darkMode } from "../../../../util/atoms";
 export default function Header(): JSX.Element {
     const pathname = usePathname();
     const router = useRouter();
-    const { toggleSidebar } = useSidebar();
     const [currentAnnouncement, setCurrentAnnouncement] = useState<number>(0);
-    const { user, setUser, loggedIn, setLoggedIn } = useUser();
+    const { setUser, setLoggedIn, loginType, setLoginType } = useUser();
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
-
-    // 디버깅용 로그 추가
-    useEffect(() => {
-        console.log("Logged in state:", loggedIn);
-        console.log("User data:", user);
-    }, [loggedIn, user]);
 
     // Firebase Auth 상태 감지
     useEffect(() => {
-        const auth = getAuth(app);
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setLoggedIn(true);
-                setUser({
-                    id: user.uid,
-                    email: user.email,
-                    displayName: user.displayName,
-                    photoUrl: user.photoURL,
-                });
-            } else {
-                console.log("No user logged in");
-                setLoggedIn(false);
-                setUser({
-                    id: null,
-                    email: null,
-                    displayName: null,
-                    photoUrl: null,
-                });
-            }
-        });
+        if (loginType === 'google') {
+            const auth = getAuth(app);
+            const unsubscribe = onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    setLoggedIn(true);
+                    setUser({
+                        id: user.uid,
+                        email: user.email,
+                        displayName: user.displayName,
+                        photoUrl: user.photoURL,
+                    });
+                } else {
+                    console.log("No user logged in");
+                    setLoggedIn(false);
+                    setUser({
+                        id: null,
+                        email: null,
+                        displayName: null,
+                        photoUrl: null,
+                    });
+                }
+            });
 
-        return () => unsubscribe();
-    }, [setLoggedIn, setUser]);
+            return () => unsubscribe();
+        }
+    }, [setLoggedIn, setUser, loginType]);
 
     // 공시 변경 로직
     useEffect(() => {
@@ -98,7 +93,6 @@ export default function Header(): JSX.Element {
     const onClickSignOut = () => {
         signOut(auth) // 구글 로그아웃
             .then(() => {
-                console.log("Signed out successfully");
                 setUser({
                     id: null,
                     email: null,
@@ -106,13 +100,13 @@ export default function Header(): JSX.Element {
                     photoUrl: null,
                 });
                 setLoggedIn(false);
+                setLoginType(null);
             }).catch((error) => {
                 console.log(error);
             });
 
         if ((window as any).Kakao?.Auth) { // 카카오 로그아웃
             (window as any).Kakao.Auth.logout(() => {
-                console.log("Logged out from Kakao");
                 setUser({
                     id: null,
                     email: null,
@@ -120,6 +114,7 @@ export default function Header(): JSX.Element {
                     photoUrl: null,
                 });
                 setLoggedIn(false);
+                setLoginType(null);
             });
         }
     }

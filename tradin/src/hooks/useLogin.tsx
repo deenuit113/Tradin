@@ -4,7 +4,7 @@ import { LoginForm } from '../components/units/login/main/Login.types';
 import { useUser } from '../contexts/UserContext';
 const useLogin = () => {
     const router = useRouter();
-    const { setLoggedIn } = useUser();
+    const { setLoggedIn, setLoginType } = useUser();
 
     const apiUrl = '';
 
@@ -19,7 +19,8 @@ const useLogin = () => {
             const token = response.data.accessToken;
             localStorage.setItem('jwtToken', token);
             router.push("/"); //로그인 성공 시 메인페이지로 이동
-            setLoggedIn(true); // 로그인 성공
+            setLoggedIn(true);
+            setLoginType("common");
         } catch (error){
             console.error('error submitting data:', error);
             alert("로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.")
