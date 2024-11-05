@@ -9,6 +9,8 @@ import { loginSchema } from "../../../../util/yupSchemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useTogglePasswordVisibility } from "../../../../hooks/useTogglePasswordVisibility";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
     const { onSendLoginForm } = useLogin(); // 커스텀 훅 사용
@@ -26,6 +28,8 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
     });
 
     const emailValue = watch("email");
+
+    const { isPasswordVisible, togglePasswordVisibility } = useTogglePasswordVisibility();
     
     useEffect(() => {
         console.log("value",emailValue); // 이메일 필드의 현재 값을 감시
@@ -58,13 +62,16 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
                         )}
                         <S.InputContainer>
                             <S.InputInfo
-                                type="password"
+                                type={isPasswordVisible ? "text" : "password"}
                                 id="password"
                                 placeholder=""
                                 {...register("password")}
                                 defaultValue=""
                             />
                             <S.InputPlaceHolder htmlFor="password">비밀번호</S.InputPlaceHolder>
+                            <S.PasswordToggleIcon onClick={togglePasswordVisibility}>
+                                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                            </S.PasswordToggleIcon>
                         </S.InputContainer>
                         {errors.password && (
                                 <S.ErrorMsgWrapper>{errors.password.message}</S.ErrorMsgWrapper>

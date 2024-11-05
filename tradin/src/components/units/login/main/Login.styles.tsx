@@ -109,8 +109,22 @@ export const InputInfo = styled.input`
     }
 `;
 
+export const PasswordToggleIcon = styled.div`
+    position: absolute;
+    top: 55%;
+    right: 28px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    
+    svg {
+        width: 20px;
+        height: 20px;
+        color: #777;
+    }
+`;
+
 export const LoginButton = styled.button`
-    width: 270px;
+    width: 300px;
     display: flex;
     font-size: 16px;
     font-weight: bolder;
@@ -209,8 +223,8 @@ export const KakaoLogo = styled.img`
 `
 
 export const NaverLogo = styled.img`
-    width: 47px;
-    height: 47px;
+    width: 48px;
+    height: 48px;
 `
 
 export const NaverLoginButton = styled.div`
