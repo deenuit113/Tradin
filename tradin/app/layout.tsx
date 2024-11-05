@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                                         )}
                                         {children}
                                     </SidebarProvider>
-                                </DndProvider>``
+                                </DndProvider>
                             </ThemeWrapper>
                         </UserProvider>
                         <ReactQueryDevtools initialIsOpen={false} />
