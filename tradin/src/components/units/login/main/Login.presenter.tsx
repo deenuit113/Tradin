@@ -73,10 +73,14 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
                             <S.LoginButton type="submit">로그인</S.LoginButton>
                         </S.ButtonWrapper>
                     </S.LoginForm>
-
-                    <GoogleLogin />
-                    <KakaoLogin />
-                    {/* <NaverLogin /> */}
+                    <S.Divider>
+                        <S.DividerText>또는</S.DividerText>
+                    </S.Divider>
+                    <S.SocialLoginContainer>
+                        <GoogleLogin />
+                        <KakaoLogin />
+                        <NaverLogin />
+                    </S.SocialLoginContainer>
                     <S.SignUpContainer>
                         <S.SignUpLabel>
                             계정이 없으신가요?

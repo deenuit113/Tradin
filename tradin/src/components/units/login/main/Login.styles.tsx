@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import GoogleIcon from '@mui/icons-material/Google';
 
 export const Container = styled.div`
     display: flex;
@@ -111,8 +112,8 @@ export const InputInfo = styled.input`
 export const LoginButton = styled.button`
     width: 270px;
     display: flex;
+    font-size: 16px;
     font-weight: bolder;
-    padding: 10px 20px 10px 10px;
     border: none;
     border-radius: 5px;
     height: 40px;
@@ -129,15 +130,44 @@ export const LoginButton = styled.button`
     }
 `
 
+export const Divider = styled.div`
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+    margin: 20px 0;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #ddd; /* 수평선 스타일 */
+        margin: 0 10px; /* 텍스트와 수평선 사이 여백 */
+    }
+`;
+
+export const DividerText = styled.span`
+    font-size: 14px;
+    color: #777;
+`;
+
+export const SocialLoginContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: 10px;
+`
+
 export const GoogleLoginButton = styled.button`
-    width: 230px;
+    width: 50px;
+    height: 50px;
     display: flex;
     font-weight: bolder;
-    padding: 10px 20px 10px 10px;
-    margin-bottom: 15px;
+    border: 2px solid lightgrey;
     border-radius: 5px;
-    height: 50px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     align-text: center;
     flex-direction: row;
@@ -145,6 +175,8 @@ export const GoogleLoginButton = styled.button`
 
     svg {
         vertical-align: middle;
+        width: 35px;
+        height: 35px;
     }
     &:hover {
         background-color: #f5f5f5;
@@ -153,18 +185,46 @@ export const GoogleLoginButton = styled.button`
 `
 
 export const KakaoLoginButton = styled.button`
-    width: 230px;
+    width: 50px;
+    height: 50px;
     display: flex;
     font-weight: bolder;
-    padding: 10px 20px 10px 10px;
-    margin-bottom: 15px;
+    border: 2px solid lightgrey;
     border-radius: 5px;
-    height: 50px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     align-text: center;
     flex-direction: row;
     font-size: 13px;
+
+    &:hover {
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+`
+
+export const KakaoLogo = styled.img`
+    width: 47px;
+    height: 47px;
+`
+
+export const NaverLogo = styled.img`
+    width: 47px;
+    height: 47px;
+`
+
+export const NaverLoginButton = styled.div`
+    width: 50px;
+    display: flex;
+    font-weight: bolder;
+    border-radius: 5px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    align-text: center;
+    flex-direction: row;
+    font-size: 13px;
+    border: 2px solid lightgrey;
 
     &:hover {
         background-color: #f5f5f5;

@@ -56,7 +56,6 @@ export default function GoogleLogin(): JSX.Element {
     return (
         <S.GoogleLoginButton onClick={onClickGoogleLogin}>
             <GoogleIcon />
-            <p>구글 아이디로 로그인</p>
         </S.GoogleLoginButton>
     );
 }

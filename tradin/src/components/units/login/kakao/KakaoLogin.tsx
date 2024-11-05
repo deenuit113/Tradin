@@ -55,8 +55,7 @@ export default function KakaoLogin(): JSX.Element {
     return (
         <>
             <S.KakaoLoginButton onClick={onClickKakaoLogin}>
-                <img src='/kakao-logo.svg' width={30} height={30}/>
-                <p>카카오 아이디로 로그인</p>
+                <S.KakaoLogo src='/kakao-logo.svg'/>
             </S.KakaoLoginButton>
         </>
     );

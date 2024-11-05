@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import * as S from "../main/Login.styles";
 
 export default function NaverLogin(): JSX.Element {
     useEffect(() => {
@@ -14,7 +15,7 @@ export default function NaverLogin(): JSX.Element {
                 clientId: "mBumTUOt1vMDFmGCay8f",
                 callbackUrl: "http://localhost:3000", // 콜백 URL
                 isPopup: true, 
-                loginButton: { color: "green", type: 3, width: 200, height: 50 }, 
+                loginButton: { color: "green", type: 1, width: 40, height: 40 }, 
             });
             naverLogin.init();
         };
@@ -25,6 +26,9 @@ export default function NaverLogin(): JSX.Element {
     }, []);
 
     return (
-        <div id="naverIdLogin" />
+        <S.NaverLoginButton>
+            <S.NaverLogo src='/naver-logo.png'/>
+            {/* <div id="naverIdLogin" /> */}
+        </S.NaverLoginButton>
     );
 }
