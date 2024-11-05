@@ -35,7 +35,7 @@ export const LoginForm = styled.form`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 300px;
+    width: 350px;
     margin-bottom: 1rem;
 `
 
@@ -123,6 +123,22 @@ export const PasswordToggleIcon = styled.div`
     }
 `;
 
+export const LoginInfoContainer = styled.div`
+    gap: 15px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    div {
+        font-size: 12px;
+        display: flex;
+        flex-direction: row
+        align-items: center;
+    }
+`
+
 export const LoginButton = styled.button`
     width: 300px;
     display: flex;
@@ -155,8 +171,8 @@ export const Divider = styled.div`
     &::after {
         content: '';
         flex: 1;
-        border-bottom: 1px solid #ddd; /* 수평선 스타일 */
-        margin: 0 10px; /* 텍스트와 수평선 사이 여백 */
+        border-bottom: 1px solid #ddd;
+        margin: 0 10px;
     }
 `;
 
@@ -175,8 +191,8 @@ export const SocialLoginContainer = styled.div`
 `
 
 export const GoogleLoginButton = styled.button`
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: flex;
     font-weight: bolder;
     border: 2px solid lightgrey;
@@ -189,8 +205,8 @@ export const GoogleLoginButton = styled.button`
 
     svg {
         vertical-align: middle;
-        width: 35px;
-        height: 35px;
+        width: 25px;
+        height: 25px;
     }
     &:hover {
         background-color: #f5f5f5;
@@ -199,8 +215,8 @@ export const GoogleLoginButton = styled.button`
 `
 
 export const KakaoLoginButton = styled.button`
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: flex;
     font-weight: bolder;
     border: 2px solid lightgrey;
@@ -218,21 +234,21 @@ export const KakaoLoginButton = styled.button`
 `
 
 export const KakaoLogo = styled.img`
-    width: 47px;
-    height: 47px;
+    width: 37px;
+    height: 37px;
 `
 
 export const NaverLogo = styled.img`
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
 `
 
 export const NaverLoginButton = styled.div`
-    width: 50px;
+    width: 40px;
     display: flex;
     font-weight: bolder;
     border-radius: 5px;
-    height: 50px;
+    height: 40px;
     justify-content: center;
     align-items: center;
     align-text: center;

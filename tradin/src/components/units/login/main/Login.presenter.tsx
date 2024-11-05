@@ -8,7 +8,7 @@ import useLogin from "../../../../hooks/useLogin";
 import { loginSchema } from "../../../../util/yupSchemas";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTogglePasswordVisibility } from "../../../../hooks/useTogglePasswordVisibility";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -19,6 +19,7 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
         handleSubmit,
         formState: { errors },
         watch,
+        setValue,
     } = useForm<LoginForm>({
         resolver: yupResolver(loginSchema),  // yup 스키마로 유효성 검사
         defaultValues: {
@@ -26,18 +27,31 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
             password: "",
         }
     });
-
+    const [saveIdChecked, setSaveIdChecked] = useState(false);
     const emailValue = watch("email");
 
     const { isPasswordVisible, togglePasswordVisibility } = useTogglePasswordVisibility();
     
+    useEffect(() => {
+        const savedEmail = localStorage.getItem("savedEmail");
+        if (savedEmail) {
+            setValue("email", savedEmail); // 이메일 필드에 저장된 값을 설정
+            setSaveIdChecked(true); // 체크박스를 선택 상태로 설정
+        }
+    }, [setValue]);
+
     useEffect(() => {
         console.log("value",emailValue); // 이메일 필드의 현재 값을 감시
     }, [emailValue]);
 
     // 로그인 폼 제출 처리
     const onSubmit = (data: LoginForm) => {
-        onSendLoginForm(data); // 로그인 요청 보내기
+        if (saveIdChecked) {
+            localStorage.setItem("savedEmail", data.email);
+        } else {
+            localStorage.removeItem("savedEmail");
+        }
+        onSendLoginForm(data);
     };
 
     return (
@@ -76,6 +90,10 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
                         {errors.password && (
                                 <S.ErrorMsgWrapper>{errors.password.message}</S.ErrorMsgWrapper>
                         )}
+                        <S.LoginInfoContainer>
+                            <div>아이디 저장<input type="checkbox" checked={saveIdChecked} onChange={(e) => setSaveIdChecked(e.target.checked)}/></div>
+                            <div>자동 로그인<input type="checkbox"/></div>
+                        </S.LoginInfoContainer>
                         <S.ButtonWrapper>
                             <S.LoginButton type="submit">로그인</S.LoginButton>
                         </S.ButtonWrapper>
