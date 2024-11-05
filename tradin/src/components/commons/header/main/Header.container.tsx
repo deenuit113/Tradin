@@ -8,13 +8,15 @@ import HeaderUI from "./Header.presenter";
 import { announcements } from "./MockAnnouncements";
 import { useRecoilState } from "recoil";
 import { darkMode } from "../../../../util/atoms";
-
+import { useFetchNews } from "../../../../hooks/useFetchNew";
+import axios from "axios";
 export default function Header(): JSX.Element {
     const pathname = usePathname();
     const router = useRouter();
     const [currentAnnouncement, setCurrentAnnouncement] = useState<number>(0);
     const { setUser, setLoggedIn, loginType, setLoginType } = useUser();
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
+    const articles = useFetchNews();
 
     // Firebase Auth 상태 감지
     useEffect(() => {
@@ -127,6 +129,7 @@ export default function Header(): JSX.Element {
                 onClickSignOut={onClickSignOut}
                 onClickMoveToProfile={onClickMoveToProfile}
                 onClickMoveToLogin={onClickMoveToLogin}
+                articles={articles}
             />
         </>
    );

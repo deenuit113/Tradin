@@ -45,11 +45,13 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
                 <NavBar />
             </S.Left>
             <S.Center>
-                <S.Marquee key={props.currentAnnouncement}>
-                    <p>
-                        {`${announcements[props.currentAnnouncement].title}: ${announcements[props.currentAnnouncement].content}`}
-                    </p>
-                </S.Marquee>
+                {props.articles.length > 0 && (
+                    <S.Marquee key={props.currentAnnouncement}>
+                        <a href={props.articles[props.currentAnnouncement].link} target="_blank" rel="noopener noreferrer">
+                            {props.articles[props.currentAnnouncement].title}
+                        </a>
+                    </S.Marquee>
+                )}
             </S.Center>
             <S.Right>
                 <S.IconList>
