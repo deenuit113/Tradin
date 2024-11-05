@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import GoogleIcon from '@mui/icons-material/Google';
 
 export const Container = styled.div`
     display: flex;
@@ -29,6 +28,7 @@ export const MainContainer = styled.div`
 export const PageTitle = styled.h1`
     font-size: 40px;
     cursor: pointer;
+    color: ${({ theme }) => theme.iconColor};
 `
 
 export const LoginForm = styled.form`
@@ -79,9 +79,11 @@ export const InputInfo = styled.input`
     width: 100%;
     padding: 18px 10px 5px 10px;
     font-size: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid ${({ theme }) => theme.borderColor};
     border-radius: 4px;
     box-sizing: border-box;
+    background-color: ${({ theme }) => theme.loginInputBackgroundColor};
+    color: ${({ theme }) => theme.textColor};
 
     &:focus {
         outline: none;
@@ -101,7 +103,7 @@ export const InputInfo = styled.input`
         top: 12px; /* 상단으로 이동 */
         left: 25px;
         font-size: 12px; 
-        color: #777;
+        color: ${({ theme }) => theme.loginInputPlaceholderColor};
         transition: all 0.3s ease;
     }
 
@@ -120,7 +122,7 @@ export const PasswordToggleIcon = styled.div`
     svg {
         width: 20px;
         height: 20px;
-        color: #777;
+        color: ${({ theme }) => theme.loginInputPasswordToggleIcon};
     }
 `;
 
@@ -134,6 +136,7 @@ export const LoginInfoContainer = styled.div`
 
     div {
         font-size: 12px;
+        color: ${({ theme }) => theme.textColor};
         display: flex;
         flex-direction: row
         align-items: center;
@@ -172,7 +175,7 @@ export const Divider = styled.div`
     &::after {
         content: '';
         flex: 1;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid ${({ theme }) => theme.borderColor};
         margin: 0 10px;
     }
 `;
@@ -196,21 +199,23 @@ export const GoogleLoginButton = styled.button`
     height: 40px;
     display: flex;
     font-weight: bolder;
-    border: 2px solid lightgrey;
+    border: 2px solid ${({ theme }) => theme.borderColor};
     border-radius: 5px;
     justify-content: center;
     align-items: center;
     align-text: center;
     flex-direction: row;
     font-size: 13px;
+    background-color: ${({ theme }) => theme.backgroundColor};
 
     svg {
         vertical-align: middle;
         width: 25px;
         height: 25px;
+        color: ${({ theme }) => theme.iconColor};
     }
     &:hover {
-        background-color: #f5f5f5;
+        background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
         cursor: pointer;
     }
 `
@@ -220,7 +225,7 @@ export const KakaoLoginButton = styled.button`
     height: 40px;
     display: flex;
     font-weight: bolder;
-    border: 2px solid lightgrey;
+    border: 2px solid ${({ theme }) => theme.borderColor};
     border-radius: 5px;
     justify-content: center;
     align-items: center;
@@ -255,10 +260,9 @@ export const NaverLoginButton = styled.div`
     align-text: center;
     flex-direction: row;
     font-size: 13px;
-    border: 2px solid lightgrey;
+    border: 2px solid ${({ theme }) => theme.borderColor};
 
     &:hover {
-        background-color: #f5f5f5;
         cursor: pointer;
     }
 `
@@ -271,6 +275,7 @@ export const SignUpContainer = styled.div`
 
 export const SignUpLabel = styled.label`
     font-size: 16px;
+    color:  ${({ theme }) => theme.textColor};
 `
 
 export const SignUpButton = styled.button`

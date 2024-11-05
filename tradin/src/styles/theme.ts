@@ -59,6 +59,10 @@ export interface Theme {
     ProfitNegativeColor: string;
     CarouselDotActiveColor: string;
     CarouselDotDefaultColor: string;
+    //login
+    loginInputBackgroundColor: string;
+    loginInputPlaceholderColor: string;
+    loginInputPasswordToggleIcon: string;
 }
 
 export const lightTheme = {
@@ -122,7 +126,11 @@ export const lightTheme = {
     ProfitPositiveColor: '#28a745',
     ProfitNegativeColor: '#dc3545',
     CarouselDotActiveColor: '#333',
-    CarouselDotDefaultColor: '#ccc'
+    CarouselDotDefaultColor: '#ccc',
+    //login
+    loginInputBackgroundColor: '#ffffff',
+    loginInputPlaceholderColor: '#777',
+    loginInputPasswordToggleIcon: '#777',
 };
 
 export const darkTheme = {
@@ -186,5 +194,9 @@ export const darkTheme = {
     ProfitPositiveColor: '#4caf50',
     ProfitNegativeColor: '#f44336',
     CarouselDotActiveColor: '#ccc',
-    CarouselDotDefaultColor: '#333'
+    CarouselDotDefaultColor: '#333',
+    //login
+    loginInputBackgroundColor: '#555',
+    loginInputPlaceholderColor: '#999',
+    loginInputPasswordToggleIcon: '#999',
 };
