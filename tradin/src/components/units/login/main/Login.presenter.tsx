@@ -11,9 +11,32 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useTogglePasswordVisibility } from "../../../../hooks/useTogglePasswordVisibility";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Modal from "react-modal";
+import { modalStyles } from "./signUpModal/SignUpModal.styles";
+import SignUpModal from "./signUpModal/SignUpModal.container";
 
 export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
-    const { onSendLoginForm } = useLogin(); // 커스텀 훅 사용
+    const [isModalOpen, setIsModalOPen] = useState<boolean>(false);
+    
+    const onClickSignUpButton = () => {
+        setIsModalOPen(prev => !prev);
+    };
+
+    const onClickCloseModal = () => {
+        setIsModalOPen(false);
+    };
+
+    useEffect(() => {
+        Modal.setAppElement(document.getElementById('__next') || document.body);
+    }, []);
+
+    const modalContent = (
+        <SignUpModal
+        
+        />
+    );
+
+    const { onSendLoginForm } = useLogin();
     const {
         register,
         handleSubmit,
@@ -28,7 +51,6 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
         }
     });
     const [saveIdChecked, setSaveIdChecked] = useState(false);
-    const emailValue = watch("email");
 
     const { isPasswordVisible, togglePasswordVisibility } = useTogglePasswordVisibility();
     
@@ -39,10 +61,6 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
             setSaveIdChecked(true); // 체크박스를 선택 상태로 설정
         }
     }, [setValue]);
-
-    useEffect(() => {
-        console.log("value",emailValue); // 이메일 필드의 현재 값을 감시
-    }, [emailValue]);
 
     // 숫자와 영문자만 허용
     const checkCharCode = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -120,10 +138,19 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
                         <S.SignUpLabel>
                             계정이 없으신가요?
                         </S.SignUpLabel>
-                        <S.SignUpButton type="button">회원가입</S.SignUpButton>
+                        <S.SignUpButton type="button" onClick={onClickSignUpButton}>회원가입</S.SignUpButton>
                     </S.SignUpContainer>
                 </S.MainContainer>
+                <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={onClickCloseModal}
+                    contentLabel="Sing Up Modal"
+                    style={modalStyles}
+                >
+                    {modalContent}
+                </Modal>
             </S.Container>
+
         </>
     );
 }
