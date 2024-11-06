@@ -90,6 +90,18 @@ export const InputInfo = styled.input`
         border-color: #777;
     }
 
+    &:-webkit-autofill {
+        -webkit-text-fill-color: ${({ theme }) => theme.textColor}; /* 텍스트 색상 */
+        -webkit-box-shadow: 0 0 0px 1000px ${({ theme }) => theme.loginInputBackgroundColor} inset; /* 배경색 덮어쓰기 */
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+        -webkit-text-fill-color: ${({ theme }) => theme.textColor}; /* 텍스트 색상 */
+        -webkit-box-shadow: 0 0 0px 1000px ${({ theme }) => theme.loginInputBackgroundColor} inset; /* 배경색 덮어쓰기 */
+    }
+
     &:placeholder-shown + label {
         top: 19px; /* 기본 위치 */
         left: 28px;

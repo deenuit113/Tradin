@@ -35,7 +35,7 @@ export default function SignUpModalUI(props: SignUpModalUIProps): JSX.Element {
             <S.SignUpForm onSubmit= {handleSubmit(onSubmitForm)}>
                 <S.InputContainer>
                     <S.InputInfo
-                        type="text"
+                        type="email"
                         id="email"
                         placeholder=""
                         {...register("email")}
@@ -98,11 +98,11 @@ export default function SignUpModalUI(props: SignUpModalUIProps): JSX.Element {
             <S.PrivacyAgreementCheckContainer>
                 <S.PrivacyAgreementCheck
                     type="checkbox" 
-                    id="agreement" 
+                    id="agreement"
                     checked={isAgreed} 
                     onChange={handleAgreementChange} 
                 />
-                <S.PrivacyAgreementLabel htmlFor="agreement">
+                <S.PrivacyAgreementLabel>
                     [개인정보 수집 및 이용 동의]
                 </S.PrivacyAgreementLabel>
 

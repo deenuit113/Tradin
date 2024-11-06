@@ -63,6 +63,7 @@ export interface Theme {
     loginInputBackgroundColor: string;
     loginInputPlaceholderColor: string;
     loginInputPasswordToggleIcon: string;
+    loginErrorMessageTextColor: string;
 }
 
 export const lightTheme = {
@@ -131,6 +132,7 @@ export const lightTheme = {
     loginInputBackgroundColor: '#ffffff',
     loginInputPlaceholderColor: '#777',
     loginInputPasswordToggleIcon: '#777',
+    loginErrorMessageTextColor: '#FF0000',
 };
 
 export const darkTheme = {
@@ -199,4 +201,5 @@ export const darkTheme = {
     loginInputBackgroundColor: '#555',
     loginInputPlaceholderColor: '#999',
     loginInputPasswordToggleIcon: '#999',
+    loginErrorMessageTextColor: '#FF474C',
 };

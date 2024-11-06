@@ -89,7 +89,7 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
                     <S.LoginForm onSubmit={handleSubmit(onSubmit)}>
                         <S.InputContainer>
                             <S.InputInfo
-                                type="text"
+                                type="email"
                                 id="email"
                                 placeholder=""
                                 {...register("email")}

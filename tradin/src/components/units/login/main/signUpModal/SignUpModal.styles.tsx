@@ -122,7 +122,7 @@ export const ErrorMsgWrapper = styled.div`
     padding: 0 1rem;
     width: 100%;
     font-size: 11px;
-    color: red;
+    color: ${({ theme }) => theme.loginErrorMessageTextColor};
     text-align: left;
     word-wrap: break-word;
 `;
@@ -179,6 +179,18 @@ export const InputInfo = styled.input`
         outline: none;
         border-color: #777;
     }
+    
+    &:-webkit-autofill {
+        -webkit-text-fill-color: ${({ theme }) => theme.textColor}; /* 텍스트 색상 */
+        -webkit-box-shadow: 0 0 0px 1000px ${({ theme }) => theme.loginInputBackgroundColor} inset; /* 배경색 덮어쓰기 */
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+        -webkit-text-fill-color: ${({ theme }) => theme.textColor}; /* 텍스트 색상 */
+        -webkit-box-shadow: 0 0 0px 1000px ${({ theme }) => theme.loginInputBackgroundColor} inset; /* 배경색 덮어쓰기 */
+    }
 
     &:placeholder-shown + label {
         top: 19px; /* 기본 위치 */
@@ -219,17 +231,22 @@ export const PasswordToggleIcon = styled.div`
 export const PrivacyAgreementCheckContainer = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
 `;
 
 export const PrivacyAgreementCheck = styled.input`
     appearance: none;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
-    border: 1px solid #ccc;
+    border: 1px solid ${({ theme }) => theme.borderColor};
     background-color: ${({ theme }) => theme.innerbackgroundColor};
     cursor: pointer;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    }
 
     &:checked {
         background-color: ${({ theme }) => theme.innerbackgroundColor};
@@ -256,6 +273,7 @@ export const PrivacyAgreementCheck = styled.input`
 export const PrivacyAgreementLabel = styled.label`
     font-size: 16px;
     font-weight: 700;
+    margin: 0;
     color: ${({ theme }) => theme.textColor};
 `;
 
@@ -272,13 +290,17 @@ export const PrivacyAgreementToggleButton = styled.button`
     border-radius: 50%;
     font-size: 20px;
     color: ${({ theme }) => theme.iconColor};
+
+    &:hover {
+        background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
+    }
 `;
 
 export const PrivacyAgreementErrorMsgWrapper = styled.div`
     padding: 0 1rem;
     width: 100%;
     font-size: 11px;
-    color: red;
+    color: ${({ theme }) => theme.loginErrorMessageTextColor};
     text-align: center;
     word-wrap: break-word;
 `;
