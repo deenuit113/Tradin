@@ -228,11 +228,11 @@ export const PrivacyAgreementCheck = styled.input`
     height: 20px;
     border-radius: 50%;
     border: 1px solid #ccc;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     cursor: pointer;
 
     &:checked {
-        background-color: #f5f5f5;
+        background-color: ${({ theme }) => theme.innerbackgroundColor};
         border-color: ${({ theme }) => theme.borderColor};
         position: relative;
     }
@@ -241,6 +241,7 @@ export const PrivacyAgreementCheck = styled.input`
         content: '✔';
         font-size: 25px;
         color: ${({ theme }) => theme.iconColor};
+        background-color: transparent;
         display: block;
         width: 20px;
         height: 20px;
@@ -259,14 +260,15 @@ export const PrivacyAgreementLabel = styled.label`
 `;
 
 export const PrivacyAgreementToggleButton = styled.button`
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid ${({ theme }) => theme.borderColor};
+    background-color: ${({ theme }) => theme.innerbackgroundColor};
     border-radius: 50%;
     font-size: 20px;
     color: ${({ theme }) => theme.iconColor};
@@ -285,10 +287,17 @@ export const PrivacyAgreementBox = styled.div`
     position: relative;
     height: 300px;
     overflow-y: auto;
+    color: ${({ theme }) => theme.textColor};
     border: 1px solid ${({ theme }) => theme.borderColor};
+    padding: 1rem;
     border-radius: 5px;
     margin-top: 1rem;
-    
+    font-size: 12px;
+
+    strong {
+        color: ${({ theme }) => theme.textColor};
+        font-size: 13px;
+    }
 
     &::-webkit-scrollbar {
         width: 6px;
