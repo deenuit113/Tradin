@@ -93,7 +93,7 @@ export const Marquee = styled.div`
     align-items: center;
     padding: 10px 15px;
 
-    a {
+    p {
         margin: 0;
         position: absolute;
         animation: slideUp 1s ease-in-out;

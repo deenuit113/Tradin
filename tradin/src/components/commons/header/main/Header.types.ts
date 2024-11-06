@@ -1,7 +1,7 @@
-export interface Article {
-    title: string;
-    link: string;
-}
+// export interface Article {
+//     title: string;
+//     link: string;
+// }
 
 export interface HeaderUIProps {
     handleTitleClick: () => void;
@@ -9,5 +9,5 @@ export interface HeaderUIProps {
     onClickSignOut: () => void;
     onClickMoveToProfile: () => void;
     onClickMoveToLogin: () => void;
-    articles: Article[];
+    // articles: Article[];
 }
