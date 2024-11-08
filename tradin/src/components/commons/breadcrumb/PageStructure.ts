@@ -25,6 +25,7 @@ export const pageStructure: PageNode[] = [
             },
             { path: '/login', label: '로그인' },
             { path: '/backtest', label: '백테스트'},
+            { path: '/profile', label: '프로필'},
         ]
     }
 ];

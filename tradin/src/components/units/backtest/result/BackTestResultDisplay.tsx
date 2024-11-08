@@ -7,7 +7,7 @@ import BackTestChart from './BackTestChart';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import ResultTransactionHistory from './ResultTransactionHistory';
 import ResultContent from './ResultContent';
-import { useSidebar } from '../../../commons/sidebar/SidebarContext';
+import { useSidebar } from '../../../../contexts/SidebarContext';
 
 const CarouselPage: React.FC<{
     pageNumber: number;

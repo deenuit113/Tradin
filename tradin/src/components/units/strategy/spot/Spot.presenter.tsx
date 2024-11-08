@@ -1,34 +1,16 @@
 import * as S from "../Item.styles";
-import { useSidebar } from "../../../commons/sidebar/SidebarContext";
-import { useRouter } from 'next/navigation';
-import { FaCaretUp, FaCaretDown, FaAngleRight } from 'react-icons/fa';
-import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
-
-type Position = '상승' | '하강';
-
-interface CoinData {
-    position: Position;
-    entryPrice: string;
-    profitLoss: string;
-    winRate: string;
-    profitFactor: string;
-    trades: number;
-    averageBars: number;
-    averageProfit: string;
-}
+import { useSidebar } from "../../../../contexts/SidebarContext";
+import { FaCaretUp, FaCaretDown } from 'react-icons/fa';
+import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb.container";
+import { SpotPageUIProps } from "./Spot.types";
+import { CoinData } from "./Spot.types";
 
 const coinData: CoinData[] = [
     { position: '상승', entryPrice: '1000 KRW', profitLoss: '10.00%', winRate: '50.00%', profitFactor: '1.234', trades: 5, averageBars: 10, averageProfit: '5.00%' },
 ];
 
-export default function FuturePage(): JSX.Element {
+export default function SpotPageUI(props: SpotPageUIProps): JSX.Element {
     const { sidebarOpen } = useSidebar();
-    const router = useRouter();
-
-    const onClickMoveToFutureStrategy = (num: number) => {
-        const queryString = `currentStrategy=${num}`;
-        router.push(`./future/${num}?${queryString}`);
-    };
 
     return (
         <S.Container>
@@ -40,7 +22,7 @@ export default function FuturePage(): JSX.Element {
             <S.MainContent sidebarOpen={sidebarOpen} >
                 {[1, 2, 3].map((num) => (
                     <S.WidgetContainer key={num} >
-                        <S.WidgetHeader onClick={() => onClickMoveToFutureStrategy(num)}>선물 {num}</S.WidgetHeader>
+                        <S.WidgetHeader onClick={() => props.onClickMoveToSpotStrategy(num)}>현물 {num}</S.WidgetHeader>
                         <S.WidgetTable>
                             <thead>
                                 <tr>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import * as S from "./WidgetSelector.styles";
 import Widget from "./Widget";
-import { currencyKRW } from "../../../commons/util/atoms";
+import { currencyKRW } from "../../../../util/atoms";
 import { useRecoilState } from "recoil";
 import { useSpring, animated } from "react-spring";
 import { useExchangeRate } from "../../../../hooks/useExchangeRate";

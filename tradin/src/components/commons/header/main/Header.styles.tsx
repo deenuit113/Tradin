@@ -25,10 +25,6 @@ export const Left = styled.div`
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 15%;
     }
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        width: 15%;
-    }
 `;
 
 export const SidebarButtonContainer = styled.div`
@@ -95,15 +91,18 @@ export const Marquee = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 0px 10px 0px;
+    padding: 10px 15px;
 
     p {
         margin: 0;
         position: absolute;
         animation: slideUp 1s ease-in-out;
-        margin: 0;
-        position: absolute;
-        animation: slideUp 1s ease-in-out;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-decoration: none;
+        white-space: nowrap;
+        display: inline-block;
+        width: 90%;
         color: ${({ theme }) => theme.textColor};
     }
 
@@ -111,15 +110,16 @@ export const Marquee = styled.div`
         0% {
             transform: translateY(100%);
             opacity: 0;
-            transform: translateY(100%);
-            opacity: 0;
         }
         50% {
             transform: translateY(0%);
             opacity: 1;
-        50% {
-            transform: translateY(0%);
-            opacity: 1;
+        }   
+    }
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        a {
+            font-size: 13px;
         }
     }
 `;

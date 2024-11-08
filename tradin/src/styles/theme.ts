@@ -17,6 +17,9 @@ export interface Theme {
     sidebarMenuHoverColor: string;
     darkModeSwitchBoxShadow: string;
     selectorBackgroundColor: string;
+    // MainPage widget
+    priceUpIconColor: string;
+    priceDownIconColor: string;
     //notification
     notificationButtonBgColor: string;
     notificationButtonTextColor: string;
@@ -56,6 +59,11 @@ export interface Theme {
     ProfitNegativeColor: string;
     CarouselDotActiveColor: string;
     CarouselDotDefaultColor: string;
+    //login
+    loginInputBackgroundColor: string;
+    loginInputPlaceholderColor: string;
+    loginInputPasswordToggleIcon: string;
+    loginErrorMessageTextColor: string;
 }
 
 export const lightTheme = {
@@ -77,6 +85,9 @@ export const lightTheme = {
     sidebarMenuHoverColor: '#d0d0d0',
     darkModeSwitchBoxShadow: '0px 0px 10px yellow',
     selectorBackgroundColor: 'rgba(240, 240, 240, 0.9)',
+    // MainPage widget
+    priceUpIconColor: '#ff0000',
+    priceDownIconColor: '#0000ff',
     //notification
     notificationButtonBgColor: '#f0f0f0',
     notificationButtonTextColor: '#333',
@@ -116,7 +127,12 @@ export const lightTheme = {
     ProfitPositiveColor: '#28a745',
     ProfitNegativeColor: '#dc3545',
     CarouselDotActiveColor: '#333',
-    CarouselDotDefaultColor: '#ccc'
+    CarouselDotDefaultColor: '#ccc',
+    //login
+    loginInputBackgroundColor: '#ffffff',
+    loginInputPlaceholderColor: '#777',
+    loginInputPasswordToggleIcon: '#777',
+    loginErrorMessageTextColor: '#FF0000',
 };
 
 export const darkTheme = {
@@ -138,6 +154,9 @@ export const darkTheme = {
     sidebarMenuHoverColor: '#555',
     darkModeSwitchBoxShadow: '0px 0px 10px lightblue',
     selectorBackgroundColor: 'rgba(51, 51, 51, 0.9)',
+    // MainPage widget
+    priceUpIconColor: '#FF474C',
+    priceDownIconColor: '#4AA8D8',
     // notification
     notificationButtonBgColor: '#555',
     notificationButtonTextColor: '#f0f0f0',
@@ -177,5 +196,10 @@ export const darkTheme = {
     ProfitPositiveColor: '#4caf50',
     ProfitNegativeColor: '#f44336',
     CarouselDotActiveColor: '#ccc',
-    CarouselDotDefaultColor: '#333'
+    CarouselDotDefaultColor: '#333',
+    //login
+    loginInputBackgroundColor: '#555',
+    loginInputPlaceholderColor: '#999',
+    loginInputPasswordToggleIcon: '#999',
+    loginErrorMessageTextColor: '#FF474C',
 };

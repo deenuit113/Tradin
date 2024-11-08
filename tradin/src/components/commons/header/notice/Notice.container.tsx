@@ -1,20 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Modal from "react-modal";
-import * as S from "./HeaderNotice.styles";
 import { useRecoilState } from "recoil";
-import { darkMode, notification } from "../util/atoms";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { modalStyles } from "./HeaderNotice.styles";
-import ModalContainer from "./HeaderNoticeModal";
-import { ToastContainer, toast } from 'react-toastify'; 
-import 'react-toastify/dist/ReactToastify.css';
-
-interface Notification {
-    message: string;
-    read: boolean;
-    timestamp: Date;
-}
+import { darkMode, notification } from "../../../../util/atoms";
+import NoticeModal from "./modal/NoticeModal.container";
+import { toast } from 'react-toastify'; 
+import { Notification } from "./Notice.types";
+import HeaderNoticeUI from "./Notice.presenter";
 
 // 로컬스토리지에 볼륨 가져오기
 const getVolumeFromLocalStorage = (): number => {
@@ -56,16 +47,15 @@ const saveNotificationsToLocalStorage = (notifications: Notification[]) => {
 export default function HeaderNotice() {
     const [isDarkMode] = useRecoilState(darkMode);
     const [isNotification, setIsNotification] = useRecoilState(notification);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<Notification[]>(getNotificationsFromLocalStorage());
     const [filteredNotifications, setFilteredNotifications] = useState<Notification[]>([]);
-    const [showUnreadOnly, setShowUnreadOnly] = useState(false);
-    const [showReadOnly, setShowReadOnly] = useState(false);
-    const [enableToastAndSound, setEnableToastAndSound] = useState(true);
-    const [unreadCount, setUnreadCount] = useState(0);
-    const [volume, setVolume] = useState(getVolumeFromLocalStorage());
+    const [showUnreadOnly, setShowUnreadOnly] = useState<boolean>(false);
+    const [showReadOnly, setShowReadOnly] = useState<boolean>(false);
+    const [unreadCount, setUnreadCount] = useState<number>(0);
+    const [volume, setVolume] = useState<number>(getVolumeFromLocalStorage());
     const [isDragging, setIsDragging] = useState(false);
-    const [dragDistance, setDragDistance] = useState(0);
+    const [dragDistance, setDragDistance] = useState<number>(0);
     const bellIconRef = useRef<HTMLDivElement>(null);
     const dragStartX = useRef(0);
     const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -95,14 +85,14 @@ export default function HeaderNotice() {
     };
 
     const showToast = (message: string) => {
-        // toast(message, {
-        //     position: "bottom-right",
-        //     autoClose: 3001,
-        //     hideProgressBar: true,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        // });
+        toast(message, {
+            position: "bottom-right",
+            autoClose: 3001,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
         playNotificationSound();
     };
 
@@ -235,7 +225,7 @@ export default function HeaderNotice() {
     }, [notifications]);
 
     const modalContent = (
-        <ModalContainer
+        <NoticeModal
             closeModal={closeModal}
             notifications={filteredNotifications}
             deleteNotification={deleteNotification}
@@ -249,36 +239,18 @@ export default function HeaderNotice() {
 
     return (
         <>
-            <S.BellIconContainer
-                ref={bellIconRef}
-                onMouseDown={handleMouseDown}
+            <HeaderNoticeUI
+                bellIconRef={bellIconRef}
+                handleMouseDown={handleMouseDown}
                 isDragging={isDragging}
                 dragDistance={dragDistance}
-            >
-                <S.FaBellContainer>
-                    <S.FaBellIcon
-                        onClick={handleNotificationClick}
-                        className="Notification-Icon"
-                    />
-                </S.FaBellContainer>
-                {unreadCount > 0 && (
-                    <S.UnreadBadge>{unreadCount}</S.UnreadBadge>
-                )}
-                {isDragging && (
-                    <S.VolumeSliderContainer>
-                        <S.VolumeSlider volume={volume} />
-                    </S.VolumeSliderContainer>
-                )}
-            </S.BellIconContainer>
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Notification Modal"
-                style={modalStyles}
-            >
-                {modalContent}
-            </Modal>
-            <ToastContainer />
+                handleNotificationClick={handleNotificationClick}
+                unreadCount={unreadCount}
+                volume={volume}
+                isModalOpen={isModalOpen}
+                closeModal={closeModal}
+                modalContent={modalContent}
+            />
         </>
     );
 }

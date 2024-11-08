@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Theme as CustomTheme } from '../../../styles/theme'
 import Switch from 'react-switch';
-import { FaDollarSign, FaWonSign } from "react-icons/fa";
+import { FaCaretDown, FaCaretUp, FaDollarSign, FaWonSign } from "react-icons/fa";
 
 declare module "@emotion/react" {
     export interface Theme extends CustomTheme {}
@@ -210,6 +210,14 @@ export const WidgetAdd = styled.div`
         }
     }
 `;
+
+export const PriceUPIcon = styled(FaCaretUp)`
+    color: ${({ theme }) => theme.priceUpIconColor};
+`
+
+export const PriceDownIcon = styled(FaCaretDown)`
+    color: ${({ theme }) => theme.priceDownIconColor};
+`
 
 export const CoinTimeStamp = styled.p`
     color: gray;

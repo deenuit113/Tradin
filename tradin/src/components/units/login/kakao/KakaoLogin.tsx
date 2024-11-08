@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import * as S from "../main/Login.styles";
-import { useSetRecoilState } from 'recoil';
-import { userInfo, loggedIn } from "../../../commons/util/atoms";
+import { useUser } from "../../../../contexts/UserContext";
 
 export default function KakaoLogin(): JSX.Element {
-    const setUserData = useSetRecoilState(userInfo);
-    const setIsLoggedIn = useSetRecoilState(loggedIn);
+    const { setUser, setLoggedIn, setLoginType } = useUser();
 
     useEffect(() => {
         const script = document.createElement("script");
@@ -40,8 +38,9 @@ export default function KakaoLogin(): JSX.Element {
                             displayName: res.properties?.nickname ?? null,
                             photoUrl: res.properties?.profile_image ?? null,
                         };
-                        setUserData(userData); // Recoil 상태 업데이트
-                        setIsLoggedIn(true); // 로그인 상태 업데이트
+                        setUser(userData);
+                        setLoggedIn(true);
+                        setLoginType("kakao");
                     },
                     fail: function (error: any) {
                         console.log(error);
@@ -54,20 +53,10 @@ export default function KakaoLogin(): JSX.Element {
         });
     };
 
-    const onClickKakaoLogout = () => {
-        if (!(window as any).Kakao?.Auth) return;
-
-        (window as any).Kakao.Auth.logout(() => {
-            console.log("Logged out from Kakao");
-            setUserData(null); // 사용자 정보 초기화
-            setIsLoggedIn(false); // 로그인 상태 초기화
-        });
-    };
-
     return (
         <>
             <S.KakaoLoginButton onClick={onClickKakaoLogin}>
-                <p>카카오 아이디로 로그인</p>
+                <S.KakaoLogo src='/kakao-logo.svg'/>
             </S.KakaoLoginButton>
         </>
     );

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as S from "./BackTest.styles";
-import { useSidebar } from "../../../commons/sidebar/SidebarContext";
-import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb";
+import { useSidebar } from "../../../../contexts/SidebarContext";
+import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb.container";
 import OptionsContainer from '../option/BackTestOption';
 import ResultSkeletonUI from '../result/ResultSkeletonUI';
 import BackTestResults from '../result/BackTestResult';
