@@ -49,15 +49,22 @@ const GaugeText = styled.text`
     alignment-baseline: middle;
 `;
 
-const Explanation = styled.text<{ hovered: boolean }>`
+const Explanation = styled.text`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     font-size: 11px;
     font-weight: 400;
     color: ${({ theme }) => theme.timeTextColor};
     align-items: center;
     text-anchor: middle;
     alignment-baseline: middle;
-    opacity: ${({ hovered }) => hovered ? 1 : 0};
     transition: opacity 0.3s ease-in-out;
+`
+
+const ExplanationContainer = styled.div<{ hovered: boolean }>`
+    opacity: ${({ hovered }) => hovered ? 1 : 0};
     display: ${({ hovered }) => hovered ? 'block' : 'none'};
 `
 
@@ -109,9 +116,11 @@ const RSIWidgetContent: React.FC = () => {
                     />
                 </GaugeSvg>
                 <GaugeText x="75" y="85">{data?.rsi}</GaugeText>
-                <Explanation hovered={hovered}>
-                    30<FaAngleDown/>과매도 70<FaAngleUp/>과매수
-                </Explanation>
+                <ExplanationContainer hovered={hovered}>
+                    <Explanation>
+                        30<FaAngleDown/>과매도 70<FaAngleUp/>과매수
+                    </Explanation>
+                </ExplanationContainer>
             </GaugeContainer>
         </S.WidgetContent>
     );

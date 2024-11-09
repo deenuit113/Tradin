@@ -43,6 +43,7 @@ export const Title = styled.h1`
     align-items: center;
     justify-content: center;
     font-size: 25px;
+    font-weight: 700;
     color: ${({ theme }) => theme.textColor};
 
     .logo{
@@ -197,9 +198,13 @@ export const ToggleButton = styled.button`
 `;
 
 export const SignInUpContainer = styled.div`
-    border: 1px solid lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid ${({ theme }) => theme.borderColor};;
     border-radius: 5px;
     padding: 0px 10px;
+    height: 90%;
     &:hover {
         cursor: pointer;
     }

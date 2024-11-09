@@ -46,14 +46,14 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
     <>
         <S.WidgetContent>
                 {isCurrencyKRW ?
-                <p>가격: {priceData.price ? `${priceData.price.toLocaleString()} KRW` : '로딩 중...'}</p>
-                : <p>가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
+                <p className="coin-price">가격: {priceData.price ? `${priceData.price.toLocaleString()} KRW` : '로딩 중...'}</p>
+                : <p className="coin-price">가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
                 }
-                
                 {priceChangeIcon && (
-                    <span>
-                        {priceChangeIcon} {priceChangePercentage}
-                    </span>
+                    <S.PriceChangeContainer>
+                        <span>{priceChangeIcon}</span>
+                        <span>{priceChangePercentage}</span>
+                    </S.PriceChangeContainer>
                 )}
                 {lastChangeTimestamp && (
                     <S.CoinTimeStamp>

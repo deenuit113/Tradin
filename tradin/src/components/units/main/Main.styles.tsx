@@ -41,6 +41,7 @@ export const CurrencyToggleContainer = styled.div<{ sidebarOpen: boolean }>`
         font-weight: 350;
         color: ${({ theme }) => theme.timeTextColor};
         position: absolute;
+        margin-top: 5px;
         left: 0;
         top: 100%;
         white-space: nowrap;
@@ -209,7 +210,15 @@ export const WidgetAdd = styled.div`
             font-size: 30px;
         }
     }
-`;
+`
+
+export const PriceChangeContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+`
 
 export const PriceUPIcon = styled(FaCaretUp)`
     color: ${({ theme }) => theme.priceUpIconColor};
@@ -222,10 +231,10 @@ export const PriceDownIcon = styled(FaCaretDown)`
 export const CoinTimeStamp = styled.p`
     color: gray;
     font-size: 11px;
-    margin-top: 20px;
+    margin-top: 10px;
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        margin-top: 10px;
+        margin-top: 5px;
         font-size: 9px !important;
     }
 `
@@ -247,7 +256,7 @@ export const WidgetTitle = styled.div`
     flex-grow: 1;
     justify-content: center;
     align-items: center;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     gap: 5px;
 
@@ -300,14 +309,19 @@ export const WidgetContent = styled.div`
     border-radius: 8px;
     background-color: ${({ theme }) => theme.moreinnerbackgroundColor};
     overflow: hidden;
+    gap: 5px;
 
     #LoadingIcon{
         font-size: 30px;
     }
 
+    .coin-price {
+        font-size: 15px;
+    }
+
     @media all and (min-width:359px) and (max-width: 799px) {
-        p {
-            font-size: 12px;
+        .coin-price{
+            font-size: 14px;
         }
 
         span {

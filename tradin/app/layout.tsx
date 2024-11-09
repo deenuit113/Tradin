@@ -16,6 +16,7 @@ import { lightTheme, darkTheme } from "../src/styles/theme";
 import { darkMode } from "../src/util/atoms";
 import { UserProvider } from '../src/contexts/UserContext';
 import { usePathname } from 'next/navigation';
+import { Provider } from '../src/components/ui/provider';
 
 const queryClient = new QueryClient();
 
@@ -30,26 +31,28 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <title>Tradin</title>
             </head>
             <body>
-                <RecoilRoot>
-                    <QueryClientProvider client={queryClient}>
-                        <UserProvider>
-                        <ThemeWrapper>
-                                <DndProvider backend={HTML5Backend}>
-                                    <SidebarProvider>
-                                        {shouldShowLayout && (
-                                            <>
-                                                <Header/>
-                                                <SideBar />
-                                            </>
-                                        )}
-                                        {children}
-                                    </SidebarProvider>
-                                </DndProvider>
-                            </ThemeWrapper>
-                        </UserProvider>
-                        <ReactQueryDevtools initialIsOpen={false} />
-                    </QueryClientProvider>
-                </RecoilRoot>
+                <Provider>
+                    <RecoilRoot>
+                        <QueryClientProvider client={queryClient}>
+                            <UserProvider>
+                            <ThemeWrapper>
+                                    <DndProvider backend={HTML5Backend}>
+                                        <SidebarProvider>
+                                            {shouldShowLayout && (
+                                                <>
+                                                    <Header/>
+                                                    <SideBar />
+                                                </>
+                                            )}
+                                            {children}
+                                        </SidebarProvider>
+                                    </DndProvider>
+                                </ThemeWrapper>
+                            </UserProvider>
+                            <ReactQueryDevtools initialIsOpen={false} />
+                        </QueryClientProvider>
+                    </RecoilRoot>
+                </Provider>
                 <style jsx global>{`
                     html, body, #__next {
                         margin: 0;

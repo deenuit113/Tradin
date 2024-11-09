@@ -45,7 +45,7 @@ const ForegroundCircle = styled.circle<{ circumference: number; offset: number, 
 
 const ProgressText = styled.p<{ hovered: boolean }>`
     position: absolute;
-    top: 33%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.2rem;
@@ -53,6 +53,10 @@ const ProgressText = styled.p<{ hovered: boolean }>`
     z-index: 1000;
     opacity: ${({ hovered }) => hovered ? 1 : 0};
     transition: opacity 0.4s ease-out;
+
+    @media all and (min-width:359px) and (max-width: 799px) {
+        font-size: 0.8rem;
+    }
 `;
 
 const FearGreedWidgetContent: React.FC = () => {

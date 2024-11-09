@@ -119,18 +119,21 @@ export const WidgetTable = styled.table`
 `;
 
 export const StrategyInfo = styled.td`
-    border-left: 1px solid ${({ theme }) => theme.innerbackgroundColor};;
+    justify-content: center;
+    border-left: 1px solid ${({ theme }) => theme.innerbackgroundColor};
     border-radius: 5px;
     padding: 0.5rem;
     text-align: center;
     color: ${({ theme }) => theme.textColor};
-
+    
     &:first-of-type {
         border-left: none;
     }
 
     .position-icon {
-        font-size: 18px;
+        font-size: 20px;
+        display: block;
+        margin: 0 auto;
     }
 `;
 

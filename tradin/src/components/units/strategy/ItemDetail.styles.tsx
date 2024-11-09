@@ -142,6 +142,7 @@ export const WidgetTable = styled.table<{ selectedOption: number | null }>`
 `;
 
 export const StrategyInfo = styled.td`
+    justify-content: center;
     border-left: 1px solid ${({ theme }) => theme.innerbackgroundColor};
     border-radius: 5px;
     padding: 0.5rem;
@@ -154,6 +155,8 @@ export const StrategyInfo = styled.td`
 
     .position-icon {
         font-size: 20px;
+        display: block;
+        margin: 0 auto;
     }
 `;
 
