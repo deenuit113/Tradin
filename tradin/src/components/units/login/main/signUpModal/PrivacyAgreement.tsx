@@ -1,9 +1,8 @@
 import React from 'react';
-import { PrivacyAgreementBox } from './SignUpModal.styles';
 
 export const PrivacyAgreement: React.FC = () => {
     return (
-        <PrivacyAgreementBox>
+        <>
             Tradin은 회원가입을 위해 다음과 같이 개인정보를 수집하고자 합니다. 아래 내용을 자세히 읽어보신 후 동의 여부를 결정해 주시기 바랍니다.
             <br /><br />
             1. <strong>수집하는 개인정보 항목</strong><br />
@@ -17,6 +16,6 @@ export const PrivacyAgreement: React.FC = () => {
             - 회원 탈퇴 시까지<br /><br />
             4. <strong>동의 거부 권리 및 불이익 안내</strong><br />
             귀하는 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있습니다.<br />
-        </PrivacyAgreementBox>
+        </>
     );
 };

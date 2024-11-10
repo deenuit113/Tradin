@@ -36,15 +36,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                         <Provider>
                             <QueryClientProvider client={queryClient}>
                                 <UserProvider>
-                                <ThemeWrapper>
+                                    <ThemeWrapper>
                                         <DndProvider backend={HTML5Backend}>
                                             <SidebarProvider>
                                                 {shouldShowLayout && (
                                                     <>
-                                                        <Header/>
+                                                        
                                                         <SideBar />
                                                     </>
                                                 )}
+                                                <Header/>
                                                 {children}
                                             </SidebarProvider>
                                         </DndProvider>

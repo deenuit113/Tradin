@@ -10,31 +10,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useTogglePasswordVisibility } from "../../../../hooks/useTogglePasswordVisibility";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Modal from "react-modal";
-import { modalStyles } from "./signUpModal/SignUpModal.styles";
 import SignUpModal from "./signUpModal/SignUpModal.container";
+import * as C from "./styles/components/Login.components";
+import { Input, Field, HStack, Separator, Stack, Text, Box } from "@chakra-ui/react";
+import { FaEyeSlash, FaEye, FaSignInAlt } from "react-icons/fa";
+import { Checkbox } from "@/components/ui/checkbox"
 
 export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
-    const [isModalOpen, setIsModalOPen] = useState<boolean>(false);
-    
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const onClickSignUpButton = () => {
-        setIsModalOPen(prev => !prev);
+        setIsModalOpen(prev => !prev);
     };
-
-    const onClickCloseModal = () => {
-        setIsModalOPen(false);
-    };
-
-    useEffect(() => {
-        Modal.setAppElement(document.getElementById('__next') || document.body);
-    }, []);
-
-    const modalContent = (
-        <SignUpModal
-        
-        />
-    );
 
     const { onSendLoginForm } = useLogin();
     const {
@@ -51,7 +37,6 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
         }
     });
     const [saveIdChecked, setSaveIdChecked] = useState(false);
-
     const { isPasswordVisible, togglePasswordVisibility } = useTogglePasswordVisibility();
     
     useEffect(() => {
@@ -83,74 +68,89 @@ export default function LoginPageUI(props: LoginPageUIProps): JSX.Element {
 
     return (
         <>
-            <S.Container>
-                <S.MainContainer>
-                    <S.PageTitle onClick={props.onClickMoveToMainPage}>Tradin</S.PageTitle>
-                    <S.LoginForm onSubmit={handleSubmit(onSubmit)}>
-                        <S.InputContainer>
-                            <S.InputInfo
-                                type="email"
-                                id="email"
-                                placeholder=""
-                                {...register("email")}
-                                defaultValue=""
-                            />
-                            <S.InputPlaceHolder htmlFor="email">이메일</S.InputPlaceHolder>
+            <C.Container>
+                <C.MainContainer>
+                    <C.LoginTitle onClick={props.onClickMoveToMainPage}>Tradin</C.LoginTitle>
+                    <C.LoginForm onSubmit={handleSubmit(onSubmit)}>
+                        <Field.Root gap="0" marginBottom="1rem">
+                            <C.InputContainer pos="relative" w="full">
+                                <Input
+                                    type="text"
+                                    id="email"
+                                    placeholder=""
+                                    {...register("email")}
+                                    defaultValue=""
+                                    className="peer"
+                                    marginBottom="5px"
+                                    padding="10px 15px"
+                                    borderColor="borderColor"
+                                />
+                                <Field.Label htmlFor="email" css={S.floatingStyles}>Email</Field.Label>
+                            </C.InputContainer>
+                            {errors.email && (
+                                <C.ErrorMsgWrapper>{errors.email.message}</C.ErrorMsgWrapper>
+                            )}
+                        </Field.Root>
 
-                        </S.InputContainer>
-                        {errors.email && (
-                            <S.ErrorMsgWrapper>{errors.email.message}</S.ErrorMsgWrapper>
-                        )}
-                        <S.InputContainer>
-                            <S.InputInfo
-                                type={isPasswordVisible ? "text" : "password"}
-                                id="password"
-                                placeholder=""
-                                {...register("password")}
-                                defaultValue=""
-                                onKeyUp={checkCharCode}
-                            />
-                            <S.InputPlaceHolder htmlFor="password">비밀번호</S.InputPlaceHolder>
-                            <S.PasswordToggleIcon onClick={togglePasswordVisibility}>
-                                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-                            </S.PasswordToggleIcon>
-                        </S.InputContainer>
-                        {errors.password && (
-                                <S.ErrorMsgWrapper>{errors.password.message}</S.ErrorMsgWrapper>
-                        )}
-                        <S.LoginInfoContainer>
-                            <div>아이디 저장<input type="checkbox" checked={saveIdChecked} onChange={(e) => setSaveIdChecked(e.target.checked)}/></div>
-                            <div>자동 로그인<input type="checkbox"/></div>
-                        </S.LoginInfoContainer>
-                        <S.ButtonWrapper>
-                            <S.LoginButton type="submit">로그인</S.LoginButton>
-                        </S.ButtonWrapper>
-                    </S.LoginForm>
-                    <S.Divider>
-                        <S.DividerText>또는</S.DividerText>
-                    </S.Divider>
-                    <S.SocialLoginContainer>
+                        <Field.Root gap="0">
+                            <C.InputContainer pos="relative" w="full">
+                                <Input
+                                    type={isPasswordVisible ? "text" : "password"}
+                                    id="password"
+                                    placeholder=""
+                                    {...register("password")}
+                                    defaultValue=""
+                                    onKeyUp={checkCharCode}
+                                    className="peer"
+                                    marginBottom="5px"
+                                    padding="10px 15px"
+                                    borderColor="borderColor"
+                                />
+                                <Field.Label htmlFor="password" css={S.floatingStyles}>Password</Field.Label>
+                                <C.PasswordToggleIcon onClick={togglePasswordVisibility}>
+                                    {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+                                </C.PasswordToggleIcon>
+                            </C.InputContainer>
+                            {errors.password && (
+                                <C.ErrorMsgWrapper>{errors.password.message}</C.ErrorMsgWrapper>
+                            )}
+                        </Field.Root>
+                        <C.LoginInfoContainer>
+                                <Checkbox
+                                    checked={saveIdChecked}
+                                    onCheckedChange={(e) => setSaveIdChecked(!!e.checked)}
+                                    size="sm"
+                                >
+                                    아이디 저장
+                                </Checkbox>
+                                <Checkbox size="sm">자동 로그인</Checkbox>
+                        </C.LoginInfoContainer>
+                        <C.ButtonWrapper>
+                            <C.LoginButton type="submit"><FaSignInAlt/>로그인</C.LoginButton>
+                        </C.ButtonWrapper>
+                    </C.LoginForm>
+                    <HStack width="50%" margin="1rem 0">
+                        <Separator width="100%" colorPalette="accent" size="lg" variant="dotted"/>
+                        <Text flexShrink="0">또는</Text>
+                        <Separator width="100%" colorPalette="accent" size="lg" variant="dotted"/>
+                    </HStack>
+                    <C.SocialLoginContainer>
                         <GoogleLogin />
                         <KakaoLogin />
                         <NaverLogin />
-                    </S.SocialLoginContainer>
-                    <S.SignUpContainer>
-                        <S.SignUpLabel>
+                    </C.SocialLoginContainer>
+                    <C.SignUpContainer>
+                        <Text color="textColor">
                             계정이 없으신가요?
-                        </S.SignUpLabel>
-                        <S.SignUpButton type="button" onClick={onClickSignUpButton}>회원가입</S.SignUpButton>
-                    </S.SignUpContainer>
-                </S.MainContainer>
-                <Modal
-                    isOpen={isModalOpen}
-                    onRequestClose={onClickCloseModal}
-                    contentLabel="Sing Up Modal"
-                    style={modalStyles}
-                >
-                    {modalContent}
-                </Modal>
-            </S.Container>
-
+                        </Text>
+                        <C.SignUpButton type="button" onClick={onClickSignUpButton}>회원가입</C.SignUpButton>
+                    </C.SignUpContainer>
+                </C.MainContainer>
+                <SignUpModal
+                    open={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
+            </C.Container>
         </>
     );
 }

@@ -1,17 +1,20 @@
+"use client";
+
 import axios from 'axios';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signUpSchema } from "../../../../../util/yupSchemas";
-import { SignupForm } from "./SignUpModal.types";
+import { SignUpForm } from './SignUpModal.types';
 import { useRouter } from "next/navigation";
-import SignUpModalUI from "./SignUpModal.presenter";
+import SignUpModalUI from './SignUpModal.presenter';
+import { SignUpModalProps } from './SignUpModal.types';
 
 const apiUrl = '';
 
-export default function SignUpModal(): JSX.Element {
+export default function SignUpModal(props: SignUpModalProps): JSX.Element {
     const router = useRouter();
 
-    const { register, handleSubmit, formState } = useForm<SignupForm>({
+    const { register, handleSubmit, formState } = useForm<SignUpForm>({
         mode: 'onChange',
         resolver: yupResolver(signUpSchema),
         reValidateMode: 'onChange',
@@ -33,7 +36,7 @@ export default function SignUpModal(): JSX.Element {
         }
     };
 
-    const onSubmitSignUpForm: SubmitHandler<SignupForm> = (data: SignupForm) => {
+    const onSubmitSignUpForm: SubmitHandler<SignUpForm> = (data: SignUpForm) => {
         onSendSignUpForm(data);
     };
 
@@ -50,6 +53,7 @@ export default function SignUpModal(): JSX.Element {
             console.log('Response from server:', response.data);
             alert("회원 가입 성공.")
             router.push("../login")
+            props.onClose();
         } catch (error){
             console.error('error submitting data:', error);
             alert("회원 가입 실패.")
@@ -61,6 +65,8 @@ export default function SignUpModal(): JSX.Element {
             formMethods={{ register, handleSubmit, formState }}
             onSubmit={onSubmitSignUpForm}
             checkCharCode={checkCharCode}
+            open={props.open}
+            onClose={props.onClose}
         />
     );
 };

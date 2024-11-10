@@ -12,16 +12,18 @@ import { useRecoilState } from "recoil";
 import { darkMode } from "../../../../util/atoms";
 import { useSidebar } from "../../../../contexts/SidebarContext";
 import { usePathname } from "next/navigation";
+import { useColorMode } from "@/components/ui/color-mode";
 
 export default function HeaderUI(props: HeaderUIProps): JSX.Element {
     const { user, loggedIn } = useUser();
     const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     const { toggleSidebar } = useSidebar();
+    const { toggleColorMode } = useColorMode();
 
     const pathname = usePathname();
     const excludedPaths = ['/login'];
     const shouldShowLayout = !excludedPaths.includes(pathname);
-
+    // onChange={() => setIsDarkMode(prev => !prev)}
    return (
         <S.HeaderContainer>
             <S.Left>
@@ -62,7 +64,7 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
                 <S.IconList>
                     <S.IconListItem>
                         <Switch
-                            onChange={() => setIsDarkMode(prev => !prev)}
+                            onChange={toggleColorMode}
                             checked={isDarkMode}
                             offColor="#888"
                             onColor="#0d6efd"
