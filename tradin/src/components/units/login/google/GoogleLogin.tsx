@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { app } from "../../../../util/firebase";
-import * as S from "../main/Login.styles";
 import GoogleIcon from '@mui/icons-material/Google';
 import { useRouter } from "next/navigation";
 import { useUser } from "../../../../contexts/UserContext";
+import { IconButton } from "@chakra-ui/react";
 
 export default function GoogleLogin(): JSX.Element {
     const provider = new GoogleAuthProvider();
@@ -55,8 +55,8 @@ export default function GoogleLogin(): JSX.Element {
     }, [auth, setUser]);
 
     return (
-        <S.GoogleLoginButton onClick={onClickGoogleLogin}>
+        <IconButton onClick={onClickGoogleLogin}>
             <GoogleIcon />
-        </S.GoogleLoginButton>
+        </IconButton>
     );
 }

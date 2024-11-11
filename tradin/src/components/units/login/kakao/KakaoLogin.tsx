@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import * as S from "../main/Login.styles";
 import { useUser } from "../../../../contexts/UserContext";
+import { IconButton, Image } from "@chakra-ui/react"
 
 export default function KakaoLogin(): JSX.Element {
     const { setUser, setLoggedIn, setLoginType } = useUser();
@@ -55,9 +55,9 @@ export default function KakaoLogin(): JSX.Element {
 
     return (
         <>
-            <S.KakaoLoginButton onClick={onClickKakaoLogin}>
-                <S.KakaoLogo src='/kakao-logo.svg'/>
-            </S.KakaoLoginButton>
+            <IconButton variant="outline" onClick={onClickKakaoLogin}>
+                <Image src='/kakao-logo.svg' width="37px" height="37px"/>
+            </IconButton>
         </>
     );
 }

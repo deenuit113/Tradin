@@ -1,11 +1,9 @@
 import { useEffect } from "react";
-import * as S from "../main/Login.styles";
-import { useRecoilState } from "recoil";
-import { darkMode } from "../../../../util/atoms";
+import { useColorMode } from "@/components/ui/color-mode";
+import { IconButton, Image } from "@chakra-ui/react";
 
 export default function NaverLogin(): JSX.Element {
-    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
-
+    const { colorMode } = useColorMode();
     useEffect(() => {
         const script = document.createElement("script");
         script.src = "https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js";
@@ -29,10 +27,16 @@ export default function NaverLogin(): JSX.Element {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(colorMode);
+    },[colorMode]);
+
     return (
-        <S.NaverLoginButton>
-            <S.NaverLogo src={isDarkMode ? '/naver-dark-logo.png' : '/naver-logo.png'} />
-            {/* <div id="naverIdLogin" /> */}
-        </S.NaverLoginButton>
+        <IconButton variant="outline">
+            <Image 
+                src={colorMode === 'dark' ? '/naver-dark-logo.png' : '/naver-logo.png'}
+                width="38px" height="38px"    
+            />
+        </IconButton>
     );
 }
