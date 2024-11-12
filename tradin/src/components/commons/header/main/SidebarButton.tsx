@@ -29,7 +29,7 @@ export default function SidebarButton(props: ToggleButtonProps): JSX.Element {
             gap="3px"
         >
             <Box
-                bg="gray.800"
+                bg="iconColor"
                 width={{ base: '19.2px', md: '24px' }}
                 height={{ base: '3.2px', md: '4px' }}
                 borderRadius="2px"
@@ -43,7 +43,7 @@ export default function SidebarButton(props: ToggleButtonProps): JSX.Element {
             />
             
             <Box
-                bg="gray.800"
+                bg="iconColor"
                 width={{ base: '19.2px', md: '24px' }}
                 height={{ base: '3.2px', md: '4px' }}
                 borderRadius="2px"
@@ -53,7 +53,7 @@ export default function SidebarButton(props: ToggleButtonProps): JSX.Element {
             />
             
             <Box
-                bg="gray.800"
+                bg="iconColor"
                 width={{ base: '19.2px', md: '24px' }}
                 height={{ base: '3.2px', md: '4px' }}
                 borderRadius="2px"
