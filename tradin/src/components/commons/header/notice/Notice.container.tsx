@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Modal from "react-modal";
 import { useRecoilState } from "recoil";
 import { darkMode, notification } from "../../../../util/atoms";
-import NoticeModal from "./modal/NoticeModal.container";
+// import NoticeModal from "./modal/NoticeModal.container";
 import { toast } from 'react-toastify'; 
 import { Notification } from "./Notice.types";
 import HeaderNoticeUI from "./Notice.presenter";
@@ -224,18 +224,18 @@ export default function HeaderNotice() {
         setUnreadCount(unreadNotifications.length);
     }, [notifications]);
 
-    const modalContent = (
-        <NoticeModal
-            closeModal={closeModal}
-            notifications={filteredNotifications}
-            deleteNotification={deleteNotification}
-            setNotifications={setNotifications}
-            showUnreadOnly={showUnreadOnly}
-            showReadOnly={showReadOnly}
-            setShowUnreadOnly={setShowUnreadOnly}
-            setShowReadOnly={setShowReadOnly}
-        />
-    );
+    // const modalContent = (
+    //     <NoticeModal
+    //         closeModal={closeModal}
+    //         notifications={filteredNotifications}
+    //         deleteNotification={deleteNotification}
+    //         setNotifications={setNotifications}
+    //         showUnreadOnly={showUnreadOnly}
+    //         showReadOnly={showReadOnly}
+    //         setShowUnreadOnly={setShowUnreadOnly}
+    //         setShowReadOnly={setShowReadOnly}
+    //     />
+    // );
 
     return (
         <>
@@ -249,7 +249,7 @@ export default function HeaderNotice() {
                 volume={volume}
                 isModalOpen={isModalOpen}
                 closeModal={closeModal}
-                modalContent={modalContent}
+                // modalContent={modalContent}
             />
         </>
     );

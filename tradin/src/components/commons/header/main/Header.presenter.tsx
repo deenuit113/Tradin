@@ -1,10 +1,10 @@
 import * as S from "./Header.styles";
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import Switch from 'react-switch';
+// import Switch from 'react-switch';
 import NavBar from "../../nav/Nav";
 import HeaderNotice from "../notice/Notice.container";
 import SidebarButton from "./SidebarButton";
-import { FaUser } from "react-icons/fa";
+import { FaMoon, FaSun, FaUser } from "react-icons/fa";
 import { HeaderUIProps } from "./Header.types";
 import { announcements } from "./MockAnnouncements";
 import { useUser } from "../../../../contexts/UserContext";
@@ -13,6 +13,8 @@ import { darkMode } from "../../../../util/atoms";
 import { useSidebar } from "../../../../contexts/SidebarContext";
 import { usePathname } from "next/navigation";
 import { useColorMode } from "@/components/ui/color-mode";
+import { Switch } from "@/components/ui/switch";
+import { Icon } from "@chakra-ui/react";
 
 export default function HeaderUI(props: HeaderUIProps): JSX.Element {
     const { user, loggedIn } = useUser();
@@ -64,6 +66,24 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
                 <S.IconList>
                     <S.IconListItem>
                         <Switch
+                            onCheckedChange={toggleColorMode}
+                            colorPalette="blue"
+                            size="lg"
+                            trackLabel={{
+                                on: (
+                                    <Icon color="gray.400">
+                                        <FaMoon/>
+                                    </Icon>
+                                ),
+                                off: (
+                                     <Icon color="yellow.400">
+                                        <FaSun/>
+                                    </Icon>
+                                )
+                            }}
+                        />
+
+                        {/* <Switch
                             onChange={toggleColorMode}
                             checked={isDarkMode}
                             offColor="#888"
@@ -75,7 +95,7 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
                             aria-label="다크모드 스위치"
                             role="switch"
                             className="DarkMode-Switch"
-                        />
+                        /> */}
                     </S.IconListItem>
                     <S.IconListItem>
                         <HeaderNotice />

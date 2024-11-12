@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { useSidebar } from "../../../../contexts/SidebarContext";
+// import { useSidebar } from "../../../../contexts/SidebarContext";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app, auth } from "../../../../util/firebase";
 import { useUser } from "../../../../contexts/UserContext";
 import HeaderUI from "./Header.presenter";
 import { announcements } from "./MockAnnouncements";
-import { useRecoilState } from "recoil";
-import { darkMode } from "../../../../util/atoms";
+// import { useRecoilState } from "recoil";
+// import { darkMode } from "../../../../util/atoms";
 // import { useFetchNews } from "../../../../hooks/useFetchNew";
 
 export default function Header(): JSX.Element {
@@ -15,7 +15,7 @@ export default function Header(): JSX.Element {
     const router = useRouter();
     const [currentAnnouncement, setCurrentAnnouncement] = useState<number>(0);
     const { setUser, setLoggedIn, loginType, setLoginType } = useUser();
-    const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
+    // const [isDarkMode, setIsDarkMode] = useRecoilState(darkMode);
     // const articles = useFetchNews();
 
     // Firebase Auth 상태 감지
@@ -56,22 +56,22 @@ export default function Header(): JSX.Element {
         return () => clearInterval(interval);
     }, []);
 
-    // 다크 모드 설정 로직
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const savedDarkMode = localStorage.getItem('DarkMode');
-            if (savedDarkMode === 'night') {
-                setIsDarkMode(true);
-            }
-        }
-    }, []);
+    // // 다크 모드 설정 로직
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         const savedDarkMode = localStorage.getItem('DarkMode');
+    //         if (savedDarkMode === 'night') {
+    //             setIsDarkMode(true);
+    //         }
+    //     }
+    // }, []);
 
-    // 다크 모드 상태를 localStorage에 저장
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('DarkMode', isDarkMode ? 'night' : 'day');
-        }
-    }, [isDarkMode]);
+    // // 다크 모드 상태를 localStorage에 저장
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         localStorage.setItem('DarkMode', isDarkMode ? 'night' : 'day');
+    //     }
+    // }, [isDarkMode]);
 
     // 타이틀 클릭 시 홈으로 이동 또는 새로고침
     const handleTitleClick = () => {

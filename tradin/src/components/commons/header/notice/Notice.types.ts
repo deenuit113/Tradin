@@ -14,5 +14,5 @@ export interface HeaderNoticeUIProps {
     volume: number;
     isModalOpen: boolean;
     closeModal: () => void;
-    modalContent: JSX.Element;
+    // modalContent: JSX.Element;
 }
