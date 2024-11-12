@@ -39,5 +39,15 @@ export interface NoticeModalUIProps {
     confirmDeleteAll: () => void;
     cancelDeleteAll: () => void;
     showDeleteConfirm: boolean;
+}
 
+export interface NoticeDrawerProps {
+    open: boolean;
+    onClose: () => void;
+}
+
+export interface MessageItemProps {
+    type: string;
+    message: string;
+    isRead: boolean;
 }

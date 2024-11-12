@@ -10,9 +10,6 @@ export default function NoticeModal (props: NoticeModalProps): JSX.Element {
     const [isNotification, setIsNotification] = useRecoilState(notification);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
     const [removingNotifications, setRemovingNotifications] = useState<string[]>([]);
-    const [draggedItem, setDraggedItem] = useState<string | null>(null);
-    const [dragX, setDragX] = useState(0);
-    const dragStartX = useRef(0);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -75,48 +72,6 @@ export default function NoticeModal (props: NoticeModalProps): JSX.Element {
         }
     };
 
-    const handleTouchStart = useCallback((e: React.TouchEvent, message: string) => {
-        dragStartX.current = e.touches[0].clientX;
-        setDraggedItem(message);
-    }, []);
-
-    const handleTouchMove = useCallback((e: React.TouchEvent) => {
-        if (draggedItem) {
-            const currentX = e.touches[0].clientX;
-            const diff = currentX - dragStartX.current;
-            setDragX(Math.min(0, Math.max(-100, diff)));
-        }
-    }, [draggedItem]);
-
-    const handleTouchEnd = useCallback(() => {
-        if (dragX < -50) {
-            handleRemoveNotification(draggedItem!);
-        }
-        setDraggedItem(null);
-        setDragX(0);
-    }, [dragX, draggedItem, handleRemoveNotification]);
-
-    const handleMouseDown = useCallback((e: React.MouseEvent, message: string) => {
-        dragStartX.current = e.clientX;
-        setDraggedItem(message);
-    }, []);
-
-    const handleMouseMove = useCallback((e: React.MouseEvent) => {
-        if (draggedItem) {
-            const currentX = e.clientX;
-            const diff = currentX - dragStartX.current;
-            setDragX(Math.min(0, Math.max(-100, diff)));
-        }
-    }, [draggedItem]);
-
-    const handleMouseUp = useCallback(() => {
-        if (dragX < -50) {
-            handleRemoveNotification(draggedItem!);
-        }
-        setDraggedItem(null);
-        setDragX(0);
-    }, [dragX, draggedItem, handleRemoveNotification]);
-
     return (
         <>
             <NoticeModalUI
@@ -130,14 +85,6 @@ export default function NoticeModal (props: NoticeModalProps): JSX.Element {
                 notifications={props.notifications}
                 removingNotifications={removingNotifications}
                 markAsRead={markAsRead}
-                handleTouchStart={handleTouchStart}
-                handleTouchEnd={handleTouchEnd}
-                handleTouchMove={handleTouchMove}
-                handleMouseDown={handleMouseDown}
-                handleMouseMove={handleMouseMove}
-                handleMouseUp={handleMouseUp}
-                dragX={dragX}
-                draggedItem={draggedItem}
                 handleRemoveNotification={handleRemoveNotification}
                 getDeleteConfirmMessage={getDeleteConfirmMessage}
                 confirmDeleteAll={confirmDeleteAll}

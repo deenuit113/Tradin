@@ -218,7 +218,7 @@ export const NotificationList = styled.ul`
     }
 `;
 
-export const NotificationItem = styled.li<{ read: boolean; isRemoving: boolean; moveUp: boolean; dragX: number, isActive: boolean }>`
+export const NotificationItem = styled.li<{ read: boolean }>`
     margin: 0;
     border-top: 1px solid lightgrey;
     color: ${({ read, theme }) => (read ? theme.notificationReadMessageTextColor : theme.notificationUnreadMessageTextColor)};
@@ -231,8 +231,6 @@ export const NotificationItem = styled.li<{ read: boolean; isRemoving: boolean; 
     padding: 10px 20px 10px 20px;
     cursor: pointer;
     transition: all 0.3s ease-out;
-    animation: ${props => props.isRemoving ? slideOutLeft : 'none'} 0.3s forwards, ${props => props.moveUp ? moveUp : 'none'} 0.3s forwards;
-    transform: translateX(${props => props.dragX}px);
     position: relative;
     overflow: hidden;
     z-index: 1010;

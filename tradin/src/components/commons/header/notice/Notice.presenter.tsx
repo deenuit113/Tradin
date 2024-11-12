@@ -1,12 +1,18 @@
-import Modal from "react-modal";
 import * as S from "./Notice.styles";
-import { modalStyles } from "./Notice.styles";
 import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
 import { HeaderNoticeUIProps} from "./Notice.types";
+import { useState } from "react";
+import NoticeDrawer from "./modal/NoticeDrawer.container";
 
 export default function HeaderNoticeUI(props: HeaderNoticeUIProps ) {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+    const onClickNoticeDrawer = () => {
+        setIsModalOpen(prev => !prev);
+    };
+
+    // onClick={props.handleNotificationClick}
     return (
         <>
             <S.BellIconContainer
@@ -17,7 +23,7 @@ export default function HeaderNoticeUI(props: HeaderNoticeUIProps ) {
             >
                 <S.FaBellContainer>
                     <S.FaBellIcon
-                        onClick={props.handleNotificationClick}
+                        onClick={onClickNoticeDrawer}
                         className="Notification-Icon"
                     />
                 </S.FaBellContainer>
@@ -30,14 +36,10 @@ export default function HeaderNoticeUI(props: HeaderNoticeUIProps ) {
                     </S.VolumeSliderContainer>
                 )}
             </S.BellIconContainer>
-            <Modal
-                isOpen={props.isModalOpen}
-                onRequestClose={props.closeModal}
-                contentLabel="Notification Modal"
-                style={modalStyles}
-            >
-                {props.modalContent}
-            </Modal>
+            <NoticeDrawer
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
             <ToastContainer />
         </>
     );

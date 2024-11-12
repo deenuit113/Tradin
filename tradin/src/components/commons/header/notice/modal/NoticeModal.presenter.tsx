@@ -73,20 +73,7 @@ export default function NoticeModalUI (props: NoticeModalUIProps): JSX.Element {
                         <S.NotificationItem
                             key={notification.message}
                             read={notification.read}
-                            isRemoving={props.removingNotifications.includes(notification.message)}
-                            moveUp={props.removingNotifications.some(m => 
-                                props.notifications.findIndex(n => n.message === m) < index
-                            )}
-                            dragX={notification.message === props.draggedItem ? props.dragX : 0}
                             onClick={() => props.markAsRead(notification.message)}
-                            onTouchStart={(e) => props.handleTouchStart(e, notification.message)}
-                            onTouchMove={props.handleTouchMove}
-                            onTouchEnd={props.handleTouchEnd}
-                            onMouseDown={(e) => props.handleMouseDown(e, notification.message)}
-                            onMouseMove={props.handleMouseMove}
-                            onMouseUp={props.handleMouseUp}
-                            onMouseLeave={props.handleMouseUp}
-                            isActive={props.dragX < -50}
                         >
                             <S.NotificationText>
                                 {notification.read ? (
@@ -104,9 +91,6 @@ export default function NoticeModalUI (props: NoticeModalUIProps): JSX.Element {
                                     props.handleRemoveNotification(notification.message);
                                 }}
                             />
-                            <S.DeletedZone opacity={props.dragX < -40 && notification.message === props.draggedItem ? 1 : 0}>
-                                삭제
-                            </S.DeletedZone>
                         </S.NotificationItem>
                     ))}
                 </S.NotificationList>
