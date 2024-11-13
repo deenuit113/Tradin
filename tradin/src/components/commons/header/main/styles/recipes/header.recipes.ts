@@ -137,3 +137,13 @@ export const marqueeRecipe = defineRecipe({
         }
     },
 });
+
+export const darkModeButtonRecipe = defineRecipe({
+    base: {
+        bg: "transparent",
+
+        _hover :{
+            bg: "transparent",
+        },
+    },
+})

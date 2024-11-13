@@ -1,6 +1,6 @@
 import HeaderNotice from "../notice/Notice.container";
 import SidebarButton from "./SidebarButton";
-import { FaMoon, FaSun, FaUser } from "react-icons/fa";
+import { FaBullhorn, FaMoon, FaSun, FaUser } from "react-icons/fa";
 import { HeaderUIProps } from "./Header.types";
 import { announcements } from "./MockAnnouncements";
 import { useUser } from "../../../../contexts/UserContext";
@@ -20,8 +20,8 @@ import {
 
 export default function HeaderUI(props: HeaderUIProps): JSX.Element {
     const { user, loggedIn } = useUser();
-    const { toggleSidebar } = useSidebar();
-    const { toggleColorMode } = useColorMode();
+    const { toggleSidebar} = useSidebar();
+    const { toggleColorMode, colorMode } = useColorMode();
 
     const pathname = usePathname();
     const excludedPaths = ['/login'];
@@ -50,29 +50,18 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
             </C.LeftContainer>
             <C.CenterContainer>
                 <C.Marquee key={props.currentAnnouncement}>
+                    
                     <p>
                         {`${announcements[props.currentAnnouncement].title}: ${announcements[props.currentAnnouncement].content}`}
                     </p>
                 </C.Marquee>
             </C.CenterContainer>
             <Flex justify="space-between" align="center" gap="10px" paddingRight="1rem">
-                <Switch
-                    onCheckedChange={toggleColorMode}
-                    colorPalette="blue"
-                    size="lg"
-                    trackLabel={{
-                        on: (
-                            <Icon color="yellow.400">
-                                <FaSun/>
-                            </Icon>
-                        ),
-                        off: (
-                                <Icon color="white.400">
-                                <FaMoon/>
-                            </Icon>
-                        )
-                    }}
-                />
+                <C.DarkModeButton onClick={toggleColorMode} variant="ghost">
+                    {colorMode === 'dark' ?
+                        <FaMoon color="FFFF00" /> : <FaSun color="#FC8720" />
+                    }
+                </C.DarkModeButton>
                 <HeaderNotice />
 
                 {(loggedIn && user && user.id) ? (
@@ -88,6 +77,7 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
                                         name={user.displayName ?? 'User'}
                                         src={user.photoUrl ?? undefined}
                                         icon={<Icon as={FaUser} />}
+                                        shape="rounded"
                                     />
                                 </IconButton>
                             </MenuTrigger>

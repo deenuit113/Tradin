@@ -44,11 +44,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                                             <SidebarProvider>
                                                 {shouldShowLayout && (
                                                     <>
-                                                        
+                                                        <Header/>
                                                         <SideBar />
                                                     </>
                                                 )}
-                                                <Header/>
                                                 {children}
                                             </SidebarProvider>
                                         </DndProvider>
