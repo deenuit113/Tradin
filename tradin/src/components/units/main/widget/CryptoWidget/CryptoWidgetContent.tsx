@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FaCaretUp, FaCaretDown } from "react-icons/fa";
+import { FaWonSign, FaDollarSign } from "react-icons/fa";
 import * as S from "../../Main.styles";
 import { ICryptoWidgetProps } from "../Widget.types";
 import { useExchangeRate } from "../../../../../hooks/useExchangeRate";
 import CryptoWidget from "./CryptoWidget";
+import { StatLabel, StatRoot, StatValueText, StatHelpText, StatUpTrend, StatDownTrend } from "@/components/ui/stat"
+import { Flex, HStack, Icon } from "@chakra-ui/react";
+import { SkeletonText } from "@/components/ui/skeleton";
 
 const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX.Element => {
     const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
@@ -11,14 +14,13 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
         prevPrice: null,
         timestamp: null,
     });
-    const [priceChangeIcon, setPriceChangeIcon] = useState<JSX.Element | null>(null);
     const [priceChangePercentage, setPriceChangePercentage] = useState<string | null>(null);
     const [lastChangeTimestamp, setLastChangeTimestamp] = useState<string | null>(null);
     const { exchangeRate } = useExchangeRate();
 
     const exchangePrice = () => {
         if (priceData?.price !== null && exchangeRate !== null) {
-            return (priceData.price / exchangeRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return priceData.price / exchangeRate;
         }
         return null;
     };
@@ -30,13 +32,10 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
                 const formattedChange = priceChange.toFixed(2) + "%";
 
                 if (priceData.price > priceData.prevPrice) {
-                    setPriceChangeIcon(<S.PriceUPIcon />);
                     setPriceChangePercentage(`+${formattedChange}`);
                 } else if (priceData.price < priceData.prevPrice) {
-                    setPriceChangeIcon(<S.PriceDownIcon />);
                     setPriceChangePercentage(formattedChange);
                 }
-
                 setLastChangeTimestamp(priceData.timestamp);
             }
         }
@@ -45,21 +44,38 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
     return (
     <>
         <S.WidgetContent>
-                {isCurrencyKRW ?
-                <p className="coin-price">가격: {priceData.price ? `${priceData.price.toLocaleString()} KRW` : '로딩 중...'}</p>
-                : <p className="coin-price">가격: {priceData.price ? `${exchangePrice()} USD` : '로딩 중...'}</p>
-                }
-                {priceChangeIcon && (
-                    <S.PriceChangeContainer>
-                        <span>{priceChangeIcon}</span>
-                        <span>{priceChangePercentage}</span>
-                    </S.PriceChangeContainer>
-                )}
+            <StatRoot maxW="240px" size="sm" alignItems="center" justifyContent="center" gap="2px">
+                <HStack justify="space-between">
+                    <StatLabel fontSize="13px" fontWeight="700">{widget.name}</StatLabel>
+                    <Icon color="fg.muted" size="xs">
+                        {isCurrencyKRW ? <FaWonSign/> : <FaDollarSign />}
+                    </Icon>
+                </HStack>
+                <Flex flexDirection="column" justifyContent="center" alignItems="center">
+                    {priceData.price !== null ? (
+                        <StatValueText
+                            value={isCurrencyKRW ? priceData.price ?? undefined : exchangePrice() ?? undefined} // null을 undefined로 변환
+                            formatOptions={{
+                                style: "currency",
+                                currency: isCurrencyKRW ? "KRW" : "USD",
+                            }}
+                            fontSize="19px"
+                        />
+                    ) : (
+                        <SkeletonText noOfLines={1} variant="shine" />
+                    )}
+                    {priceData.price !== null && priceData.prevPrice !== null && priceChangePercentage && (
+                        priceData.price > priceData.prevPrice ? (
+                            <StatUpTrend variant="plain" px="0">{priceChangePercentage}</StatUpTrend> // 상승 트렌드
+                        ) : (
+                            <StatDownTrend variant="plain" px="0">{priceChangePercentage}</StatDownTrend> // 하락 트렌드
+                        )
+                    )}
+                </Flex>
                 {lastChangeTimestamp && (
-                    <S.CoinTimeStamp>
-                        {lastChangeTimestamp} 기준
-                    </S.CoinTimeStamp>
+                    <StatHelpText fontSize="8px">{lastChangeTimestamp}</StatHelpText>
                 )}
+            </StatRoot>
         </S.WidgetContent>
         {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
     </>
