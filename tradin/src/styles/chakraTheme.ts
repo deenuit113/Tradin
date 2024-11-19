@@ -1,10 +1,11 @@
 'use client';
 
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react"
+import { keyframes } from "./keyframes";
 
 const config = defineConfig({
-    strictTokens: true,
     theme: {
+        keyframes: keyframes,
         semanticTokens: {
             colors: {
                 testButtonColor: {
@@ -35,9 +36,9 @@ const config = defineConfig({
                 }
             },
         },
-        breakpoints: {
-            desktop: "1200px",
-            halfDesktop: "799px",
+        breakpoints:{
+            full: "1200px",
+            half: "799px"
         }
     },
 })

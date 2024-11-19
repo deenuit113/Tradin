@@ -13,4 +13,21 @@ export interface IWidgetProps {
 export interface ICryptoWidgetProps {
     widget: any;
     isCurrencyKRW: boolean;
+    widgetIcon: JSX.Element;
+}
+
+export interface DataWidgetProps {
+    type: string;
+    title: string;
+}
+
+// BTC 롱숏 비율 데이터 위젯 롱비율 props
+export interface LongRatioBarProps {
+    long: number;
+    children?: React.ReactNode;
+}
+// BTC 롱숏 비율 데이터 위젯 숏비율 props
+export interface ShortRatioBarProps {
+    short: number;
+    children?: React.ReactNode;
 }

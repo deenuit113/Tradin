@@ -2,11 +2,19 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import * as S from "../Main.styles";
-import { FaEllipsisV } from "react-icons/fa";
+import { FaEllipsisV, FaEllipsisH } from "react-icons/fa";
 import { availableWidgets } from "./AvailableWidgets";
 import { IWidgetProps } from "./Widget.types";
 import CryptoWidgetContent from "./CryptoWidget/CryptoWidgetContent";
 import DataWidgetContent from "./DataWidget/DataWidgetContent";
+import {
+    MenuContent,
+    MenuItem,
+    MenuRoot,
+    MenuTrigger,
+} from "@/components/ui/menu"
+import { IconButton } from "@chakra-ui/react";
+import * as C from "./styles/components/Widget.components";
 
 const ItemType = "WIDGET";
 
@@ -88,9 +96,9 @@ const Widget = ({
 
     const renderWidgetContent = () => {
         if (widgetConfig?.category === 'crypto') {
-            return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} />;
+            return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} widgetIcon={widgetConfig?.icon}/>;
         } else if (widgetConfig?.category === 'data') {
-            return <DataWidgetContent type={widget.type} />;
+            return <DataWidgetContent type={widget.type} title={widget.name}/>;
         } else {
             return <p>Unknown widget category</p>;
         }
@@ -98,7 +106,7 @@ const Widget = ({
 
     return (
         <animated.div style={springStyle} ref={ref}>
-            <S.Widget 
+            <C.Widget 
                 isDragging={isDragging}
                 onClick={() => {
                     if (widgetConfig?.symbol) {
@@ -106,29 +114,30 @@ const Widget = ({
                     }
                 }}
             >
-                <S.WidgetHeader>
-                    <S.WidgetTitle>{widgetConfig?.name} {widgetConfig?.icon}</S.WidgetTitle>
-                    <S.MenuIcon
-                        onClick={(e) => {
-                            e.stopPropagation(); // 메뉴 아이콘 클릭 시 이벤트 버블링 방지
-                            setMenuOpen(index === menuOpen ? null : index);
-                        }}
-                    >
-                        <FaEllipsisV className="MenuIcon" />
-                    </S.MenuIcon>
-                    {menuOpen === index && (
-                        <S.DropdownMenu ref={dropdownRef}>
-                            <S.DropdownItem
+                <C.WidgetDropDownContainer> 
+                    <MenuRoot>
+                        <MenuTrigger asChild onClick={(e)=> e.stopPropagation()} >
+                            <C.WidgetDropDownBtn size="xs" variant="ghost" rounded="xl">
+                                <FaEllipsisV />
+                            </C.WidgetDropDownBtn>
+                        </MenuTrigger>
+                        <MenuContent>
+                            <MenuItem 
+                                value="delete"
+                                color="fg.error"
+                                _hover={{ bg: "bg.error", color: "fg.error" }}
                                 onClick={(e) => {
-                                    e.stopPropagation(); // 삭제 클릭 시 이벤트 버블링 방지
-                                    removeWidget(index);
+                                    e.stopPropagation();
+                                    removeWidget(index)
                                 }}
-                            >위젯 삭제</S.DropdownItem>
-                        </S.DropdownMenu>
-                    )}
-                </S.WidgetHeader>
+                            >
+                                Delete ...
+                            </MenuItem>
+                        </MenuContent>
+                    </MenuRoot>
+                </C.WidgetDropDownContainer>
                 {renderWidgetContent()}
-            </S.Widget>
+            </C.Widget>
         </animated.div>
     );
 };

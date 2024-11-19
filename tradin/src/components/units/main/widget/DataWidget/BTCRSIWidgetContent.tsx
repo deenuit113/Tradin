@@ -1,78 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useRSIData } from "../../../../../hooks/useRSIData";
-import styled from "@emotion/styled";
-import * as S from "../../Main.styles";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import * as C from "./styles/components/RSIWidget.components";
+import { DataWidgetTitle } from "./styles/components/Common.components";
+import { Center, Spinner, Text } from "@chakra-ui/react";
 
-const GaugeContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    position: relative;
+interface RSIWidgetProps {
+    title: string;
+}
 
-    @media all and (min-width:359px) and (max-width: 799px) {
-        width: 80%;
-        height: 80%;
-    }
-`;
-
-const GaugeSvg = styled.svg`
-    width: 81%;
-    height: 54%;
-    overflow: visible;
-`;
-
-const ArcPath = styled.path<{ color: string }>`
-    fill: none;
-    stroke: ${({ color }) => color};
-    stroke-width: 10;
-    transition: stroke 0.3s ease-in-out;
-`;
-
-const GaugeNeedle = styled.line`
-    stroke: ${({ theme }) => theme.iconColor};
-    stroke-width: 6;
-    stroke-linecap: round;
-    transition: transform 1s cubic-bezier(0.68, -1.00, 0.27, 1.55);
-    transform-origin: 50% 80%;
-`;
-
-const GaugeText = styled.text`
-    font-size: 16px;
-    fill: #333;
-    text-anchor: middle;
-    alignment-baseline: middle;
-`;
-
-const Explanation = styled.text`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    font-size: 11px;
-    font-weight: 400;
-    color: ${({ theme }) => theme.timeTextColor};
-    align-items: center;
-    text-anchor: middle;
-    alignment-baseline: middle;
-    transition: opacity 0.3s ease-in-out;
-`
-
-const ExplanationContainer = styled.div<{ hovered: boolean }>`
-    opacity: ${({ hovered }) => hovered ? 1 : 0};
-    display: ${({ hovered }) => hovered ? 'block' : 'none'};
-`
-
-const RSIWidgetContent: React.FC = () => {
+const RSIWidgetContent: React.FC<RSIWidgetProps> = ({ title }) => {
     const { data, loading, error } = useRSIData("BTCUSDT");
     const [rotation, setRotation] = useState(-90);
     const [hovered, setHovered] = useState(false);
-    const [color, setColor] = useState("#FFA500");
+    const [color, setColor] = useState<"red" | "green" | "orange">("orange");
 
     useEffect(() => {
         if (data?.rsi !== undefined) {
@@ -85,44 +26,57 @@ const RSIWidgetContent: React.FC = () => {
             });
 
             if (value < 30) {
-                setColor("#BF1E2E");
+                setColor("red");
             } else if (value > 70) {
-                setColor("#50C878");
+                setColor("green");
             } else {
-                setColor("#FFA500");
+                setColor("orange");
             }
         }
     }, [data]);
 
-    if (loading) return <S.WidgetContent><FontAwesomeIcon id="LoadingIcon" icon={faSpinner} spin /></S.WidgetContent>;
-    if (error) return <p>Error: {error}</p>;
+    if (loading) {
+        return (
+            <Center width="100%" height="100%">
+                <Spinner size="lg"/>
+            </Center>
+        );
+    }
+    if (error) {
+        return (
+            <Center width="100%" height="100%">
+                <Text>Error: {error}</Text>
+            </Center>
+        );
+    }
 
     return (
-        <S.WidgetContent
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}>
-            <GaugeContainer>
-                <GaugeSvg viewBox="0 0 150 75">
-                    <ArcPath
-                        color={color}
-                        d="M 15 70 A 60 60 0 0 1 135 70"
-                    />
-                    <GaugeNeedle
+        <>
+            <C.GaugeContainer
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                <DataWidgetTitle>{title}</DataWidgetTitle>
+                <C.GaugeSvg viewBox="0 0 150 75">
+                    <C.ArcPath color={color} d="M 15 70 A 60 60 0 0 1 135 70" />
+                    <C.GaugeNeedle
                         x1="75"
                         y1="70"
                         x2="75"
                         y2="20"
                         style={{ transform: `rotate(${rotation}deg)` }}
                     />
-                </GaugeSvg>
-                <GaugeText x="75" y="85">{data?.rsi}</GaugeText>
-                <ExplanationContainer hovered={hovered}>
-                    <Explanation>
-                        30<FaAngleDown/>과매도 70<FaAngleUp/>과매수
-                    </Explanation>
-                </ExplanationContainer>
-            </GaugeContainer>
-        </S.WidgetContent>
+                </C.GaugeSvg>
+                <C.GaugeText x="75" y="85">{data?.rsi}</C.GaugeText>
+                <C.ExplanationContainer hovered={hovered}>
+                    <C.Explanation>
+                        30<FaAngleDown/> 과매도
+                        /
+                        70<FaAngleUp/> 과매수
+                    </C.Explanation>
+                </C.ExplanationContainer>
+            </C.GaugeContainer>
+        </>
     );
 };
 

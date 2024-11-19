@@ -2,20 +2,17 @@ import React from "react";
 import LongShortRatioWidgetContent from "./LongShortRatioWidgetContent";
 import FearGreedWidgetContent from "./FearGreedWidgetContent";
 import RSIWidgetContent from "./BTCRSIWidgetContent";
+import { DataWidgetProps } from "../Widget.types";
 
-interface DataWidgetContentProps {
-    type: string;
-}
-
-const DataWidgetContent: React.FC<DataWidgetContentProps> = ({ type }) => {
+const DataWidgetContent: React.FC<DataWidgetProps> = ({ type, title }) => {
     const renderWidget = () => {
         switch (type) {
             case 'longshortratio':
-                return <LongShortRatioWidgetContent />;
+                return <LongShortRatioWidgetContent title={title} />;
             case 'feargreedindex':
-                return <FearGreedWidgetContent />;
+                return <FearGreedWidgetContent title={title}/>;
             case 'btcrsiindex':
-                return <RSIWidgetContent />;
+                return <RSIWidgetContent title={title}/>;
             default:
                 return <p>Unknown widget type</p>;
         }

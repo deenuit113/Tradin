@@ -1,15 +1,8 @@
 'use client';
 
 import { ChakraProvider } from '@chakra-ui/react'
-import { ThemeProvider as NextThemeProvider } from 'next-themes';
-import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
-import { ReactNode } from 'react'
-import { useRecoilState } from "recoil";
 import system from '@/styles/chakraTheme';
 import { ColorModeProvider, type ColorModeProviderProps } from '@/components/ui/color-mode';
-interface ProviderProps {
-    children: ReactNode
-}
 
 export function Provider(props: ColorModeProviderProps) {
 

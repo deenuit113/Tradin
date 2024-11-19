@@ -161,29 +161,6 @@ export const MainContent = styled.div<{ sidebarOpen: boolean }>`
     }
 `;
 
-export const Widget = styled.div<{ isDragging: boolean }>`
-    background-color: ${({ theme }) => theme.innerbackgroundColor};
-    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 1rem;
-    width: 240px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    position: relative;
-    transition: transform 0.3s ease;
-    transform: ${({ isDragging }) => (isDragging ? 'scale(1.05)' : 'scale(1)')};
-    :hover {
-        transform: scale(1.05);
-    }
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        width: 180px;
-        height: 150px;
-        padding: 0.5rem;
-    }
-`;
 
 export const WidgetAdd = styled.div`
     background-color: ${({ theme }) => theme.innerbackgroundColor};
@@ -264,40 +241,6 @@ export const WidgetTitle = styled.div`
         font-size: 12px;
     }
 `
-
-export const MenuIcon = styled.div`
-    cursor: pointer;
-
-    .MenuIcon {
-        color: ${({ theme }) => theme.textColor};
-    }
-`;
-
-export const DropdownMenu = styled.div`
-    position: absolute;
-    background-color: ${({ theme }) => theme.widgetBackgroundColor};
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid lightgray;
-    border-radius: 8px;
-    right: 1rem;
-    top: 2rem;
-    z-index: 1050;
-`;
-
-export const DropdownItem = styled.div`
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    color: ${({ theme }) => theme.textColor};
-    
-    &:hover {
-        background-color: ${({ theme }) => theme.widgetDropDownHoverColor};
-        border-radius: 8px;
-    }
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 12px;
-    }
-`;
 
 export const WidgetContent = styled.div`
     color: ${({ theme }) => theme.textColor};

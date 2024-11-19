@@ -1,65 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useFearGreedIndex } from "../../../../../hooks/useFearGreedIndex";
-import styled from "@emotion/styled";
-import * as S from "../../Main.styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { DataWidgetTitle } from "./styles/components/Common.components";
+import * as C from "./styles/components/FearGreedWidget.components";
+import { Center, Spinner, Text } from "@chakra-ui/react";
 
-const ProgressBarContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    position: relative;
+interface FearGreedWidgetProps {
+    title: string;
+}
 
-    @media all and (min-width:359px) and (max-width: 799px) {
-        width: 70%;
-        height: 70%;
-    }
-`;
-
-const SvgContainer = styled.svg`
-    transform: rotate(-90deg); /* 시작점을 12시 방향으로 설정 */
-    position: relative; /* 상대 위치로 설정하여 내부 요소의 절대 위치를 설정할 수 있게 함 */
-    z-index: 1;
-`;
-
-const BackgroundCircle = styled.circle`
-    stroke: #a8a8a8;
-    stroke-width: 11;
-    fill: none;
-    z-index: 998;
-`;
-
-const ForegroundCircle = styled.circle<{ circumference: number; offset: number, hovered: boolean }>`
-    stroke: #4169E1;
-    stroke-width: ${({ hovered }) => hovered ? 15 : 10};
-    fill: none;
-    stroke-dasharray: ${({ circumference }) => circumference};
-    stroke-dashoffset: ${({ offset }) => offset};
-    transition: stroke-dashoffset 0.4s ease-out; stroke-width 0.4s ease-out;
-    z-index: 999;
-`;
-
-const ProgressText = styled.p<{ hovered: boolean }>`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.2rem;
-    color: ${({ theme }) => theme.textColor};
-    z-index: 1000;
-    opacity: ${({ hovered }) => hovered ? 1 : 0};
-    transition: opacity 0.4s ease-out;
-
-    @media all and (min-width:359px) and (max-width: 799px) {
-        font-size: 0.8rem;
-    }
-`;
-
-const FearGreedWidgetContent: React.FC = () => {
+const FearGreedWidgetContent: React.FC<FearGreedWidgetProps> = ({ title }) => {
     const { data, loading, error } = useFearGreedIndex();
     const [offset, setOffset] = useState(0);
     const [circumference, setCircumference] = useState(0);
@@ -81,37 +30,59 @@ const FearGreedWidgetContent: React.FC = () => {
         }
     }, [data]);
 
-    if (loading) return <S.WidgetContent><FontAwesomeIcon id="LoadingIcon" icon={faSpinner} spin /></S.WidgetContent>;
-    if (error) return <p>Error: {error}</p>;
+    if (loading) {
+        return (
+            <Center width="100%" height="100%">
+                <Spinner size="lg"/>
+            </Center>
+        );
+    }
+    if (error) {
+        return (
+            <Center width="100%" height="100%">
+                <Text>Error: {error}</Text>
+            </Center>
+        );
+    }
 
     return (
-        <S.WidgetContent>
-            <ProgressBarContainer>
-                <SvgContainer 
-                    xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"
-                    onMouseEnter={() => setHovered(true)}
-                    onMouseLeave={() => setHovered(false)}
-                >
-                    <BackgroundCircle
-                        cx="50"
-                        cy="50"
-                        r="40"
-                    />
-                    <ForegroundCircle
-                        cx="50"
-                        cy="50"
-                        r="40"
-                        circumference={circumference}
-                        offset={offset}
-                        hovered={hovered}
-                    />
-                    
-                </SvgContainer>
-                <ProgressText hovered={hovered}>{data?.fearGreedIndex}</ProgressText>
-                
-            </ProgressBarContainer>
-        </S.WidgetContent>
-        
+        <C.ProgressBarContainer>
+            <DataWidgetTitle>{title}</DataWidgetTitle>
+            <C.SvgContainer 
+                xmlns="http://www.w3.org/2000/svg" width="65%" height="65%" viewBox="0 0 100 100"
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                <C.BackgroundCircle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                />
+                <C.ForegroundCircle
+                    cx="50"
+                    cy="50"
+                    r="40"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={offset}
+                    hovered={hovered}
+                />
+                <foreignObject x="0" y="0" width="100" height="100">
+                    <div 
+                        style={{ 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            height: '100%', 
+                            width: '100%',
+                            transform: 'rotate(90deg)',
+                        }}>
+                        <C.ProgressText hovered={hovered}>
+                            {data?.fearGreedIndex}
+                        </C.ProgressText>
+                    </div>
+                </foreignObject>
+            </C.SvgContainer>
+        </C.ProgressBarContainer>
     );
 };
 
