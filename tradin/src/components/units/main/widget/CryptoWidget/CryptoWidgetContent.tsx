@@ -42,7 +42,7 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
     return (
         <>
             <StatRoot width="100%" height="65%" alignItems="center" justifyContent="center" gap="10px">
-                <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center" marginBottom="10px">
+                <Flex flexDirection="column" width="100%" justifyContent="center" alignItems="center">
                     {priceData.price !== null ? (
                         <StatValueText
                             value={isCurrencyKRW ? priceData.price ?? undefined : exchangePrice() ?? undefined}

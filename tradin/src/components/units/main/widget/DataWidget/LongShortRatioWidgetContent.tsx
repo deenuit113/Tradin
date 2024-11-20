@@ -58,11 +58,11 @@ const LongShortRatioWidgetContent: React.FC = () => {
 
     return (
         <>
-            <C.LongShortRatioContainer>
-                <C.RatioBarContainer
-                    onMouseEnter={() => setHovered(true)}
-                    onMouseLeave={() => setHovered(false)}
-                >
+            <C.LongShortRatioContainer
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                <C.RatioBarContainer>
                     <C.LongRatioBar long={longRatio}>
                         {hovered ? `${longRatio.toFixed(2)}%` : "Long"}
                     </C.LongRatioBar>
