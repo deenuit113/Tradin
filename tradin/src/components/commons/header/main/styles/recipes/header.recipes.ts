@@ -19,7 +19,7 @@ export const headerContainerRecipe = defineRecipe({
         justifyContent: "space-between",
         alignItems: "center",
         height: "10vh",
-        bg: "background",
+        bg: "backgroundColor",
         borderBottom: "1px solid borderColor",
         padding: "0",
         boxSizing: "border-box",

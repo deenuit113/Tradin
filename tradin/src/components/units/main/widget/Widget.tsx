@@ -110,7 +110,7 @@ const Widget = ({
                 isDragging={isDragging}
             >
                 <C.WidgetHeader>
-                    <C.WidgetTitle>{widgetConfig?.name}{widgetConfig?.icon}</C.WidgetTitle>
+                    <C.WidgetTitle>{widgetConfig?.name}&nbsp;{widgetConfig?.icon}</C.WidgetTitle>
                     <MenuRoot>
                         <MenuTrigger asChild onClick={(e)=> e.stopPropagation()} >
                             <C.WidgetDropDownBtn size="xs" variant="ghost" rounded="xl">

@@ -1,21 +1,23 @@
-import * as S from "./Main.styles";
 import { useRecoilState } from "recoil";
 import { currencyKRW } from "../../../util/atoms";
 import { useSidebar } from "../../../contexts/SidebarContext";
-import { FaPlus } from "react-icons/fa";
+import { FaDollarSign, FaPlus, FaWonSign } from "react-icons/fa";
 import Widget from "./widget/Widget";
 import WidgetSelector from "./widget/WidgetSelector";
 import ChartPopup from "./chart/Chart";
 import { IMainPageUIProps } from "./main.types";
-import Switch from 'react-switch';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWon } from "@fortawesome/free-solid-svg-icons";
-import { faDollar } from "@fortawesome/free-solid-svg-icons";
 import { useExchangeRate } from "../../../hooks/useExchangeRate";
+import { Switch } from "@/components/ui/switch";
+import { Text } from "@chakra-ui/react";
+import { Tooltip } from "@/components/ui/tooltip";
+import { useId } from "react";
+import * as C from "./styles/components/Main.components"
+import { WidgetHeader, WidgetTitle } from "./widget/styles/components/Widget.components";
 
 export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const [isCurrencyKRW, setIsCurrencyKRW] = useRecoilState(currencyKRW);
     const { sidebarOpen } = useSidebar();
+    const id = useId();
 
     const { exchangeRate, timestamp } = useExchangeRate();
     console.log('timestamp:',timestamp);
@@ -27,70 +29,76 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     };
 
     return (
-        <>
-            <S.Container>
-                <S.CurrencyToggleContainer sidebarOpen={sidebarOpen}>
-                    <p>
-                        {exchangeRate}&nbsp;KRW/USD
-                        {timestamp && <sub>{new Date(timestamp).toLocaleString()}</sub>}
-                    </p>
+        <C.Container>
+            <C.SwitchContainer sidebarOpen={sidebarOpen}>
+                <Tooltip 
+                    ids={{ trigger: id }} 
+                    content={timestamp ? new Date(timestamp).toLocaleString() : ''}
+                    openDelay={300}
+                    closeDelay={100}
+                    
+                    showArrow
+                >
                     <Switch
-                            onChange={() => setIsCurrencyKRW(prev => !prev)}
-                            checked={isCurrencyKRW}
-                            offColor="#ffd700"
-                            onColor="#85bb65"
-                            uncheckedIcon={<FontAwesomeIcon icon={faWon} style={{ color: 'green', padding: '3.5px', paddingTop:'6px', fontSize: '14px'}} />}
-                            checkedIcon={<FontAwesomeIcon icon={faDollar} style={{ color: 'green', padding: '6px', fontSize: '15px'}} />}
-                            height={30}
-                            width={50}
-                            aria-label="coin-price-currency-unit"
-                            role="switch"
-                            className="Currency-Unit-Switch"
-                        />
-                </S.CurrencyToggleContainer>
-                <S.WidgetGridContainer sidebarOpen={sidebarOpen}>
-                    {props.widgets.map((widgetData, index) => {
-                        const widgetConfig = props.availableWidgetTypes.find(w => w.type === widgetData.type);
+                        colorPalette="blue"
+                        onCheckedChange={() => setIsCurrencyKRW(prev => !prev)}
+                        ids = {{ root: id }}
+                        size="lg"
+                        thumbLabel={{
+                            on: (
+                                <FaDollarSign />
+                            ),
+                            off: (
+                                <FaWonSign/>
+                            )
+                        }}
+                    >
+                        <Text fontWeight="700">{exchangeRate}&nbsp;KRW/USD</Text>
+                    </Switch>
+                </Tooltip>
+            </C.SwitchContainer>
+            <C.WidgetGrid sidebarOpen={sidebarOpen}>
+                {props.widgets.map((widgetData, index) => {
+                    const widgetConfig = props.availableWidgetTypes.find(w => w.type === widgetData.type);
 
-                        return (
-                            <Widget
-                                key={widgetData.id}
-                                index={index}
-                                widget={widgetData}
-                                removeWidget={props.removeWidget}
-                                menuOpen={props.menuOpen}
-                                setMenuOpen={props.setMenuOpen}
-                                moveWidget={props.moveWidget}
-                                onClickWidget={handleWidgetClick}
-                                isCurrencyKRW={isCurrencyKRW}
-                                exchangeRate={props.exchangeRate}
-                            />
-                        );
-                    })}
-                    <S.WidgetAdd>
-                        <S.WidgetHeader>
-                            <S.WidgetTitle>
-                                위젯 추가
-                            </S.WidgetTitle> 
-                        </S.WidgetHeader>
-                        <S.AddWidgetButton className="WidgetAddButton" onClick={props.onClickWidgetSelector}>
-                            <FaPlus className="PlusIcon"/>
-                        </S.AddWidgetButton> 
-                    </S.WidgetAdd>
-                    <WidgetSelector
-                        addWidget={props.addWidget}
-                        setIsSelectorOpen={props.setWidgetSelectorOpen}
-                        availableWidgets={props.availableWidgetTypes}
-                        isOpen={props.widgetSelectorOpen}
-                    />
-                    {props.selectedSymbol && (
-                        <ChartPopup
-                            symbol={props.selectedSymbol}
-                            onClose={() => props.setSelectedSymbol(null)}
+                    return (
+                        <Widget
+                            key={widgetData.id}
+                            index={index}
+                            widget={widgetData}
+                            removeWidget={props.removeWidget}
+                            menuOpen={props.menuOpen}
+                            setMenuOpen={props.setMenuOpen}
+                            moveWidget={props.moveWidget}
+                            onClickWidget={handleWidgetClick}
+                            isCurrencyKRW={isCurrencyKRW}
+                            exchangeRate={props.exchangeRate}
                         />
-                    )}
-                </S.WidgetGridContainer>
-            </S.Container>
-        </>
+                    );
+                })}
+                <C.WidgetAddContainer>
+                    <WidgetHeader>
+                        <WidgetTitle>
+                            위젯 추가
+                        </WidgetTitle> 
+                    </WidgetHeader>
+                    <C.WidgetAddBtn onClick={props.onClickWidgetSelector}>
+                        <FaPlus className="PlusIcon"/>
+                    </C.WidgetAddBtn> 
+                </C.WidgetAddContainer>
+            </C.WidgetGrid>
+            <WidgetSelector
+                    addWidget={props.addWidget}
+                    setIsSelectorOpen={props.setWidgetSelectorOpen}
+                    availableWidgets={props.availableWidgetTypes}
+                    isOpen={props.widgetSelectorOpen}
+            />
+            {props.selectedSymbol && (
+                <ChartPopup
+                    symbol={props.selectedSymbol}
+                    onClose={() => props.setSelectedSymbol(null)}
+                />
+            )}
+        </C.Container>
     );
 }

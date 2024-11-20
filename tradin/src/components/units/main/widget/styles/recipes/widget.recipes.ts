@@ -5,7 +5,7 @@ export const widgetRecipe = defineRecipe({
         display: "flex",
         position: "relative",
         flexDirection: "column",
-        bg: "backgroundColor.primary",
+        bg: "backgroundColor.secondary",
         padding: {
             lg: "1rem 1rem 0.5rem 1rem",
             sm: "0.5rem 0.5rem 0 0.5rem",
@@ -13,11 +13,11 @@ export const widgetRecipe = defineRecipe({
         transition: "transform 0.3s ease",
         width: {
             lg: "220px", // 240
-            sm: "200px", // 200
+            sm: "180px", // 200
         },
         height: {
             lg: "162px", // 200
-            sm: "150px", // 150
+            sm: "145px", // 150
         },
         margin: "auto",
         borderRadius: "8px",
@@ -67,7 +67,8 @@ export const widgetTitleRecipe = defineRecipe({
         fontSize: {
             base: "14px",
             lg: "15px",
-            sm: "13px"},
+            sm: "13px"
+        },
         fontWeight: "700",
         flexGrow: "1",
         color: "textColor",
@@ -98,6 +99,9 @@ export const widgetTimeStampRecipe = defineRecipe({
     base: {
         color: "gray",
         width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         fontSize: {
             base: "10px",
             lg: "11px",

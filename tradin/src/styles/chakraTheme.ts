@@ -33,7 +33,13 @@ const config = defineConfig({
                 },
                 loginErrorMessageDanger: {
                     value: { base: "#ff0000", _dark: "#ff474c" },
-                }
+                },
+                mainSwitchContainerColor: {
+                    value: { base: "#cbe5fd", _dark: "#335" },
+                },
+                widgetAddBtnColor: {
+                    value: { base: "#0070f3", _dark: "#333" },
+                },
             },
         },
         breakpoints:{
