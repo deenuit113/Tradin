@@ -3,7 +3,7 @@ import { defineRecipe } from "@chakra-ui/react";
 export const progressBarContainerRecipe = defineRecipe({
     base: {
         width: "100%",
-        height: "100%",
+        height: "65%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -45,7 +45,11 @@ export const foregroundCircleRecipe = defineRecipe({
                 strokeWidth: "15px",
             },
             false: {
-                strokeWidth: "10px",
+                strokeWidth: {
+                    base: "15px",
+                    lg: "10px",
+                    sm: "15px",
+                },
             },
         },
     },
@@ -57,9 +61,7 @@ export const progressTextRecipe = defineRecipe({
         fontWeight: 700,
         color: "textColor",
         opacity: 0,
-        transitionProperty: "opacity",
-        transitionDuration: "0.4s",
-        transitionTimingFunction: "ease-out",
+        transition: "opacity 0.4s ease-out",
     },
     variants: {
         hovered: {
@@ -67,7 +69,11 @@ export const progressTextRecipe = defineRecipe({
                 opacity: 1,
             },
             false: {
-                opacity: 0,
+                opacity: {
+                    base: 1,
+                    lg: 0,
+                    sm: 1,
+                },
             },
         },
     },

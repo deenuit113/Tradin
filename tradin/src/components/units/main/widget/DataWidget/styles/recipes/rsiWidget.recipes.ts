@@ -7,15 +7,23 @@ export const gaugeContainerRecipe = defineRecipe({
         alignItems: "center",
         flexDirection: "column",
         width: "100%",
-        height: "100%",
+        height: "65%",
         position: "relative",
     },
 });
 
 export const gaugeSvgRecipe = defineRecipe({
     base: {
-        width: "60%",
-        height: "40%",
+        width: {
+            base: "66%",
+            lg: "84%",
+            sm: "60%",
+        },
+        height: {
+            base: "44%",
+            lg: "56%",
+            sm: "40%",
+        },
         overflow: "visible",
     },
 });
@@ -62,7 +70,11 @@ export const explanationRecipe = defineRecipe({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: "11px",
+        fontSize: {
+            lg: "11px",
+            md: "10px",
+            sm: "9px",
+        },
         fontWeight: "400",
         color: "textColor",
         textAnchor: "middle",
@@ -85,8 +97,16 @@ export const explanationContainerRecipe = defineRecipe({
                 display: 'block',
             },
             false: {
-                opacity: 0,
-                display: 'none',
+                opacity: {
+                    base: 1,
+                    lg: 0,
+                    sm: 1,
+                },
+                display: {
+                    base: 'block',
+                    lg: 'none',
+                    sm: 'block',
+                },
             },
         },
     },

@@ -3,7 +3,7 @@ import { defineRecipe } from "@chakra-ui/react"
 export const longShortRatioContainerRecipe = defineRecipe({
     base: {
         width: "100%",
-        height: "100%",
+        height: "70%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -15,13 +15,17 @@ export const longShortRatioContainerRecipe = defineRecipe({
 
 export const ratioBarContainerRecipe = defineRecipe({
     base: {
-        width: "100%",
-        height: "30px",
+        width: "95%",
+        height: {
+            base: "30px",
+            lg: "30px",
+            sm: "25px",
+        },
         display: "flex",
-        borderRadius: "10px",
+        borderRadius: "5px",
         overflow: "hidden",
         position: "relative",
-        padding: "0px 10px 0px 10px",
+        padding: "0px 7px 0px 7px",
     },
 });
 
@@ -38,7 +42,7 @@ export const longRatioBarRecipe = defineRecipe({
         fontWeight: "600",
         paddingLeft: "15px",
         left: "0",
-        borderRadius: "10px 0px 0px 10px",
+        borderRadius: "7px 0px 0px 7px",
     },
 });
 
@@ -51,12 +55,11 @@ export const shortRatioBarRecipe = defineRecipe({
         justifyContent: "flex-end",
         alignItems: "center",
         color: "white",
-        fontSize: "12px",
+        fontSize: "11px",
         fontWeight: "600",
         paddingRight: "15px",
         marginLeft: "auto",
-        borderRadius: "0px 10px 10px 0px",
-        animationFillMode: "forwards",
+        borderRadius: "0px 7px 7px 0px",
     },
 });
 

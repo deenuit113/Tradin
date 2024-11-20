@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
 import { useBinanceLongShortRatio } from "../../../../../hooks/useLongShortRatioData";
 import { Center, Spinner, Text } from "@chakra-ui/react";
-import { DataWidgetTitle } from "./styles/components/Common.components";
 import * as C from "./styles/components/longShortRatioWidget.components";
+import { WidgetFooter, WidgetTimeStamp } from "../styles/components/Widget.components";
 
-interface LongShortRatioWidgetProps {
-    title: string;
-}
-
-const LongShortRatioWidgetContent: React.FC<LongShortRatioWidgetProps> = ({ title }) => {
+const LongShortRatioWidgetContent: React.FC = () => {
     const { data, loading, error } = useBinanceLongShortRatio("BTCUSDT");
     const [longRatio, setLongRatio] = useState(0);
     const [shortRatio, setShortRatio] = useState(0);
@@ -60,26 +55,28 @@ const LongShortRatioWidgetContent: React.FC<LongShortRatioWidgetProps> = ({ titl
             </Center>
         );
     } 
-    console.log(longRatio, shortRatio);
 
     return (
-        <C.LongShortRatioContainer>
-            <DataWidgetTitle>{title}</DataWidgetTitle>
-            <C.RatioBarContainer
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-            >
-                <C.LongRatioBar long={longRatio}>
-                    {hovered ? `${longRatio.toFixed(2)}%` : "Long"}
-                </C.LongRatioBar>
-                <C.ShortRatioBar short={shortRatio}>
-                    {hovered ? `${shortRatio.toFixed(2)}%` : "Short"}
-                </C.ShortRatioBar>
-            </C.RatioBarContainer>
-            <C.TimeStamp>
-                {data?.timestamp || JSON.parse(localStorage.getItem('binanceLongShortRatio') || '{}').timestamp} 기준
-            </C.TimeStamp>
-        </C.LongShortRatioContainer>
+        <>
+            <C.LongShortRatioContainer>
+                <C.RatioBarContainer
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                >
+                    <C.LongRatioBar long={longRatio}>
+                        {hovered ? `${longRatio.toFixed(2)}%` : "Long"}
+                    </C.LongRatioBar>
+                    <C.ShortRatioBar short={shortRatio}>
+                        {hovered ? `${shortRatio.toFixed(2)}%` : "Short"}
+                    </C.ShortRatioBar>
+                </C.RatioBarContainer>
+            </C.LongShortRatioContainer>
+            <WidgetFooter>
+                <WidgetTimeStamp>
+                    {data?.timestamp || JSON.parse(localStorage.getItem('binanceLongShortRatio') || '{}').timestamp}
+                </WidgetTimeStamp>
+            </WidgetFooter>
+        </>
     );
 }
 

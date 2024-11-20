@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useFearGreedIndex } from "../../../../../hooks/useFearGreedIndex";
-import { DataWidgetTitle } from "./styles/components/Common.components";
 import * as C from "./styles/components/FearGreedWidget.components";
 import { Center, Spinner, Text } from "@chakra-ui/react";
+import { WidgetFooter, WidgetTimeStamp } from "../styles/components/Widget.components";
 
-interface FearGreedWidgetProps {
-    title: string;
-}
-
-const FearGreedWidgetContent: React.FC<FearGreedWidgetProps> = ({ title }) => {
+const FearGreedWidgetContent: React.FC = () => {
     const { data, loading, error } = useFearGreedIndex();
     const [offset, setOffset] = useState(0);
     const [circumference, setCircumference] = useState(0);
@@ -46,43 +42,51 @@ const FearGreedWidgetContent: React.FC<FearGreedWidgetProps> = ({ title }) => {
     }
 
     return (
-        <C.ProgressBarContainer>
-            <DataWidgetTitle>{title}</DataWidgetTitle>
-            <C.SvgContainer 
-                xmlns="http://www.w3.org/2000/svg" width="65%" height="65%" viewBox="0 0 100 100"
+        <>
+            <C.ProgressBarContainer
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
             >
-                <C.BackgroundCircle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                />
-                <C.ForegroundCircle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={offset}
-                    hovered={hovered}
-                />
-                <foreignObject x="0" y="0" width="100" height="100">
-                    <div 
-                        style={{ 
-                            display: 'flex', 
-                            justifyContent: 'center', 
-                            alignItems: 'center', 
-                            height: '100%', 
-                            width: '100%',
-                            transform: 'rotate(90deg)',
-                        }}>
-                        <C.ProgressText hovered={hovered}>
-                            {data?.fearGreedIndex}
-                        </C.ProgressText>
-                    </div>
-                </foreignObject>
-            </C.SvgContainer>
-        </C.ProgressBarContainer>
+                <C.SvgContainer 
+                    xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"
+
+                >
+                    <C.BackgroundCircle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                    />
+                    <C.ForegroundCircle
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={offset}
+                        hovered={hovered}
+                    />
+                    <foreignObject x="0" y="0" width="100" height="100">
+                        <div 
+                            style={{ 
+                                display: 'flex', 
+                                justifyContent: 'center', 
+                                alignItems: 'center', 
+                                height: '100%', 
+                                width: '100%',
+                                transform: 'rotate(90deg)',
+                            }}>
+                            <C.ProgressText hovered={hovered}>
+                                {data?.fearGreedIndex}
+                            </C.ProgressText>
+                        </div>
+                    </foreignObject>
+                </C.SvgContainer>
+            </C.ProgressBarContainer>
+            <WidgetFooter>
+                <WidgetTimeStamp>
+                    {data?.timestamp}
+                </WidgetTimeStamp>
+            </WidgetFooter>
+        </>
     );
 };
 

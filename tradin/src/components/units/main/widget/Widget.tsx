@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
-import * as S from "../Main.styles";
-import { FaEllipsisV, FaEllipsisH } from "react-icons/fa";
+import { FaEllipsisV } from "react-icons/fa";
 import { availableWidgets } from "./AvailableWidgets";
 import { IWidgetProps } from "./Widget.types";
 import CryptoWidgetContent from "./CryptoWidget/CryptoWidgetContent";
@@ -13,7 +12,7 @@ import {
     MenuRoot,
     MenuTrigger,
 } from "@/components/ui/menu"
-import { IconButton } from "@chakra-ui/react";
+import { IconButton, Box } from "@chakra-ui/react";
 import * as C from "./styles/components/Widget.components";
 
 const ItemType = "WIDGET";
@@ -96,25 +95,22 @@ const Widget = ({
 
     const renderWidgetContent = () => {
         if (widgetConfig?.category === 'crypto') {
-            return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} widgetIcon={widgetConfig?.icon}/>;
+            return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW}/>;
         } else if (widgetConfig?.category === 'data') {
-            return <DataWidgetContent type={widget.type} title={widget.name}/>;
+            return <DataWidgetContent type={widget.type}/>;
         } else {
             return <p>Unknown widget category</p>;
         }
     };
+    
 
     return (
         <animated.div style={springStyle} ref={ref}>
             <C.Widget 
                 isDragging={isDragging}
-                onClick={() => {
-                    if (widgetConfig?.symbol) {
-                        onClickWidget(widgetConfig.symbol);
-                    }
-                }}
             >
-                <C.WidgetDropDownContainer> 
+                <C.WidgetHeader>
+                    <C.WidgetTitle>{widgetConfig?.name}{widgetConfig?.icon}</C.WidgetTitle>
                     <MenuRoot>
                         <MenuTrigger asChild onClick={(e)=> e.stopPropagation()} >
                             <C.WidgetDropDownBtn size="xs" variant="ghost" rounded="xl">
@@ -122,6 +118,13 @@ const Widget = ({
                             </C.WidgetDropDownBtn>
                         </MenuTrigger>
                         <MenuContent>
+                            {
+                                widgetConfig?.symbol && (
+                                    <MenuItem value="coin-chart" onClick={() => onClickWidget(widgetConfig.symbol)}>
+                                        Chart
+                                    </MenuItem>
+                                )
+                            }
                             <MenuItem 
                                 value="delete"
                                 color="fg.error"
@@ -135,7 +138,7 @@ const Widget = ({
                             </MenuItem>
                         </MenuContent>
                     </MenuRoot>
-                </C.WidgetDropDownContainer>
+                </C.WidgetHeader>
                 {renderWidgetContent()}
             </C.Widget>
         </animated.div>

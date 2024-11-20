@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useRSIData } from "../../../../../hooks/useRSIData";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import * as C from "./styles/components/RSIWidget.components";
-import { DataWidgetTitle } from "./styles/components/Common.components";
 import { Center, Spinner, Text } from "@chakra-ui/react";
+import { WidgetFooter, WidgetTimeStamp } from "../styles/components/Widget.components";
 
-interface RSIWidgetProps {
-    title: string;
-}
-
-const RSIWidgetContent: React.FC<RSIWidgetProps> = ({ title }) => {
+const RSIWidgetContent: React.FC = ( ) => {
     const { data, loading, error } = useRSIData("BTCUSDT");
     const [rotation, setRotation] = useState(-90);
     const [hovered, setHovered] = useState(false);
@@ -56,7 +52,6 @@ const RSIWidgetContent: React.FC<RSIWidgetProps> = ({ title }) => {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
             >
-                <DataWidgetTitle>{title}</DataWidgetTitle>
                 <C.GaugeSvg viewBox="0 0 150 75">
                     <C.ArcPath color={color} d="M 15 70 A 60 60 0 0 1 135 70" />
                     <C.GaugeNeedle
@@ -76,6 +71,11 @@ const RSIWidgetContent: React.FC<RSIWidgetProps> = ({ title }) => {
                     </C.Explanation>
                 </C.ExplanationContainer>
             </C.GaugeContainer>
+            <WidgetFooter>
+                <WidgetTimeStamp>
+                    {data?.timestamp}
+                </WidgetTimeStamp>
+            </WidgetFooter>
         </>
     );
 };
