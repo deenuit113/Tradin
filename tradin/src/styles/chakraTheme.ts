@@ -40,6 +40,9 @@ const config = defineConfig({
                 widgetAddBtnColor: {
                     value: { base: "#0070f3", _dark: "#333" },
                 },
+                widgetSelectorBackgroundColor: {
+                    value: { base: "rgba(240, 240, 240, 0.9)", _dark: 'rgba(51, 51, 51, 0.9)'},
+                },
             },
         },
         breakpoints:{

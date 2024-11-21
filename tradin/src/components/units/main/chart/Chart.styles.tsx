@@ -9,7 +9,7 @@ export const PopupContainer = styled.div`
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: ${({ theme }) => theme.textColor};
-    z-index: 1000;
+    z-index: 1300;
     width: 40vw;
     height: 50vh;
 

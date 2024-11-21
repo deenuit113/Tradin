@@ -59,8 +59,6 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
             </C.SwitchContainer>
             <C.WidgetGrid sidebarOpen={sidebarOpen}>
                 {props.widgets.map((widgetData, index) => {
-                    const widgetConfig = props.availableWidgetTypes.find(w => w.type === widgetData.type);
-
                     return (
                         <Widget
                             key={widgetData.id}
@@ -89,9 +87,9 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
             </C.WidgetGrid>
             <WidgetSelector
                     addWidget={props.addWidget}
-                    setIsSelectorOpen={props.setWidgetSelectorOpen}
+                    widgetSelectorOpen={props.widgetSelectorOpen}
                     availableWidgets={props.availableWidgetTypes}
-                    isOpen={props.widgetSelectorOpen}
+                    onClose={() => props.setWidgetSelectorOpen(false)}
             />
             {props.selectedSymbol && (
                 <ChartPopup
