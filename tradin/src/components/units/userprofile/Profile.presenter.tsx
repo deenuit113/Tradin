@@ -1,4 +1,3 @@
-import * as S from "./Profile.styles";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import Breadcrumb from "../../commons/breadcrumb/BreadCrumb.container";
 import { useUser } from "../../../contexts/UserContext";
@@ -7,6 +6,9 @@ import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { signOut } from "firebase/auth";
 import { auth } from "../../../util/firebase";
+import { Avatar } from "@/components/ui/avatar";
+import { Box, Button, Icon } from "@chakra-ui/react";
+import * as C from "./styles/Profile.components";
 
 export default function ProfilePageUI() {
     const { sidebarOpen } = useSidebar();
@@ -50,33 +52,32 @@ export default function ProfilePageUI() {
 
     return (
         <>
-            <S.Container>
-                <S.ProfileHeader sidebarOpen={sidebarOpen}>
+            <C.Container>
+                <C.Header sidebarOpen={sidebarOpen}>
                     <Breadcrumb/>
-                </S.ProfileHeader>
-                <S.MainContent sidebarOpen={sidebarOpen}>
-                    {user?.photoUrl ? (
-                        <S.UserImg
-                            src={user.photoUrl}
-                            alt={user.displayName ?? 'User profile picture'}
-                        />
-                    ) : (
-                        <FaUser/>
-                    )}
-                    <S.SignOutButton onClick={onClickSignOut}>로그아웃</S.SignOutButton>
-                    <S.UserInfoContainer>
-                        <S.UserInfoTitleContainer>
-                            {user.displayName ? <S.UserInfoTitle>이름</S.UserInfoTitle> : <></>}
-                            {user.email ? <S.UserInfoTitle>이메일</S.UserInfoTitle> : <></>}
-                        </S.UserInfoTitleContainer>
+                </C.Header>
+                <C.MainContent sidebarOpen={sidebarOpen}>
+                    <Avatar
+                        size="2xl"
+                        name={user.displayName ?? 'User'}
+                        src={user.photoUrl ?? undefined}
+                        icon={<Icon as={FaUser} />}
+                        shape="rounded"
+                    />
+                    <Button size="xs" borderColor="borderColor" rounded="md" variant="outline" onClick={onClickSignOut}>로그아웃</Button>
+                    <C.UserInfoContainer>
+                        <C.UserInfoTitleContainer>
+                            {user.displayName ? <C.UserInfoTitle>이름</C.UserInfoTitle> : <></>}
+                            {user.email ? <C.UserInfoTitle>이메일</C.UserInfoTitle> : <></>}
+                        </C.UserInfoTitleContainer>
 
-                        <S.UserInfoDataContainer>
-                            {user.displayName ? <S.UserInfoData>{user.displayName}</S.UserInfoData> : <></>}
-                            {user.email ? <S.UserInfoData>{user.email}</S.UserInfoData> : <></>}
-                        </S.UserInfoDataContainer>
-                    </S.UserInfoContainer>
-                </S.MainContent>
-            </S.Container>
+                        <C.UserInfoDataContainer>
+                            {user.displayName ? <C.UserInfoData>{user.displayName}</C.UserInfoData> : <></>}
+                            {user.email ? <C.UserInfoData>{user.email}</C.UserInfoData> : <></>}
+                        </C.UserInfoDataContainer>
+                    </C.UserInfoContainer>
+                </C.MainContent>
+            </C.Container>
         </>
     );
 }
