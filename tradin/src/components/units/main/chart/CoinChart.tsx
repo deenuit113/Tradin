@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { darkMode } from '../../../../util/atoms';
+import { Box } from '@chakra-ui/react';
+import { useColorMode } from '@/components/ui/color-mode';
 
 declare global {
     interface Window {
@@ -13,9 +13,10 @@ interface CoinChartProps {
 }
 
 const CoinChart: React.FC<CoinChartProps> = ({ symbol }) => {
-    const [isDarkMode] = useRecoilState(darkMode);
     const containerRef = useRef<HTMLDivElement>(null);
     const [dimensions, setDimensions] = useState({ width: 600, height: 360 });
+    const { colorMode } = useColorMode();
+
 
     useEffect(() => {
         const container = containerRef.current;
@@ -46,7 +47,7 @@ const CoinChart: React.FC<CoinChartProps> = ({ symbol }) => {
         return () => {
             document.head.removeChild(script);
         };
-    }, [symbol, isDarkMode, dimensions]);
+    }, [symbol, colorMode, dimensions]);
 
     const createWidget = () => {
         if (window.TradingView) {
@@ -56,7 +57,7 @@ const CoinChart: React.FC<CoinChartProps> = ({ symbol }) => {
                 symbol: symbol,
                 interval: 'D',
                 timezone: 'Asia/Seoul',
-                theme: isDarkMode ? 'dark' : 'light',
+                theme: colorMode === 'dark' ? 'dark' : 'light',
                 style: '1',
                 locale: 'kr',
                 toolbar_bg: '#f1f3f6',
@@ -68,9 +69,9 @@ const CoinChart: React.FC<CoinChartProps> = ({ symbol }) => {
     };
 
     return (
-        <div ref={containerRef} style={{ width: '100%', height: '100%' }}>
+        <Box ref={containerRef} style={{ width: '100%', height: '100%' }}>
             <div id="tradingview_1" />
-        </div>
+        </Box>
     );
 };
 

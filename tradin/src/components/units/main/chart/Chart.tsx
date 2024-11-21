@@ -1,8 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import * as S from "./Chart.styles"
 import CoinChart from "./CoinChart";
-import { FaTimes } from "react-icons/fa";
-
+import * as C from "./styles/CryptoChart.components"
 interface ChartPopupProps {
     symbol: string;
     onClose: () => void;
@@ -26,10 +24,9 @@ const ChartPopup: React.FC<ChartPopupProps> = ({ symbol, onClose }) => {
     }, [onClose]);
     
     return (
-        <S.PopupContainer ref={popupRef}>
-            <S.CloseButton onClick={onClose}><FaTimes/></S.CloseButton>
+        <C.CryptoChartContainer ref={popupRef}>
             <CoinChart symbol={symbol}/>
-        </S.PopupContainer>
+        </C.CryptoChartContainer>
     );
 };
 
