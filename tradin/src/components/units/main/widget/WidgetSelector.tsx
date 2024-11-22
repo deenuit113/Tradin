@@ -32,7 +32,7 @@ const WidgetSelector = ({ addWidget, widgetSelectorOpen, availableWidgets, onClo
             <DrawerBackdrop />
             <DrawerContent
                 roundedTop="lg"
-                opacity="0.7"
+                opacity="0.9"
                 bg="widgetSelectorBackgroundColor"
             >
                 <DrawerHeader>

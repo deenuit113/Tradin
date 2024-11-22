@@ -30,7 +30,17 @@ const Widget = ({
 }: IWidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const widgetConfig = availableWidgets.find(w => w.type === widget.type);
+    const widgetColorMapping = [
+        { type: "crypto", color: "cryptoWidgetColor" },
+        { type: "data", color: "dataWidgetColor" },
+        { type: "default", color: "backgroundColor.secondary" },
+    ];
 
+    const widgetColor =
+        widgetColorMapping.find((item) => item.type === widgetConfig?.category)?.color || 
+        widgetColorMapping.find((item) => item.type === "default")?.color;
+    
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
         item: { index },
@@ -42,27 +52,19 @@ const Widget = ({
     const [, drop] = useDrop({
         accept: ItemType,
         hover(item: { index: number }, monitor: any) {
-            if (!ref.current) {
-                return;
-            }
+            if (!ref.current) return;
             const dragIndex = item.index;
             const hoverIndex = index;
 
-            if (dragIndex === hoverIndex) {
-                return;
-            }
+            if (dragIndex === hoverIndex) return;
 
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
             const clientOffset = monitor.getClientOffset();
             const hoverClientX = clientOffset!.x - hoverBoundingRect.left;
 
-            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-                return;
-            }
-            if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-                return;
-            }
+            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) return;
+            if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) return;
 
             moveWidget(dragIndex, hoverIndex);
             item.index = hoverIndex;
@@ -91,7 +93,7 @@ const Widget = ({
     }, [setMenuOpen]);
 
 
-    const widgetConfig = availableWidgets.find(w => w.type === widget.type);
+    
 
     const renderWidgetContent = () => {
         if (widgetConfig?.category === 'crypto') {
@@ -108,6 +110,7 @@ const Widget = ({
         <animated.div style={springStyle} ref={ref}>
             <C.Widget 
                 isDragging={isDragging}
+                color={widgetColor}
             >
                 <C.WidgetHeader>
                     <C.WidgetTitle>{widgetConfig?.name}&nbsp;{widgetConfig?.icon}</C.WidgetTitle>

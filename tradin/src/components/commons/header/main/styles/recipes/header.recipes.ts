@@ -20,7 +20,7 @@ export const headerContainerRecipe = defineRecipe({
         alignItems: "center",
         height: "10vh",
         bg: "backgroundColor",
-        borderBottom: "1px solid borderColor",
+        borderBottom: "1px solid lightgrey",
         padding: "0",
         boxSizing: "border-box",
         gap: "1rem",

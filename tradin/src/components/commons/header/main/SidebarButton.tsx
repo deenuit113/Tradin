@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, Button } from '@chakra-ui/react';
+import { FirstBox, SecondBox, ThirdBox } from './styles/SidebarButton.component';
 
 interface ToggleButtonProps {
     onClick: () => void;
@@ -14,7 +15,7 @@ export default function SidebarButton(props: ToggleButtonProps): JSX.Element {
     };
 
     return (
-        <Button
+        <Box
             onClick={handleClick}
             bg="transparent"
             border="none"
@@ -22,49 +23,22 @@ export default function SidebarButton(props: ToggleButtonProps): JSX.Element {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            width={{ base: '32px', md: '40px' }}
-            height={{ base: '32px', md: '40px' }}
+            width="24px"
+            height="24px"
             padding="0"
             cursor="pointer"
-            gap="3px"
+            gap="4.8px"
+            scale={{sm: "0.8"}}
         >
-            <Box
-                bg="iconColor"
-                width={{ base: '19.2px', md: '24px' }}
-                height={{ base: '3.2px', md: '4px' }}
-                borderRadius="2px"
-                transition="all 0.3s ease-in-out"
-                transformOrigin="2px 4px"
-                transform={
-                    isClose
-                        ? 'rotate(45deg) translate(0px, 0px)'
-                        : 'rotate(0deg)'
-                }
+            <FirstBox
+                isClose={isClose}
             />
-            
-            <Box
-                bg="iconColor"
-                width={{ base: '19.2px', md: '24px' }}
-                height={{ base: '3.2px', md: '4px' }}
-                borderRadius="2px"
-                transition="all 0.3s ease-in-out"
-                transformOrigin="center"
-                transform={isClose ? 'scaleX(0)' : 'scaleX(1)'}
+            <SecondBox
+                isClose={isClose}
             />
-            
-            <Box
-                bg="iconColor"
-                width={{ base: '19.2px', md: '24px' }}
-                height={{ base: '3.2px', md: '4px' }}
-                borderRadius="2px"
-                transition="all 0.3s ease-in-out"
-                transformOrigin="2px 0px"
-                transform={
-                    isClose
-                        ? 'rotate(-45deg) translate(0px, 0px)'
-                        : 'rotate(0deg)'
-                }
+            <ThirdBox
+                isClose={isClose}
             />
-        </Button>
+        </Box>
     );
 }

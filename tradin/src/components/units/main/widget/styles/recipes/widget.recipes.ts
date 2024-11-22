@@ -12,12 +12,12 @@ export const widgetRecipe = defineRecipe({
         },
         transition: "transform 0.3s ease",
         width: {
-            lg: "220px", // 240
-            sm: "180px", // 200
+            lg: "240px", // 240
+            sm: "210px", // 200
         },
         height: {
-            lg: "162px", // 200
-            sm: "145px", // 150
+            lg: "160px", // 200
+            sm: "140px", // 150
         },
         margin: "auto",
         borderRadius: "8px",
@@ -34,6 +34,14 @@ export const widgetRecipe = defineRecipe({
             },
             false: {
                 transform: "scale(1)",
+            },
+        },
+        color : {
+            cryptoWidgetColor: {
+                bg: "cryptoWidgetColor",
+            },
+            dataWidgetColor: {
+                bg: "dataWidgetColor",
             },
         },
     },

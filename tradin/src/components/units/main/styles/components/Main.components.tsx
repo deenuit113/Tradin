@@ -22,9 +22,13 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
     const styles = recipe();
     return (
         <Grid
-            templateColumns={{ base: "repeat(auto-fill, minmax(180px, 1fr))", md: "repeat(auto-fill, minmax(250px, 1fr))" }}
-            gap={{ base: "0.5rem", md: "1rem" }}
-            rowGap={{ base: "2rem", md: "3rem" }}
+            templateColumns= {{ 
+                    base: "repeat(auto-fill, minmax(220px, 1fr))", 
+                    lg: "repeat(auto-fill, minmax(270px, 1fr))",
+                    sm: "repeat(auto-fill, minmax(220px, 1fr))",
+            }}
+            gap={{ base: "2rem", lg: "30px", sm: "10px" }}
+            rowGap={{ base: "2rem", lg: "40px", sm: "40px" }}
             css={styles}
             width={props.sidebarOpen ? "85%" : "100%"}
             marginLeft={props.sidebarOpen? "15%" : "0%"}

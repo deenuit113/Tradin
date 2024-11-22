@@ -45,7 +45,13 @@ const config = defineConfig({
                 },
                 breadcrumbBackgroundColor: {
                     value: { base: "#B0C4DE", _dark: "#4682B4" },
-                }
+                },
+                cryptoWidgetColor :{
+                    value: { base: "#F0FAFF", _dark: "#2A3445" },
+                },
+                dataWidgetColor :{
+                    value: { base: "#F4FFF2", _dark: "#2D3A2A" },
+                },
             },
         },
         breakpoints:{
