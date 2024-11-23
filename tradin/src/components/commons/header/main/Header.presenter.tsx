@@ -20,7 +20,6 @@ import {
 
 export default function HeaderUI(props: HeaderUIProps): JSX.Element {
     const { user, loggedIn } = useUser();
-    const { toggleSidebar} = useSidebar();
     const { toggleColorMode, colorMode } = useColorMode();
 
     const pathname = usePathname();
@@ -33,7 +32,7 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
                 <C.SidebarBtnContainer>
                     {shouldShowLayout && (
                         <>
-                            <SidebarButton onClick={toggleSidebar}/>
+                            <SidebarButton />
                         </>
                     )}
                 </C.SidebarBtnContainer>

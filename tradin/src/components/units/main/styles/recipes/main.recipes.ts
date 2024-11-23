@@ -26,8 +26,16 @@ export const switchContainerRecipe = defineRecipe({
     variants: {
         sidebarOpen: {
             true: {
-                width: "85%",
-                marginLeft: "15%",
+                width: {
+                    base: "85%",
+                    lg: "85%",
+                    sm: "100%",
+                },
+                marginLeft: {
+                    base: "15%",
+                    lg: "15%",
+                    sm: "0",
+                }
             },
             false: {
                 width: "100%",

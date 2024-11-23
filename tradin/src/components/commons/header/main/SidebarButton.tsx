@@ -1,22 +1,14 @@
-import { useState } from 'react';
-import { Box, Button } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { FirstBox, SecondBox, ThirdBox } from './styles/SidebarButton.component';
+import { useSidebar } from '@/contexts/SidebarContext';
 
-interface ToggleButtonProps {
-    onClick: () => void;
-}
-
-export default function SidebarButton(props: ToggleButtonProps): JSX.Element {
-    const [isClose, setIsClose] = useState(false);
-
-    const handleClick = () => {
-        setIsClose(!isClose);
-        props.onClick();
-    };
+export default function SidebarButton(): JSX.Element {
+    const { sidebarOpen, toggleSidebar, sidebarButtonRef} = useSidebar();
 
     return (
         <Box
-            onClick={handleClick}
+            ref={sidebarButtonRef}
+            onClick={toggleSidebar}
             bg="transparent"
             border="none"
             display="flex"
@@ -31,13 +23,13 @@ export default function SidebarButton(props: ToggleButtonProps): JSX.Element {
             scale={{sm: "0.8"}}
         >
             <FirstBox
-                isClose={isClose}
+                isClose={sidebarOpen}
             />
             <SecondBox
-                isClose={isClose}
+                isClose={sidebarOpen}
             />
             <ThirdBox
-                isClose={isClose}
+                isClose={sidebarOpen}
             />
         </Box>
     );

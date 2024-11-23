@@ -30,8 +30,8 @@ export function WidgetGrid(props: WidgetGridProps): JSX.Element {
             gap={{ base: "2rem", lg: "30px", sm: "10px" }}
             rowGap={{ base: "2rem", lg: "40px", sm: "40px" }}
             css={styles}
-            width={props.sidebarOpen ? "85%" : "100%"}
-            marginLeft={props.sidebarOpen? "15%" : "0%"}
+            width={props.sidebarOpen ? {base: "85%", lg: "85%", sm: "100%"} : "100%"}
+            marginLeft={props.sidebarOpen? {base: "15%", lg: "15%", sm: "0%"} : "0%"}
         >
             {props.children}
         </Grid>

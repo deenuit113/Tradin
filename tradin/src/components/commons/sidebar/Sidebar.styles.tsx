@@ -7,14 +7,14 @@ export const Sidebar = styled.div<{ open: boolean }>`
     border-radius: 5px;
     background-color: ${({ theme }) => theme.backgroundColor};
     overflow-y: auto;
-    z-index: 999;
+    z-index: 1500;
     position: fixed;
     top: 10vh;
     left: ${({ open }) => (open ? "0" : "-20%")};
     transition: left 0.3s ease;
 
     @media all and (min-width:359px) and (max-width: 799px) {
-        width: 15%;
+        width: 25%;
         left: ${({ open }) => (open ? "0" : "-40%")};
         font-size: 12px;
     }

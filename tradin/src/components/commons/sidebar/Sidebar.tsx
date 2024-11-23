@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaAngleDown, FaCalendarAlt, FaClock, FaExchangeAlt, FaPlusCircle } from "react-icons/fa";
 import * as S from "./Sidebar.styles";
 import { useSidebar } from "../../../contexts/SidebarContext";
@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 export default function SideBar(): JSX.Element {
     const [spotOpen, setSpotOpen] = useState(false);
     const [futuresOpen, setFuturesOpen] = useState(false);
-    const { sidebarOpen } = useSidebar();
+    const { sidebarOpen, setSidebarOpen, sidebarRef, sidebarButtonRef } = useSidebar();
     const router = useRouter();
 
     const toggleSpot = () => setSpotOpen(!spotOpen);
@@ -35,9 +35,28 @@ export default function SideBar(): JSX.Element {
         router.push('/backtest');
     };
 
+    // 사이드바 외부 클릭했을 시 사이드바 닫음
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                sidebarRef.current &&
+                !sidebarRef.current.contains(event.target as Node) &&
+                sidebarButtonRef.current &&
+                !sidebarButtonRef.current.contains(event.target as Node)
+            ) {
+                setSidebarOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [setSidebarOpen, sidebarRef, sidebarButtonRef]);
+
     return (
         <>
-            <S.Sidebar open={sidebarOpen}>
+            <S.Sidebar ref={sidebarRef} open={sidebarOpen}>
                 <S.Menu>
                     <S.ItemContainer onClick={onClickMoveToSpot}>
                         <S.MenuTitle>
