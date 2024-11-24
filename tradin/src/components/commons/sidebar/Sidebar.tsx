@@ -1,19 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { FaAngleDown, FaCalendarAlt, FaClock, FaExchangeAlt, FaPlusCircle } from "react-icons/fa";
-import * as S from "./Sidebar.styles";
+import { useEffect, useState } from "react";
+import { FaAngleDown, FaCalendarAlt, FaClock, FaExchangeAlt } from "react-icons/fa";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import { useRouter } from 'next/navigation';
+import { Box, Center, Collapsible } from "@chakra-ui/react";
+import * as C from "./styles/Sidebar.components";
 
 export default function SideBar(): JSX.Element {
     const [spotOpen, setSpotOpen] = useState(false);
     const [futuresOpen, setFuturesOpen] = useState(false);
     const { sidebarOpen, setSidebarOpen, sidebarRef, sidebarButtonRef } = useSidebar();
     const router = useRouter();
-
-    const toggleSpot = () => setSpotOpen(!spotOpen);
-    const toggleFutures = () => setFuturesOpen(!futuresOpen);
 
     const onClickMoveToSpot = () => {
         router.push('/spot');
@@ -55,50 +53,106 @@ export default function SideBar(): JSX.Element {
     }, [setSidebarOpen, sidebarRef, sidebarButtonRef]);
 
     return (
-        <>
-            <S.Sidebar ref={sidebarRef} open={sidebarOpen}>
-                <S.Menu>
-                    <S.ItemContainer onClick={onClickMoveToSpot}>
-                        <S.MenuTitle>
-                            <FaExchangeAlt className="MenuIcon"/> <p>현물</p>
-                        </S.MenuTitle>
-                        <S.Icon onClick={(e) => { e.stopPropagation(); toggleSpot(); }} isOpen={spotOpen}>
-                            <FaAngleDown className="FaAngleDown" />
-                        </S.Icon>
-                    </S.ItemContainer>
-                    <S.SubMenu isOpen={spotOpen}>
-                        {[1, 2, 3].map((num, index) => (
-                            <S.MenuItem key={num} index={4 - index} isOpen={spotOpen} onClick={() => onClickMoveToSpotStrategy(num)}>
-                                현물 {num}
-                            </S.MenuItem>
-                        ))}
-                        {/* <S.MenuItem index={0} isOpen={spotOpen}><FaPlusCircle /></S.MenuItem> */}
-                        {/* 추후 전략 추가 기능 추가 */}
-                    </S.SubMenu>
-                    <S.ItemContainer onClick={onClickMoveToFutures}>
-                        <S.MenuTitle>
-                            <FaClock className="MenuIcon"/><p>선물</p>
-                        </S.MenuTitle>
-                        <S.Icon onClick={(e) => { e.stopPropagation(); toggleFutures(); }} isOpen={futuresOpen}>
-                            <FaAngleDown className="FaAngleDown" />
-                        </S.Icon>
-                    </S.ItemContainer>
-                    <S.SubMenu isOpen={futuresOpen}>
-                        {[1, 2, 3].map((num, index) => (
-                            <S.MenuItem key={num} index={4 - index} isOpen={futuresOpen} onClick={() => onClickMoveToFutureStrategy(num)}>
-                                선물 {num}
-                            </S.MenuItem>
-                        ))}
-                        {/* <S.MenuItem index={0} isOpen={futuresOpen}><FaPlusCircle /></S.MenuItem> */}
-                        {/* 추후 전략 추가 기능 추가 */}
-                    </S.SubMenu>
-                    <S.ItemContainer>
-                        <S.MenuTitle onClick={onClickMoveToBackTest}>
-                            <FaCalendarAlt className="MenuIcon"/><p>백테스트</p>
-                        </S.MenuTitle>
-                    </S.ItemContainer>
-                </S.Menu>
-            </S.Sidebar>
-        </>
+        <C.SidebarContainer ref={sidebarRef} sidebarOpen={sidebarOpen}>
+            <C.Menu>
+                {/* 현물 메뉴 */}
+                <Collapsible.Root>
+                    <Collapsible.Trigger asChild>
+                        <C.ItemContainer
+                            onClick={() => setSpotOpen(!spotOpen)}
+                        >
+                            <C.MenuTitle onClick={onClickMoveToSpot}>
+                                <FaExchangeAlt className="MenuIcon" />
+                                <Box marginLeft="1rem">현물</Box>
+                            </C.MenuTitle>
+                            <Center width="20%" height="100%">
+                                <FaAngleDown
+                                    className="FaAngleDown"
+                                    style={{
+                                        transform: spotOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                        transition: "transform 0.3s ease",
+                                    }}
+                                />
+                            </Center>
+                        </C.ItemContainer>
+                    </Collapsible.Trigger>
+
+                    <Collapsible.Content>
+                        <Box
+                            as="ul"
+                            listStyleType="none"
+                            paddingLeft="10%"
+                            marginBottom={spotOpen ? "1rem" : "0"}
+                        >
+                            {[1, 2, 3].map((num) => (
+                                <Box
+                                    key={num}
+                                    as="li"
+                                    fontSize="12px"
+                                    padding="1rem"
+                                    cursor="pointer"
+                                    borderRadius="5px"
+                                    _hover={{ backgroundColor: "gray.700" }}
+                                    onClick={() => onClickMoveToSpotStrategy(num)}
+                                >
+                                    현물 {num}
+                                </Box>
+                            ))}
+                        </Box>
+                    </Collapsible.Content>
+                </Collapsible.Root>
+                {/* 현물 메뉴 */}
+                <Collapsible.Root>
+                    <Collapsible.Trigger asChild>
+                        <C.ItemContainer
+                            onClick={() => setFuturesOpen(!futuresOpen)}
+                        >
+                            <C.MenuTitle onClick={onClickMoveToFutures}>
+                                <FaClock className="MenuIcon" />
+                                <Box marginLeft="1rem">선물</Box>
+                            </C.MenuTitle>
+                            <Center width="20%" height="100%">
+                                <FaAngleDown
+                                    className="FaAngleDown"
+                                    style={{
+                                        transform: futuresOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                        transition: "transform 0.3s ease",
+                                    }}
+                                />
+                            </Center>
+                        </C.ItemContainer>
+                    </Collapsible.Trigger>
+
+                    <Collapsible.Content>
+                        <Box
+                            as="ul"
+                            listStyleType="none"
+                            paddingLeft="10%"
+                        >
+                            {[1, 2, 3].map((num) => (
+                                <Box
+                                    key={num}
+                                    as="li"
+                                    fontSize="12px"
+                                    padding="1rem"
+                                    cursor="pointer"
+                                    borderRadius="5px"
+                                    _hover={{ backgroundColor: "gray.700" }}
+                                >
+                                    선물 {num}
+                                </Box>
+                            ))}
+                        </Box>
+                    </Collapsible.Content>
+                </Collapsible.Root>
+                {/* 백테스트 메뉴 */}
+                <C.ItemContainer>
+                    <C.MenuTitle onClick={onClickMoveToBackTest}>
+                        <FaCalendarAlt className="MenuIcon" />
+                        <Box marginLeft="1rem">백테스트</Box>
+                    </C.MenuTitle>
+                </C.ItemContainer>
+            </C.Menu>
+        </C.SidebarContainer>
     );
 }

@@ -1,21 +1,21 @@
 import styled from "@emotion/styled";
 
-export const Sidebar = styled.div<{ open: boolean }>`
+export const Sidebar = styled.div<{ sidebarOpen: boolean }>`
     width: 15%;
     height: 90vh;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
+    border-radius: 0 5px 5px 0;
     background-color: ${({ theme }) => theme.backgroundColor};
     overflow-y: auto;
     z-index: 1500;
     position: fixed;
     top: 10vh;
-    left: ${({ open }) => (open ? "0" : "-20%")};
+    left: ${({ sidebarOpen }) => (sidebarOpen ? "0" : "-15%")};
     transition: left 0.3s ease;
 
     @media all and (min-width:359px) and (max-width: 799px) {
         width: 25%;
-        left: ${({ open }) => (open ? "0" : "-40%")};
+        left: ${({ sidebarOpen }) => (sidebarOpen ? "0" : "-25%")};
         font-size: 12px;
     }
 `;
