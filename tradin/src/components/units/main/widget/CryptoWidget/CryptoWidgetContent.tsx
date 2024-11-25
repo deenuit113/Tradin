@@ -50,18 +50,25 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
                                 style: "currency",
                                 currency: isCurrencyKRW ? "KRW" : "USD",
                             }}
-                            marginBottom="5px"
-                            fontSize="22px"
-                            lg={{ fontSize: "24px" }}
+                            marginBottom={{
+                                base: "5px",
+                                lg: "5px",
+                                sm: "0",
+                            }}
+                            fontSize={{
+                                base: "20px",
+                                lg: "20px",
+                                sm: "18px",
+                            }}
                         />
                     ) : (
                         <SkeletonText noOfLines={1} variant="shine" />
                     )}
                     {priceData.price !== null && priceData.prevPrice !== null && priceChangePercentage && (
                         parseFloat(priceChangePercentage) > 0 ? (
-                            <StatUpTrend px="0" variant="plain" padding="3px 6px">{priceChangePercentage}</StatUpTrend> // 상승 트렌드
+                            <StatUpTrend px="0" variant="plain" padding="0px 6px" size={{base: "sm", lg: "sm", sm: "xs"}}>{priceChangePercentage}</StatUpTrend> // 상승 트렌드
                         ) : (
-                            <StatDownTrend px="0" variant="plain" padding="3px 6px">{priceChangePercentage}</StatDownTrend> // 하락 트렌드
+                            <StatDownTrend px="0" variant="plain" padding="0px 6px" size={{base: "sm", lg: "sm", sm: "xs"}}>{priceChangePercentage}</StatDownTrend> // 하락 트렌드
                         )
                     )}
                 </Flex>

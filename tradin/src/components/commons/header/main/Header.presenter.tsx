@@ -21,13 +21,15 @@ import {
 export default function HeaderUI(props: HeaderUIProps): JSX.Element {
     const { user, loggedIn } = useUser();
     const { toggleColorMode, colorMode } = useColorMode();
+    const { sidebarOpen } = useSidebar();
+
 
     const pathname = usePathname();
     const excludedPaths = ['/login'];
     const shouldShowLayout = !excludedPaths.includes(pathname);
 
    return (
-        <C.HeaderContainer>
+        <C.HeaderContainer sidebarOpen={sidebarOpen}>
             <C.LeftContainer>
                 <C.SidebarBtnContainer>
                     {shouldShowLayout && (
@@ -48,12 +50,12 @@ export default function HeaderUI(props: HeaderUIProps): JSX.Element {
                 </C.Title>
             </C.LeftContainer>
             <C.CenterContainer>
-                <C.Marquee key={props.currentAnnouncement}>
+                {/* <C.Marquee key={props.currentAnnouncement}>
                     
                     <p>
                         {`${announcements[props.currentAnnouncement].title}: ${announcements[props.currentAnnouncement].content}`}
                     </p>
-                </C.Marquee>
+                </C.Marquee> */}
             </C.CenterContainer>
             <Flex justify="space-between" align="center" gap="10px" paddingRight="1rem">
                 <C.DarkModeButton onClick={toggleColorMode} variant="ghost">

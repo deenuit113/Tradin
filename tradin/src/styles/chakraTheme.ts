@@ -2,24 +2,26 @@
 
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react"
 import { keyframes } from "./keyframes";
+import { globalCss } from "./global-css";
 
 const config = defineConfig({
+    globalCss: globalCss,
     theme: {
         keyframes: keyframes,
         semanticTokens: {
             colors: {
-                testButtonColor: {
-                    value: { base: "red", _dark: "green" },
+                sidebarHoverColor: {
+                    value: { base: "#d0d0d0", _dark: "#555" },
                 },
                 backgroundColor: {
-                    DEFAULT: { value: {base: "#f0f0f0", _dark: "#333" } },
-                    primary: { value: {base: "#e0e0e0", _dark: "#444" } },
-                    secondary: { value: {base: "d0d0d0", _dark: "#555" } },
+                    DEFAULT: { value: { base: "#f0f0f0", _dark: "#333" } },
+                    primary: { value: { base: "#e0e0e0", _dark: "#444" } },
+                    secondary: { value: { base: "d0d0d0", _dark: "#555" } },
                 },
                 textColor: {
                     value: { base: "#333", _dark: "#f0f0f0" },
                 },
-                borderColor: {
+                borderGrayColor: {
                     value: { base: "#ccc", _dark: "#666" },
                 },
                 iconColor: {
@@ -38,7 +40,7 @@ const config = defineConfig({
                     value: { base: "#cbe5fd", _dark: "#335" },
                 },
                 widgetAddBtnColor: {
-                    value: { base: "#0070f3", _dark: "#333" },
+                    value: { base: "rgba(0, 112, 243, 0.8)", _dark: "#333" },
                 },
                 widgetSelectorBackgroundColor: {
                     value: { base: "rgba(240, 240, 240, 0.9)", _dark: 'rgba(51, 51, 51, 0.9)'},
@@ -47,10 +49,10 @@ const config = defineConfig({
                     value: { base: "#B0C4DE", _dark: "#4682B4" },
                 },
                 cryptoWidgetColor :{
-                    value: { base: "#F0FAFF", _dark: "#2A3445" },
+                    value: { base: "rgba(173, 216, 230, 0.1)", _dark: "rgba(173, 216, 230, 0.1)" },
                 },
                 dataWidgetColor :{
-                    value: { base: "#F4FFF2", _dark: "#2D3A2A" },
+                    value: { base: "rgba(255, 255, 194, 0.1)", _dark: "rgba(255, 255, 194, 0.1)" },
                 },
             },
         },

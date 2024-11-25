@@ -32,7 +32,7 @@ export const ratioBarContainerRecipe = defineRecipe({
 export const longRatioBarRecipe = defineRecipe({
     base: {
         background: "linear-gradient(-45deg, #ff4b4b, #ff6f6f, #ff4b4b)",
-        backgroundSize: "400% 400%",
+        backgroundSize: "200% 200%",
         animation: "colorChange 3s ease infinite, fillLongBar 0.6s ease forwards",
         display: "flex",
         justifyContent: "flex-start",
@@ -49,7 +49,7 @@ export const longRatioBarRecipe = defineRecipe({
 export const shortRatioBarRecipe = defineRecipe({
     base: {
         background: "linear-gradient(-45deg, #4b4bff, #6f6fff, #4b4bff)",
-        backgroundSize: "400% 400%",
+        backgroundSize: "200% 200%",
         animation: "colorChange 3s ease infinite, fillShortBar 0.6s ease forwards",
         display: "flex",
         justifyContent: "flex-end",

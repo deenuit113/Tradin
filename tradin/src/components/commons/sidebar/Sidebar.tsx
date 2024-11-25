@@ -61,7 +61,10 @@ export default function SideBar(): JSX.Element {
                         <C.ItemContainer
                             onClick={() => setSpotOpen(!spotOpen)}
                         >
-                            <C.MenuTitle onClick={onClickMoveToSpot}>
+                            <C.MenuTitle onClick={(e) => {
+                                e.stopPropagation();
+                                onClickMoveToSpot();
+                            }}>
                                 <FaExchangeAlt className="MenuIcon" />
                                 <Box marginLeft="1rem">현물</Box>
                             </C.MenuTitle>
@@ -92,7 +95,8 @@ export default function SideBar(): JSX.Element {
                                     padding="1rem"
                                     cursor="pointer"
                                     borderRadius="5px"
-                                    _hover={{ backgroundColor: "gray.700" }}
+                                    transition="background-color 0.3s ease-in-out"
+                                    _hover={{ bg: "sidebarHoverColor" }}
                                     onClick={() => onClickMoveToSpotStrategy(num)}
                                 >
                                     현물 {num}
@@ -107,7 +111,10 @@ export default function SideBar(): JSX.Element {
                         <C.ItemContainer
                             onClick={() => setFuturesOpen(!futuresOpen)}
                         >
-                            <C.MenuTitle onClick={onClickMoveToFutures}>
+                            <C.MenuTitle onClick={(e) => {
+                                e.stopPropagation();
+                                onClickMoveToFutures();
+                            }}>
                                 <FaClock className="MenuIcon" />
                                 <Box marginLeft="1rem">선물</Box>
                             </C.MenuTitle>
@@ -137,7 +144,9 @@ export default function SideBar(): JSX.Element {
                                     padding="1rem"
                                     cursor="pointer"
                                     borderRadius="5px"
-                                    _hover={{ backgroundColor: "gray.700" }}
+                                    transition="background-color 0.3s ease-in-out"
+                                    _hover={{ bg: "sidebarHoverColor" }}
+                                    onClick={() => onClickMoveToFutureStrategy(num)}
                                 >
                                     선물 {num}
                                 </Box>

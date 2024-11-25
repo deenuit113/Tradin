@@ -7,15 +7,19 @@ export const sidebarContainerRecipe = defineRecipe({
             lg: "15%",
             sm: "25%",
         },
-        height: "90vh",
+        height: "100vh",
         boxShadow: "0 10px 10px rgba(0, 0, 0, 0.3)",
         borderRadius: "0 5px 5px 0",
-        bg: "backgroundColor",
+        bg: "backgroundColor.secondary",
         overflowY: "auto",
         zIndex: "1500",
         position: "fixed",
-        top: "10vh",
         transition: "left 0.3s ease",
+        top: {
+            base: "0",
+            lg: "0",
+            sm: "10vh",
+        },
     },
     variants: {
         sidebarOpen: {
@@ -55,7 +59,7 @@ export const menuItemRecipe = defineRecipe({
             sm: "12px",
         },
         _hover: {
-            bg: "red"
+            bg: "sidebarHoverColor"
         }
     },
     variants: {
@@ -81,6 +85,7 @@ export const menuTitleRecipe = defineRecipe({
         alignItems: "center",
         color: "textColor",
         paddingLeft: "1rem",
+        fontWeight: "700",
 
         "& p": {
             fontSize: "14px",
@@ -129,6 +134,7 @@ export const itemContainerRecipe = defineRecipe({
         alignItems: "center",
         borderRadius: "5px",
         cursor: "pointer",
+        transition: "background-color 0.3s ease-in-out",
         height: {
             base: "60px",
             lg: "60px",
@@ -136,7 +142,7 @@ export const itemContainerRecipe = defineRecipe({
         },
 
         _hover: {
-            bg: "red",
+            bg: "sidebarHoverColor",
         }
     }
 });

@@ -1,24 +1,8 @@
 * {
-    /* -webkit-user-select: none;
+    -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; */
+    user-select: none;
 }
 
-::-webkit-scrollbar {
-    width: 12px; /* Adjust width as needed */
-}
 
-::-webkit-scrollbar-track {
-    background: transparent; /* Make track transparent */
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.5); /* Customize thumb color and transparency */
-    border-radius: 10px; /* Optional: round the thumb */
-    border: 3px solid transparent; /* Add space around thumb */
-}
-
-body {
-    overflow-y: hidden;
-}

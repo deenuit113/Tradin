@@ -12,12 +12,12 @@ export const widgetRecipe = defineRecipe({
         },
         transition: "transform 0.3s ease",
         width: {
-            lg: "240px", // 240
-            sm: "210px", // 200
+            lg: "195px", // 240
+            sm: "150px", // 200
         },
         height: {
-            lg: "160px", // 200
-            sm: "140px", // 150
+            lg: "130px", // 200
+            sm: "100px", // 150
         },
         margin: "auto",
         borderRadius: "8px",
@@ -26,6 +26,7 @@ export const widgetRecipe = defineRecipe({
             transform: "scale(1.05)",
         },
         boxSizing: "border-box",
+        opacity: "0.9",
     },
     variants: {
         isDragging: {
@@ -74,8 +75,8 @@ export const widgetTitleRecipe = defineRecipe({
         alignItems: "center",
         fontSize: {
             base: "14px",
-            lg: "15px",
-            sm: "13px"
+            lg: "14px",
+            sm: "11px"
         },
         fontWeight: "700",
         flexGrow: "1",

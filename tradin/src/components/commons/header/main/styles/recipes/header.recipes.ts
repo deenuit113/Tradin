@@ -14,7 +14,6 @@ const slideUp = keyframes`
 
 export const headerContainerRecipe = defineRecipe({
     base: {
-        width: "100%",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -24,13 +23,34 @@ export const headerContainerRecipe = defineRecipe({
         padding: "0",
         boxSizing: "border-box",
         gap: "1rem",
+        transition: "width 0.3s ease, margin-left 0.3s ease",
+    },
+    variants: {
+        sidebarOpen: {
+            true: {
+                width: {
+                    base: "85%",
+                    lg: "85%",
+                    sm: "100%",
+                },
+                marginLeft: {
+                    base: "15%",
+                    lg: "15%",
+                    sm: "0",
+                }
+            },
+            false: {
+                width: "100%",
+                marginLeft: "0",
+            }
+        }
     },
 });
 
 
 export const leftContainerRecipe = defineRecipe({
     base: {
-        width: "15%",
+        width: "20%",
         height: "100%",
         display: "flex",
         alignItems: "center",

@@ -29,7 +29,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     };
 
     return (
-        <C.Container>
+        <C.Container sidebarOpen={sidebarOpen}>
             <C.SwitchContainer sidebarOpen={sidebarOpen}>
                 <Tooltip 
                     ids={{ trigger: id }} 
@@ -43,7 +43,7 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                         colorPalette="blue"
                         onCheckedChange={() => setIsCurrencyKRW(prev => !prev)}
                         ids = {{ root: id }}
-                        size="lg"
+                        size="md"
                         thumbLabel={{
                             on: (
                                 <FaDollarSign />
@@ -75,11 +75,6 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                     );
                 })}
                 <C.WidgetAddContainer>
-                    <WidgetHeader>
-                        <WidgetTitle>
-                            위젯 추가
-                        </WidgetTitle> 
-                    </WidgetHeader>
                     <C.WidgetAddBtn onClick={props.onClickWidgetSelector}>
                         <FaPlus className="PlusIcon"/>
                     </C.WidgetAddBtn> 
