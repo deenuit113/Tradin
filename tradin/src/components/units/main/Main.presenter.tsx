@@ -12,7 +12,6 @@ import { Text } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useId } from "react";
 import * as C from "./styles/components/Main.components"
-import { WidgetHeader, WidgetTitle } from "./widget/styles/components/Widget.components";
 
 export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const [isCurrencyKRW, setIsCurrencyKRW] = useRecoilState(currencyKRW);
@@ -36,7 +35,6 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                     content={timestamp ? new Date(timestamp).toLocaleString() : ''}
                     openDelay={300}
                     closeDelay={100}
-                    
                     showArrow
                 >
                     <Switch
@@ -56,8 +54,17 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                         <Text fontWeight="700">{exchangeRate}&nbsp;KRW/USD</Text>
                     </Switch>
                 </Tooltip>
+                <C.WidgetAddContainer>
+                    <Text fontSize="12px">위젯 추가</Text>
+                    <C.WidgetAddBtn onClick={props.onClickWidgetSelector}>
+                        <FaPlus className="PlusIcon"/>
+                    </C.WidgetAddBtn> 
+                </C.WidgetAddContainer>
             </C.SwitchContainer>
-            <C.WidgetGrid sidebarOpen={sidebarOpen}>
+            <C.CryptoWidgetContainer
+                onWheel={(e) => {
+                e.currentTarget.scrollLeft += e.deltaY;
+            }}>
                 {props.widgets.map((widgetData, index) => {
                     return (
                         <Widget
@@ -74,12 +81,8 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                         />
                     );
                 })}
-                <C.WidgetAddContainer>
-                    <C.WidgetAddBtn onClick={props.onClickWidgetSelector}>
-                        <FaPlus className="PlusIcon"/>
-                    </C.WidgetAddBtn> 
-                </C.WidgetAddContainer>
-            </C.WidgetGrid>
+            </C.CryptoWidgetContainer>
+            
             <WidgetSelector
                     addWidget={props.addWidget}
                     widgetSelectorOpen={props.widgetSelectorOpen}

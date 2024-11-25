@@ -11,19 +11,4 @@ export function Provider(props: ColorModeProviderProps) {
                 <ColorModeProvider {...props} />
         </ChakraProvider>
     )
-} 
-/* 차크라 모두 마이그레이션 하면
-export function Provider({ children }: ProviderProps) {
-    const [isDarkMode] = useRecoilState(darkMode);
-
-    return (
-        <NextThemeProvider attribute="class" disableTransitionOnChange>
-            <ChakraProvider value={system}>
-                <EmotionThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-                    {children}
-                </EmotionThemeProvider>
-            </ChakraProvider>
-        </NextThemeProvider>
-    )
 }
-*/

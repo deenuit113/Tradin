@@ -3,10 +3,14 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react"
 import { keyframes } from "./keyframes";
 import { globalCss } from "./global-css";
+import { fonts } from "./fonts";
 
 const config = defineConfig({
     globalCss: globalCss,
     theme: {
+        tokens: {
+            fonts: fonts,
+        },
         keyframes: keyframes,
         semanticTokens: {
             colors: {
@@ -22,7 +26,7 @@ const config = defineConfig({
                     value: { base: "#333", _dark: "#f0f0f0" },
                 },
                 borderGrayColor: {
-                    value: { base: "#ccc", _dark: "#666" },
+                    value: { base: "#d0d0d0", _dark: "#666" },
                 },
                 iconColor: {
                     value: { base: "#333", _dark: "#f0f0f0" },
@@ -49,11 +53,14 @@ const config = defineConfig({
                     value: { base: "#B0C4DE", _dark: "#4682B4" },
                 },
                 cryptoWidgetColor :{
-                    value: { base: "rgba(173, 216, 230, 0.1)", _dark: "rgba(173, 216, 230, 0.1)" },
+                    value: { base: "rgba(173, 216, 230, 0.2)", _dark: "rgba(173, 216, 230, 0.1)" },
                 },
                 dataWidgetColor :{
-                    value: { base: "rgba(255, 255, 194, 0.1)", _dark: "rgba(255, 255, 194, 0.1)" },
+                    value: { base: "rgba(255, 255, 194, 0.2)", _dark: "rgba(255, 255, 194, 0.1)" },
                 },
+                defaultWidgetColor: {
+                    value: { base: "#e0e0e0", _dark: "#444" },
+                }
             },
         },
         breakpoints:{

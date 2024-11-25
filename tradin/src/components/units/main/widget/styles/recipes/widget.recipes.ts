@@ -44,6 +44,9 @@ export const widgetRecipe = defineRecipe({
             dataWidgetColor: {
                 bg: "dataWidgetColor",
             },
+            defaultWidgetColor: {
+                bg: "defaultWidgetColor",
+            }
         },
     },
     defaultVariants: {

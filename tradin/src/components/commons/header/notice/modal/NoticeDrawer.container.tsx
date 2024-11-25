@@ -22,20 +22,6 @@ const mockMessages = [
     { id: 2, type: "type1", content: "두 번째 메시지입니다.", isRead: false },
     { id: 3, type: "type1", content: "세 번째 메시지입니다.", isRead: true },
     { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
-    { id: 4, type: "type1", content: "네 번째 메시지입니다.", isRead: false },
 ];
 
 export default function NoticeDrawer(props: NoticeDrawerProps): JSX.Element {

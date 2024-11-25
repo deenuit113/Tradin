@@ -41,7 +41,7 @@ const RSIWidgetContent: React.FC = ( ) => {
     if (error) {
         return (
             <Center width="100%" height="100%">
-                <Text>Error: {error}</Text>
+                <p>Error: {error}</p>
             </Center>
         );
     }

@@ -57,7 +57,8 @@ export const globalCss = defineGlobalStyles({
         bg: "colorPalette.muted/80",
     },
     "::-webkit-scrollbar": {
-        width: "12px",
+        width: "8px",
+        height: "8px",
     },
     "::-webkit-scrollbar-track": {
         bg: "transparent",

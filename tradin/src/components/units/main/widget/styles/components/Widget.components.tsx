@@ -1,6 +1,6 @@
 "use client";
 
-import { chakra, GridItem, IconButton } from "@chakra-ui/react";
+import { chakra, IconButton, Box } from "@chakra-ui/react";
 import { 
     widgetDropDownBtnRecipe, 
     widgetFooterRecipe, 
@@ -10,7 +10,7 @@ import {
     widgetTitleRecipe 
 } from "../recipes/widget.recipes";
 
-export const Widget = chakra(GridItem, widgetRecipe);
+export const Widget = chakra("div", widgetRecipe);
 export const WidgetDropDownBtn = chakra(IconButton, widgetDropDownBtnRecipe);
 export const WidgetHeader = chakra("div", widgetHeaderRecipe);
 export const WidgetTitle = chakra("div", widgetTitleRecipe);

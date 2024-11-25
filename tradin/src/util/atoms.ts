@@ -15,5 +15,5 @@ export const notification = atom({
 
 export const currencyKRW = atom({
     key: 'CurrencyKRW',
-    default: true,
+    default: false,
 })

@@ -31,16 +31,13 @@ const Widget = ({
     const ref = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const widgetConfig = availableWidgets.find(w => w.type === widget.type);
-    const widgetColorMapping = [
+    const widgetColorMapping: { type: "crypto" | "data" | "default"; color: "cryptoWidgetColor" | "dataWidgetColor" | "defaultWidgetColor" }[] = [
         { type: "crypto", color: "cryptoWidgetColor" },
         { type: "data", color: "dataWidgetColor" },
-        { type: "default", color: "backgroundColor.secondary" },
+        { type: "default", color: "defaultWidgetColor" },
     ];
 
-    const widgetColor =
-        widgetColorMapping.find((item) => item.type === widgetConfig?.category)?.color || 
-        widgetColorMapping.find((item) => item.type === "default")?.color;
-    
+    const widgetColor = widgetColorMapping.find((item) => item.type === widgetConfig?.category)?.color;
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
         item: { index },
