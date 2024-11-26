@@ -8,6 +8,9 @@ export const cryptoWidgets = [
     { type: 'solana', name: '솔라나', icon: <>SOL</>, symbol: 'BINANCE:SOLUSD' },
     { type: 'dogecoin', name: '도지코인', icon: <>DOGE</>, symbol: 'BINANCE:DOGEUSD' },
     { type: 'cardano', name: '에이다', icon: <>ADA</>, symbol: 'BINANCE:ADAUSD' },
+    { type: 'binancecoin', name: '바이낸스 코인', icon: <>BNB</>, symbol: 'BINANCE:BNBUSD' },
+    { type: 'usd-coin', name: 'USDC', icon: <></>, symbol: 'BITSTAMP:USDCUSD' },
+    { type: 'tron', name: '트론', icon: <>TRX</>, symbol: 'BINANCE:TRXUSD' },
 ];
 
 export const dataWidgets = [
