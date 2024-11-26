@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil";
 import { currencyKRW } from "../../../util/atoms";
 import { useSidebar } from "../../../contexts/SidebarContext";
 import { FaDollarSign, FaPlus, FaWonSign } from "react-icons/fa";
-import Widget from "./widget/Widget";
+import Widget from "./widget/CryptoWidget/CryptoWidget";
 import WidgetSelector from "./widget/WidgetSelector";
 import ChartPopup from "./chart/Chart";
 import { IMainPageUIProps } from "./main.types";

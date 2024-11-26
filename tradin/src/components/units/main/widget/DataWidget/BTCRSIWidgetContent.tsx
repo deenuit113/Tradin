@@ -3,7 +3,7 @@ import { useRSIData } from "../../../../../hooks/useRSIData";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import * as C from "./styles/components/RSIWidget.components";
 import { Center, Spinner, Text } from "@chakra-ui/react";
-import { WidgetFooter, WidgetTimeStamp } from "../styles/components/Widget.components";
+import { WidgetFooter, WidgetTimeStamp } from "../styles/components/CryptoWidget.components";
 
 const RSIWidgetContent: React.FC = ( ) => {
     const { data, loading, error } = useRSIData("BTCUSDT");

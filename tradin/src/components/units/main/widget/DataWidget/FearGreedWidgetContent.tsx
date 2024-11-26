@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useFearGreedIndex } from "../../../../../hooks/useFearGreedIndex";
 import * as C from "./styles/components/FearGreedWidget.components";
 import { Center, Spinner, Text } from "@chakra-ui/react";
-import { WidgetFooter, WidgetTimeStamp } from "../styles/components/Widget.components";
+import { WidgetFooter, WidgetTimeStamp } from "../styles/components/CryptoWidget.components";
 
 const FearGreedWidgetContent: React.FC = () => {
     const { data, loading, error } = useFearGreedIndex();

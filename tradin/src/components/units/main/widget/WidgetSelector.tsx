@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Widget from "./Widget";
+import Widget from "./CryptoWidget/CryptoWidget";
 import { currencyKRW } from "../../../../util/atoms";
 import { useRecoilState } from "recoil";
 import { useExchangeRate } from "../../../../hooks/useExchangeRate";

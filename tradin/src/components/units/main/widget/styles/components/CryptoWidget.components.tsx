@@ -8,7 +8,7 @@ import {
     widgetRecipe, 
     widgetTimeStampRecipe, 
     widgetTitleRecipe 
-} from "../recipes/widget.recipes";
+} from "../recipes/cryptoWidget.recipes";
 
 export const Widget = chakra("div", widgetRecipe);
 export const WidgetDropDownBtn = chakra(IconButton, widgetDropDownBtnRecipe);

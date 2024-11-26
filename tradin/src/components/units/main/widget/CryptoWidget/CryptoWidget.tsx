@@ -1,51 +1,110 @@
-import { useEffect } from 'react';
-import axios from 'axios';
+import React, { useRef, useState, useEffect } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { useSpring, animated } from "react-spring";
+import { FaEllipsisV } from "react-icons/fa";
+import { cryptoWidgets } from "../AvailableWidgets";
+import { IWidgetProps } from "../Widget.types";
+import CryptoWidgetContent from "./CryptoWidgetContent";
+import DataWidgetContent from "../DataWidget/DataWidgetContent";
+import {
+    MenuContent,
+    MenuItem,
+    MenuRoot,
+    MenuTrigger,
+} from "@/components/ui/menu"
+import * as C from "../styles/components/CryptoWidget.components";
 
-interface CryptoWidgetProps {
-    coinId: string;
-    setPriceData: React.Dispatch<React.SetStateAction<{ price: number | null; prevPrice: number | null; timestamp: string | null }>>;
-}
+const ItemType = "WIDGET";
 
-export default function CryptoWidget({ coinId, setPriceData }: CryptoWidgetProps) {
-    useEffect(() => {
-        const cachedData = localStorage.getItem(`crypto-${coinId}`);
-        let prevPrice: number | null = null;
+const Widget = ({
+    widget,
+    index,
+    removeWidget,
+    moveWidget,
+    onClickWidget,
+    isCurrencyKRW,
+}: IWidgetProps): JSX.Element => {
+    const ref = useRef<HTMLDivElement>(null);
+    const widgetConfig = cryptoWidgets.find(w => w.type === widget.type);
 
-        if (cachedData) {
-            const parsedData = JSON.parse(cachedData);
-            prevPrice = parsedData.price;
-            setPriceData(parsedData);
-        }
+    const [{ isDragging }, drag] = useDrag({
+        type: ItemType,
+        item: { index },
+        collect: (monitor: any) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
 
-        const fetchCryptoPrice = async () => {
-            try {
-                const response = await axios.get(
-                    `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=krw`
-                );
-                const newPrice = response.data[coinId].krw;
-                const timestamp = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+    const [, drop] = useDrop({
+        accept: ItemType,
+        hover(item: { index: number }, monitor: any) {
+            if (!ref.current) return;
+            const dragIndex = item.index;
+            const hoverIndex = index;
 
-                const newData = {
-                    prevPrice: prevPrice,
-                    price: newPrice,
-                    timestamp,
-                };
+            if (dragIndex === hoverIndex) return;
 
-                setPriceData(newData);
-                localStorage.setItem(`crypto-${coinId}`, JSON.stringify(newData));
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
+            const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
+            const clientOffset = monitor.getClientOffset();
+            const hoverClientX = clientOffset!.x - hoverBoundingRect.left;
 
-                // Update prevPrice for the next iteration
-                prevPrice = newPrice;
-            } catch (error) {
-                console.error('Error fetching crypto price:', error);
-            }
-        };
+            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) return;
+            if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) return;
 
-        fetchCryptoPrice();
-        const intervalId = setInterval(fetchCryptoPrice, 30000);
+            moveWidget(dragIndex, hoverIndex);
+            item.index = hoverIndex;
+        },
+    });
 
-        return () => clearInterval(intervalId);
-    }, [coinId, setPriceData]);
+    drag(drop(ref));
 
-    return null;
-}
+    const springStyle = useSpring({
+        transform: isDragging ? 'scale(1.05)' : 'scale(1)',
+        opacity: isDragging ? 0.5 : 1,
+        config: { tension: 250, friction: 20 }
+    });
+    
+
+    return (
+        <animated.div style={springStyle} ref={ref}>
+            <C.Widget 
+                isDragging={isDragging}
+            >
+                <C.WidgetHeader>
+                    <C.WidgetTitle>{widgetConfig?.name}&nbsp;{widgetConfig?.icon}</C.WidgetTitle>
+                    <MenuRoot>
+                        <MenuTrigger asChild onClick={(e)=> e.stopPropagation()} >
+                            <C.WidgetDropDownBtn size="xs" variant="ghost" rounded="xl">
+                                <FaEllipsisV />
+                            </C.WidgetDropDownBtn>
+                        </MenuTrigger>
+                        <MenuContent>
+                            {
+                                widgetConfig?.symbol && (
+                                    <MenuItem value="coin-chart" onClick={() => onClickWidget(widgetConfig.symbol)}>
+                                        Chart
+                                    </MenuItem>
+                                )
+                            }
+                            <MenuItem 
+                                value="delete"
+                                color="fg.error"
+                                _hover={{ bg: "bg.error", color: "fg.error" }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeWidget(index)
+                                }}
+                            >
+                                Delete ...
+                            </MenuItem>
+                        </MenuContent>
+                    </MenuRoot>
+                </C.WidgetHeader>
+                <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} />
+            </C.Widget>
+        </animated.div>
+    );
+};
+
+export default Widget;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useBinanceLongShortRatio } from "../../../../../hooks/useLongShortRatioData";
 import { Center, Spinner, Text } from "@chakra-ui/react";
 import * as C from "./styles/components/longShortRatioWidget.components";
-import { WidgetFooter, WidgetTimeStamp } from "../styles/components/Widget.components";
+import { WidgetFooter, WidgetTimeStamp } from "../styles/components/CryptoWidget.components";
 
 const LongShortRatioWidgetContent: React.FC = () => {
     const { data, loading, error } = useBinanceLongShortRatio("BTCUSDT");

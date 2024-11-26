@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ICryptoWidgetProps } from "../Widget.types";
 import { useExchangeRate } from "../../../../../hooks/useExchangeRate";
-import CryptoWidget from "./CryptoWidget";
+import { fetchCryptoPrice } from "./fetchCryptoPrice";
 import { StatLabel, StatRoot, StatValueText, StatHelpText, StatUpTrend, StatDownTrend } from "@/components/ui/stat";
 import { Flex, HStack } from "@chakra-ui/react";
 import { SkeletonText } from "@/components/ui/skeleton";
-import { WidgetFooter, WidgetTimeStamp } from "../styles/components/Widget.components";
+import { WidgetFooter, WidgetTimeStamp } from "../styles/components/CryptoWidget.components";
 
 const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX.Element => {
     const [priceData, setPriceData] = useState<{ price: number | null; prevPrice: number | null; timestamp: string | null }>({
@@ -23,6 +23,30 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
         }
         return null;
     };
+
+    useEffect(() => {
+        const cachedData = localStorage.getItem(`crypto-${widget.type}`);
+        let prevPrice: number | null = null;
+
+        if (cachedData) {
+            const parsedData = JSON.parse(cachedData);
+            prevPrice = parsedData.price;
+            setPriceData(parsedData);
+        }
+
+        const updateCryptoPrice = async () => {
+            const newData = await fetchCryptoPrice({ coinId: widget.type, prevPrice });
+            if (newData) {
+                setPriceData(newData);
+                prevPrice = newData.price; // 이전 가격 갱신
+            }
+        };
+
+        updateCryptoPrice();
+        const intervalId = setInterval(updateCryptoPrice, 30000);
+
+        return () => clearInterval(intervalId);
+    }, [widget.type]);
 
     useEffect(() => {
         if (priceData.prevPrice !== null && priceData.price !== null) {
@@ -66,18 +90,19 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
                     )}
                     {priceData.price !== null && priceData.prevPrice !== null && priceChangePercentage && (
                         parseFloat(priceChangePercentage) > 0 ? (
-                            <StatUpTrend px="0" variant="plain" padding="0px 6px" size={{base: "sm", lg: "sm", sm: "xs"}}>{priceChangePercentage}</StatUpTrend> // 상승 트렌드
+                            <StatUpTrend px="0" variant="plain" padding="0px 6px" size={{ base: "sm", lg: "sm", sm: "xs" }}>
+                                {priceChangePercentage}
+                            </StatUpTrend>
                         ) : (
-                            <StatDownTrend px="0" variant="plain" padding="0px 6px" size={{base: "sm", lg: "sm", sm: "xs"}}>{priceChangePercentage}</StatDownTrend> // 하락 트렌드
+                            <StatDownTrend px="0" variant="plain" padding="0px 6px" size={{ base: "sm", lg: "sm", sm: "xs" }}>
+                                {priceChangePercentage}
+                            </StatDownTrend>
                         )
                     )}
                 </Flex>
             </StatRoot>
-            {widget.type && <CryptoWidget coinId={widget.type} setPriceData={setPriceData} />}
             <WidgetFooter>
-                <WidgetTimeStamp>
-                        {lastChangeTimestamp}
-                </WidgetTimeStamp>
+                <WidgetTimeStamp>{lastChangeTimestamp}</WidgetTimeStamp>
             </WidgetFooter>
         </>
     );

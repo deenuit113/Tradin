@@ -1,5 +1,5 @@
 import React from "react";
-import * as C from "./styles/components/Widget.components";
+import * as C from "./styles/components/CryptoWidget.components";
 import DataWidgetContent from "./DataWidget/DataWidgetContent";
 
 interface IDataWidgetProps {
