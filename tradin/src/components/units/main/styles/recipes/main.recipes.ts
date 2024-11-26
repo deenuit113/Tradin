@@ -65,6 +65,7 @@ export const cryptoWidgetContainerRecipe = defineRecipe({
         bg: "transparent",
         boxSizing: "border-box",
         overflowY: "auto",
+        overflowX: "scroll",
         gap: { base: "20px", lg: "20px", sm: "10px" },
         borderBottomWidth: "1px",
         borderStyle: "solid",
