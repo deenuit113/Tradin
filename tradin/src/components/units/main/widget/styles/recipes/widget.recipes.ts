@@ -2,13 +2,13 @@ import { defineRecipe } from "@chakra-ui/react";
 
 export const widgetRecipe = defineRecipe({
     base: {
+        bg: "cryptoWidgetColor",
         display: "flex",
         position: "relative",
         flexDirection: "column",
-        bg: "backgroundColor.secondary",
         padding: {
             lg: "1rem 1rem 0.5rem 1rem",
-            sm: "0.5rem 0.5rem 0 0.5rem",
+            sm: "0.5rem 0.5rem 0.3rem 0.5rem",
         },
         transition: "transform 0.3s ease",
         width: {
@@ -16,8 +16,8 @@ export const widgetRecipe = defineRecipe({
             sm: "150px", // 200
         },
         height: {
-            lg: "130px", // 200
-            sm: "100px", // 150
+            lg: "140px", // 200
+            sm: "110px", // 150
         },
         margin: "auto",
         borderRadius: "8px",
@@ -36,17 +36,6 @@ export const widgetRecipe = defineRecipe({
             false: {
                 transform: "scale(1)",
             },
-        },
-        color : {
-            cryptoWidgetColor: {
-                bg: "cryptoWidgetColor",
-            },
-            dataWidgetColor: {
-                bg: "dataWidgetColor",
-            },
-            defaultWidgetColor: {
-                bg: "defaultWidgetColor",
-            }
         },
     },
     defaultVariants: {

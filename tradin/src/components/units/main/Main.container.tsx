@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import { availableWidgets } from "./widget/AvailableWidgets";
+import { cryptoWidgets } from "./widget/AvailableWidgets";
 import { v4 as uuidv4 } from 'uuid';
 import MainPageUI from "./Main.presenter";
 import { useExchangeRate } from "../../../hooks/useExchangeRate";
 
 export default function MainPage(): JSX.Element {
     const [widgets, setWidgets] = useState<{ id: string; type: string; name: string }[]>([]);
-    const [menuOpen, setMenuOpen] = useState<number | null>(null);
     const [widgetSelectorOpen, setWidgetSelectorOpen] = useState(false);
     const [selectedSymbol, setSelectedSymbol] = useState<string | null>(null);
 
-    const { exchangeRate, timestamp } = useExchangeRate();
+    const { exchangeRate } = useExchangeRate();
 
     const addWidget = (widgetType: string) => {
-        const widgetName = availableWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
+        const widgetName = cryptoWidgets.find(widget => widget.type === widgetType)?.name || `정보 ${widgets.length + 1}`;
         setWidgets(prevWidgets => {
             const newId = uuidv4(); // 고유한 ID 생성
             const newWidgets = [...prevWidgets, { id: newId, type: widgetType, name: widgetName }];
@@ -39,7 +38,6 @@ export default function MainPage(): JSX.Element {
             localStorage.setItem('widgets', JSON.stringify(newWidgets));
             return newWidgets;
         });
-        setMenuOpen(null);
     };
 
     useEffect(() => {
@@ -71,7 +69,7 @@ export default function MainPage(): JSX.Element {
         return () => window.removeEventListener('keydown', handleEsc);
     }, []);
 
-    const availableWidgetTypes = availableWidgets.filter(
+    const availableWidgetTypes = cryptoWidgets.filter(
         (widget) => !widgets.some((w) => w.type === widget.type)
     );
 
@@ -84,8 +82,6 @@ export default function MainPage(): JSX.Element {
             <MainPageUI
                 widgets={widgets}
                 removeWidget={removeWidget}
-                menuOpen={menuOpen}
-                setMenuOpen={setMenuOpen}
                 moveWidget={moveWidget}
                 setSelectedSymbol={setSelectedSymbol}
                 onClickWidgetSelector={onClickWidgetSelector}
@@ -94,7 +90,6 @@ export default function MainPage(): JSX.Element {
                 availableWidgetTypes={availableWidgetTypes}
                 widgetSelectorOpen={widgetSelectorOpen}
                 selectedSymbol={selectedSymbol}
-                exchangeRate={exchangeRate}
             />
         </>
     );

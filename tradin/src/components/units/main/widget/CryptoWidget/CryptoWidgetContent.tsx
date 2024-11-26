@@ -51,8 +51,8 @@ const CryptoWidgetContent = ({ widget, isCurrencyKRW }: ICryptoWidgetProps): JSX
                                 currency: isCurrencyKRW ? "KRW" : "USD",
                             }}
                             marginBottom={{
-                                base: "5px",
-                                lg: "5px",
+                                base: "0",
+                                lg: "0",
                                 sm: "0",
                             }}
                             fontSize={{

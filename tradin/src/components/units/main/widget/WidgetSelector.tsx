@@ -47,13 +47,10 @@ const WidgetSelector = ({ addWidget, widgetSelectorOpen, availableWidgets, onClo
                                     <Widget
                                         widget={{ id: `${widget.type}`, type: widget.type, name: widget.name }} // 고유한 ID 생성
                                         index={0}
-                                        menuOpen={null}
-                                        setMenuOpen={() => {}}
                                         removeWidget={() => {}}
                                         moveWidget={() => {}}
                                         onClickWidget={(symbol: string) => {}}
                                         isCurrencyKRW={isCurrencyKRW}
-                                        exchangeRate={exchangeRate}
                                     />
                                 </C.SelectorOption>
                             ))

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useSpring, animated } from "react-spring";
 import { FaEllipsisV } from "react-icons/fa";
-import { availableWidgets } from "./AvailableWidgets";
+import { cryptoWidgets } from "./AvailableWidgets";
 import { IWidgetProps } from "./Widget.types";
 import CryptoWidgetContent from "./CryptoWidget/CryptoWidgetContent";
 import DataWidgetContent from "./DataWidget/DataWidgetContent";
@@ -12,7 +12,6 @@ import {
     MenuRoot,
     MenuTrigger,
 } from "@/components/ui/menu"
-import { IconButton, Box } from "@chakra-ui/react";
 import * as C from "./styles/components/Widget.components";
 
 const ItemType = "WIDGET";
@@ -20,24 +19,14 @@ const ItemType = "WIDGET";
 const Widget = ({
     widget,
     index,
-    menuOpen,
-    setMenuOpen,
     removeWidget,
     moveWidget,
     onClickWidget,
     isCurrencyKRW,
-    exchangeRate,
 }: IWidgetProps): JSX.Element => {
     const ref = useRef<HTMLDivElement>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const widgetConfig = availableWidgets.find(w => w.type === widget.type);
-    const widgetColorMapping: { type: "crypto" | "data" | "default"; color: "cryptoWidgetColor" | "dataWidgetColor" | "defaultWidgetColor" }[] = [
-        { type: "crypto", color: "cryptoWidgetColor" },
-        { type: "data", color: "dataWidgetColor" },
-        { type: "default", color: "defaultWidgetColor" },
-    ];
+    const widgetConfig = cryptoWidgets.find(w => w.type === widget.type);
 
-    const widgetColor = widgetColorMapping.find((item) => item.type === widgetConfig?.category)?.color;
     const [{ isDragging }, drag] = useDrag({
         type: ItemType,
         item: { index },
@@ -75,39 +64,12 @@ const Widget = ({
         opacity: isDragging ? 0.5 : 1,
         config: { tension: 250, friction: 20 }
     });
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setMenuOpen(null);  // dropdownMenu 외부를 클릭하면 닫음
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [setMenuOpen]);
-
-
-    
-
-    const renderWidgetContent = () => {
-        if (widgetConfig?.category === 'crypto') {
-            return <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW}/>;
-        } else if (widgetConfig?.category === 'data') {
-            return <DataWidgetContent type={widget.type}/>;
-        } else {
-            return <p>Unknown widget category</p>;
-        }
-    };
     
 
     return (
         <animated.div style={springStyle} ref={ref}>
             <C.Widget 
                 isDragging={isDragging}
-                color={widgetColor}
             >
                 <C.WidgetHeader>
                     <C.WidgetTitle>{widgetConfig?.name}&nbsp;{widgetConfig?.icon}</C.WidgetTitle>
@@ -139,7 +101,7 @@ const Widget = ({
                         </MenuContent>
                     </MenuRoot>
                 </C.WidgetHeader>
-                {renderWidgetContent()}
+                <CryptoWidgetContent widget={widget} isCurrencyKRW={isCurrencyKRW} />
             </C.Widget>
         </animated.div>
     );

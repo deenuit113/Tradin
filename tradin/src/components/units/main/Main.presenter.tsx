@@ -12,6 +12,8 @@ import { Text } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useId } from "react";
 import * as C from "./styles/components/Main.components"
+import { dataWidgets } from "./widget/AvailableWidgets";
+import DataWidget from "./widget/DataWidget";
 
 export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const [isCurrencyKRW, setIsCurrencyKRW] = useRecoilState(currencyKRW);
@@ -19,7 +21,6 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     const id = useId();
 
     const { exchangeRate, timestamp } = useExchangeRate();
-    console.log('timestamp:',timestamp);
 
     const handleWidgetClick = (symbol: string | undefined) => {
         if (symbol) {
@@ -30,6 +31,12 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
     return (
         <C.Container sidebarOpen={sidebarOpen}>
             <C.SwitchContainer sidebarOpen={sidebarOpen}>
+                <C.WidgetAddContainer>
+                    <Text fontSize={{base: "24px", lg: "24px", sm: "18px"}} fontWeight="700">관심 종목</Text>
+                    <C.WidgetAddBtn onClick={props.onClickWidgetSelector}>
+                        <FaPlus className="PlusIcon"/>
+                    </C.WidgetAddBtn> 
+                </C.WidgetAddContainer>
                 <Tooltip 
                     ids={{ trigger: id }} 
                     content={timestamp ? new Date(timestamp).toLocaleString() : ''}
@@ -54,12 +61,6 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                         <Text fontWeight="700">{exchangeRate}&nbsp;KRW/USD</Text>
                     </Switch>
                 </Tooltip>
-                <C.WidgetAddContainer>
-                    <Text fontSize="12px">위젯 추가</Text>
-                    <C.WidgetAddBtn onClick={props.onClickWidgetSelector}>
-                        <FaPlus className="PlusIcon"/>
-                    </C.WidgetAddBtn> 
-                </C.WidgetAddContainer>
             </C.SwitchContainer>
             <C.CryptoWidgetContainer
                 onWheel={(e) => {
@@ -72,16 +73,18 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
                             index={index}
                             widget={widgetData}
                             removeWidget={props.removeWidget}
-                            menuOpen={props.menuOpen}
-                            setMenuOpen={props.setMenuOpen}
                             moveWidget={props.moveWidget}
                             onClickWidget={handleWidgetClick}
                             isCurrencyKRW={isCurrencyKRW}
-                            exchangeRate={props.exchangeRate}
                         />
                     );
                 })}
             </C.CryptoWidgetContainer>
+            <C.DataWidgetContainer>
+                {dataWidgets.map((widget) => (
+                    <DataWidget key={widget.type} widget={widget} />
+                ))}
+            </C.DataWidgetContainer>
             
             <WidgetSelector
                     addWidget={props.addWidget}
