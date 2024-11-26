@@ -14,7 +14,7 @@ const DataWidgetContent: React.FC<DataWidgetProps> = ({ type }) => {
             case 'btcrsiindex':
                 return <RSIWidgetContent/>;
             default:
-                return <p>Unknown widget type</p>;
+                return <p>test widget</p>;
         }
     };
 

@@ -1,4 +1,4 @@
-import { FaBitcoin, FaEthereum } from "react-icons/fa";
+import { FaBitcoin, FaChartBar, FaChartLine, FaChartPie, FaEthereum } from "react-icons/fa";
 
 export const cryptoWidgets = [
     { type: 'bitcoin', name: '비트코인', icon: <FaBitcoin />, symbol: 'BITSTAMP:BTCUSD' },
@@ -11,7 +11,8 @@ export const cryptoWidgets = [
 ];
 
 export const dataWidgets = [
-    { type: 'longshortratio', name: 'BTC 선물 롱/숏 비율', icon: <></> },
-    { type: 'feargreedindex', name: '공포 / 탐욕 지수', icon: <></> },
-    { type: 'btcrsiindex', name: 'BTC RSI', icon: <></> },
+    { type: 'longshortratio', name: 'BTC 선물 롱/숏 비율', icon: <FaChartBar/> },
+    { type: 'feargreedindex', name: '공포 / 탐욕 지수', icon: <FaChartPie/> },
+    { type: 'btcrsiindex', name: 'BTC RSI', icon: <FaChartLine/> },
+    { type: 'test', name: 'test', icon: <></> },
 ];

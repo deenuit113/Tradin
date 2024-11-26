@@ -30,9 +30,9 @@ export default function MainPageUI(props: IMainPageUIProps): JSX.Element {
 
     return (
         <C.Container sidebarOpen={sidebarOpen}>
-            <C.SwitchContainer sidebarOpen={sidebarOpen}>
+            <C.SwitchContainer>
                 <C.WidgetAddContainer>
-                    <Text fontSize={{base: "24px", lg: "24px", sm: "18px"}} fontWeight="700">관심 종목</Text>
+                    <Text fontSize={{base: "20px", lg: "20px", sm: "16px"}} fontWeight="700">관심 종목</Text>
                     <C.WidgetAddBtn onClick={props.onClickWidgetSelector}>
                         <FaPlus className="PlusIcon"/>
                     </C.WidgetAddBtn> 

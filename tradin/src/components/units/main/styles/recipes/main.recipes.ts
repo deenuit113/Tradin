@@ -45,30 +45,10 @@ export const switchContainerRecipe = defineRecipe({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "10px 10px 10px 10px",
+        padding: "10px 2rem 0px 2rem",
         bg: "backgroundColor", //mainSwitchContainerColor
         gap: "5px",
     },
-    variants: {
-        sidebarOpen: {
-            true: {
-                width: {
-                    base: "85%",
-                    lg: "85%",
-                    sm: "100%",
-                },
-                marginLeft: {
-                    base: "15%",
-                    lg: "15%",
-                    sm: "0",
-                }
-            },
-            false: {
-                width: "100%",
-                marginLeft: "0",
-            }
-        }
-    }
 });
 
 export const cryptoWidgetContainerRecipe = defineRecipe({
@@ -98,19 +78,14 @@ export const cryptoWidgetContainerRecipe = defineRecipe({
 
 export const dataWidgetContainerRecipe = defineRecipe({
     base: {
-        display: "flex",
-        flexDirection: "row",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gap: "1rem",
         width: "50%",
-        height: {
-            base: "40vh",
-            lg: "40vh",
-            sm: "50vh",
-        },
         borderWidth: "1px",
         borderStyle: "solid",
         borderColor: "borderGrayColor",
         borderRadius: "5px",
-        padding: "0.5rem 1rem 0.5rem 1rem",
+        padding: "1rem",
         boxSizing: "border-box",
     },
 });

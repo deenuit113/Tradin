@@ -16,11 +16,7 @@ export const longShortRatioContainerRecipe = defineRecipe({
 export const ratioBarContainerRecipe = defineRecipe({
     base: {
         width: "95%",
-        height: {
-            base: "30px",
-            lg: "30px",
-            sm: "25px",
-        },
+        height: "30%",
         display: "flex",
         borderRadius: "5px",
         overflow: "hidden",
@@ -38,11 +34,19 @@ export const longRatioBarRecipe = defineRecipe({
         justifyContent: "flex-start",
         alignItems: "center",
         color: "white",
-        fontSize: "11px",
+        fontSize: {
+            base: "0.8rem",
+            lg: "0.8rem",
+            sm: "11px",
+        },
         fontWeight: "600",
-        paddingLeft: "15px",
+        paddingLeft: {
+            base: "15px",
+            lg: "15px",
+            sm: "5px",
+        },
         left: "0",
-        borderRadius: "7px 0px 0px 7px",
+        borderRadius: "10px 0px 0px 10px",
     },
 });
 
@@ -55,11 +59,19 @@ export const shortRatioBarRecipe = defineRecipe({
         justifyContent: "flex-end",
         alignItems: "center",
         color: "white",
-        fontSize: "11px",
+        fontSize: {
+            base: "0.8rem",
+            lg: "0.8rem",
+            sm: "11px",
+        },
         fontWeight: "600",
-        paddingRight: "15px",
+        paddingRight: {
+            base: "15px",
+            lg: "15px",
+            sm: "5px",
+        },
         marginLeft: "auto",
-        borderRadius: "0px 7px 7px 0px",
+        borderRadius: "0px 10px 10px 0px",
     },
 });
 
