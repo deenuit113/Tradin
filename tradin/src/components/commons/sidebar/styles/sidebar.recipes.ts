@@ -10,7 +10,7 @@ export const sidebarContainerRecipe = defineRecipe({
         height: "100vh",
         boxShadow: "0 10px 10px rgba(0, 0, 0, 0.3)",
         borderRadius: "0 5px 5px 0",
-        bg: "backgroundColor.secondary",
+        bg: "backgroundColor",
         overflowY: "auto",
         zIndex: "1500",
         position: "fixed",

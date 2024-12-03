@@ -20,7 +20,7 @@ const config = defineConfig({
                 backgroundColor: {
                     DEFAULT: { value: { base: "#f0f0f0", _dark: "#333" } },
                     primary: { value: { base: "#e0e0e0", _dark: "#444" } },
-                    secondary: { value: { base: "d0d0d0", _dark: "#555" } },
+                    secondary: { value: { base: "#d0d0d0", _dark: "#555" } },
                 },
                 textColor: {
                     value: { base: "#333", _dark: "#f0f0f0" },

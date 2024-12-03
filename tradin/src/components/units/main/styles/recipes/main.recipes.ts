@@ -1,8 +1,9 @@
-import { defineRecipe } from "@chakra-ui/react";
+import { defineRecipe, Flex } from "@chakra-ui/react";
 
 export const containerRecipe = defineRecipe({
     base: {
         display: "flex",
+        padding: "1rem 1rem 1rem 1rem",
         width: "100%",
         minHeight: "85vh",
         flexDirection: "column",
@@ -39,19 +40,47 @@ export const containerRecipe = defineRecipe({
     },
 });
 
-export const switchContainerRecipe = defineRecipe({
+export const rowBoxRecipe = defineRecipe({
+    base: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        gap: {
+            base: "40px",
+            lg: "40px",
+            sm: "20px",
+        },
+        width: "100%",
+        alignItems: "stretch",
+    }
+});
+
+export const widgetContainerRecipe = defineRecipe({
+    base: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "space-between",
+        gap: "10px",
+    }
+})
+
+export const widgetContainerHeaderRecipe = defineRecipe({
     base: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "10px 2rem 0px 2rem",
-        bg: "backgroundColor", //mainSwitchContainerColor
+        padding: {
+            base: "0px 20px",
+            lg: "0px 20px",
+            sm: "0px 10px",
+        },
         gap: "5px",
     },
 });
 
-export const cryptoWidgetContainerRecipe = defineRecipe({
+export const cryptoWidgetBoxRecipe = defineRecipe({
     base: {
         width: "100%",
         height: {
@@ -59,7 +88,6 @@ export const cryptoWidgetContainerRecipe = defineRecipe({
             lg: "200px",
             sm: "160px",
         },
-        transition: "width 0.3s ease, margin-left 0.3s ease",
         padding: "0 1rem 1rem 1rem",
         alignItems: "center",
         bg: "transparent",
@@ -67,7 +95,7 @@ export const cryptoWidgetContainerRecipe = defineRecipe({
         overflowY: "auto",
         overflowX: "scroll",
         gap: { base: "20px", lg: "20px", sm: "10px" },
-        borderBottomWidth: "1px",
+        borderWidth: "1px",
         borderStyle: "solid",
         borderColor: "borderGrayColor",
         borderRadius: "5px",
@@ -77,17 +105,43 @@ export const cryptoWidgetContainerRecipe = defineRecipe({
     },
 });
 
-export const dataWidgetContainerRecipe = defineRecipe({
+export const dataWidgetBoxRecipe = defineRecipe({
     base: {
         gridTemplateColumns: "repeat(2, 1fr)",
         gap: "1rem",
-        width: "50%",
+        width: "100%",
         borderWidth: "1px",
         borderStyle: "solid",
         borderColor: "borderGrayColor",
         borderRadius: "5px",
         padding: "1rem",
         boxSizing: "border-box",
+    },
+});
+
+export const newsBoxRecipe = defineRecipe({
+    base: {
+        width: "100%",
+        height: {
+            base: "200px",
+            lg: "200px",
+            sm: "160px",
+        },
+        padding: "0 1rem 1rem 1rem",
+        alignItems: "center",
+        bg: "transparent",
+        boxSizing: "border-box",
+        overflowY: "auto",
+        overflowX: "scroll",
+        gap: { base: "20px", lg: "20px", sm: "10px" },
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: "borderGrayColor",
+        borderRadius: "5px",
+        position: "relative",
+        overscrollBehaviorX: "contain", // X축 체이닝 방지
+        overscrollBehaviorY: "none",
+        flexGrow: "1",
     },
 });
 
@@ -99,7 +153,6 @@ export const widgetAddContainerRecipe = defineRecipe({
         justifyContent: "space-between",
         alignItems: "center",
         gap: "10px",
-        
     },
 })
 
