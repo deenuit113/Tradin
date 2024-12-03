@@ -4,9 +4,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@chakra-ui/react"],
   },
-  compiler: {
-    emotion: true,
-  },
 };
 
 export default nextConfig;
