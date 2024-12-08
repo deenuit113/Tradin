@@ -25,6 +25,12 @@ const config = defineConfig({
                 textColor: {
                     value: { base: "#333", _dark: "#f0f0f0" },
                 },
+                reversedTextColor: {
+                    value: { base: "#f0f0f0", _dark: "#333" },
+                },
+                descriptionTextColor: {
+                    value: { base: "grey", _dark: "lightgrey" },
+                },
                 borderGrayColor: {
                     value: { base: "#d0d0d0", _dark: "#666" },
                 },
@@ -36,6 +42,9 @@ const config = defineConfig({
                 },
                 loginPlaceholderColor: {
                     value: { base: "#777", _dark: "#999" },
+                },
+                danger: {
+                    value: { base: "#ff0000", _dark: "#ff474c" },
                 },
                 loginErrorMessageDanger: {
                     value: { base: "#ff0000", _dark: "#ff474c" },
@@ -60,6 +69,24 @@ const config = defineConfig({
                 },
                 defaultWidgetColor: {
                     value: { base: "#e0e0e0", _dark: "#444" },
+                },
+                optionHighlightColor: {
+                    value: { base: "#4682B4", _dark: "#B0C4DE" },
+                },
+                dropdownHoverColor: {
+                    value: { base: "#d0d0d0", _dark: "#555" },
+                },
+                backTestButtonColor: {
+                    value: { base: "#1DB717", _dark: "#1DA717" },
+                },
+                backTestButtonHoverColor: {
+                    value: { base: "#d0d0d0", _dark: "#555" },
+                },
+                dayHoverColor: {
+                    value: { base: "#d0d0d0", _dark: "#444" },
+                },
+                dateInputColor: {
+                    value: { base: "#f0f0f0", _dark: "#555" },
                 }
             },
         },

@@ -5,13 +5,17 @@ import { CSSProperties } from 'react';
 // BackTest 결과 화면
 export const ResultContainer = styled.div`
     background-color: ${({ theme }) => theme.innerbackgroundColor};
-    width: 100%;
+    width: 50%;
     flex-grow: 1;
     padding: 1.5rem;
     border-radius: 8px;
     overflow-x: hidden;
     margin-bottom: 1rem;
     overflow-y: hidden;
+
+    @media (max-width: 799px) {
+        width: 100%;
+    }
 `;
 
 export const ResultDisplayContainer = styled.div`

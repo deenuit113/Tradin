@@ -60,6 +60,7 @@ export const useBackTestOptionDate = () => {
 
     return {
         dateRange,
+        setDateRange,
         startDate,
         endDate,
         handleDateRangeChange,

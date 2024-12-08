@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import * as S from "./BackTest.styles";
+import * as C from "./styles/BackTest.components";
 import { useSidebar } from "../../../../contexts/SidebarContext";
 import Breadcrumb from "../../../commons/breadcrumb/BreadCrumb.container";
 import OptionsContainer from '../option/BackTestOption';
@@ -12,6 +12,7 @@ import { useBackTest } from '../../../../hooks/useBackTest';
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
 import { RootState } from '../../../../store/rootReducer';
 import { setBacktestResults, setExecutedOptions, clearBacktestResults } from '../../../../store/backtestResultSlice';
+import { Button, Collapsible } from '@chakra-ui/react';
 
 export default function BackTestPage(): JSX.Element {
     const { sidebarOpen } = useSidebar();
@@ -51,44 +52,60 @@ export default function BackTestPage(): JSX.Element {
         }
     }, [backTestMutation.isSuccess, backTestMutation.data, dispatch, marketType, selectedStrategies, position, startDate, endDate]);
 
-    const handlePerformBackTest = () => {
-        performBackTest();
-    };
-
     const toggleOptions = () => {
         setOptionsVisible(!optionsVisible);
     };
 
     return (
-        <S.Container>
-            <S.BackTestHeader sidebarOpen={sidebarOpen}>
-                <Breadcrumb />
-            </S.BackTestHeader>
-            <S.MainContent sidebarOpen={sidebarOpen}>
-                <S.BackTestContainer>
-                    {backTestMutation.isLoading ? (
-                        <ResultSkeletonUI />
-                    ) : results && executedOptions ? (
-                        <BackTestResults trades={results} executedOptions={executedOptions} />
-                    ) : null}
-                    
+        <C.Container sidebarOpen={sidebarOpen}>
+            <Breadcrumb />
+            <C.BackTestContainer>
+                {backTestMutation.isLoading ? (
+                    <ResultSkeletonUI />
+                ) : results && executedOptions ? (
+                    <BackTestResults trades={results} executedOptions={executedOptions} />
+                ) : null}
+                
+                <Collapsible.Root 
+                    open={optionsVisible} 
+                    width={{base: "50%", lg: "50%", sm: "100%"}}
+                >
                     {showToggleButton ? (
-                        <S.OptionToggleButton onClick={toggleOptions} isVisible={optionsVisible}>
-                            <FontAwesomeIcon className="FilterIcon" icon={faFilter} />
-                            {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
-                        </S.OptionToggleButton>
-                    ) : (<></>)}
-                    
-                    <OptionsContainer
-                        isVisible={optionsVisible}
-                        loading={backTestMutation.isLoading}
-                        showToggleButton={showToggleButton}
-                        performBackTest={handlePerformBackTest}
-                    />
-                    
-                    {backTestMutation.isError && <p>{(backTestMutation.error as Error).message}</p>}
-                </S.BackTestContainer>
-            </S.MainContent>
-        </S.Container>
+                        <Collapsible.Trigger
+                            width="100%"
+                            onClick={toggleOptions}
+                        >
+                            <Button
+                                width="100%"
+                                display="flex"
+                                flexDirection="row"
+                                justifyContent="center"
+                                alignItems="center"
+                                color="textColor"
+                                bg="backgroundColor"
+                                borderColor="borderGrayColor"
+                                borderRadius={optionsVisible ? "6px 6px 0px 0px" : "6px 6px 6px 6px"}
+                            >
+                                <FontAwesomeIcon icon={faFilter} />
+                                {optionsVisible ? '옵션 숨기기' : '옵션 보기'}
+                            </Button>
+                            
+                        </Collapsible.Trigger>)
+                        : 
+                        (<></>)
+                    }
+                    <Collapsible.Content marginBottom="20px">
+                        <OptionsContainer
+                            isVisible={optionsVisible}
+                            loading={backTestMutation.isLoading}
+                            showToggleButton={showToggleButton}
+                            performBackTest={performBackTest}
+                        />
+                    </Collapsible.Content>
+                </Collapsible.Root>
+                
+                {backTestMutation.isError && <p>{(backTestMutation.error as Error).message}</p>}
+            </C.BackTestContainer>
+        </C.Container>
     );
 }

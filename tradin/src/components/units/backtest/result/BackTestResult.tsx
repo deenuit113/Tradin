@@ -9,7 +9,6 @@ import ResultContent from './ResultContent';
 import { useBackTestContext } from '../../../../contexts/BackTestContext';
 import { saveOptionModalStyle } from './BackTestResult.styles';
 import pako from 'pako';
-import { Container, MainContent } from '../main/BackTest.styles';
 
 const CarouselPage: React.FC<{
     pageNumber: number;

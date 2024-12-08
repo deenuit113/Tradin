@@ -28,5 +28,5 @@ export const useBackTestOptionError = () => {
         });
     };
 
-    return { errors, setError, resetErrors };
+    return { errors, setErrors, setError, resetErrors };
 };

@@ -60,8 +60,8 @@ export const BackTestProvider: React.FC<BackTestProviderProps> = ({
     useEffect(() => { // 시장 유형을 바꿨을 때 전략이 초기화 되게
         if (!isInitialRender) {
             setSelectedStrategies([]);
-            setPosition('long');
             setSavedMarketType(marketType);
+            console.log(position)
         } else {
             setIsInitialRender(false);
         }
